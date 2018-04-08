@@ -84,12 +84,57 @@ class CucumberSwiftTests: XCTestCase {
         }
     }
     
+    func testFeatureHooks() {
+        let cucumber = Cucumber(with: featureFile)
+        var beforeFeatureCalled = 0
+        cucumber.BeforeFeature = { _ in
+            beforeFeatureCalled += 1
+        }
+        var afterFeatureCalled = 0
+        cucumber.AfterFeature = { _ in
+            afterFeatureCalled += 1
+        }
+        cucumber.executeFeatures()
+        XCTAssertEqual(beforeFeatureCalled, 1)
+        XCTAssertEqual(afterFeatureCalled, 1)
+    }
+
+    func testBeforeScenarioHooks() {
+        let cucumber = Cucumber(with: featureFile)
+        var beforeScenarioCalled = 0
+        cucumber.BeforeScenario = { _ in
+            beforeScenarioCalled += 1
+        }
+        var afterScenarioCalled = 0
+        cucumber.AfterScenario = { _ in
+            afterScenarioCalled += 1
+        }
+        cucumber.executeFeatures()
+        XCTAssertEqual(beforeScenarioCalled, 2)
+        XCTAssertEqual(afterScenarioCalled, 2)
+    }
+
+    func testBeforeStepHooks() {
+        let cucumber = Cucumber(with: featureFile)
+        var beforeStepCalled = 0
+        cucumber.BeforeStep = { _ in
+            beforeStepCalled += 1
+        }
+        var afterStepCalled = 0
+        cucumber.AfterStep = { _ in
+            afterStepCalled += 1
+        }
+        cucumber.executeFeatures()
+        XCTAssertEqual(beforeStepCalled, 10)
+        XCTAssertEqual(afterStepCalled, 10)
+    }
+    
     func testStepsGetCallbacksAttachedCorrectly() {
 //        let bundle = Bundle(for: CucumberSwiftTests.self)
 //
 //        Cucumberish.executeFeatures(inDirectory: "Features", from: bundle)
 
-        var cucumber = Cucumber(with: featureFile)
+        let cucumber = Cucumber(with: featureFile)
         var givenCalled = false
         cucumber.Given("s(.)me (?:precondition)") { matches in
             givenCalled = true

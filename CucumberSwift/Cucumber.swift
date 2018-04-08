@@ -9,7 +9,13 @@
 import Foundation
 class Cucumber {
     var features = [Feature]()
-    
+    var BeforeFeature:((Feature) -> Void) = {_ in }
+    var AfterFeature:((Feature) -> Void) = {_ in }
+    var BeforeScenario:((Scenario) -> Void) = {_ in }
+    var AfterScenario:((Scenario) -> Void) = {_ in }
+    var BeforeStep:((Step) -> Void) = {_ in }
+    var AfterStep:((Step) -> Void) = {_ in }
+
     init(with file:String) {
         features = allSectionsFor(parentScope: .feature, inString:file)
             .flatMap { Feature(with: $0) }
@@ -37,8 +43,19 @@ class Cucumber {
     }
     
     func executeFeatures() {
-        features.flatMap { $0.scenarios.flatMap { $0.steps } }
-            .forEach { $0.execute?($0.match.matches(for: $0.regex)) }
+        for feature in features {
+            BeforeFeature(feature)
+            for scenario in feature.scenarios {
+                BeforeScenario(scenario)
+                for step in scenario.steps {
+                    BeforeStep(step)
+                    step.execute?(step.match.matches(for: step.regex))
+                    AfterStep(step)
+                }
+                AfterScenario(scenario)
+            }
+            AfterFeature(feature)
+        }
     }
     
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
@@ -76,4 +93,5 @@ class Cucumber {
     func MatchAll(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(regex: regex, callback:callback)
     }
+    
 }
