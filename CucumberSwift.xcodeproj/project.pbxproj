@@ -1,0 +1,481 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
+		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
+		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
+		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47A2079CFA1002494C0 /* Cucumber.swift */; };
+		AD9EB47D2079D280002494C0 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47C2079D280002494C0 /* Feature.swift */; };
+		AD9EB47F2079D28E002494C0 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47E2079D28E002494C0 /* Step.swift */; };
+		AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4802079D540002494C0 /* StringExtensions.swift */; };
+		AD9EB4832079D606002494C0 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4822079D606002494C0 /* Scenario.swift */; };
+		AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AD9EB46B2079CF87002494C0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD9EB4572079CF87002494C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD9EB45F2079CF87002494C0;
+			remoteInfo = CucumberSwift;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
+		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
+		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CucumberSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftTests.swift; sourceTree = "<group>"; };
+		AD9EB4702079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		AD9EB47A2079CFA1002494C0 /* Cucumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cucumber.swift; sourceTree = "<group>"; };
+		AD9EB47C2079D280002494C0 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
+		AD9EB47E2079D28E002494C0 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
+		AD9EB4802079D540002494C0 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
+		AD9EB4822079D606002494C0 /* Scenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
+		AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperator.swift; sourceTree = "<group>"; };
+		AD9EB4872079FED8002494C0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		AD9EB45C2079CF87002494C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD9EB4662079CF87002494C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		AD9EB4562079CF87002494C0 = {
+			isa = PBXGroup;
+			children = (
+				AD9EB4622079CF87002494C0 /* CucumberSwift */,
+				AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */,
+				AD9EB4612079CF87002494C0 /* Products */,
+				AD9EB4862079FED8002494C0 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		AD9EB4612079CF87002494C0 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AD9EB4602079CF87002494C0 /* CucumberSwift.framework */,
+				AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
+			isa = PBXGroup;
+			children = (
+				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
+				AD9EB4642079CF87002494C0 /* Info.plist */,
+				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
+				AD9EB47C2079D280002494C0 /* Feature.swift */,
+				AD9EB47E2079D28E002494C0 /* Step.swift */,
+				AD9EB4802079D540002494C0 /* StringExtensions.swift */,
+				AD9EB4822079D606002494C0 /* Scenario.swift */,
+				AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */,
+				AD7D2524207A7B72001B8211 /* Scope.swift */,
+			);
+			path = CucumberSwift;
+			sourceTree = "<group>";
+		};
+		AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */ = {
+			isa = PBXGroup;
+			children = (
+				AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */,
+				AD9EB4702079CF87002494C0 /* Info.plist */,
+			);
+			path = CucumberSwiftTests;
+			sourceTree = "<group>";
+		};
+		AD9EB4862079FED8002494C0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AD9EB4872079FED8002494C0 /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		AD9EB45D2079CF87002494C0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		AD9EB45F2079CF87002494C0 /* CucumberSwift */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD9EB4742079CF87002494C0 /* Build configuration list for PBXNativeTarget "CucumberSwift" */;
+			buildPhases = (
+				AD9EB45B2079CF87002494C0 /* Sources */,
+				AD9EB45C2079CF87002494C0 /* Frameworks */,
+				AD9EB45D2079CF87002494C0 /* Headers */,
+				AD9EB45E2079CF87002494C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CucumberSwift;
+			productName = CucumberSwift;
+			productReference = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AD9EB4682079CF87002494C0 /* CucumberSwiftTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AD9EB4772079CF87002494C0 /* Build configuration list for PBXNativeTarget "CucumberSwiftTests" */;
+			buildPhases = (
+				AD9EB4652079CF87002494C0 /* Sources */,
+				AD9EB4662079CF87002494C0 /* Frameworks */,
+				AD9EB4672079CF87002494C0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AD9EB46C2079CF87002494C0 /* PBXTargetDependency */,
+			);
+			name = CucumberSwiftTests;
+			productName = CucumberSwiftTests;
+			productReference = AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		AD9EB4572079CF87002494C0 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0920;
+				LastUpgradeCheck = 0920;
+				ORGANIZATIONNAME = "Asynchrony Labs";
+				TargetAttributes = {
+					AD9EB45F2079CF87002494C0 = {
+						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 0920;
+						ProvisioningStyle = Automatic;
+					};
+					AD9EB4682079CF87002494C0 = {
+						CreatedOnToolsVersion = 9.2;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = AD9EB45A2079CF87002494C0 /* Build configuration list for PBXProject "CucumberSwift" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = AD9EB4562079CF87002494C0;
+			productRefGroup = AD9EB4612079CF87002494C0 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				AD9EB45F2079CF87002494C0 /* CucumberSwift */,
+				AD9EB4682079CF87002494C0 /* CucumberSwiftTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		AD9EB45E2079CF87002494C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD9EB4672079CF87002494C0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		AD9EB45B2079CF87002494C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
+				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
+				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
+				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
+				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
+				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
+				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AD9EB4652079CF87002494C0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AD9EB46C2079CF87002494C0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD9EB45F2079CF87002494C0 /* CucumberSwift */;
+			targetProxy = AD9EB46B2079CF87002494C0 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		AD9EB4722079CF87002494C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		AD9EB4732079CF87002494C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		AD9EB4752079CF87002494C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CucumberSwift/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwift;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD9EB4762079CF87002494C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = CucumberSwift/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwift;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		AD9EB4782079CF87002494C0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				INFOPLIST_FILE = CucumberSwiftTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AD9EB4792079CF87002494C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				INFOPLIST_FILE = CucumberSwiftTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwiftTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		AD9EB45A2079CF87002494C0 /* Build configuration list for PBXProject "CucumberSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD9EB4722079CF87002494C0 /* Debug */,
+				AD9EB4732079CF87002494C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD9EB4742079CF87002494C0 /* Build configuration list for PBXNativeTarget "CucumberSwift" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD9EB4752079CF87002494C0 /* Debug */,
+				AD9EB4762079CF87002494C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AD9EB4772079CF87002494C0 /* Build configuration list for PBXNativeTarget "CucumberSwiftTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AD9EB4782079CF87002494C0 /* Debug */,
+				AD9EB4792079CF87002494C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = AD9EB4572079CF87002494C0 /* Project object */;
+}
