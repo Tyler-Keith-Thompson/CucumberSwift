@@ -42,7 +42,7 @@ public class Cucumber {
         return allSections.filter{ !$0.isEmpty }
     }
     
-    func executeFeatures() {
+    public func executeFeatures() {
         for feature in features {
             BeforeFeature(feature)
             for scenario in feature.scenarios {
