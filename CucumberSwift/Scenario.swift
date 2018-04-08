@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Scenario {
+public class Scenario {
     var title = ""
     var steps = [Step]()
     init(with lines:[(scope: Scope, string: String)]) {

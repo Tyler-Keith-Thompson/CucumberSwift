@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Step {
+public class Step {
     enum Keyword:String {
         case given = "Given"
         case when = "When"

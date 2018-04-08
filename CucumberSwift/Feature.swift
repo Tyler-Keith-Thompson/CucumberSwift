@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Feature {
+public class Feature {
     var title = ""
     var description = ""
     var scenarios = [Scenario]()
