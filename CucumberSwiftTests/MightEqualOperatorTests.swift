@@ -1,14 +1,6 @@
 import XCTest
 @testable import CucumberSwift
 class MightEqualOperatorTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
-    }
-    
     func testMightEqualSetsOldStringToNewStringIfNewStringIsDefined() {
         var oldString = ""
         let newString = "I am a string!"

@@ -9,12 +9,12 @@
 import Foundation
 class Cucumber {
     var features = [Feature]()
-    var BeforeFeature:((Feature) -> Void) = {_ in }
-    var AfterFeature:((Feature) -> Void) = {_ in }
-    var BeforeScenario:((Scenario) -> Void) = {_ in }
-    var AfterScenario:((Scenario) -> Void) = {_ in }
-    var BeforeStep:((Step) -> Void) = {_ in }
-    var AfterStep:((Step) -> Void) = {_ in }
+    var BeforeFeature  :((Feature)  -> Void) = {_ in }
+    var AfterFeature   :((Feature)  -> Void) = {_ in }
+    var BeforeScenario :((Scenario) -> Void) = {_ in }
+    var AfterScenario  :((Scenario) -> Void) = {_ in }
+    var BeforeStep     :((Step)     -> Void) = {_ in }
+    var AfterStep      :((Step)     -> Void) = {_ in }
 
     init(with file:String) {
         features = allSectionsFor(parentScope: .feature, inString:file)
