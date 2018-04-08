@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
+		AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */; };
+		AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2528207A8B4E001B8211 /* StepTests.swift */; };
+		AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
 		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -31,6 +34,9 @@
 
 /* Begin PBXFileReference section */
 		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
+		AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperatorTests.swift; sourceTree = "<group>"; };
+		AD7D2528207A8B4E001B8211 /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
+		AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
 		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,7 +110,10 @@
 			isa = PBXGroup;
 			children = (
 				AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */,
+				AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */,
 				AD9EB4702079CF87002494C0 /* Info.plist */,
+				AD7D2528207A8B4E001B8211 /* StepTests.swift */,
+				AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -242,6 +251,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */,
+				AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */,
+				AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */,
 				AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

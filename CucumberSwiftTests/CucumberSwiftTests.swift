@@ -85,14 +85,66 @@ class CucumberSwiftTests: XCTestCase {
     }
     
     func testStepsGetCallbacksAttachedCorrectly() {
-        let cucumber = Cucumber(with: featureFile)
-        var callbackCalled = false
+//        let bundle = Bundle(for: CucumberSwiftTests.self)
+//
+//        Cucumberish.executeFeatures(inDirectory: "Features", from: bundle)
+
+        var cucumber = Cucumber(with: featureFile)
+        var givenCalled = false
         cucumber.Given("s(.)me (?:precondition)") { matches in
-            callbackCalled = true
+            givenCalled = true
             XCTAssertEqual(matches.count, 2)
             XCTAssertEqual(matches.last, "o")
         }
         cucumber.executeFeatures()
-        XCTAssertTrue(callbackCalled)
+        XCTAssertTrue(givenCalled)
+
+        var whenCalled = false
+        cucumber.When("(.*?)") { matches in
+            whenCalled = true
+            XCTAssertEqual(matches.count, 2)
+        }
+        cucumber.executeFeatures()
+        XCTAssertTrue(whenCalled)
+
+        var thenCalled = false
+        cucumber.Then("(.*?)") { matches in
+            thenCalled = true
+            XCTAssertEqual(matches.count, 2)
+        }
+        cucumber.executeFeatures()
+        XCTAssertTrue(thenCalled)
+
+        var andCalled = false
+        cucumber.And("(.*?)") { matches in
+            andCalled = true
+            XCTAssertEqual(matches.count, 2)
+        }
+        cucumber.executeFeatures()
+        XCTAssertTrue(andCalled)
+
+        var orCalled = false
+        cucumber.Or("(.*?)") { matches in
+            orCalled = true
+            XCTAssertEqual(matches.count, 1)
+        }
+        cucumber.executeFeatures()
+        XCTAssertFalse(orCalled)
+
+        var butCalled = false
+        cucumber.But("(.*?)") { matches in
+            butCalled = true
+            XCTAssertEqual(matches.count, 1)
+        }
+        cucumber.executeFeatures()
+        XCTAssertFalse(butCalled)
+
+        var matchAllCalled = false
+        cucumber.MatchAll("(.*?)") { matches in
+            matchAllCalled = true
+            XCTAssertEqual(matches.count, 2)
+        }
+        cucumber.executeFeatures()
+        XCTAssertTrue(matchAllCalled)
     }
 }
