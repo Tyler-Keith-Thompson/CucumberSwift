@@ -35,14 +35,14 @@ class CucumberSwiftTests: XCTestCase {
 
     func testExample() {
         self.measure {
-            _ = Cucumber(with:
+            _ = Cucumber(withString:
                 repeatElement(featureFile, count: 1000)
                     .joined(separator: "\n"))
         }
     }
     
     func testGherkinIsParcedIntoCorrectFeaturesScenariosAndSteps() {
-        let cucumber = Cucumber(with: featureFile)
+        let cucumber = Cucumber(withString: featureFile)
         let feature = cucumber.features.first
         let firstScenario = cucumber.features.first?.scenarios.first
         let lastScenario = cucumber.features.first?.scenarios.last
@@ -85,7 +85,7 @@ class CucumberSwiftTests: XCTestCase {
     }
     
     func testFeatureHooks() {
-        let cucumber = Cucumber(with: featureFile)
+        let cucumber = Cucumber(withString: featureFile)
         var beforeFeatureCalled = 0
         cucumber.BeforeFeature = { _ in
             beforeFeatureCalled += 1
@@ -100,7 +100,7 @@ class CucumberSwiftTests: XCTestCase {
     }
 
     func testBeforeScenarioHooks() {
-        let cucumber = Cucumber(with: featureFile)
+        let cucumber = Cucumber(withString: featureFile)
         var beforeScenarioCalled = 0
         cucumber.BeforeScenario = { _ in
             beforeScenarioCalled += 1
@@ -115,7 +115,7 @@ class CucumberSwiftTests: XCTestCase {
     }
 
     func testBeforeStepHooks() {
-        let cucumber = Cucumber(with: featureFile)
+        let cucumber = Cucumber(withString: featureFile)
         var beforeStepCalled = 0
         cucumber.BeforeStep = { _ in
             beforeStepCalled += 1
@@ -130,11 +130,8 @@ class CucumberSwiftTests: XCTestCase {
     }
     
     func testStepsGetCallbacksAttachedCorrectly() {
-//        let bundle = Bundle(for: CucumberSwiftTests.self)
-//
-//        Cucumberish.executeFeatures(inDirectory: "Features", from: bundle)
-
-        let cucumber = Cucumber(with: featureFile)
+        let bundle = Bundle(for: CucumberSwiftTests.self)
+        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
         var givenCalled = false
         cucumber.Given("s(.)me (?:precondition)") { matches in
             givenCalled = true

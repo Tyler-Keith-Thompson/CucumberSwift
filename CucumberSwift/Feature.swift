@@ -29,7 +29,7 @@ public class Feature {
         var linesInScope = [(scope: Scope, string: String)]()
         var allSections = [[(scope: Scope, string: String)]]()
         for line in lines {
-            if (line.scope == parentScope) {
+            if (line.scope.priority == parentScope.priority) {
                 if (!linesInScope.isEmpty) {
                     allSections.append(linesInScope)
                 }

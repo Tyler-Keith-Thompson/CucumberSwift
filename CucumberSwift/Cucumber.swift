@@ -16,11 +16,22 @@ public class Cucumber {
     public var BeforeStep     :((Step)     -> Void) = {_ in }
     public var AfterStep      :((Step)     -> Void) = {_ in }
 
-    public init(with file:String) {
-        features = allSectionsFor(parentScope: .feature, inString:file)
+    public init(withString string:String) {
+        features = allSectionsFor(parentScope: .feature, inString:string)
             .flatMap { Feature(with: $0) }
     }
     
+    public init(withDirectory directory:String, inBundle bundle:Bundle) {
+        if let files = try? FileManager.default.contentsOfDirectory(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil, options: .skipsHiddenFiles) {
+            for url in files {
+                if let string = try? String(contentsOf: url, encoding: .utf8) {
+                    features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
+                        .flatMap { Feature(with: $0) })
+                }
+            }
+        }
+    }
+
     func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
         var scope:Scope = parentScope
         var linesInScope = [(scope: Scope, string: String)]()
@@ -29,7 +40,7 @@ public class Cucumber {
             let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
             if (trimmed.isEmpty || trimmed.starts(with: "#")) { continue }
             let lineScope = Scope.scopeFor(line: trimmed)
-            if (lineScope == parentScope) {
+            if (lineScope.priority == parentScope.priority) {
                 allSections.append(linesInScope)
                 linesInScope.removeAll()
             }

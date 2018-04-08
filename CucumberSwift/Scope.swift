@@ -9,6 +9,7 @@
 import Foundation
 enum Scope {
     case feature
+    case background
     case scenario
     case step
     case unknown
@@ -27,5 +28,22 @@ enum Scope {
             return .step
         }
         return .unknown
+    }
+    
+    var priority:Int {
+        get {
+            switch self {
+            case .feature:
+                return 0
+            case .background:
+                return 1
+            case .scenario:
+                return 1
+            case .step:
+                return 2
+            case .unknown:
+                return -1
+            }
+        }
     }
 }
