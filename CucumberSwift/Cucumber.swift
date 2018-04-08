@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class Cucumber {
+public class Cucumber {
     var features = [Feature]()
     var BeforeFeature  :((Feature)  -> Void) = {_ in }
     var AfterFeature   :((Feature)  -> Void) = {_ in }
