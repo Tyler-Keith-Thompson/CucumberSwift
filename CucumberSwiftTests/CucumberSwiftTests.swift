@@ -87,11 +87,12 @@ class CucumberSwiftTests: XCTestCase {
     func testStepsGetCallbacksAttachedCorrectly() {
         let cucumber = Cucumber(with: featureFile)
         var callbackCalled = false
-        cucumber.Given("s.me precondition") { _ in
-                callbackCalled = true
+        cucumber.Given("s(.)me (?:precondition)") { matches in
+            callbackCalled = true
+            XCTAssertEqual(matches.count, 2)
+            XCTAssertEqual(matches.last, "o")
         }
-        cucumber.features.flatMap { $0.scenarios.flatMap { $0.steps } }
-            .forEach { $0.execute?([]) }
+        cucumber.executeFeatures()
         XCTAssertTrue(callbackCalled)
     }
 }

@@ -36,6 +36,11 @@ class Cucumber {
         return allSections.filter{ !$0.isEmpty }
     }
     
+    func executeFeatures() {
+        features.flatMap { $0.scenarios.flatMap { $0.steps } }
+            .forEach { $0.execute?($0.match.matches(for: $0.regex)) }
+    }
+    
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
         features
         .flatMap { $0.scenarios.flatMap { $0.steps } }
@@ -46,6 +51,7 @@ class Cucumber {
             return false
         }.forEach { (step) in
             step.execute = callback
+            step.regex = regex
         }
     }
     

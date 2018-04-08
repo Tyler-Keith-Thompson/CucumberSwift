@@ -30,6 +30,7 @@ class Step {
     var match = ""
     var keyword:Keyword?
     var execute:(([String]) -> Void)? = nil
+    var regex:String = ""
     init(with line:(scope: Scope, string: String)) {
         //Regex here slows us down at massive scale, hence the subscripts
         if let keywordEndIndex = line.string.index(of: " ") {
