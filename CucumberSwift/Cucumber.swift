@@ -16,7 +16,7 @@ public class Cucumber {
     var BeforeStep     :((Step)     -> Void) = {_ in }
     var AfterStep      :((Step)     -> Void) = {_ in }
 
-    init(with file:String) {
+    public init(with file:String) {
         features = allSectionsFor(parentScope: .feature, inString:file)
             .flatMap { Feature(with: $0) }
     }
