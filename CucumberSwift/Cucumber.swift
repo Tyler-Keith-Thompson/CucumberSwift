@@ -23,7 +23,8 @@ public class Cucumber {
     
     public init(withDirectory directory:String, inBundle bundle:Bundle) {
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
-        while let url = enumerator?.nextObject() as? URL {
+        while let url = enumerator?.nextObject() as? URL,
+            url.pathExtension == "feature" {
             if let string = try? String(contentsOf: url, encoding: .utf8) {
                 features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
                     .flatMap { Feature(with: $0) })
