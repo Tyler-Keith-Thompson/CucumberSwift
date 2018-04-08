@@ -22,12 +22,11 @@ public class Cucumber {
     }
     
     public init(withDirectory directory:String, inBundle bundle:Bundle) {
-        if let files = try? FileManager.default.contentsOfDirectory(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil, options: .skipsHiddenFiles) {
-            for url in files {
-                if let string = try? String(contentsOf: url, encoding: .utf8) {
-                    features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
-                        .flatMap { Feature(with: $0) })
-                }
+        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
+        while let url = enumerator?.nextObject() as? URL {
+            if let string = try? String(contentsOf: url, encoding: .utf8) {
+                features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
+                    .flatMap { Feature(with: $0) })
             }
         }
     }
