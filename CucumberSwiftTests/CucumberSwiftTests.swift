@@ -36,7 +36,7 @@ class CucumberSwiftTests: XCTestCase {
     func testExample() {
         self.measure {
             _ = Cucumber(with:
-                repeatElement(featureFile, count: 1)
+                repeatElement(featureFile, count: 1000)
                     .joined(separator: "\n"))
         }
     }

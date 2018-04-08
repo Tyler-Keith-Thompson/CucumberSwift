@@ -11,9 +11,8 @@ class Cucumber {
     var features = [Feature]()
     
     init(with file:String) {
-        for featureLines in allSectionsFor(parentScope: .feature, inString:file) {
-            features.append(Feature(with: featureLines))
-        }
+        features = allSectionsFor(parentScope: .feature, inString:file)
+            .flatMap { Feature(with: $0) }
     }
     
     func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
@@ -25,9 +24,7 @@ class Cucumber {
             if (trimmed.isEmpty || trimmed.starts(with: "#")) { continue }
             let lineScope = Scope.scopeFor(line: trimmed)
             if (lineScope == parentScope) {
-                if (!linesInScope.isEmpty) {
-                    allSections.append(linesInScope)
-                }
+                allSections.append(linesInScope)
                 linesInScope.removeAll()
             }
             if (lineScope != .unknown && lineScope != scope) {
@@ -35,21 +32,19 @@ class Cucumber {
             }
             linesInScope.append((scope: scope, string: trimmed))
         }
-        if (!linesInScope.isEmpty) {
-            allSections.append(linesInScope)
-        }
-        return allSections
+        allSections.append(linesInScope)
+        return allSections.filter{ !$0.isEmpty }
     }
     
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
-        let steps = features.flatMap { $0.scenarios.flatMap { $0.steps } }
-            .filter { (step) -> Bool in
-                if (keyword == nil || keyword == step.keyword) {
-                    return !step.match.matches(for: regex).isEmpty
-                }
-                return false
-        }
-        for step in steps {
+        features
+        .flatMap { $0.scenarios.flatMap { $0.steps } }
+        .filter { (step) -> Bool in
+            if (keyword == nil || keyword == step.keyword) {
+                return !step.match.matches(for: regex).isEmpty
+            }
+            return false
+        }.forEach { (step) in
             step.execute = callback
         }
     }
