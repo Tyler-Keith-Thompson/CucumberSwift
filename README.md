@@ -10,3 +10,8 @@ Add this line to your podfile:
     pod 'CucumberSwift', :git => 'https://gitlab.asynchrony.com/tyler.thompson/CucumberSwift.git'
 ```
 
+### What's Missing?
+
+- Background definition
+- JSON report
+- Tags
