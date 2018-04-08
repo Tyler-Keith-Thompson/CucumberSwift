@@ -8,9 +8,9 @@
 
 import Foundation
 public class Feature {
-    var title = ""
-    var description = ""
-    var scenarios = [Scenario]()
+    public private(set) var title = ""
+    public private(set) var description = ""
+    public private(set) var scenarios = [Scenario]()
     
     init(with lines:[(scope: Scope, string: String)]) {
         title ?= lines.first?.string.matches(for: "^(?:Feature)(?:\\s*):?(?:\\s*)(.*?)$").last

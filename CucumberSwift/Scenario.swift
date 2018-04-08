@@ -8,8 +8,8 @@
 
 import Foundation
 public class Scenario {
-    var title = ""
-    var steps = [Step]()
+    public private(set) var title = ""
+    public private(set) var steps = [Step]()
     init(with lines:[(scope: Scope, string: String)]) {
         title ?= lines.first?.string.matches(for: "^(?:Scenario)(?:\\s*):?(?:\\s*)(.*?)$").last
         steps = lines.filter({ $0.scope == .step }).flatMap{ Step(with: $0) }

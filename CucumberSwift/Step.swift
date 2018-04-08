@@ -8,7 +8,7 @@
 
 import Foundation
 public class Step {
-    enum Keyword:String {
+    public enum Keyword:String {
         case given = "Given"
         case when = "When"
         case then = "Then"
@@ -27,8 +27,8 @@ public class Step {
             ]
         }
     }
-    var match = ""
-    var keyword:Keyword?
+    public private(set) var match = ""
+    public private(set) var keyword:Keyword?
     var execute:(([String]) -> Void)? = nil
     var regex:String = ""
     init(with line:(scope: Scope, string: String)) {
