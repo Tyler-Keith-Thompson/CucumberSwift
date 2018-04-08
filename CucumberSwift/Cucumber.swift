@@ -72,25 +72,25 @@ public class Cucumber {
         }
     }
     
-    func Given(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func Given(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .given, regex: regex, callback:callback)
     }
-    func When(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func When(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .when, regex: regex, callback:callback)
     }
-    func Then(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func Then(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .then, regex: regex, callback:callback)
     }
-    func And(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func And(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .and, regex: regex, callback:callback)
     }
-    func Or(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func Or(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .or, regex: regex, callback:callback)
     }
-    func But(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func But(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .but, regex: regex, callback:callback)
     }
-    func MatchAll(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func MatchAll(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(regex: regex, callback:callback)
     }
     
