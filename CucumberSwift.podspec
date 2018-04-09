@@ -17,5 +17,10 @@ Pod::Spec.new do |s|
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
     s.resources = ["CucumberSwift/**/*.{storyboard,xib,xcassets,otf,ttf}"]  
-  end
+
+    s.weak_framework = "XCTest"
+    s.pod_target_xcconfig = {
+      'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
+    }
+end
   

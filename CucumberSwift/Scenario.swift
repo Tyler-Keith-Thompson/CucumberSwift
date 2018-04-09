@@ -14,4 +14,14 @@ public class Scenario {
         title ?= lines.first?.string.matches(for: "^(?:Scenario)(?:\\s*):?(?:\\s*)(.*?)$").last
         steps = lines.filter({ $0.scope == .step }).flatMap{ Step(with: $0) }
     }
+    func toJSON() -> [String:Any] {
+        return [
+            "id" : title.lowercased().replacingOccurrences(of: " ", with: "-"),
+            "keyword" : "Scenario",
+            "type" : "scenario",
+            "name" : title,
+            "description" : "",
+            "steps" : steps.map { $0.toJSON() }
+        ]
+    }
 }

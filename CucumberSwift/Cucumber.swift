@@ -7,8 +7,11 @@
 //
 
 import Foundation
-public class Cucumber {
+import XCTest
+@objc public class Cucumber: NSObject, XCTestObservation {
     var features = [Feature]()
+    var currentStep:Step? = nil
+    var reportName:String = ""
     public var BeforeFeature  :((Feature)  -> Void) = {_ in }
     public var AfterFeature   :((Feature)  -> Void) = {_ in }
     public var BeforeScenario :((Scenario) -> Void) = {_ in }
@@ -16,22 +19,31 @@ public class Cucumber {
     public var BeforeStep     :((Step)     -> Void) = {_ in }
     public var AfterStep      :((Step)     -> Void) = {_ in }
 
-    public init(withString string:String) {
+    init(withString string:String) {
+        super.init()
         features = allSectionsFor(parentScope: .feature, inString:string)
             .flatMap { Feature(with: $0) }
     }
     
-    public init(withDirectory directory:String, inBundle bundle:Bundle) {
+    public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
+        currentStep?.result = .failed
+        currentStep?.errorMessage = description
+    }
+    
+    public init(withDirectory directory:String, inBundle bundle:Bundle, reportName:String = "CucumberTestResults.json") {
+        super.init()
+        self.reportName = reportName
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL,
             url.pathExtension == "feature" {
             if let string = try? String(contentsOf: url, encoding: .utf8) {
                 features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
-                    .flatMap { Feature(with: $0) })
+                    .flatMap { Feature(with: $0, uri: url.absoluteString) })
             }
         }
+        XCTestObservationCenter.shared.addTestObserver(self)
     }
-
+    
     func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
         var scope:Scope = parentScope
         var linesInScope = [(scope: Scope, string: String)]()
@@ -60,12 +72,23 @@ public class Cucumber {
                 BeforeScenario(scenario)
                 for step in scenario.steps {
                     BeforeStep(step)
-                    step.execute?(step.match.matches(for: step.regex))
+                    currentStep = step
+                    XCTContext.runActivity(named: "\(step.keyword ?? .given)" + step.match) { _ in
+                        step.execute?(step.match.matches(for: step.regex))
+                        if (step.execute != nil && step.result != .failed) {
+                            step.result = .passed
+                        }
+                    }
                     AfterStep(step)
                 }
                 AfterScenario(scenario)
             }
             AfterFeature(feature)
+        }
+        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
+            let data = try? JSONSerialization.data(withJSONObject: features.map { $0.toJSON() }, options: JSONSerialization.WritingOptions.prettyPrinted) {
+                let fileURL = documentDirectory.appendingPathComponent(reportName)
+                try? data.write(to: fileURL)
         }
     }
     
@@ -78,6 +101,7 @@ public class Cucumber {
             }
             return false
         }.forEach { (step) in
+            step.result = .undefined
             step.execute = callback
             step.regex = regex
         }

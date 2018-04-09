@@ -13,5 +13,6 @@ Add this line to your podfile:
 ### What's Missing?
 
 - Background definition
-- JSON report
+- Gherkin Tables
 - Tags
+

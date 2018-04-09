@@ -11,8 +11,10 @@ public class Feature {
     public private(set) var title = ""
     public private(set) var description = ""
     public private(set) var scenarios = [Scenario]()
+    public private(set) var uri:String = ""
     
-    init(with lines:[(scope: Scope, string: String)]) {
+    init(with lines:[(scope: Scope, string: String)], uri:String? = nil) {
+        self.uri ?= uri
         title ?= lines.first?.string.matches(for: "^(?:Feature)(?:\\s*):?(?:\\s*)(.*?)$").last
         for (i, line) in lines.enumerated() {
             if (i == 0) { continue }
@@ -41,5 +43,16 @@ public class Feature {
             allSections.append(linesInScope)
         }
         return allSections
+    }
+    
+    func toJSON() -> [String:Any] {
+        return [
+            "uri": uri,
+            "id" : title.lowercased().replacingOccurrences(of: " ", with: "-"),
+            "name" : title,
+            "description" : description,
+            "keyword" : "Feature",
+            "elements" : scenarios.map { $0.toJSON() }
+        ]
     }
 }
