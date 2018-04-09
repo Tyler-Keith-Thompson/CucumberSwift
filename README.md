@@ -7,7 +7,7 @@ CucumberSwift also has the advantage of letting you choose where and how steps a
 ##### Cocoapods
 Add this line to your podfile:
 ```ruby
-    pod 'CucumberSwift', :git => 'https://gitlab.asynchrony.com/tyler.thompson/CucumberSwift.git'
+    pod 'CucumberSwift', :git => 'https://github.com/Tyler-Keith-Thompson/CucumberSwift.git'
 ```
 
 ### What's Missing?
