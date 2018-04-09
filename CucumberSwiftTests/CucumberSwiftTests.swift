@@ -32,12 +32,54 @@ class CucumberSwiftTests: XCTestCase {
          When some action by the actor
          Then some testable outcome is achieved
     """
+    
+    let featureFileWithBackground: String =
+    """
+    Feature: Some terse yet descriptive text of what is desired
+       Textual description of the business value of this feature
+       Business rules that govern the scope of the feature
+       Any additional information that will make the feature easier to understand
 
-    func testExample() {
+       Background:
+         Given a global administrator named "Greg"
+           And a blog named "Greg's anti-tax rants"
+           And a customer named "Dr. Bill"
+           And a blog named "Expensive Therapy" owned by "Dr. Bill"
+
+       Scenario: Some determinable business situation
+         Given some precondition
+           And some other precondition
+         When some action by the actor
+           And some other action
+           And yet another action
+         Then some testable outcome is achieved
+           #And something else we can check happens too
+
+       Scenario: Some other determinable business situation
+         Given some precondition
+           And some other precondition
+         When some action by the actor
+         Then some testable outcome is achieved
+    """
+
+    func testSpeed() {
         self.measure {
             _ = Cucumber(withString:
                 repeatElement(featureFile, count: 1000)
                     .joined(separator: "\n"))
+        }
+    }
+    
+    func testBackgroundSteps() {
+        let cucumber = Cucumber(withString: featureFileWithBackground)
+        let feature = cucumber.features.first
+        let firstScenario = cucumber.features.first?.scenarios.first
+        XCTAssertEqual(feature?.scenarios.count, 2)
+        XCTAssertEqual(firstScenario?.steps.count, 10)
+        if ((firstScenario?.steps.count ?? 0) == 10) {
+            let steps = firstScenario?.steps
+            XCTAssertEqual(steps?[0].keyword, .given)
+            XCTAssertEqual(steps?[0].match, "a global administrator named \"Greg\"")
         }
     }
     

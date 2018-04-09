@@ -25,19 +25,33 @@ public class Feature {
         scenarios = allSectionsFor(parentScope: .scenario,
                                    inLines: lines.filter { $0.scope != .feature })
                     .flatMap{ Scenario(with: $0) }
+        let backgroundSteps = allSectionsFor(parentScope: .background,
+                                             inLines: lines)
+            .flatMap{ $0 }
+            .filter{ $0.scope == .step }
+            .map { Step(with: $0) }
+        for scenario in scenarios {
+            scenario.steps.insert(contentsOf: backgroundSteps, at: 0)
+        }
     }
     
     func allSectionsFor(parentScope:Scope, inLines lines:[(scope: Scope, string: String)]) -> [[(scope: Scope, string: String)]] {
         var linesInScope = [(scope: Scope, string: String)]()
         var allSections = [[(scope: Scope, string: String)]]()
+        var scope = parentScope
         for line in lines {
             if (line.scope.priority == parentScope.priority) {
+                scope = line.scope
+            }
+            if (line.scope == parentScope) {
                 if (!linesInScope.isEmpty) {
                     allSections.append(linesInScope)
                 }
                 linesInScope.removeAll()
             }
-            linesInScope.append(line)
+            if (scope == parentScope) {
+                linesInScope.append(line)
+            }
         }
         if (!linesInScope.isEmpty) {
             allSections.append(linesInScope)

@@ -19,6 +19,8 @@ enum Scope {
             return .feature
         } else if (line.starts(with: "Scenario")) {
             return .scenario
+        } else if (line.starts(with: "Background")) {
+            return .background
         } else if (line.starts(with: "Given")
             || line.starts(with: "When")
             || line.starts(with: "Then")
