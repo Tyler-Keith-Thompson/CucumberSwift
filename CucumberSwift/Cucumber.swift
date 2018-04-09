@@ -84,11 +84,13 @@ import XCTest
             }
             AfterFeature(feature)
         }
-//        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
-//            let data = try? JSONSerialization.data(withJSONObject: features.map { $0.toJSON() }, options: JSONSerialization.WritingOptions.prettyPrinted) {
-//                let fileURL = documentDirectory.appendingPathComponent(reportName)
-//                try? data.write(to: fileURL)
-//        }
+        DispatchQueue.main.async {
+            if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
+                let data = try? JSONSerialization.data(withJSONObject: self.features.map { $0.toJSON() }, options: JSONSerialization.WritingOptions.prettyPrinted) {
+                let fileURL = documentDirectory.appendingPathComponent(self.reportName)
+                try? data.write(to: fileURL)
+            }
+        }
     }
     
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
