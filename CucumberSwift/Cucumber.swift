@@ -35,7 +35,11 @@ import XCTest
         self.reportName = reportName
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
-            for file in try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles) ?? [] {
+            var files:[URL] = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
+            if (url.pathExtension == "feature") {
+                files.append(url)
+            }
+            for file in files {
                 if (file.pathExtension == "feature") {
                     if let string = try? String(contentsOf: file, encoding: .utf8) {
                         features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
