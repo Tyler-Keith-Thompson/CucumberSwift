@@ -35,22 +35,14 @@ import XCTest
         self.reportName = reportName
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
-            var files:[URL] = (try? FileManager.default.contentsOfDirectory(at: url, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)) ?? []
-            if (url.pathExtension == "feature") {
-                files.append(url)
-            }
-            for file in files {
-                if (file.pathExtension == "feature") {
-                    if let string = try? String(contentsOf: file, encoding: .utf8) {
-                        features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
-                            .flatMap { Feature(with: $0, uri: url.absoluteString) })
-                    }
-                }
+            if let string = try? String(contentsOf: url, encoding: .utf8) {
+                features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
+                    .flatMap { Feature(with: $0) })
             }
         }
         XCTestObservationCenter.shared.addTestObserver(self)
     }
-    
+
     func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
         var scope:Scope = parentScope
         var linesInScope = [(scope: Scope, string: String)]()
