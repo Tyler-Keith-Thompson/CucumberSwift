@@ -15,4 +15,4 @@ Add this line to your podfile:
 - Background definition
 - Gherkin Tables
 - Tags
-
+- Inline comments
