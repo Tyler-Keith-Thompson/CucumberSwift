@@ -14,3 +14,4 @@ git tag "`podspec-bump --dump-version`"
 git push origin HEAD -u $(podspec-bump --dump-version)
 git reset --hard
 git clean -df
+pod trunk push CucumberSwift.podspec
