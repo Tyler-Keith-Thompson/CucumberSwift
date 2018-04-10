@@ -48,7 +48,7 @@ import XCTest
         var linesInScope = [(scope: Scope, string: String)]()
         var allSections = [[(scope: Scope, string: String)]]()
         for line in string.lines {
-            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines).trimmingComments()
+            let trimmed = line.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines)
             if (trimmed.isEmpty) { continue }
             let lineScope = Scope.scopeFor(line: trimmed)
             if (lineScope.priority == parentScope.priority) {
