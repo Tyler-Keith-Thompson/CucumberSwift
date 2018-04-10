@@ -23,9 +23,7 @@ extension String {
             regex.matches
             let results = regex.matches(in: self,
                                         range: NSRange(self.startIndex..., in: self))
-            if (results.isEmpty) {
-                return []
-            }
+            guard !results.isEmpty else { return [] }
             var matches = [String]()
             for i in 0..<results.first!.numberOfRanges {
                 matches.append(String(self[Range(results.first!.range(at: i), in: self)!]))
