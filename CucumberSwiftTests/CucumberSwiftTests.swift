@@ -62,17 +62,6 @@ class CucumberSwiftTests: XCTestCase {
          Then some testable outcome is achieved
     """
     
-    let featureFileWithInlineComment: String =
-    """
-    Feature: Some terse yet descriptive text of what is desired
-       Textual description of the business value of this feature
-       Business rules that govern the scope of the feature
-       Any additional information that will make the feature easier to understand
-
-       Scenario: Some determinable business situation
-         Given some precondition #Snarky Dev Comment
-    """
-
     func testSpeed() {
         self.measure {
             _ = Cucumber(withString:
@@ -95,7 +84,11 @@ class CucumberSwiftTests: XCTestCase {
     }
     
     func testInlineCommentsAreIgnored() {
-        let cucumber = Cucumber(withString: featureFileWithInlineComment)
+        let cucumber = Cucumber(withString: """
+    Feature: Some terse yet descriptive text of what is desired
+       Scenario: Some determinable business situation
+         Given some precondition #Snarky Dev Comment
+    """)
         let firstScenario = cucumber.features.first?.scenarios.first
         let steps = firstScenario?.steps
         XCTAssertEqual(steps?.first?.keyword, .given)
