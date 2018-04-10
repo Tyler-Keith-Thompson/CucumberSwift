@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
     s.swift_version = '4.0'
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
-    s.resources = ["CucumberSwift/**/*.{storyboard,xib,xcassets,otf,ttf}"]  
+    # s.resources = ["CucumberSwift/**/*.{storyboard,xib,xcassets,otf,ttf}"]  
 
     s.weak_framework = "XCTest"
     s.pod_target_xcconfig = {
