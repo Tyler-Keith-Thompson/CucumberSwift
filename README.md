@@ -26,7 +26,7 @@ import CucumberSwift
 class MyBehaviorTests: XCTestCase {
 
     func testBehavior() {
-        let bundle = Bundle(for: Recorder.self)
+        let bundle = Bundle(for: MyBehaviorTests.self)
         let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
         //Step definitions
         cucumber.Given("Something (matches|matched)") {  matches in
@@ -73,7 +73,7 @@ import CucumberSwift
 class MyBehaviorTests: XCTestCase {
 
     func testBehavior() {
-        let bundle = Bundle(for: Recorder.self)
+        let bundle = Bundle(for: MyBehaviorTests.self)
         let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
         //hooks
         cucumber.BeforeFeature = { feature in
