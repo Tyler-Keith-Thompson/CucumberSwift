@@ -1,4 +1,5 @@
 # get the latest code
+git checkout master
 git reset --hard origin/master
 git clean -df
 
@@ -14,4 +15,7 @@ git tag "`podspec-bump --dump-version`"
 git push origin HEAD -u $(podspec-bump --dump-version)
 git reset --hard
 git clean -df
+git checkout -b `podspec-bump --dump-version`
+git push origin HEAD -u
+git checkout master
 pod trunk push CucumberSwift.podspec
