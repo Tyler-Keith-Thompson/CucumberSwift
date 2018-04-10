@@ -250,4 +250,16 @@ class CucumberSwiftTests: XCTestCase {
         cucumber.executeFeatures()
         XCTAssertTrue(matchAllCalled)
     }
+    
+    func testStepFailsIfObserverCallsBackWithFailure() {
+        let cucumber = Cucumber(withString: "")
+        cucumber.currentStep = Step(with: (scope: .step, string: ""))
+        
+        XCTAssertEqual(cucumber.currentStep?.result, .pending)
+        
+        let errorMessage = "You did something stupid"
+        cucumber.testCase(XCTestCase(), didFailWithDescription: errorMessage, inFile: nil, atLine: 0)
+        XCTAssertEqual(cucumber.currentStep?.result, .failed)
+        XCTAssertEqual(cucumber.currentStep?.errorMessage, errorMessage)
+    }
 }

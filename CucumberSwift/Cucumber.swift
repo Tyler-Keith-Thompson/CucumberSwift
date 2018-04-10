@@ -12,12 +12,12 @@ import XCTest
     var features = [Feature]()
     var currentStep:Step? = nil
     var reportName:String = ""
-    public var BeforeFeature  :((Feature)  -> Void) = {_ in }
-    public var AfterFeature   :((Feature)  -> Void) = {_ in }
-    public var BeforeScenario :((Scenario) -> Void) = {_ in }
-    public var AfterScenario  :((Scenario) -> Void) = {_ in }
-    public var BeforeStep     :((Step)     -> Void) = {_ in }
-    public var AfterStep      :((Step)     -> Void) = {_ in }
+    public var BeforeFeature  :((Feature)  -> Void)?
+    public var AfterFeature   :((Feature)  -> Void)?
+    public var BeforeScenario :((Scenario) -> Void)?
+    public var AfterScenario  :((Scenario) -> Void)?
+    public var BeforeStep     :((Step)     -> Void)?
+    public var AfterStep      :((Step)     -> Void)?
 
     init(withString string:String) {
         super.init()
@@ -66,11 +66,11 @@ import XCTest
     
     public func executeFeatures() {
         for feature in features {
-            BeforeFeature(feature)
+            BeforeFeature?(feature)
             for scenario in feature.scenarios {
-                BeforeScenario(scenario)
+                BeforeScenario?(scenario)
                 for step in scenario.steps {
-                    BeforeStep(step)
+                    BeforeStep?(step)
                     currentStep = step
                     XCTContext.runActivity(named: "\(step.keyword ?? .given) \(step.match)") { _ in
                         step.execute?(step.match.matches(for: step.regex))
@@ -78,11 +78,11 @@ import XCTest
                             step.result = .passed
                         }
                     }
-                    AfterStep(step)
+                    AfterStep?(step)
                 }
-                AfterScenario(scenario)
+                AfterScenario?(scenario)
             }
-            AfterFeature(feature)
+            AfterFeature?(feature)
         }
         DispatchQueue.main.async {
             if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
