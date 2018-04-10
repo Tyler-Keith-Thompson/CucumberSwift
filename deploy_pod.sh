@@ -15,5 +15,5 @@ git tag "`podspec-bump --dump-version`"
 git push origin HEAD -u $(podspec-bump --dump-version)
 git reset --hard
 git clean -df
-curl --data '{"tag_name": "`podspec-bump --dump-version`","target_commitish": "master","name": "`podspec-bump --dump-version`","body": "Release of version `podspec-bump --dump-version`","draft": false,"prerelease": false}' https://api.github.com/repos/Tyler-Keith-Thompson/CucumberSwift/releases?access_token=:$PERSONAL_ACCESS_TOKEN
-pod trunk push CucumberSwift.podspec
+curl --data '{"tag_name": "`podspec-bump --dump-version`","target_commitish": "master","name": "`podspec-bump --dump-version`","body": "Release of version `podspec-bump --dump-version`","draft": false,"prerelease": false}' "https://api.github.com/repos/Tyler-Keith-Thompson/CucumberSwift/releases?access_token=$PERSONAL_ACCESS_TOKEN"
+# pod trunk push CucumberSwift.podspec
