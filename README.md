@@ -14,7 +14,6 @@ Add this line to your podfile:
 
 - Gherkin Tables
 - Tags
-- inline comments
 
 ### How do I use it?
 CucumberSwift can be used inside any class any way you like, the preffered method would be to stick it in a subclass of XCTestCase.

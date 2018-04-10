@@ -36,4 +36,8 @@ extension String {
             return []
         }
     }
+    func trimmingComments(_ commentString:String = "#") -> String {
+        guard !starts(with: commentString) else { return "" }
+        return components(separatedBy: commentString).first ?? self
+    }
 }

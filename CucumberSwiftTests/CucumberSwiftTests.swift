@@ -61,6 +61,17 @@ class CucumberSwiftTests: XCTestCase {
          When some action by the actor
          Then some testable outcome is achieved
     """
+    
+    let featureFileWithInlineComment: String =
+    """
+    Feature: Some terse yet descriptive text of what is desired
+       Textual description of the business value of this feature
+       Business rules that govern the scope of the feature
+       Any additional information that will make the feature easier to understand
+
+       Scenario: Some determinable business situation
+         Given some precondition #Snarky Dev Comment
+    """
 
     func testSpeed() {
         self.measure {
@@ -81,6 +92,14 @@ class CucumberSwiftTests: XCTestCase {
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "a global administrator named \"Greg\"")
         }
+    }
+    
+    func testInlineCommentsAreIgnored() {
+        let cucumber = Cucumber(withString: featureFileWithInlineComment)
+        let firstScenario = cucumber.features.first?.scenarios.first
+        let steps = firstScenario?.steps
+        XCTAssertEqual(steps?.first?.keyword, .given)
+        XCTAssertEqual(steps?.first?.match, "some precondition")
     }
     
     func testGherkinIsParcedIntoCorrectFeaturesScenariosAndSteps() {

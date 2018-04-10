@@ -42,14 +42,14 @@ import XCTest
         }
         XCTestObservationCenter.shared.addTestObserver(self)
     }
-
+    
     func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
         var scope:Scope = parentScope
         var linesInScope = [(scope: Scope, string: String)]()
         var allSections = [[(scope: Scope, string: String)]]()
         for line in string.lines {
-            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines)
-            if (trimmed.isEmpty || trimmed.starts(with: "#")) { continue }
+            let trimmed = line.trimmingCharacters(in: .whitespacesAndNewlines).trimmingComments()
+            if (trimmed.isEmpty) { continue }
             let lineScope = Scope.scopeFor(line: trimmed)
             if (lineScope.priority == parentScope.priority) {
                 allSections.append(linesInScope)
