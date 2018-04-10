@@ -15,3 +15,92 @@ Add this line to your podfile:
 - Gherkin Tables
 - Tags
 - inline comments
+
+### How do I use it?
+CucumberSwift can be used inside any class any way you like, the preffered method would be to stick it in a subclass of XCTestCase.
+```swift
+import Foundation
+import XCTest
+import CucumberSwift
+
+class MyBehaviorTests: XCTestCase {
+
+    func testBehavior() {
+        let bundle = Bundle(for: Recorder.self)
+        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
+        //Step definitions
+        cucumber.Given("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.When("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.Then("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.And("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.Or("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.But("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.MatchAll("Something (matches|matched)") {  matches in
+            
+        }
+
+        cucumber.executeFeatures()
+    }
+    
+}
+```
+
+### Hooks
+CucumberSwift comes with 6 hooks, Before/After Feature Before/After Scenario and Before/After step, use them like so
+```swift
+import Foundation
+import XCTest
+import CucumberSwift
+
+class MyBehaviorTests: XCTestCase {
+
+    func testBehavior() {
+        let bundle = Bundle(for: Recorder.self)
+        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
+        //hooks
+        cucumber.BeforeFeature = { feature in
+
+        }
+        
+        cucumber.AfterFeature = { feature in
+            
+        }
+        
+        cucumber.BeforeScenario = { scenario in
+            
+        }
+
+        cucumber.AfterScenario = { scenario in
+            
+        }
+
+        cucumber.BeforeStep = { step in
+            
+        }
+
+        cucumber.AfterStep = { step in
+            
+        }
+        cucumber.executeFeatures()
+    }
+    
+}
+```
