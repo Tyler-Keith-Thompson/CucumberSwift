@@ -43,7 +43,7 @@ public class Feature {
             if (line.scope.priority == parentScope.priority) {
                 scope = line.scope
             }
-            if (line.scope == parentScope) {
+            if (line.scope.priority == parentScope.priority) {
                 if (!linesInScope.isEmpty) {
                     allSections.append(linesInScope)
                 }
