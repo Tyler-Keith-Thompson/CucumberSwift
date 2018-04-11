@@ -72,7 +72,7 @@ import XCTest
                 for step in scenario.steps {
                     BeforeStep?(step)
                     currentStep = step
-                    XCTContext.runActivity(named: "\(step.keyword ?? .given) \(step.match)") { _ in
+                    XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ in
                         step.execute?(step.match.matches(for: step.regex))
                         if (step.execute != nil && step.result != .failed) {
                             step.result = .passed
