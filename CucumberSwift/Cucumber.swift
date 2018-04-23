@@ -66,23 +66,27 @@ import XCTest
     
     public func executeFeatures() {
         for feature in features {
-            BeforeFeature?(feature)
-            for scenario in feature.scenarios {
-                BeforeScenario?(scenario)
-                for step in scenario.steps {
-                    BeforeStep?(step)
-                    currentStep = step
-                    XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ in
-                        step.execute?(step.match.matches(for: step.regex))
-                        if (step.execute != nil && step.result != .failed) {
-                            step.result = .passed
+            XCTContext.runActivity(named: "Feature: \(feature.title)") { _ in
+                BeforeFeature?(feature)
+                for scenario in feature.scenarios {
+                    XCTContext.runActivity(named: "Scenario: \(scenario.title)") { _ in
+                        BeforeScenario?(scenario)
+                        for step in scenario.steps {
+                            BeforeStep?(step)
+                            currentStep = step
+                            XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ in
+                                step.execute?(step.match.matches(for: step.regex))
+                                if (step.execute != nil && step.result != .failed) {
+                                    step.result = .passed
+                                }
+                            }
+                            AfterStep?(step)
                         }
+                        AfterScenario?(scenario)
                     }
-                    AfterStep?(step)
                 }
-                AfterScenario?(scenario)
+                AfterFeature?(feature)
             }
-            AfterFeature?(feature)
         }
         DispatchQueue.main.async {
             if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
