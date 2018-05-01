@@ -187,7 +187,7 @@ class CucumberSwiftTests: XCTestCase {
         let bundle = Bundle(for: CucumberSwiftTests.self)
         let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
         var givenCalled = false
-        cucumber.Given("s(.)me (?:precondition)") { matches in
+        cucumber.Given("S(.)mE (?:precondition)") { matches in
             givenCalled = true
             XCTAssertEqual(matches.count, 2)
             XCTAssertEqual(matches.last, "o")

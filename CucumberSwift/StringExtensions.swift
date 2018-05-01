@@ -19,8 +19,7 @@ extension String {
     }
     func matches(for regex: String) -> [String] {
         do {
-            let regex = try NSRegularExpression(pattern: regex)
-            regex.matches
+            let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
             let results = regex.matches(in: self,
                                         range: NSRange(self.startIndex..., in: self))
             guard !results.isEmpty else { return [] }
