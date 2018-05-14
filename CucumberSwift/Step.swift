@@ -7,7 +7,11 @@
 //
 
 import Foundation
-public class Step {
+public class Step : Taggable, CustomStringConvertible {
+    public var description: String {
+        return "TAGS:\(tags)\n\(keyword ?? .given): \(match)"
+    }
+    
     public enum Keyword:String {
         case given = "Given"
         case when = "When"
@@ -35,8 +39,10 @@ public class Step {
         case undefined
         case ambiguous
     }
-    public private(set) var match = ""
-    public private(set) var keyword:Keyword?
+    public private(set)  var match = ""
+    public private(set)  var keyword:Keyword?
+    public internal(set) var tags = [String]()
+
     var result:Result = .pending
     var execute:(([String]) -> Void)? = nil
     var regex:String = ""

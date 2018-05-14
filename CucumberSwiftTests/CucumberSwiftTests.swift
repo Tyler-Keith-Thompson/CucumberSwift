@@ -62,6 +62,25 @@ class CucumberSwiftTests: XCTestCase {
          Then some testable outcome is achieved
     """
     
+    let featureFileWithTags: String =
+    """
+    @featuretag
+    Feature: Some terse yet descriptive text of what is desired
+       Textual description of the business value of this feature
+       Business rules that govern the scope of the feature
+       Any additional information that will make the feature easier to understand
+
+       @scenario1tag
+       Scenario: Some determinable business situation
+         @step1tag
+         Given some precondition
+           And some other precondition
+         When some action by the actor
+           And some other action
+           And yet another action
+         Then some testable outcome is achieved
+           #And something else we can check happens too
+    """
     func testSpeed() {
         self.measure {
             _ = Cucumber(withString:
@@ -93,6 +112,17 @@ class CucumberSwiftTests: XCTestCase {
         let steps = firstScenario?.steps
         XCTAssertEqual(steps?.first?.keyword, .given)
         XCTAssertEqual(steps?.first?.match, "some precondition")
+    }
+    
+    func testTagsAreScopedAndInheritedCorrectly() {
+        let cucumber = Cucumber(withString: featureFileWithTags)
+        XCTAssert(cucumber.features.first?.containsTag("featuretag") ?? false)
+        XCTAssertEqual(cucumber.features.first?.scenarios.count, 1)
+        XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("featuretag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("scenario1tag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("featuretag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("scenario1tag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("step1tag") ?? false)
     }
     
     func testGherkinIsParcedIntoCorrectFeaturesScenariosAndSteps() {

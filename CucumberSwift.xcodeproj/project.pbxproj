@@ -21,6 +21,9 @@
 		AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4802079D540002494C0 /* StringExtensions.swift */; };
 		AD9EB4832079D606002494C0 /* Scenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4822079D606002494C0 /* Scenario.swift */; };
 		AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */; };
+		ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738B20A92BB000D2344C /* Taggable.swift */; };
+		ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738D20A9356000D2344C /* CollectionExtensions.swift */; };
+		ADAA739020A9358200D2344C /* SequenceExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +55,9 @@
 		AD9EB4822079D606002494C0 /* Scenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scenario.swift; sourceTree = "<group>"; };
 		AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperator.swift; sourceTree = "<group>"; };
 		AD9EB4872079FED8002494C0 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		ADAA738B20A92BB000D2344C /* Taggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taggable.swift; sourceTree = "<group>"; };
+		ADAA738D20A9356000D2344C /* CollectionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtensions.swift; sourceTree = "<group>"; };
+		ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensionsTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +110,8 @@
 				AD9EB4822079D606002494C0 /* Scenario.swift */,
 				AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */,
 				AD7D2524207A7B72001B8211 /* Scope.swift */,
+				ADAA738B20A92BB000D2344C /* Taggable.swift */,
+				ADAA738D20A9356000D2344C /* CollectionExtensions.swift */,
 			);
 			path = CucumberSwift;
 			sourceTree = "<group>";
@@ -117,6 +125,7 @@
 				AD9EB4702079CF87002494C0 /* Info.plist */,
 				AD7D2528207A8B4E001B8211 /* StepTests.swift */,
 				AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */,
+				ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -241,9 +250,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
+				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
@@ -259,6 +270,7 @@
 				AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */,
 				AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */,
 				AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */,
+				ADAA739020A9358200D2344C /* SequenceExtensionsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

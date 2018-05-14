@@ -47,13 +47,26 @@ import XCTest
         var scope:Scope = parentScope
         var linesInScope = [(scope: Scope, string: String)]()
         var allSections = [[(scope: Scope, string: String)]]()
-        for line in string.lines {
+        let lines = string.lines
+        for (i, line) in lines.enumerated() {
             let trimmed = line.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines)
             if (trimmed.isEmpty) { continue }
             let lineScope = Scope.scopeFor(line: trimmed)
+            if  let nextLine = lines[safe: i + 1],
+                Feature.isTag(trimmed) {
+                linesInScope.append((scope: Scope.scopeFor(line: nextLine.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines)), string: trimmed))
+                continue
+            }
             if (lineScope.priority == parentScope.priority) {
-                allSections.append(linesInScope)
-                linesInScope.removeAll()
+                if let prev = lines[safe: i - 1] {
+                    if (!Feature.isTag(prev.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines))) {
+                        allSections.append(linesInScope)
+                        linesInScope.removeAll()
+                    }
+                } else {
+                    allSections.append(linesInScope)
+                    linesInScope.removeAll()
+                }
             }
             if (lineScope != .unknown && lineScope != scope) {
                 scope = lineScope
