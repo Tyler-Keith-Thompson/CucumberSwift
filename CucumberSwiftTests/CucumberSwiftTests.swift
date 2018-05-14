@@ -73,13 +73,11 @@ class CucumberSwiftTests: XCTestCase {
        @scenario1tag
        Scenario: Some determinable business situation
          @step1tag
-         Given some precondition
-           And some other precondition
-         When some action by the actor
-           And some other action
-           And yet another action
-         Then some testable outcome is achieved
-           #And something else we can check happens too
+         Given a scenario with tags
+
+       Scenario: Some other determinable business situation
+         Given a scenario without tags
+
     """
     func testSpeed() {
         self.measure {
@@ -117,12 +115,31 @@ class CucumberSwiftTests: XCTestCase {
     func testTagsAreScopedAndInheritedCorrectly() {
         let cucumber = Cucumber(withString: featureFileWithTags)
         XCTAssert(cucumber.features.first?.containsTag("featuretag") ?? false)
-        XCTAssertEqual(cucumber.features.first?.scenarios.count, 1)
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("featuretag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("scenario1tag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("featuretag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("scenario1tag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("step1tag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("featuretag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("scenario1tag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("step1tag") ?? false)
+    }
+    
+    func testRunWithSpecificTags() {
+        let cucumber = Cucumber(withString: featureFileWithTags)
+        cucumber.environment["CUCUMBER_TAGS"] = "scenario1tag"
+        
+        var withTagsCalled = false
+        cucumber.Given("a scenario with tags") { _ in
+            withTagsCalled = true
+        }
+        var withoutTagsCalled = false
+        cucumber.Given("a scenario without tags") { _ in
+            withoutTagsCalled = true
+        }
+
+        cucumber.executeFeatures()
+        
+        XCTAssert(withTagsCalled)
+        XCTAssertFalse(withoutTagsCalled)
     }
     
     func testGherkinIsParcedIntoCorrectFeaturesScenariosAndSteps() {

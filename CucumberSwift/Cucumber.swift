@@ -12,6 +12,7 @@ import XCTest
     var features = [Feature]()
     var currentStep:Step? = nil
     var reportName:String = ""
+    var environment:[String:String] = ProcessInfo.processInfo.environment
     public var BeforeFeature  :((Feature)  -> Void)?
     public var AfterFeature   :((Feature)  -> Void)?
     public var BeforeScenario :((Scenario) -> Void)?
@@ -78,13 +79,28 @@ import XCTest
     }
     
     public func executeFeatures() {
-        for feature in features {
+        var featuresToExecute = features
+        if let tagNames = environment["CUCUMBER_TAGS"] {
+            let tags = tagNames.components(separatedBy: ",")
+            featuresToExecute = features.filter { $0.containsTags(tags) }
+        }
+        for feature in featuresToExecute {
             XCTContext.runActivity(named: "Feature: \(feature.title)") { _ in
                 BeforeFeature?(feature)
-                for scenario in feature.scenarios {
+                var scenariosToExecute = feature.scenarios
+                if let tagNames = environment["CUCUMBER_TAGS"] {
+                    let tags = tagNames.components(separatedBy: ",")
+                    scenariosToExecute = feature.scenarios.filter { $0.containsTags(tags) }
+                }
+                for scenario in scenariosToExecute {
                     XCTContext.runActivity(named: "Scenario: \(scenario.title)") { _ in
                         BeforeScenario?(scenario)
-                        for step in scenario.steps {
+                        var stepsToExecute = scenario.steps
+                        if let tagNames = environment["CUCUMBER_TAGS"] {
+                            let tags = tagNames.components(separatedBy: ",")
+                            stepsToExecute = scenario.steps.filter { $0.containsTags(tags) }
+                        }
+                        for step in stepsToExecute {
                             BeforeStep?(step)
                             currentStep = step
                             XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ in

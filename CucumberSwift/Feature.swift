@@ -91,6 +91,16 @@ public class Feature : Taggable {
         return allSections
     }
     
+    func containsTags(_ tags:[String]) -> Bool {
+        if (!tags.filter{ containsTag($0) }.isEmpty) {
+            return true
+        }
+        if (!scenarios.filter{ $0.containsTags(tags) }.isEmpty) {
+            return true
+        }
+        return false
+    }
+    
     func toJSON() -> [String:Any] {
         return [
             "uri": uri,

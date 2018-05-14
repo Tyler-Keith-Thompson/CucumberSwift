@@ -55,6 +55,13 @@ public class Step : Taggable, CustomStringConvertible {
         }
     }
     
+    func containsTags(_ tags:[String]) -> Bool {
+        if (!tags.filter{ containsTag($0) }.isEmpty) {
+            return true
+        }
+        return false
+    }
+    
     func toJSON() -> [String:Any] {
         return [
             "result":["status":"\(result)", "error_message" : errorMessage],
