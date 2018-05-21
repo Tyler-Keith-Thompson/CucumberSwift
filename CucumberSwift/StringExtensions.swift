@@ -22,10 +22,12 @@ extension String {
             let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
             let results = regex.matches(in: self,
                                         range: NSRange(self.startIndex..., in: self))
-            guard !results.isEmpty else { return [] }
+            guard let firstResult = results.first else { return [] }
             var matches = [String]()
-            for i in 0..<results.first!.numberOfRanges {
-                matches.append(String(self[Range(results.first!.range(at: i), in: self)!]))
+            for i in 0..<firstResult.numberOfRanges {
+                if let range = Range(firstResult.range(at: i), in: self) {
+                    matches.append(String(self[range]))
+                }
             }
             return matches
         } catch let error {

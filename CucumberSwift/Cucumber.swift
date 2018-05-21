@@ -103,11 +103,12 @@ import XCTest
                         for step in stepsToExecute {
                             BeforeStep?(step)
                             currentStep = step
-                            XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ in
+                            _ = XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ -> String in
                                 step.execute?(step.match.matches(for: step.regex))
                                 if (step.execute != nil && step.result != .failed) {
                                     step.result = .passed
                                 }
+                                return ""
                             }
                             AfterStep?(step)
                         }
