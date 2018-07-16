@@ -15,7 +15,7 @@ extension Array where Element == Token {
                 if case Token.identifier(let id) = $0 {
                     return id
                 } else if case Token.string(let str) = $0 {
-                    return str
+                    return "\"\(str)\""
                 } else {
                     return ""
                 }

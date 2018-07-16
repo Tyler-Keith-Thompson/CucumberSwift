@@ -17,7 +17,9 @@ public class Feature : Taggable {
     init(with lines:[[Token]], uri:String? = nil) {
         self.uri ?= uri
         var scope:Scope = .feature
+        var parentScope:Scope = .feature
         var scenarioLines = [[Token]]()
+        var backgroundStepLines = [[Token]]()
         var foundIdentifierInScope = false
         for line in lines {
             guard let firstToken = line.first else { continue }
@@ -30,6 +32,11 @@ public class Feature : Taggable {
                 }
                 if (s == .feature) {
                     title += line.removingScope().stringAggregate
+                } else if (s == .scenario) {
+                    parentScope = .scenario
+                } else if (s == .background) {
+                    parentScope = .background
+                    continue
                 }
                 if (scope == .feature && s == .unknown) {
                     description += line.stringAggregate
@@ -47,12 +54,18 @@ public class Feature : Taggable {
             }
             if (firstToken.isTag() && foundIdentifierInScope) {
                 scope = .scenario
+                parentScope = .scenario
             }
-            if (scope != .feature) {
+            if (parentScope == .scenario) {
                 scenarioLines.append(line)
+            } else if (parentScope == .background) {
+                backgroundStepLines.append(line)
             }
         }
         scenarios = scenarioLines.groupBy(.scenario).compactMap { Scenario(with: $0, tags:tags) }
+        scenarios.forEach { (scenario) in
+            scenario.steps.insert(contentsOf: backgroundStepLines.compactMap{ Step(with: $0, tags: tags)}, at: 0)
+        }
     }
     
     func containsTags(_ tags:[String]) -> Bool {
