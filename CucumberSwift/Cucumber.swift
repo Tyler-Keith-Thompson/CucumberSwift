@@ -56,7 +56,7 @@ import XCTest
             if (token == .newLine && line.count > 0) {
                 allLines.append(line)
                 line.removeAll()
-            } else {
+            } else if token != .newLine {
                 line.append(token)
             }
         }

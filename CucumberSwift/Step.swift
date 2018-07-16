@@ -55,7 +55,8 @@ public class Step : Taggable, CustomStringConvertible {
         }
     }
     
-    init(with line:[Token]) {
+    init(with line:[Token], tags:[String]) {
+        self.tags.insert(contentsOf: tags, at: 0)
         var lineCopy = line
         if let firstIdentifier = line.firstIdentifier(),
             case Token.identifier(let id) = firstIdentifier {

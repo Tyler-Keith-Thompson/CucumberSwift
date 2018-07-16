@@ -48,26 +48,35 @@ public class Feature : Taggable {
         self.uri ?= uri
         var scope:Scope = .feature
         var scenarioLines = [[Token]]()
+        var foundIdentifierInScope = false
         for line in lines {
             guard let firstToken = line.first else { continue }
             if let firstIdentifier = line.firstIdentifier(),
             case Token.identifier(let id) = firstIdentifier {
+                foundIdentifierInScope = true
                 let s = Scope.scopeFor(str: id)
                 if (s != .unknown) {
                     scope = s
                 }
-                var lineCopy = line
                 if (s == .feature) {
-                    lineCopy.removeFirst()
-                    title += lineCopy.stringAggregate
+                    title += line.removingScope().stringAggregate
                 }
                 if (scope == .feature && s == .unknown) {
-                    description += lineCopy.stringAggregate
+                    description += line.stringAggregate
                     description += "\n"
                 }
-            } else if case Token.tag(let tag) = firstToken,
-                scope == .feature {
-                tags.append(tag)
+            }
+            if firstToken.isTag() &&
+                scope == .feature &&
+                !foundIdentifierInScope {
+                for token in line {
+                    if case Token.tag(let tag) = token {
+                        self.tags.append(tag)
+                    }
+                }
+            }
+            if (firstToken.isTag() && foundIdentifierInScope) {
+                scope = .scenario
             }
             if (scope != .feature) {
                 scenarioLines.append(line)

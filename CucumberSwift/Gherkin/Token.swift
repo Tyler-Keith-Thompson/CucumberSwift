@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension Sequence where Element == Token {
+extension Array where Element == Token {
     var stringAggregate:String {
         return filter { $0.isIdentifier() || $0.isString() }
             .map {
@@ -28,6 +28,22 @@ extension Sequence where Element == Token {
             return token.isIdentifier()
         })
     }
+    
+    func removingScope() -> [Token] {
+        var remaining = self
+        if let firstID = firstIdentifier(),
+            case Token.identifier(let id) = firstID,
+            Scope.scopeFor(str: id) != .unknown,
+            let scopeIndex = remaining.index(of: firstID) {
+            if let colonIndex = index(scopeIndex, offsetBy: 1, limitedBy: endIndex),
+                case Token.identifier(let colon) = self[colonIndex],
+                colon == ":" {
+                remaining.remove(at: colonIndex)
+            }
+            remaining.remove(at: scopeIndex)
+        }
+        return remaining
+    }
 }
 
 extension Sequence where Element == [Token] {
@@ -38,7 +54,8 @@ extension Sequence where Element == [Token] {
             if let first = line.firstIdentifier(),
                 case Token.identifier(let id) = first,
                 Scope.scopeFor(str: id) == scope,
-                group.count > 0 {
+                group.count > 0,
+                !group.containsOnlyTags() {
                 allGroups.append(group)
                 group.removeAll()
             } else {
@@ -47,6 +64,16 @@ extension Sequence where Element == [Token] {
         }
         allGroups.append(group)
         return allGroups
+    }
+    func containsOnlyTags() -> Bool {
+        for line in self {
+            for token in line {
+                if (!token.isTag()) {
+                    return false
+                }
+            }
+        }
+        return true
     }
 }
 

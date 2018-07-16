@@ -38,33 +38,39 @@ public class Scenario : Taggable {
         self.tags.insert(contentsOf: tags, at: 0)
         var scope:Scope = .scenario
         var stepLines = [[Token]]()
+        var foundIdentifierInScope = false
         for line in lines {
             guard let firstToken = line.first else { continue }
             if let firstIdentifier = line.firstIdentifier(),
                 case Token.identifier(let id) = firstIdentifier {
+                foundIdentifierInScope = true
                 let s = Scope.scopeFor(str: id)
                 if (s != .unknown) {
                     scope = s
                 }
-                var lineCopy = line
                 if (s == .scenario) {
-                    lineCopy.removeFirst()
-                    title += lineCopy.stringAggregate
+                    title += line.removingScope().stringAggregate
                 }
                 if (scope == .scenario && s == .unknown) {
-                    description += lineCopy.stringAggregate
+                    description += line.stringAggregate
                     description += "\n"
                 }
-            } else if case Token.tag(let tag) = firstToken,
-                scope == .scenario {
-                self.tags.append(tag)
+            }
+            if firstToken.isTag() &&
+                scope == .scenario &&
+                !foundIdentifierInScope {
+                for token in line {
+                    if case Token.tag(let tag) = token {
+                        self.tags.append(tag)
+                    }
+                }
             }
             if (scope != .scenario) {
                 stepLines.append(line)
             }
         }
         for line in stepLines {
-            steps.append(Step(with: line))
+            steps.append(Step(with: line, tags: self.tags))
         }
     }
     

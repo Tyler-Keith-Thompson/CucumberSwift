@@ -66,13 +66,9 @@ class CucumberSwiftTests: XCTestCase {
     """
     @featuretag
     Feature: Some terse yet descriptive text of what is desired
-       Textual description of the business value of this feature
-       Business rules that govern the scope of the feature
-       Any additional information that will make the feature easier to understand
 
        @scenario1tag
        Scenario: Some determinable business situation
-         @step1tag
          Given a scenario with tags
 
        Scenario: Some other determinable business situation
@@ -82,7 +78,7 @@ class CucumberSwiftTests: XCTestCase {
     func testSpeed() {
         self.measure {
             _ = Cucumber(withString:
-                repeatElement(featureFile, count: 10000)
+                repeatElement(featureFile, count: 100)
                     .joined(separator: "\n"))
         }
     }
@@ -119,7 +115,6 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("scenario1tag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("featuretag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("scenario1tag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("step1tag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("featuretag") ?? false)
     }
     
