@@ -107,18 +107,13 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				ADD9673220FCED48000BCAA2 /* Protocols */,
+				ADD9673120FCED15000BCAA2 /* Custom Operators */,
 				CA5A7C3720FC2B0A00F4564A /* Extensions */,
 				CA5A7C3620FC2AF600F4564A /* Gherkin */,
 				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
-				AD9EB47C2079D280002494C0 /* Feature.swift */,
-				AD9EB47E2079D28E002494C0 /* Step.swift */,
-				AD9EB4802079D540002494C0 /* StringExtensions.swift */,
-				AD9EB4822079D606002494C0 /* Scenario.swift */,
-				AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */,
-				AD7D2524207A7B72001B8211 /* Scope.swift */,
-				ADAA738B20A92BB000D2344C /* Taggable.swift */,
 				ADAA738D20A9356000D2344C /* CollectionExtensions.swift */,
 			);
 			path = CucumberSwift;
@@ -146,9 +141,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		ADD9673020FCECF2000BCAA2 /* Parser */ = {
+			isa = PBXGroup;
+			children = (
+				AD7D2524207A7B72001B8211 /* Scope.swift */,
+				AD9EB47C2079D280002494C0 /* Feature.swift */,
+				AD9EB47E2079D28E002494C0 /* Step.swift */,
+				AD9EB4822079D606002494C0 /* Scenario.swift */,
+			);
+			path = Parser;
+			sourceTree = "<group>";
+		};
+		ADD9673120FCED15000BCAA2 /* Custom Operators */ = {
+			isa = PBXGroup;
+			children = (
+				AD9EB4842079EB1C002494C0 /* MightEqualOperator.swift */,
+			);
+			path = "Custom Operators";
+			sourceTree = "<group>";
+		};
+		ADD9673220FCED48000BCAA2 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				ADAA738B20A92BB000D2344C /* Taggable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		CA5A7C3620FC2AF600F4564A /* Gherkin */ = {
 			isa = PBXGroup;
 			children = (
+				ADD9673020FCECF2000BCAA2 /* Parser */,
 				CA5A7C3C20FC2B2900F4564A /* Token.swift */,
 				CA5A7C3A20FC2B2300F4564A /* Lexer.swift */,
 			);
@@ -158,6 +181,7 @@
 		CA5A7C3720FC2B0A00F4564A /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AD9EB4802079D540002494C0 /* StringExtensions.swift */,
 				CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */,
 			);
 			path = Extensions;

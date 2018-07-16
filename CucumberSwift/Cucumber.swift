@@ -81,12 +81,7 @@ import XCTest
                 for scenario in scenariosToExecute {
                     XCTContext.runActivity(named: "Scenario: \(scenario.title)") { _ in
                         BeforeScenario?(scenario)
-                        var stepsToExecute = scenario.steps
-                        if let tagNames = environment["CUCUMBER_TAGS"] {
-                            let tags = tagNames.components(separatedBy: ",")
-                            stepsToExecute = scenario.steps.filter { $0.containsTags(tags) }
-                        }
-                        for step in stepsToExecute {
+                        for step in scenario.steps {
                             BeforeStep?(step)
                             currentStep = step
                             _ = XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ -> String in

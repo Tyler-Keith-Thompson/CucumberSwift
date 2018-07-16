@@ -7,7 +7,7 @@
 //
 
 import Foundation
-public class Step : Taggable, CustomStringConvertible {
+public class Step : CustomStringConvertible {
     public var description: String {
         return "TAGS:\(tags)\n\(keyword ?? .given): \(match)"
     }
@@ -47,13 +47,6 @@ public class Step : Taggable, CustomStringConvertible {
     var execute:(([String]) -> Void)? = nil
     var regex:String = ""
     var errorMessage:String = ""
-    init(with line:(scope: Scope, string: String)) {
-        //Regex here slows us down at massive scale, hence the subscripts
-        if let keywordEndIndex = line.string.index(of: " ") {
-            keyword = Keyword(rawValue: String(line.string[...keywordEndIndex]).trimmingCharacters(in: .whitespaces))
-            match = String(line.string[keywordEndIndex...]).trimmingCharacters(in: .whitespaces)
-        }
-    }
     
     init(with line:[Token], tags:[String]) {
         self.tags.insert(contentsOf: tags, at: 0)
@@ -67,13 +60,6 @@ public class Step : Taggable, CustomStringConvertible {
                 match += lineCopy.stringAggregate
             }
         }
-    }
-    
-    func containsTags(_ tags:[String]) -> Bool {
-        if (!tags.filter{ containsTag($0) }.isEmpty) {
-            return true
-        }
-        return false
     }
     
     func toJSON() -> [String:Any] {

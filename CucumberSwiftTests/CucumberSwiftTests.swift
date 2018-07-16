@@ -113,9 +113,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssert(cucumber.features.first?.containsTag("featuretag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("featuretag") ?? false)
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("scenario1tag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("featuretag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.first?.steps.first?.containsTag("scenario1tag") ?? false)
-        XCTAssert(cucumber.features.first?.scenarios.last?.steps.first?.containsTag("featuretag") ?? false)
+        XCTAssert(!(cucumber.features.first?.scenarios.last?.containsTag("scenario1tag") ?? true))
     }
     
     func testRunWithSpecificTags() {
@@ -288,7 +286,7 @@ class CucumberSwiftTests: XCTestCase {
     
     func testStepFailsIfObserverCallsBackWithFailure() {
         let cucumber = Cucumber(withString: "")
-        cucumber.currentStep = Step(with: (scope: .step, string: ""))
+        cucumber.currentStep = Step(with: [], tags: [])
         
         XCTAssertEqual(cucumber.currentStep?.result, .pending)
         
