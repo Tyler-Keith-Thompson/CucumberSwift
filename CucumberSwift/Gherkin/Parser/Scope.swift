@@ -16,9 +16,9 @@ enum Scope {
     
     static func scopeFor(str:String) -> Scope {
         switch str.lowercased() {
-        case "feature": return .feature
-        case "scenario": return .scenario
-        case "background": return .background
+        case "feature:": return .feature
+        case "scenario:": return .scenario
+        case "background:": return .background
         case "given": return .step
         case "when": return .step
         case "then": return .step

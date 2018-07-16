@@ -21,8 +21,7 @@ extension Character {
         return isalnum(value) != 0
     }
     var isSymbol: Bool {
-        return isEscapeChar ||
-               isComment ||
+        return isComment ||
                isNewline ||
                isTagMarker ||
                isQuote
@@ -32,9 +31,6 @@ extension Character {
     }
     var isTagMarker: Bool {
         return self == "@"
-    }
-    var isEscapeChar: Bool {
-        return self == "\\"
     }
     var isComment: Bool {
         return self == "#"

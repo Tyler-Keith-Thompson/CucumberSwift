@@ -35,11 +35,6 @@ extension Array where Element == Token {
             case Token.identifier(let id) = firstID,
             Scope.scopeFor(str: id) != .unknown,
             let scopeIndex = remaining.index(of: firstID) {
-            if let colonIndex = index(scopeIndex, offsetBy: 1, limitedBy: endIndex),
-                case Token.identifier(let colon) = self[colonIndex],
-                colon == ":" {
-                remaining.remove(at: colonIndex)
-            }
             remaining.remove(at: scopeIndex)
         }
         return remaining

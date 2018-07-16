@@ -26,7 +26,7 @@ class Lexer {
     
     func readIdentifierOrNumber() -> String? {
         var str:String? = nil
-        while let char = currentChar, char.isAlphanumeric {
+        while let char = currentChar, !char.isSpace {
             if (str == nil) { str = "" }
             str?.append(char)
             advanceIndex()
@@ -36,16 +36,7 @@ class Lexer {
     
     func readUntilEndQuote() -> String {
         var str = ""
-        while let char = currentChar, !char.isNewline {
-            if (char.isEscapeChar) {
-                advanceIndex()
-                if let next = currentChar {
-                    str.append(next)
-                }
-                advanceIndex()
-                continue
-            }
-            guard !char.isQuote else { break }
+        while let char = currentChar, !char.isNewline, !char.isQuote {
             str.append(char)
             advanceIndex()
         }
@@ -78,11 +69,6 @@ class Lexer {
             }
             advanceIndex()
             return advanceToNextToken()
-        } else if char.isEscapeChar {
-            advanceIndex()
-            advanceIndex()
-            let str = String(describing: char)
-            return .identifier(str)
         } else if char.isQuote {
             advanceIndex()
             let str = readUntilEndQuote()
