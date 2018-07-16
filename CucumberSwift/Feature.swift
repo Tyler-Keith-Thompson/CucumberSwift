@@ -44,6 +44,38 @@ public class Feature : Taggable {
         }
     }
     
+    init(with lines:[[Token]], uri:String? = nil) {
+        self.uri ?= uri
+        var scope:Scope = .feature
+        var scenarioLines = [[Token]]()
+        for line in lines {
+            guard let firstToken = line.first else { continue }
+            if let firstIdentifier = line.firstIdentifier(),
+            case Token.identifier(let id) = firstIdentifier {
+                let s = Scope.scopeFor(str: id)
+                if (s != .unknown) {
+                    scope = s
+                }
+                var lineCopy = line
+                if (s == .feature) {
+                    lineCopy.removeFirst()
+                    title += lineCopy.stringAggregate
+                }
+                if (scope == .feature && s == .unknown) {
+                    description += lineCopy.stringAggregate
+                    description += "\n"
+                }
+            } else if case Token.tag(let tag) = firstToken,
+                scope == .feature {
+                tags.append(tag)
+            }
+            if (scope != .feature) {
+                scenarioLines.append(line)
+            }
+        }
+        scenarios = scenarioLines.groupBy(.scenario).compactMap { Scenario(with: $0, tags:tags) }
+    }
+    
     private func parseTags(inLines lines:[(scope: Scope, string: String)]) {
         for line in lines {
             if line.scope == .feature && Feature.isTag(line.string),

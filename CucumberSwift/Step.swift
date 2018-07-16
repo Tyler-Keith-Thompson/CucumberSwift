@@ -13,12 +13,12 @@ public class Step : Taggable, CustomStringConvertible {
     }
     
     public enum Keyword:String {
-        case given = "Given"
-        case when = "When"
-        case then = "Then"
-        case and = "And"
-        case or = "Or"
-        case but = "But"
+        case given = "given"
+        case when = "when"
+        case then = "then"
+        case and = "and"
+        case or = "or"
+        case but = "but"
         
         static var all:[Keyword] {
             return [
@@ -52,6 +52,19 @@ public class Step : Taggable, CustomStringConvertible {
         if let keywordEndIndex = line.string.index(of: " ") {
             keyword = Keyword(rawValue: String(line.string[...keywordEndIndex]).trimmingCharacters(in: .whitespaces))
             match = String(line.string[keywordEndIndex...]).trimmingCharacters(in: .whitespaces)
+        }
+    }
+    
+    init(with line:[Token]) {
+        var lineCopy = line
+        if let firstIdentifier = line.firstIdentifier(),
+            case Token.identifier(let id) = firstIdentifier {
+            let s = Scope.scopeFor(str: id)
+            if (s == .step) {
+                keyword = Keyword(rawValue: id.lowercased().trimmingCharacters(in: .whitespaces))
+                lineCopy.removeFirst()
+                match += lineCopy.stringAggregate
+            }
         }
     }
     

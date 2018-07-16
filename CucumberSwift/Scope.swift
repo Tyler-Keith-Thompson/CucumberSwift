@@ -14,22 +14,19 @@ enum Scope {
     case step
     case unknown
     
-    static func scopeFor(line:String) -> Scope {
-        if (line.starts(with: "Feature")) {
-            return .feature
-        } else if (line.starts(with: "Scenario")) {
-            return .scenario
-        } else if (line.starts(with: "Background")) {
-            return .background
-        } else if (line.starts(with: "Given")
-            || line.starts(with: "When")
-            || line.starts(with: "Then")
-            || line.starts(with: "And")
-            || line.starts(with: "Or")
-            || line.starts(with: "But")) {
-            return .step
+    static func scopeFor(str:String) -> Scope {
+        switch str.lowercased() {
+        case "feature": return .feature
+        case "scenario": return .scenario
+        case "background": return .background
+        case "given": return .step
+        case "when": return .step
+        case "then": return .step
+        case "and": return .step
+        case "or": return .step
+        case "but": return .step
+        default: return .unknown
         }
-        return .unknown
     }
     
     var priority:Int {

@@ -82,7 +82,7 @@ class CucumberSwiftTests: XCTestCase {
     func testSpeed() {
         self.measure {
             _ = Cucumber(withString:
-                repeatElement(featureFile, count: 1000)
+                repeatElement(featureFile, count: 10000)
                     .joined(separator: "\n"))
         }
     }

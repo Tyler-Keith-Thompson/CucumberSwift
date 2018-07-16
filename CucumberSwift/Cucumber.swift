@@ -22,8 +22,7 @@ import XCTest
 
     init(withString string:String) {
         super.init()
-        features = allSectionsFor(parentScope: .feature, inString:string)
-            .flatMap { Feature(with: $0) }
+        parseIntoFeatures(string)
     }
     
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
@@ -37,45 +36,32 @@ import XCTest
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if let string = try? String(contentsOf: url, encoding: .utf8) {
-                features.append(contentsOf: allSectionsFor(parentScope: .feature, inString:string)
-                    .flatMap { Feature(with: $0) })
+                parseIntoFeatures(string)
             }
         }
         XCTestObservationCenter.shared.addTestObserver(self)
     }
     
-    func allSectionsFor(parentScope:Scope, inString string:String) -> [[(scope: Scope, string: String)]] {
-        var scope:Scope = parentScope
-        var linesInScope = [(scope: Scope, string: String)]()
-        var allSections = [[(scope: Scope, string: String)]]()
-        let lines = string.lines
-        for (i, line) in lines.enumerated() {
-            let trimmed = line.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines)
-            if (trimmed.isEmpty) { continue }
-            let lineScope = Scope.scopeFor(line: trimmed)
-            if  let nextLine = lines[safe: i + 1],
-                Feature.isTag(trimmed) {
-                linesInScope.append((scope: Scope.scopeFor(line: nextLine.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines)), string: trimmed))
-                continue
+    private func parseIntoFeatures(_ string:String) {
+        let tokens = Lexer(input: string).lex()
+        features = groupTokensByLine(tokens)
+                  .groupBy(.feature)
+                  .compactMap { Feature(with: $0) }
+    }
+    
+    private func groupTokensByLine(_ tokens:[Token]) -> [[Token]] {
+        var allLines = [[Token]]()
+        var line = [Token]()
+        for token in tokens {
+            if (token == .newLine && line.count > 0) {
+                allLines.append(line)
+                line.removeAll()
+            } else {
+                line.append(token)
             }
-            if (lineScope.priority == parentScope.priority) {
-                if let prev = lines[safe: i - 1] {
-                    if (!Feature.isTag(prev.trimmingComments().trimmingCharacters(in: .whitespacesAndNewlines))) {
-                        allSections.append(linesInScope)
-                        linesInScope.removeAll()
-                    }
-                } else {
-                    allSections.append(linesInScope)
-                    linesInScope.removeAll()
-                }
-            }
-            if (lineScope != .unknown && lineScope != scope) {
-                scope = lineScope
-            }
-            linesInScope.append((scope: scope, string: trimmed))
         }
-        allSections.append(linesInScope)
-        return allSections.filter{ !$0.isEmpty }
+        allLines.append(line)
+        return allLines
     }
     
     public func executeFeatures() {

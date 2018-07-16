@@ -9,6 +9,7 @@
 import Foundation
 public class Scenario : Taggable {
     public private(set)  var title = ""
+    public private(set)  var description = ""
     public private(set)  var tags = [String]()
     public internal(set) var steps = [Step]()
     
@@ -30,6 +31,40 @@ public class Scenario : Taggable {
                 stepTag = nil
             }
             steps.append(step)
+        }
+    }
+    
+    init (with lines:[[Token]], tags:[String] = []) {
+        self.tags.insert(contentsOf: tags, at: 0)
+        var scope:Scope = .scenario
+        var stepLines = [[Token]]()
+        for line in lines {
+            guard let firstToken = line.first else { continue }
+            if let firstIdentifier = line.firstIdentifier(),
+                case Token.identifier(let id) = firstIdentifier {
+                let s = Scope.scopeFor(str: id)
+                if (s != .unknown) {
+                    scope = s
+                }
+                var lineCopy = line
+                if (s == .scenario) {
+                    lineCopy.removeFirst()
+                    title += lineCopy.stringAggregate
+                }
+                if (scope == .scenario && s == .unknown) {
+                    description += lineCopy.stringAggregate
+                    description += "\n"
+                }
+            } else if case Token.tag(let tag) = firstToken,
+                scope == .scenario {
+                self.tags.append(tag)
+            }
+            if (scope != .scenario) {
+                stepLines.append(line)
+            }
+        }
+        for line in stepLines {
+            steps.append(Step(with: line))
         }
     }
     
