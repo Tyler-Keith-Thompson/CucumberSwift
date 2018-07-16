@@ -26,6 +26,7 @@
 		ADAA739020A9358200D2344C /* SequenceExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */; };
 		ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5F920FD0234005997AD /* CommentTests.swift */; };
 		ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FB20FD02B8005997AD /* TagTests.swift */; };
+		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -65,6 +66,7 @@
 		ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensionsTests.swift; sourceTree = "<group>"; };
 		ADB4D5F920FD0234005997AD /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		ADB4D5FB20FD02B8005997AD /* TagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTests.swift; sourceTree = "<group>"; };
+		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */,
 				ADB4D5F920FD0234005997AD /* CommentTests.swift */,
 				ADB4D5FB20FD02B8005997AD /* TagTests.swift */,
+				ADB4D5FD20FD03BF005997AD /* ParserTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */,
 				AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */,
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
