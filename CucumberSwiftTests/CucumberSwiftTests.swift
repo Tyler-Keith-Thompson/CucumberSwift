@@ -140,7 +140,7 @@ class CucumberSwiftTests: XCTestCase {
     
     func testStepFailsIfObserverCallsBackWithFailure() {
         let cucumber = Cucumber(withString: "")
-        cucumber.currentStep = Step(with: [], tags: [])
+        cucumber.currentStep = Step(with: StepNode())
         
         XCTAssertEqual(cucumber.currentStep?.result, .pending)
         

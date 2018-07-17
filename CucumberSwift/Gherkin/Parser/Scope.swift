@@ -11,7 +11,9 @@ enum Scope {
     case feature
     case background
     case scenario
+    case scenarioOutline
     case step
+    case example
     case unknown
     
     static func scopeFor(str:String) -> Scope {
@@ -19,6 +21,8 @@ enum Scope {
         case "feature:": return .feature
         case "scenario:": return .scenario
         case "background:": return .background
+        case "example:": return .example
+        case "scenario outline:": return .scenarioOutline
         case "given": return .step
         case "when": return .step
         case "then": return .step
@@ -37,6 +41,10 @@ enum Scope {
             case .background:
                 return 1
             case .scenario:
+                return 1
+            case .scenarioOutline:
+                return 1
+            case .example:
                 return 1
             case .step:
                 return 2

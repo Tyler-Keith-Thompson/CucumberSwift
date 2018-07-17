@@ -14,58 +14,22 @@ public class Feature : Taggable {
     public private(set)  var uri:String = ""
     public internal(set) var tags = [String]()
     
-    init(with lines:[[Token]], uri:String? = nil) {
-        self.uri ?= uri
-        var scope:Scope = .feature
-        var parentScope:Scope = .feature
-        var scenarioLines = [[Token]]()
-        var backgroundStepLines = [[Token]]()
-        var foundIdentifierInScope = false
-        for line in lines {
-            guard let firstToken = line.first else { continue }
-            if let firstIdentifier = line.firstIdentifier(),
-            case Token.identifier(let id) = firstIdentifier {
-                foundIdentifierInScope = true
-                let s = Scope.scopeFor(str: id)
-                if (s != .unknown) {
-                    scope = s
-                }
-                if (s == .feature) {
-                    title += line.removingScope().stringAggregate
-                } else if (s == .scenario) {
-                    parentScope = .scenario
-                } else if (s == .background) {
-                    parentScope = .background
-                    continue
-                }
-                if (scope == .feature && s == .unknown) {
-                    description += line.stringAggregate
-                    description += "\n"
-                }
-            }
-            if firstToken.isTag() &&
-                scope == .feature &&
-                !foundIdentifierInScope {
-                for token in line {
-                    if case Token.tag(let tag) = token {
-                        self.tags.append(tag)
-                    }
-                }
-            }
-            if (firstToken.isTag() && foundIdentifierInScope) {
-                scope = .scenario
-                parentScope = .scenario
-            }
-            if (parentScope == .scenario) {
-                scenarioLines.append(line)
-            } else if (parentScope == .background) {
-                backgroundStepLines.append(line)
+    init (with node:FeatureNode) {
+        for token in node.tokens {
+            if case Token.title(let t) = token {
+                title = t
+            } else if case Token.description(let desc) = token {
+                description += desc + "\n"
+            } else if case Token.tag(let tag) = token {
+                self.tags.append(tag)
             }
         }
-        scenarios = scenarioLines.groupBy(.scenario).compactMap { Scenario(with: $0, tags:tags) }
-        scenarios.forEach { (scenario) in
-            scenario.steps.insert(contentsOf: backgroundStepLines.compactMap{ Step(with: $0, tags: tags)}, at: 0)
-        }
+        let backgroundSteps:[StepNode] = node.children.filter { $0 is BackgroundNode }
+                                        .map { $0 as! BackgroundNode }
+                                        .flatMap { $0.children as! [StepNode] }
+        scenarios ?= node.children.filter { $0 is ScenarioNode }
+                    .map { $0 as! ScenarioNode }
+                    .compactMap{ Scenario(with: $0, tags:tags, stepNodes: backgroundSteps) }
     }
     
     func containsTags(_ tags:[String]) -> Bool {

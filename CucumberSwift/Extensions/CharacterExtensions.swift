@@ -8,6 +8,13 @@
 
 import Foundation
 extension Character {
+    static let tableHeaderOpen:Character = "<"
+    static let tableHeaderClose:Character = ">"
+    static let newLine:Character = "\n"
+    static let scopeTerminator:Character = ":"
+    static let quote:Character = "\""
+    static let tagMarker:Character = "@"
+    static let comment:Character = "#"
     var value: Int32 {
         return Int32(scalar.value)
     }
@@ -22,23 +29,36 @@ extension Character {
     }
     var isSymbol: Bool {
         return isComment ||
-               isNewline ||
-               isTagMarker ||
-               isQuote
+            isNewline ||
+            isTagMarker ||
+//            isQuote ||
+            isHeaderToken
+    }
+    var isHeaderToken: Bool {
+        return self == Character.tableHeaderOpen || self == Character.tableHeaderClose
+    }
+    var isHeaderOpen: Bool {
+        return self == Character.tableHeaderOpen
+    }
+    var isHeaderClosed: Bool {
+        return self == Character.tableHeaderClose
     }
     var isQuote: Bool {
-        return self == "\""
+        return self == Character.quote
     }
     var isTagMarker: Bool {
-        return self == "@"
+        return self == Character.tagMarker
     }
     var isComment: Bool {
-        return self == "#"
+        return self == Character.comment
     }
     var isNewline: Bool {
-        return self == "\n"
+        return self == Character.newLine
     }
     var isWhitespace: Bool {
         return CharacterSet.whitespacesAndNewlines.contains(scalar)
+    }
+    var isScopeTerminator: Bool {
+        return self == Character.scopeTerminator
     }
 }

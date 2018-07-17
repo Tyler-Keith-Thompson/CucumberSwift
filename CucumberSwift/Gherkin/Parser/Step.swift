@@ -48,16 +48,12 @@ public class Step : CustomStringConvertible {
     var regex:String = ""
     var errorMessage:String = ""
     
-    init(with line:[Token], tags:[String]) {
-        self.tags.insert(contentsOf: tags, at: 0)
-        var lineCopy = line
-        if let firstIdentifier = line.firstIdentifier(),
-            case Token.identifier(let id) = firstIdentifier {
-            let s = Scope.scopeFor(str: id)
-            if (s == .step) {
-                keyword = Keyword(rawValue: id.lowercased().trimmingCharacters(in: .whitespaces))
-                lineCopy.removeFirst()
-                match += lineCopy.stringAggregate
+    init(with node:StepNode) {
+        for token in node.tokens {
+            if case Token.keyword(let kw) = token {
+                keyword = kw
+            } else if case Token.match(let m) = token {
+                match += m
             }
         }
     }

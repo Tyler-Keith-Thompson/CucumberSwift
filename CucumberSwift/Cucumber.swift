@@ -44,9 +44,11 @@ import XCTest
     
     private func parseIntoFeatures(_ string:String) {
         let tokens = Lexer(input: string).lex()
-        features = groupTokensByLine(tokens)
-                  .groupBy(.feature)
-                  .compactMap { Feature(with: $0) }
+        let ast = AST(tokens)
+        features = ast.featureNodes.compactMap { Feature(with: $0) }
+//        features = groupTokensByLine(tokens)
+//                  .groupBy(.feature)
+//                  .compactMap { Feature(with: $0) }
     }
     
     private func groupTokensByLine(_ tokens:[Token]) -> [[Token]] {
@@ -107,6 +109,26 @@ import XCTest
             }
         }
     }
+    
+    /*
+     # Data Tables
+     Feature:
+     Scenario: Thing I want to test
+        Given some <header1> precondition
+        Then some <header2> expectation
+     
+        Example:
+            | header1 | header2 |
+            | data1   | data2   |
+     
+     Scenario: Other way to write tables
+        Given some users exist:
+            | Dave       | Dave's password        |
+            | nothereman | nothereman's passoword |
+        When a random user tries to log in
+            And they use the correct password
+        Then they log in successfully
+     */
     
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
         features
