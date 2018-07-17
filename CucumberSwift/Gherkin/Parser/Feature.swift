@@ -31,7 +31,10 @@ public class Feature : Taggable {
                     .map { $0 as! ScenarioNode }
                     .compactMap{ Scenario(with: $0, tags:tags, stepNodes: backgroundSteps) }
         node.children.filter { $0 is ScenarioOutlineNode }
-            .map { $0 as! ScenarioOutlineNode }
+            .map { $0 as! ScenarioOutlineNode }.forEach { (son) in
+                let generatedScenarios = ScenarioOutlineParser.parse(son, featureTags: tags)
+                scenarios.append(contentsOf: generatedScenarios)
+        }
     }
     
     func containsTags(_ tags:[String]) -> Bool {

@@ -51,6 +51,12 @@ enum Token: Equatable {
         }
         return false
     }
+    func isKeyword() -> Bool {
+        if case .keyword(_) = self {
+            return true
+        }
+        return false
+    }
     func isTag() -> Bool {
         if case .tag(_) = self {
             return true

@@ -38,6 +38,8 @@ class TableTests: XCTestCase {
         XCTAssertEqual(feature?.scenarios.count, 2)
         XCTAssertEqual(firstScenario?.steps.count, 4)
         XCTAssertEqual(secondScenario?.steps.count, 4)
+        XCTAssertEqual(firstScenario?.title, "Some determinable business situation")
+        XCTAssertEqual(secondScenario?.title, "Some determinable business situation")
         if ((firstScenario?.steps.count ?? 0) == 4) {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)

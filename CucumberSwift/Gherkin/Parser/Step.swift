@@ -58,6 +58,11 @@ public class Step : CustomStringConvertible {
         }
     }
     
+    init(with keyword:Keyword, match:String) {
+        self.keyword = keyword
+        self.match = match
+    }
+    
     func toJSON() -> [String:Any] {
         return [
             "result":["status":"\(result)", "error_message" : errorMessage],
