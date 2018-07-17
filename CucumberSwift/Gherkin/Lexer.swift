@@ -57,6 +57,14 @@ class Lexer {
             linePosition += 1
             advanceIndex()
             return .tag(readLineUntil({ !$0.isAlphanumeric }))
+        } else if char.isTableCellDelimiter {
+            linePosition += 1
+            advanceIndex()
+            let tableCellContents = readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces)
+            if (!tableCellContents.isEmpty) {
+                return .tableCell(tableCellContents)
+            }
+            return advanceToNextToken()
         }
         if (linePosition == 0) {
             if (char.isSpace) {

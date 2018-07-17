@@ -19,6 +19,7 @@ class Node {
 class FeatureNode: Node {}
 class BackgroundNode: Node {}
 class ScenarioNode: Node {}
+class ScenarioOutlineNode: Node {}
 class StepNode: Node {}
 
 class AST {
@@ -48,6 +49,15 @@ class AST {
                     tags.removeAll()
                     currentNode = scenario
                     feature.add(child: scenario)
+                case .scenarioOutline:
+                    let outline = ScenarioOutlineNode()
+                    scenario = outline
+                    currentNode = scenario
+                    scenario.tokens.append(contentsOf: tags)
+                    tags.removeAll()
+                    feature.add(child: scenario)
+                case .example:
+                    currentNode = scenario
                 default: currentNode?.tokens.append(token)
                 }
             } else if case Token.keyword(_) = token {

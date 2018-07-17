@@ -46,24 +46,6 @@ import XCTest
         let tokens = Lexer(input: string).lex()
         let ast = AST(tokens)
         features = ast.featureNodes.compactMap { Feature(with: $0) }
-//        features = groupTokensByLine(tokens)
-//                  .groupBy(.feature)
-//                  .compactMap { Feature(with: $0) }
-    }
-    
-    private func groupTokensByLine(_ tokens:[Token]) -> [[Token]] {
-        var allLines = [[Token]]()
-        var line = [Token]()
-        for token in tokens {
-            if (token == .newLine && line.count > 0) {
-                allLines.append(line)
-                line.removeAll()
-            } else if token != .newLine {
-                line.append(token)
-            }
-        }
-        allLines.append(line)
-        return allLines
     }
     
     public func executeFeatures() {

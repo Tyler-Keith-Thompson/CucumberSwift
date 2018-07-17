@@ -15,6 +15,7 @@ extension Character {
     static let quote:Character = "\""
     static let tagMarker:Character = "@"
     static let comment:Character = "#"
+    static let tableCellDelimiter:Character = "|"
     var value: Int32 {
         return Int32(scalar.value)
     }
@@ -32,6 +33,7 @@ extension Character {
             isNewline ||
             isTagMarker ||
 //            isQuote ||
+            isTableCellDelimiter ||
             isHeaderToken
     }
     var isHeaderToken: Bool {
@@ -60,5 +62,8 @@ extension Character {
     }
     var isScopeTerminator: Bool {
         return self == Character.scopeTerminator
+    }
+    var isTableCellDelimiter: Bool {
+        return self == Character.tableCellDelimiter
     }
 }

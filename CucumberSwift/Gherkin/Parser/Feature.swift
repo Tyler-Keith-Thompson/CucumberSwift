@@ -30,6 +30,8 @@ public class Feature : Taggable {
         scenarios ?= node.children.filter { $0 is ScenarioNode }
                     .map { $0 as! ScenarioNode }
                     .compactMap{ Scenario(with: $0, tags:tags, stepNodes: backgroundSteps) }
+        node.children.filter { $0 is ScenarioOutlineNode }
+            .map { $0 as! ScenarioOutlineNode }
     }
     
     func containsTags(_ tags:[String]) -> Bool {

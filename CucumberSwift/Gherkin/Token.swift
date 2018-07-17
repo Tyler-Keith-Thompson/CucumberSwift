@@ -8,72 +8,6 @@
 
 import Foundation
 
-extension Array where Element == Token {
-    var stringAggregate:String {
-//        return filter { $0.isIdentifier() || $0.isString() }
-//            .map {
-//                if case Token.identifier(let id) = $0 {
-//                    return id
-//                } else if case Token.string(let str) = $0 {
-//                    return "\"\(str)\""
-//                } else {
-//                    return ""
-//                }
-//            }
-//            .joined(separator: " ")
-        return ""
-    }
-    
-    func firstIdentifier() -> Token? {
-        return nil
-//        return first(where: { (token) -> Bool in
-//            return token.isIdentifier()
-//        })
-    }
-    
-    func removingScope() -> [Token] {
-        var remaining = self
-//        if let firstID = firstIdentifier(),
-//            case Token.identifier(let id) = firstID,
-//            Scope.scopeFor(str: id) != .unknown,
-//            let scopeIndex = remaining.index(of: firstID) {
-//            remaining.remove(at: scopeIndex)
-//        }
-        return remaining
-    }
-}
-
-extension Sequence where Element == [Token] {
-    func groupBy(_ scope:Scope) -> [[[Token]]] {
-        var allGroups = [[[Token]]]()
-//        var group = [[Token]]()
-//        for line in self {
-//            if let first = line.firstIdentifier(),
-//                case Token.identifier(let id) = first,
-//                Scope.scopeFor(str: id) == scope,
-//                group.count > 0,
-//                !group.containsOnlyTags() {
-//                allGroups.append(group)
-//                group.removeAll()
-//            } else {
-//                group.append(line)
-//            }
-//        }
-//        allGroups.append(group)
-        return allGroups
-    }
-    func containsOnlyTags() -> Bool {
-        for line in self {
-            for token in line {
-                if (!token.isTag()) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-}
-
 enum Token: Equatable {
     case newLine
 //    case integer(Int)
@@ -84,6 +18,7 @@ enum Token: Equatable {
     case description(String)
     case tag(String)
     case tableHeader(String)
+    case tableCell(String)
     case scope(Scope)
     case keyword(Step.Keyword)
     
@@ -103,23 +38,19 @@ enum Token: Equatable {
 //            return string1 == string2
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
             return tableHeader1 == tableHeader2
+        case let (.tableCell(tableCell1), .tableCell(tableCell2)):
+            return tableCell1 == tableCell2
         default:
             return false
         }
     }
     
-//    func isIdentifier() -> Bool {
-//        if case .identifier(_) = self {
-//            return true
-//        }
-//        return false
-//    }
-//    func isString() -> Bool {
-//        if case .string(_) = self {
-//            return true
-//        }
-//        return false
-//    }
+    func isTableCell() -> Bool {
+        if case .tableCell(_) = self {
+            return true
+        }
+        return false
+    }
     func isTag() -> Bool {
         if case .tag(_) = self {
             return true
