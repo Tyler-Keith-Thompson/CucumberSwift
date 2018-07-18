@@ -18,8 +18,6 @@ public class Scenario : Taggable {
         for token in node.tokens {
             if case Token.title(let t) = token {
                 title = t
-            } else if case Token.description(let desc) = token {
-                description += desc + "\n"
             } else if case Token.tag(let tag) = token {
                 self.tags.append(tag)
             }
@@ -28,7 +26,7 @@ public class Scenario : Taggable {
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
     }
     
-    init(with steps:[Step], title:String, tags:[String]) {
+    init(with steps:[Step], title:String, description:String, tags:[String]) {
         self.steps = steps
         self.title = title
         self.tags = tags

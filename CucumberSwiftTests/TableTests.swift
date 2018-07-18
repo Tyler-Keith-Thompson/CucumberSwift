@@ -63,4 +63,64 @@ class TableTests: XCTestCase {
             XCTAssertEqual(steps?[3].match, "some result 2 is achieved")
         }
     }
+    
+    func testScenarioOutlinesHandleBackgroundSteps() {
+        let cucumber = Cucumber(withString:"""
+    Feature: Some terse yet descriptive text of what is desired
+        Textual description of the business value of this feature
+        Business rules that govern the scope of the feature
+        Any additional information that will make the feature easier to understand
+        
+        Background:
+            Given I am logged in
+    
+        Scenario Outline: Some determinable business situation
+            Given some <precondition>
+                And some <other precondition>
+            When some action by <actor>
+            Then some <testable outcome> is achieved
+
+            Example:
+                | precondition  | other precondition    | actor | testable outcome  |
+                | first         | second                | Bob   | result 1          |
+                | third         | fourth                | Susan | result 2          |
+    """)
+        let feature = cucumber.features.first
+        XCTAssertEqual(feature?.scenarios.count, 2)
+        feature?.scenarios.forEach({ (scenario) in
+            XCTAssertEqual(scenario.title, "Some determinable business situation")
+            XCTAssertEqual(scenario.steps.count, 5)
+        })
+    }
+    
+    func testScenarioOutlinesHandleTags() {
+        let cucumber = Cucumber(withString:"""
+    Feature: Some terse yet descriptive text of what is desired
+        Textual description of the business value of this feature
+        Business rules that govern the scope of the feature
+        Any additional information that will make the feature easier to understand
+        
+        Background:
+            Given I am logged in
+    
+        @outline
+        Scenario Outline: Some determinable business situation
+            Given some <precondition>
+                And some <other precondition>
+            When some action by <actor>
+            Then some <testable outcome> is achieved
+
+            Example:
+                | precondition  | other precondition    | actor | testable outcome  |
+                | first         | second                | Bob   | result 1          |
+                | third         | fourth                | Susan | result 2          |
+    """)
+        let feature = cucumber.features.first
+        XCTAssertEqual(feature?.scenarios.count, 2)
+        feature?.scenarios.forEach({ (scenario) in
+            XCTAssertEqual(scenario.title, "Some determinable business situation")
+            XCTAssertEqual(scenario.steps.count, 5)
+            XCTAssert(scenario.containsTag("outline"))
+        })
+    }
 }

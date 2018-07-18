@@ -27,13 +27,13 @@ public class Feature : Taggable {
         let backgroundSteps:[StepNode] = node.children.filter { $0 is BackgroundNode }
                                         .map { $0 as! BackgroundNode }
                                         .flatMap { $0.children as! [StepNode] }
-        scenarios ?= node.children.filter { $0 is ScenarioNode }
-                    .map { $0 as! ScenarioNode }
-                    .compactMap{ Scenario(with: $0, tags:tags, stepNodes: backgroundSteps) }
-        node.children.filter { $0 is ScenarioOutlineNode }
-            .map { $0 as! ScenarioOutlineNode }.forEach { (son) in
-                let generatedScenarios = ScenarioOutlineParser.parse(son, featureTags: tags)
+        node.children.forEach { (node) in
+            if let sn = node as? ScenarioNode {
+                scenarios.append(Scenario(with: sn, tags:tags, stepNodes: backgroundSteps))
+            } else if let son = node as? ScenarioOutlineNode {
+                let generatedScenarios = ScenarioOutlineParser.parse(son, featureTags: tags, backgroundStepNodes: backgroundSteps)
                 scenarios.append(contentsOf: generatedScenarios)
+            }
         }
     }
     
