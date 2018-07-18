@@ -15,6 +15,12 @@ class Node {
         child.parent = self
         children.append(child)
     }
+    init() { }
+    init(node:Node) {
+        parent   = node.parent
+        tokens   = node.tokens
+        children = node.children
+    }
 }
 class FeatureNode: Node {}
 class BackgroundNode: Node {}

@@ -63,12 +63,6 @@ public class Step : CustomStringConvertible {
         self.match = self.match.trimmingCharacters(in: .whitespaces)
     }
     
-    init(with keyword:Keyword, match:String) {
-        self.keyword = keyword
-        self.match = match
-        self.match = self.match.trimmingCharacters(in: .whitespaces)
-    }
-    
     func toJSON() -> [String:Any] {
         return [
             "result":["status":"\(result)", "error_message" : errorMessage],

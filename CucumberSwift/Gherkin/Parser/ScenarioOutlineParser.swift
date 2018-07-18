@@ -34,37 +34,26 @@ class ScenarioOutlineParser {
         for line in lines {
             var steps = backgroundStepNodes.map { Step(with: $0) }
             for stepNode in stepNodes {
-                if let step = getStepFromLine(line, lookup: headerLookup, node: stepNode) {
-                    steps.append(step)
-                }
+                steps.append(getStepFromLine(line, lookup: headerLookup, stepNode: stepNode))
             }
             scenarios.append(Scenario(with: steps, title:title, tags: tags))
         }
         return scenarios
     }
     
-    private static func getStepFromLine(_ line:[Token], lookup:[String:Int], node:StepNode) -> Step? {
-        if let keywordToken = node.tokens.first(where: { (token) -> Bool in
-            return token.isKeyword()
-        }) {
-            var match = ""
-            for token in node.tokens {
-                if case Token.tableHeader(let headerText) = token {
-                    if let index = lookup[headerText],
-                        index < line.count,
-                        index >= 0,
-                        case Token.tableCell(let cellText) = line[index] {
-                        match += cellText
-                    }
-                } else if case Token.match(let m) = token {
-                    match += m
+    private static func getStepFromLine(_ line:[Token], lookup:[String:Int], stepNode:StepNode) -> Step {
+        let node = StepNode(node: stepNode)
+        for (i, token) in node.tokens.enumerated() {
+            if case Token.tableHeader(let headerText) = token {
+                if let index = lookup[headerText],
+                    index < line.count,
+                    index >= 0,
+                    case Token.tableCell(let cellText) = line[index] {
+                    node.tokens[i] = .match(cellText)
                 }
             }
-            if case Token.keyword(let keyword) = keywordToken {
-                return Step(with: keyword, match: match.trimmingCharacters(in: .whitespaces))
-            }
         }
-        return nil
+        return Step(with: node)
     }
     
     private static func groupTokensByLine(_ tokens:[Token]) -> [[Token]] {
