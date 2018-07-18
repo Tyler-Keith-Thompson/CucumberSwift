@@ -115,33 +115,34 @@ class Lexer {
             let str = readLineUntil{ $0.isQuote }
             advanceIndex()
             return .string(str)
-        } else if char.isNumeric {
-            let digits = readLineUntil{ !$0.isNumeric }
-            if let next = currentChar,
-                next.isDecimal {
-                advanceIndex()
-                let decimalDigits = readLineUntil{ !$0.isNumeric }
-                var isDouble = false
-                if let n = currentChar,
-                    n.isSpace {
-                    isDouble = true
-                } else { //EOF
-                    isDouble = true
-                }
-                if (isDouble) {
-                    return .double(Double(digits + "." + decimalDigits)!)
-                } else {
-                    return .integer(Int(digits)!)
-                }
-            } else {
-                return .integer(Int(digits)!)
-            }
         } else if let _ = lastKeyword {
             return .match(readLineUntil{ $0.isSymbol })
         } else {
             advanceIndex()
             return advanceToNextToken()
         }
+        //        else if char.isNumeric {
+        //            let digits = readLineUntil{ !$0.isNumeric }
+        //            if let next = currentChar,
+        //                next.isDecimal {
+        //                advanceIndex()
+        //                let decimalDigits = readLineUntil{ !$0.isNumeric }
+        //                var isDouble = false
+        //                if let n = currentChar,
+        //                    n.isSpace {
+        //                    isDouble = true
+        //                } else { //EOF
+        //                    isDouble = true
+        //                }
+        //                if (isDouble) {
+        //                    return .double(Double(digits + "." + decimalDigits)!)
+        //                } else {
+        //                    return .integer(Int(digits)!)
+        //                }
+        //            } else {
+        //                return .integer(Int(digits)!)
+        //            }
+        //        }
     }
     
     func lex() -> [Token] {
