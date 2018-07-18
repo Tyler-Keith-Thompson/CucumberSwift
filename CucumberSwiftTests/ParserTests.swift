@@ -125,54 +125,62 @@ class ParserTests: XCTestCase {
         }
     }
 
-//    func testWithIntegerType() {
-//        let cucumber = Cucumber(withString: """
-//    Feature: Some feature
-//       Scenario: Some determinable business situation
-//         Given a user with 2 ideas
-//            And a PO with 1
-//    """)
-//        let feature = cucumber.features.first
-//        let scenario = feature?.scenarios.first
-//        let firstStep = scenario?.steps.first
-//        let secondStep = scenario?.steps.last
-//        XCTAssertEqual(firstStep?.keyword, .given)
-//        XCTAssertEqual(firstStep?.match, "a user with 2 ideas")
-//        XCTAssertEqual(secondStep?.keyword, .and)
-//        XCTAssertEqual(secondStep?.match, "a PO with 1")
-//    }
+    func testWithIntegerType() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a user with 2 ideas
+            And a PO with 1
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        let firstStep = scenario?.steps.first
+        let secondStep = scenario?.steps.last
+        XCTAssertEqual(firstStep?.keyword, .given)
+        XCTAssertEqual(firstStep?.match, "a user with 2 ideas")
+        XCTAssertEqual(secondStep?.keyword, .and)
+        XCTAssertEqual(secondStep?.match, "a PO with 1")
+    }
     
-//    func testWithDoubleType() {
-//        let cucumber = Cucumber(withString: """
-//    Feature: Some feature
-//       Scenario: Some determinable business situation
-//         Given a user with 2.5 ideas
-//            And a PO with 0.5
-//    """)
-//        let feature = cucumber.features.first
-//        let scenario = feature?.scenarios.first
-//        let firstStep = scenario?.steps.first
-//        let secondStep = scenario?.steps.last
-//        XCTAssertEqual(firstStep?.keyword, .given)
-//        XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
-//        XCTAssertEqual(secondStep?.keyword, .and)
-//        XCTAssertEqual(secondStep?.match, "a PO with 0.5")
-//    }
+    func testWithDoubleType() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a user with 2.5 ideas
+            And a PO with 0.5
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        let firstStep = scenario?.steps.first
+        let secondStep = scenario?.steps.last
+        XCTAssertEqual(firstStep?.keyword, .given)
+        XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
+        XCTAssertEqual(secondStep?.keyword, .and)
+        XCTAssertEqual(secondStep?.match, "a PO with 0.5")
+    }
     
-//    func testItDoesNotGetFooledByThingsThatLookLikeDoublesButAreNot() {
-//        let cucumber = Cucumber(withString: """
-//    Feature: Some feature
-//       Scenario: Some determinable business situation
-//         Given a user with 2.5 ideas
-//            And a birthday with 8.1.1992
-//    """)
-//        let feature = cucumber.features.first
-//        let scenario = feature?.scenarios.first
-//        let firstStep = scenario?.steps.first
-//        let secondStep = scenario?.steps.last
-//        XCTAssertEqual(firstStep?.keyword, .given)
-//        XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
-//        XCTAssertEqual(secondStep?.keyword, .and)
-//        XCTAssertEqual(secondStep?.match, "a PO with 0.5")
-//    }
+    func testItDoesNotGetFooledByThingsThatLookLikeDoublesButAreNot() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a user with 2.5 ideas
+            And a birthday with 08.01.1992
+         When a requirement is to handle 08 without changing it
+         Then it works
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        let firstStep = scenario?.steps.first
+        XCTAssertEqual(scenario?.steps.count, 4)
+        XCTAssertEqual(firstStep?.keyword, .given)
+        XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
+        if ((scenario?.steps.count ?? 0) == 4) {
+            XCTAssertEqual(scenario?.steps[1].keyword, .and)
+            XCTAssertEqual(scenario?.steps[1].match, "a birthday with 08.01.1992")
+            XCTAssertEqual(scenario?.steps[2].keyword, .when)
+            XCTAssertEqual(scenario?.steps[2].match, "a requirement is to handle 08 without changing it")
+            XCTAssertEqual(scenario?.steps[3].keyword, .then)
+            XCTAssertEqual(scenario?.steps[3].match, "it works")
+        }
+    }
 }
