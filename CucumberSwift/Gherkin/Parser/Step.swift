@@ -56,6 +56,8 @@ public class Step : CustomStringConvertible {
                 match += m
             } else if case Token.string(let s) = token {
                 match += "\"\(s)\""
+            } else if case Token.integer(let i) = token {
+                match += String(describing: i)
             }
         }
         self.match = self.match.trimmingCharacters(in: .whitespaces)

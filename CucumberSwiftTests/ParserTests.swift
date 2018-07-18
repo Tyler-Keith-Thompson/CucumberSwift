@@ -125,4 +125,16 @@ class ParserTests: XCTestCase {
         }
     }
 
+    func testWithIntegerType() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a user with 2 ideas
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .given)
+        XCTAssertEqual(step?.match, "a user with 2 ideas")
+    }
 }
