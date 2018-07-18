@@ -45,9 +45,9 @@ extension Character {
     var isHeaderClosed: Bool {
         return self == Character.tableHeaderClose
     }
-    var isQuote: Bool {
-        return self == Character.quote
-    }
+//    var isQuote: Bool {
+//        return self == Character.quote
+//    }
     var isTagMarker: Bool {
         return self == Character.tagMarker
     }
@@ -56,9 +56,6 @@ extension Character {
     }
     var isNewline: Bool {
         return self == Character.newLine
-    }
-    var isWhitespace: Bool {
-        return CharacterSet.whitespacesAndNewlines.contains(scalar)
     }
     var isScopeTerminator: Bool {
         return self == Character.scopeTerminator

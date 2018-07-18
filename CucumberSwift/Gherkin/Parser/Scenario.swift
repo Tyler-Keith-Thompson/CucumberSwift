@@ -26,7 +26,7 @@ public class Scenario : Taggable {
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
     }
     
-    init(with steps:[Step], title:String, description:String, tags:[String]) {
+    init(with steps:[Step], title:String, tags:[String]) {
         self.steps = steps
         self.title = title
         self.tags = tags

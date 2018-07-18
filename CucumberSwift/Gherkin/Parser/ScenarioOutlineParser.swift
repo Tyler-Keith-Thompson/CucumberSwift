@@ -38,7 +38,7 @@ class ScenarioOutlineParser {
                     steps.append(step)
                 }
             }
-            scenarios.append(Scenario(with: steps, title:title, description:description, tags: tags))
+            scenarios.append(Scenario(with: steps, title:title, tags: tags))
         }
         return scenarios
     }

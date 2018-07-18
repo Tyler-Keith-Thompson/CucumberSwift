@@ -14,7 +14,8 @@ public class Feature : Taggable {
     public private(set)  var uri:String = ""
     public internal(set) var tags = [String]()
     
-    init (with node:FeatureNode) {
+    init(with node:FeatureNode, uri:String = "") {
+        self.uri = uri
         for token in node.tokens {
             if case Token.title(let t) = token {
                 title = t

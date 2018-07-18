@@ -8,15 +8,6 @@
 
 import Foundation
 extension String {
-    var lines:[String] {
-        get {
-            var lines = [String]()
-            enumerateLines { (line, _) in
-                lines.append(line)
-            }
-            return lines
-        }
-    }
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
@@ -34,9 +25,5 @@ extension String {
             print("invalid regex: \(error.localizedDescription)")
             return []
         }
-    }
-    func trimmingComments(_ commentString:String = "#") -> String {
-        guard !starts(with: commentString) else { return "" }
-        return components(separatedBy: commentString).first ?? self
     }
 }

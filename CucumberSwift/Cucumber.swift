@@ -36,16 +36,16 @@ import XCTest
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if let string = try? String(contentsOf: url, encoding: .utf8) {
-                parseIntoFeatures(string)
+                parseIntoFeatures(string, uri: url.absoluteString)
             }
         }
         XCTestObservationCenter.shared.addTestObserver(self)
     }
     
-    private func parseIntoFeatures(_ string:String) {
+    private func parseIntoFeatures(_ string:String, uri:String = "") {
         let tokens = Lexer(input: string).lex()
         let ast = AST(tokens)
-        features = ast.featureNodes.compactMap { Feature(with: $0) }
+        features = ast.featureNodes.compactMap { Feature(with: $0, uri:uri) }
     }
     
     public func executeFeatures() {
