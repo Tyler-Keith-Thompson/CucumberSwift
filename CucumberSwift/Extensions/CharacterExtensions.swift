@@ -28,11 +28,14 @@ extension Character {
     var isAlphanumeric: Bool {
         return isalnum(value) != 0
     }
+    var isNumeric: Bool {
+        return isnumber(value) != 0
+    }
     var isSymbol: Bool {
         return isComment ||
             isNewline ||
             isTagMarker ||
-//            isQuote ||
+            isQuote ||
             isTableCellDelimiter ||
             isHeaderToken
     }
@@ -45,9 +48,9 @@ extension Character {
     var isHeaderClosed: Bool {
         return self == Character.tableHeaderClose
     }
-//    var isQuote: Bool {
-//        return self == Character.quote
-//    }
+    var isQuote: Bool {
+        return self == Character.quote
+    }
     var isTagMarker: Bool {
         return self == Character.tagMarker
     }

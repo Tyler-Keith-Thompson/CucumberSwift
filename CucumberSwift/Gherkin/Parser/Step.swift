@@ -54,13 +54,17 @@ public class Step : CustomStringConvertible {
                 keyword = kw
             } else if case Token.match(let m) = token {
                 match += m
+            } else if case Token.string(let s) = token {
+                match += "\"\(s)\""
             }
         }
+        self.match = self.match.trimmingCharacters(in: .whitespaces)
     }
     
     init(with keyword:Keyword, match:String) {
         self.keyword = keyword
         self.match = match
+        self.match = self.match.trimmingCharacters(in: .whitespaces)
     }
     
     func toJSON() -> [String:Any] {

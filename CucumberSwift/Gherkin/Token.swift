@@ -12,7 +12,7 @@ enum Token: Equatable {
     case newLine
 //    case integer(Int)
 //    case double(Double)
-//    case string(String)
+    case string(String)
     case match(String)
     case title(String)
     case description(String)
@@ -34,8 +34,8 @@ enum Token: Equatable {
             return description1 == description2
         case let (.tag(tag1), .tag(tag2)):
             return tag1 == tag2
-//        case let (.string(string1), .string(string2)):
-//            return string1 == string2
+        case let (.string(string1), .string(string2)):
+            return string1 == string2
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
             return tableHeader1 == tableHeader2
         case let (.tableCell(tableCell1), .tableCell(tableCell2)):

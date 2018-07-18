@@ -54,7 +54,7 @@ class ScenarioOutlineParser {
                         index < line.count,
                         index >= 0,
                         case Token.tableCell(let cellText) = line[index] {
-                        match += " " + cellText + " "
+                        match += cellText
                     }
                 } else if case Token.match(let m) = token {
                     match += m

@@ -10,7 +10,7 @@ import Foundation
 class Lexer {
     let input: String
     var index: String.Index
-    var linePosition:Int = 0
+    var atLineStart = true
     var lastScope:Scope?
     var lastKeyword:Step.Keyword?
     
@@ -36,13 +36,21 @@ class Lexer {
         return str
     }
     
+    @discardableResult func stripSpaceIfNecessary() -> Bool {
+        if let c = currentChar, c.isSpace {
+            readLineUntil { !$0.isSpace }
+            return true
+        }
+        return false
+    }
+    
     func advanceToNextToken() -> Token? {
         guard let char = currentChar else {
             return nil
         }
         if (char.isNewline) {
             advanceIndex()
-            linePosition = 0
+            atLineStart = true
             lastScope = nil
             lastKeyword = nil
             return .newLine
@@ -54,11 +62,11 @@ class Lexer {
             advanceIndex()
             return advanceToNextToken()
         } else if char.isTagMarker {
-            linePosition += 1
+            atLineStart = false
             advanceIndex()
             return .tag(readLineUntil({ !$0.isAlphanumeric }))
         } else if char.isTableCellDelimiter {
-            linePosition += 1
+            atLineStart = false
             advanceIndex()
             let tableCellContents = readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces)
             if (!tableCellContents.isEmpty) {
@@ -66,22 +74,23 @@ class Lexer {
             }
             return advanceToNextToken()
         }
-        if (linePosition == 0) {
-            if (char.isSpace) {
-                readLineUntil { !$0.isSpace }
+        if (atLineStart) {
+            if (stripSpaceIfNecessary()) {
                 return advanceToNextToken()
             }
-            linePosition += 1
+            atLineStart = false
             let i = index
             let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator }
                 + String(describing: Character.scopeTerminator))
             if (scope != .unknown) {
                 advanceIndex() //strip scope terminator
                 lastScope = scope
+                stripSpaceIfNecessary()
                 return .scope(scope)
             } else { index = i }
             if let keyword = Step.Keyword(rawValue: readLineUntil{ $0.isSpace }.lowercased()) {
                 lastKeyword = keyword
+                stripSpaceIfNecessary()
                 return .keyword(keyword)
             } else {
                 index = i
@@ -94,19 +103,17 @@ class Lexer {
             let str = readLineUntil{ $0.isHeaderClosed }
             advanceIndex()
             return .tableHeader(str)
+        } else if char.isQuote {
+            advanceIndex()
+            let str = readLineUntil{ $0.isQuote }
+            advanceIndex()
+            return .string(str)
         } else if let _ = lastKeyword {
-            return .match(readLineUntil{ $0.isSymbol }.trimmingCharacters(in: .whitespaces))
+            return .match(readLineUntil{ $0.isSymbol })
         } else {
             advanceIndex()
             return advanceToNextToken()
         }
-//        else if char.isQuote {
-//            advanceIndex()
-//            let str = readUntil { !$0.isQuote }
-//            advanceIndex()
-//            return .string(str)
-//        }
-//        return nil
     }
     
     func lex() -> [Token] {
