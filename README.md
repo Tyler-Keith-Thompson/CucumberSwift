@@ -12,7 +12,6 @@ Add this line to your podfile:
 
 ### What's Missing?
 
-- Gherkin Tables
 - AND support for tags (currently when multiple tags are passed in it's treated as OR)
 
 ### How do I use it?
