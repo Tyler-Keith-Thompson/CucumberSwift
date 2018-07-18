@@ -23,6 +23,13 @@ class Lexer {
         return index < input.endIndex ? input[index] : nil
     }
     
+    var nextChar: Character? {
+        if let i = input.index(index, offsetBy: 1, limitedBy: input.endIndex) {
+            return input[i]
+        }
+        return nil
+    }
+    
     func advanceIndex() {
         _ = input.formIndex(&index, offsetBy: 1, limitedBy: input.endIndex)
     }
@@ -109,8 +116,26 @@ class Lexer {
             advanceIndex()
             return .string(str)
         } else if char.isNumeric {
-            let str = readLineUntil{ !$0.isNumeric }
-            return .integer(Int(str)!)
+            let digits = readLineUntil{ !$0.isNumeric }
+            if let next = currentChar,
+                next.isDecimal {
+                advanceIndex()
+                let decimalDigits = readLineUntil{ !$0.isNumeric }
+                var isDouble = false
+                if let n = currentChar,
+                    n.isSpace {
+                    isDouble = true
+                } else { //EOF
+                    isDouble = true
+                }
+                if (isDouble) {
+                    return .double(Double(digits + "." + decimalDigits)!)
+                } else {
+                    return .integer(Int(digits)!)
+                }
+            } else {
+                return .integer(Int(digits)!)
+            }
         } else if let _ = lastKeyword {
             return .match(readLineUntil{ $0.isSymbol })
         } else {

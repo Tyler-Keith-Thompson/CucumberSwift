@@ -11,7 +11,7 @@ import Foundation
 enum Token: Equatable {
     case newLine
     case integer(Int)
-//    case double(Double)
+    case double(Double)
     case string(String)
     case match(String)
     case title(String)
@@ -36,6 +36,8 @@ enum Token: Equatable {
             return tag1 == tag2
         case let (.integer(int1), .integer(int2)):
             return int1 == int2
+        case let (.double(double1), .double(double2)):
+            return double1 == double2
         case let (.string(string1), .string(string2)):
             return string1 == string2
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):

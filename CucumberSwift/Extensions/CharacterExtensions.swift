@@ -16,6 +16,8 @@ extension Character {
     static let tagMarker:Character = "@"
     static let comment:Character = "#"
     static let tableCellDelimiter:Character = "|"
+    static let decimal:Character = "."
+    
     var value: Int32 {
         return Int32(scalar.value)
     }
@@ -31,12 +33,16 @@ extension Character {
     var isNumeric: Bool {
         return isnumber(value) != 0
     }
+    var isDecimal: Bool {
+        return self == Character.decimal
+    }
     var isSymbol: Bool {
         return isComment ||
             isNewline ||
             isTagMarker ||
             isQuote ||
             isNumeric ||
+            isDecimal ||
             isTableCellDelimiter ||
             isHeaderToken
     }
