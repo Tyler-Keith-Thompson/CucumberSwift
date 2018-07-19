@@ -55,7 +55,7 @@ public class Feature : NSObject, Taggable {
             "uri": uri,
             "id" : title.lowercased().replacingOccurrences(of: " ", with: "-"),
             "name" : title,
-            "description" : description,
+            "description" : desc,
             "keyword" : "Feature",
             "elements" : scenarios.map { $0.toJSON() }
         ]
