@@ -50,7 +50,8 @@ class CucumberSwiftTests: XCTestCase {
     func testBeforeScenarioHooks() {
         let cucumber = Cucumber(withString: featureFile)
         var beforeScenarioCalled = 0
-        cucumber.BeforeScenario = { _ in
+        cucumber.BeforeScenario = { scenario in
+            XCTAssertNotNil(scenario.feature)
             beforeScenarioCalled += 1
         }
         var afterScenarioCalled = 0

@@ -7,8 +7,8 @@
 //
 
 import Foundation
-public class Step : CustomStringConvertible {
-    public var description: String {
+public class Step : NSObject {
+    override public var description: String {
         return "TAGS:\(tags)\n\(keyword ?? .given): \(match)"
     }
     
@@ -42,6 +42,7 @@ public class Step : CustomStringConvertible {
     public private(set)  var match = ""
     public private(set)  var keyword:Keyword?
     public internal(set) var tags = [String]()
+    public internal(set) var scenario:Scenario?
 
     var result:Result = .pending
     var execute:(([String]) -> Void)? = nil

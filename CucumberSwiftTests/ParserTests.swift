@@ -90,11 +90,14 @@ class ParserTests: XCTestCase {
         
         XCTAssertEqual(cucumber.features.count, 1)
         XCTAssertEqual(feature?.title, "Some terse yet descriptive text of what is desired")
-        XCTAssertEqual(feature?.description, "Textual description of the business value of this feature\nBusiness rules that govern the scope of the feature\nAny additional information that will make the feature easier to understand\n")
-        
+        XCTAssertEqual(feature?.desc, "Textual description of the business value of this feature\nBusiness rules that govern the scope of the feature\nAny additional information that will make the feature easier to understand\n")
         XCTAssertEqual(feature?.scenarios.count, 2)
+        XCTAssert(firstScenario?.feature === feature)
+        XCTAssert(lastScenario?.feature === feature)
         XCTAssertEqual(firstScenario?.title, "Some determinable business situation")
         XCTAssertEqual(firstScenario?.steps.count, 6)
+        firstScenario?.steps.forEach { XCTAssert($0.scenario === firstScenario) }
+        lastScenario?.steps.forEach { XCTAssert($0.scenario === lastScenario) }
         if ((firstScenario?.steps.count ?? 0) == 6) {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)

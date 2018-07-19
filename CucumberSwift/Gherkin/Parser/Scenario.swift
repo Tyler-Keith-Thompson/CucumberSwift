@@ -7,13 +7,14 @@
 //
 
 import Foundation
-public class Scenario : Taggable {
+public class Scenario : NSObject, Taggable {
     public private(set)  var title = ""
-    public private(set)  var description = ""
     public private(set)  var tags = [String]()
     public internal(set) var steps = [Step]()
+    public internal(set) var feature:Feature?
     
     init(with node:ScenarioNode, tags:[String], stepNodes:[StepNode]) {
+        super.init()
         self.tags = tags
         for token in node.tokens {
             if case Token.title(let t) = token {
@@ -24,6 +25,7 @@ public class Scenario : Taggable {
         }
         steps ?= ((node.children as? [StepNode])?.compactMap{ Step(with: $0) })
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
+        steps.forEach { $0.scenario = self }
     }
     
     init(with steps:[Step], title:String, tags:[String]) {

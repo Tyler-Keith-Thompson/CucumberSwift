@@ -7,20 +7,21 @@
 //
 
 import Foundation
-public class Feature : Taggable {
+public class Feature : NSObject, Taggable {
     public private(set)  var title = ""
-    public private(set)  var description = ""
+    public private(set)  var desc = ""
     public private(set)  var scenarios = [Scenario]()
     public private(set)  var uri:String = ""
     public internal(set) var tags = [String]()
     
     init(with node:FeatureNode, uri:String = "") {
+        super.init()
         self.uri = uri
         for token in node.tokens {
             if case Token.title(let t) = token {
                 title = t
-            } else if case Token.description(let desc) = token {
-                description += desc + "\n"
+            } else if case Token.description(let description) = token {
+                desc += description + "\n"
             } else if case Token.tag(let tag) = token {
                 self.tags.append(tag)
             }
@@ -36,6 +37,7 @@ public class Feature : Taggable {
                 scenarios.append(contentsOf: generatedScenarios)
             }
         }
+        scenarios.forEach { $0.feature = self }
     }
     
     func containsTags(_ tags:[String]) -> Bool {
