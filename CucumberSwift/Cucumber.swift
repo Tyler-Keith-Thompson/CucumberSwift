@@ -45,7 +45,7 @@ import XCTest
     private func parseIntoFeatures(_ string:String, uri:String = "") {
         let tokens = Lexer(input: string).lex()
         let ast = AST(tokens)
-        features = ast.featureNodes.compactMap { Feature(with: $0, uri:uri) }
+        features.append(contentsOf: ast.featureNodes.compactMap { Feature(with: $0, uri:uri) })
     }
     
     public func executeFeatures() {
