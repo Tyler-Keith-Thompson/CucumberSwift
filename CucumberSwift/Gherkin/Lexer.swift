@@ -90,13 +90,14 @@ class Lexer {
             atLineStart = false
             let i = index
             let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator })
-            if (scope != .unknown) {
+            if (scope != .unknown && !scope.isStep()) {
                 advanceIndex() //strip scope terminator
                 lastScope = scope
                 stripSpaceIfNecessary()
                 return .scope(scope)
-            } else { index = i }
-            if let keyword = Step.Keyword(readLineUntil{ $0.isSpace }.lowercased()) {
+            } else if case .step(let keyword) = scope {
+                index = i
+                readLineUntil { $0.isSpace }
                 lastKeyword = keyword
                 stripSpaceIfNecessary()
                 return .keyword(keyword)

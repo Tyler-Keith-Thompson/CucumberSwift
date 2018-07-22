@@ -14,12 +14,13 @@ public class Step : NSObject {
     
     public struct Keyword: OptionSet {
         public let rawValue: Int
-
+        private var stringValue:String? = nil
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
         
         public init?(_ str:String) {
+            stringValue = str
             var set:Keyword = []
             if (Scope.language.matchesGiven(str)) {
                 set.insert(.given)
@@ -41,6 +42,9 @@ public class Step : NSObject {
         }
         
         public func toString() -> String {
+            if let str = stringValue {
+                return str
+            }
             if (contains(Keyword.given)) {
                 return "Given"
             }

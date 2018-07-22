@@ -7,14 +7,14 @@
 //
 
 import Foundation
-enum Scope {
+enum Scope: Equatable {
     static var language = Language()
     
     case feature
     case background
     case scenario
     case scenarioOutline
-    case step
+    case step(Step.Keyword)
     case examples
     case unknown
     
@@ -29,14 +29,44 @@ enum Scope {
             return .examples
         } else if (language.matchesScenarioOutline(str)) {
             return .scenarioOutline
-        } else if (language.matchesGiven(str)
-            || language.matchesWhen(str)
-            || language.matchesThen(str)
-            || language.matchesAnd(str)
-            || language.matchesBut(str)) {
-            return .step
+        }
+        let index = str.index(of: " ")
+        var keywordString = str
+        if let i = index {
+            keywordString = String(str[str.startIndex..<i])
+        }
+        if let keyword = Step.Keyword(keywordString) {
+             return .step(keyword)
         }
         return .unknown
+    }
+    
+    static func ==(lhs: Scope, rhs: Scope) -> Bool {
+        switch (lhs, rhs) {
+        case (.feature, .feature):
+            return true
+        case (.background, .background):
+            return true
+        case (.scenario, .scenario):
+            return true
+        case (.scenarioOutline, .scenarioOutline):
+            return true
+        case (.step(let s1), .step(let s2)):
+            return s1 == s2
+        case (.examples, .examples):
+            return true
+        case (.unknown, .unknown):
+            return true
+        default:
+            return false
+        }
+    }
+    
+    func isStep() -> Bool {
+        if case .step(_) = self {
+            return true
+        }
+        return false
     }
     
     var priority:Int {
