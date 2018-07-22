@@ -114,14 +114,6 @@ class CucumberSwiftTests: XCTestCase {
         cucumber.executeFeatures()
         XCTAssertTrue(andCalled)
 
-        var orCalled = false
-        cucumber.Or("(.*?)") { matches in
-            orCalled = true
-            XCTAssertEqual(matches.count, 1)
-        }
-        cucumber.executeFeatures()
-        XCTAssertFalse(orCalled)
-
         var butCalled = false
         cucumber.But("(.*?)") { matches in
             butCalled = true

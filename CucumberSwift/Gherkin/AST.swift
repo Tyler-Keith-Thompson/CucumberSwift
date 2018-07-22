@@ -62,7 +62,7 @@ class AST {
                     scenario.tokens.append(contentsOf: tags)
                     tags.removeAll()
                     feature.add(child: scenario)
-                case .example:
+                case .examples:
                     currentNode = scenario
                 default: currentNode?.tokens.append(token)
                 }

@@ -8,29 +8,35 @@
 
 import Foundation
 enum Scope {
+    static let language = Language()
+    
     case feature
     case background
     case scenario
     case scenarioOutline
     case step
-    case example
+    case examples
     case unknown
     
     static func scopeFor(str:String) -> Scope {
-        switch str.lowercased() {
-        case "feature:": return .feature
-        case "scenario:": return .scenario
-        case "background:": return .background
-        case "example:": return .example
-        case "scenario outline:": return .scenarioOutline
-        case "given": return .step
-        case "when": return .step
-        case "then": return .step
-        case "and": return .step
-        case "or": return .step
-        case "but": return .step
-        default: return .unknown
+        if (language.matchesFeature(str)) {
+            return .feature
+        } else if (language.matchesScenario(str)) {
+            return .scenario
+        } else if (language.matchesBackground(str)) {
+            return .background
+        } else if (language.matchesExamples(str)) {
+            return .examples
+        } else if (language.matchesScenarioOutline(str)) {
+            return .scenarioOutline
+        } else if (language.matchesGiven(str)
+            || language.matchesWhen(str)
+            || language.matchesThen(str)
+            || language.matchesAnd(str)
+            || language.matchesBut(str)) {
+            return .step
         }
+        return .unknown
     }
     
     var priority:Int {
@@ -44,7 +50,7 @@ enum Scope {
                 return 1
             case .scenarioOutline:
                 return 1
-            case .example:
+            case .examples:
                 return 1
             case .step:
                 return 2

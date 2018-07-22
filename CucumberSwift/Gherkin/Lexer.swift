@@ -87,8 +87,7 @@ class Lexer {
             }
             atLineStart = false
             let i = index
-            let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator }
-                + String(describing: Character.scopeTerminator))
+            let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator })
             if (scope != .unknown) {
                 advanceIndex() //strip scope terminator
                 lastScope = scope

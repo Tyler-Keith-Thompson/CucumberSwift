@@ -17,7 +17,6 @@ public class Step : NSObject {
         case when = "when"
         case then = "then"
         case and = "and"
-        case or = "or"
         case but = "but"
         
         static var all:[Keyword] {
@@ -26,7 +25,6 @@ public class Step : NSObject {
                 .when,
                 .then,
                 .and,
-                .or,
                 .but
             ]
         }

@@ -15,6 +15,8 @@
 		AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2528207A8B4E001B8211 /* StepTests.swift */; };
 		AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */; };
 		AD7D2530207AAB2B001B8211 /* Features in Resources */ = {isa = PBXBuildFile; fileRef = AD7D252F207AAB2B001B8211 /* Features */; };
+		AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7F1C0B2104D6B10004852A /* gherkin-languages.json */; };
+		AD7F1C0E2104DB240004852A /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0D2104DB240004852A /* Language.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
 		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -57,6 +59,8 @@
 		AD7D2528207A8B4E001B8211 /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
 		AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 		AD7D252F207AAB2B001B8211 /* Features */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Features; sourceTree = "<group>"; };
+		AD7F1C0B2104D6B10004852A /* gherkin-languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gherkin-languages.json"; sourceTree = "<group>"; };
+		AD7F1C0D2104DB240004852A /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
 		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -195,6 +199,8 @@
 				CA5A7C3C20FC2B2900F4564A /* Token.swift */,
 				CA5A7C3A20FC2B2300F4564A /* Lexer.swift */,
 				5AE2C0BE20FE7EE7000DDD48 /* AST.swift */,
+				AD7F1C0D2104DB240004852A /* Language.swift */,
+				AD7F1C0B2104D6B10004852A /* gherkin-languages.json */,
 			);
 			path = Gherkin;
 			sourceTree = "<group>";
@@ -332,6 +338,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +364,7 @@
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
+				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,

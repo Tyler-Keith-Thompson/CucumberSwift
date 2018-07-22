@@ -35,8 +35,10 @@ import XCTest
         self.reportName = reportName
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
-            if let string = try? String(contentsOf: url, encoding: .utf8) {
-                parseIntoFeatures(string, uri: url.absoluteString)
+            if (url.pathExtension == "feature") {
+                if let string = try? String(contentsOf: url, encoding: .utf8) {
+                    parseIntoFeatures(string, uri: url.absoluteString)
+                }
             }
         }
         XCTestObservationCenter.shared.addTestObserver(self)
@@ -92,26 +94,6 @@ import XCTest
         }
     }
     
-    /*
-     # Data Tables
-     Feature:
-     Scenario: Thing I want to test
-        Given some <header1> precondition
-        Then some <header2> expectation
-     
-        Example:
-            | header1 | header2 |
-            | data1   | data2   |
-     
-     Scenario: Other way to write tables
-        Given some users exist:
-            | Dave       | Dave's password        |
-            | nothereman | nothereman's passoword |
-        When a random user tries to log in
-            And they use the correct password
-        Then they log in successfully
-     */
-    
     func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
         features
         .flatMap { $0.scenarios.flatMap { $0.steps } }
@@ -138,9 +120,6 @@ import XCTest
     }
     public func And(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .and, regex: regex, callback:callback)
-    }
-    public func Or(_ regex:String, callback:@escaping (([String]) -> Void)) {
-        attachClosureToSteps(keyword: .or, regex: regex, callback:callback)
     }
     public func But(_ regex:String, callback:@escaping (([String]) -> Void)) {
         attachClosureToSteps(keyword: .but, regex: regex, callback:callback)

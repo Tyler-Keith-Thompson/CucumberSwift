@@ -24,7 +24,7 @@ class TableTests: XCTestCase {
             When some action by <actor>
             Then some <testable outcome> is achieved
 
-            Example:
+            Examples:
                 | precondition  | other precondition    | actor | testable outcome  |
                 | first         | second                | Bob   | result 1          |
                 | third         | fourth                | Susan | result 2          |
@@ -80,7 +80,7 @@ class TableTests: XCTestCase {
             When some action by <actor>
             Then some <testable outcome> is achieved
 
-            Example:
+            Examples:
                 | precondition  | other precondition    | actor | testable outcome  |
                 | first         | second                | Bob   | result 1          |
                 | third         | fourth                | Susan | result 2          |
@@ -110,7 +110,7 @@ class TableTests: XCTestCase {
             When some action by <actor>
             Then some <testable outcome> is achieved
 
-            Example:
+            Examples:
                 | precondition  | other precondition    | actor | testable outcome  |
                 | first         | second                | Bob   | result 1          |
                 | third         | fourth                | Susan | result 2          |
