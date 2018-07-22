@@ -10,10 +10,6 @@ Add this line to your podfile:
     pod 'CucumberSwift'
 ```
 
-### What's Missing?
-
-- AND support for tags (currently when multiple tags are passed in it's treated as OR)
-
 ### How do I use it?
 CucumberSwift can be used inside any class any way you like, the preffered method would be to stick it in a subclass of XCTestCase.
 ```swift
@@ -40,10 +36,6 @@ class MyBehaviorTests: XCTestCase {
         }
 
         cucumber.And("Something (matches|matched)") {  matches in
-            
-        }
-
-        cucumber.Or("Something (matches|matched)") {  matches in
             
         }
 
@@ -105,3 +97,15 @@ class MyBehaviorTests: XCTestCase {
 
 ### Tags
 You can specify what tags are supposed to be run by using the environment variable `CUCUMBER_TAGS`. This can be set by going to edit scheme -> test -> environment variables. Pass in a comma delimited list of tags to run.
+
+### What's Still Missing?
+- Gherkin language errors
+- TableHeader support in scenario outline titles
+- Rules
+- Data Tables outside of examples (so the ones attached to steps)
+- Docstrings
+- Keyword "*"
+- AND support for tags (currently when multiple tags are passed in it's treated as OR)
+
+### When will it be done?
+The gherkin language features mentioned above will be completed as I've got time to work on it. If you want to see something feel free to submit a pull request
