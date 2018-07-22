@@ -31,10 +31,7 @@ enum Scope: Equatable {
             return .scenarioOutline
         }
         let index = str.index(of: " ")
-        var keywordString = str
-        if let i = index {
-            keywordString = String(str[str.startIndex..<i])
-        }
+        let keywordString = String(str[str.startIndex..<(index ?? str.endIndex)])
         if let keyword = Step.Keyword(keywordString) {
              return .step(keyword)
         }
