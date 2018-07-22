@@ -63,8 +63,10 @@ class Lexer {
             return .newLine
         } else if char.isComment {
             advanceIndex()
-            while let char = currentChar, !char.isNewline {
-                advanceIndex()
+            let str = readLineUntil { _ in false }
+            let matches = str.matches(for: "^(?:\\s*)language(?:\\s*):(?:\\s*)(.*?)(?:\\s*)$")
+            if (!matches.isEmpty) {
+                Scope.language = Language(matches[1])
             }
             advanceIndex()
             return advanceToNextToken()
@@ -128,6 +130,7 @@ class Lexer {
     }
     
     func lex() -> [Token] {
+        Scope.language = Language()
         var toks = [Token]()
         while let tok = advanceToNextToken() {
             toks.append(tok)

@@ -8,7 +8,7 @@
 
 import Foundation
 enum Scope {
-    static let language = Language()
+    static var language = Language()
     
     case feature
     case background
