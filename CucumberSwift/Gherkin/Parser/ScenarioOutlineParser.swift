@@ -10,14 +10,12 @@ import Foundation
 class ScenarioOutlineParser {
     static func parse(_ scenarioOutlineNode:ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[StepNode]) -> [Scenario] {
         var scenarios = [Scenario]()
+        let titleLine = groupTokensByLine(scenarioOutlineNode.tokens).first
         var lines = groupTokensByLine(scenarioOutlineNode.tokens.filter{ $0.isTableCell() || $0 == .newLine })
         var headerLookup:[String:Int] = [:]
-        var title = ""
         var tags = [String]()
-        for token in scenarioOutlineNode.tokens {
-            if case Token.title(let t) = token {
-                title = t
-            } else if case Token.tag(let tag) = token {
+        scenarioOutlineNode.tokens.forEach {
+            if case Token.tag(let tag) = $0 {
                 tags.append(tag)
             }
         }
@@ -32,6 +30,21 @@ class ScenarioOutlineParser {
         let stepNodes = scenarioOutlineNode.children.filter { $0 is StepNode }
                         .map { $0 as! StepNode }
         for line in lines {
+            var title = ""
+            if let titleTokens = titleLine {
+                for token in titleTokens {
+                    if case Token.tableHeader(let headerText) = token {
+                        if let index = headerLookup[headerText],
+                            index < line.count,
+                            index >= 0,
+                            case Token.tableCell(let cellText) = line[index] {
+                            title += cellText
+                        }
+                    } else if case Token.title(let titleText) = token {
+                        title += titleText
+                    }
+                }
+            }
             var steps = backgroundStepNodes.map { Step(with: $0) }
             for stepNode in stepNodes {
                 steps.append(getStepFromLine(line, lookup: headerLookup, stepNode: stepNode))

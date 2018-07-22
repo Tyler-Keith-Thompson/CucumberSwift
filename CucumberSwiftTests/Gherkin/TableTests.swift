@@ -123,4 +123,21 @@ class TableTests: XCTestCase {
             XCTAssert(scenario.containsTag("outline"))
         })
     }
+    
+    func testTableHeadersInsideTitle() {
+        let cucumber = Cucumber(withString:"""
+    Feature: Some terse yet descriptive text of what is desired
+      Scenario Outline: the <one>
+        Given the <four>
+            
+            Examples:
+              | one | two  | three | four   | five  |
+              | un  | deux | trois | quatre | cinq  |
+              | uno | dos  | tres  | quatro | cinco |
+    """)
+        let firstScenario = cucumber.features.first?.scenarios.first
+        let secondScenario = cucumber.features.first?.scenarios.last
+        XCTAssertEqual(firstScenario?.title, "the un")
+        XCTAssertEqual(secondScenario?.title, "the uno")
+    }
 }

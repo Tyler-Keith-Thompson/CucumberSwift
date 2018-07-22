@@ -100,7 +100,6 @@ You can specify what tags are supposed to be run by using the environment variab
 
 ### What's Still Missing?
 - Gherkin language errors
-- TableHeader support in scenario outline titles
 - Rules
 - Data Tables outside of examples (so the ones attached to steps)
 - Docstrings

@@ -11,21 +11,4 @@ import XCTest
 @testable import CucumberSwift
 
 class DocstringTests: XCTestCase {
-    func testTableHeadersInsideDocStrings() {
-        let _ = Cucumber(withString:"""
-      Scenario Outline: the <one>
-        Given the <two>:
-          \"\"\"
-                  <three>
-          \"\"\"
-        Given the <four>:
-          | <five> |
-            
-            Examples:
-              | one | two  | three | four   | five  |
-              | un  | deux | trois | quatre | cinq  |
-              | uno | dos  | tres  | quatro | cinco |
-    """)
-        
-    }
 }

@@ -105,18 +105,18 @@ class Lexer {
                 index = i
                 return .description(readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
             }
-        } else if let _ = lastScope {
-            let title = readLineUntil{ $0.isSymbol }.trimmingCharacters(in: .whitespaces)
-            if (title.isEmpty) { //hack to get around potential infinite loop
-                advanceIndex()
-                return advanceToNextToken()
-            }
-            return .title(title)
         } else if char.isHeaderOpen {
             advanceIndex()
             let str = readLineUntil{ $0.isHeaderClosed }
             advanceIndex()
             return .tableHeader(str)
+        } else if let _ = lastScope {
+            let title = readLineUntil{ $0.isSymbol }
+            if (title.isEmpty) { //hack to get around potential infinite loop
+                advanceIndex()
+                return advanceToNextToken()
+            }
+            return .title(title)
         } else if char.isQuote {
             advanceIndex()
             let str = readLineUntil{ $0.isQuote }
