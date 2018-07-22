@@ -104,7 +104,12 @@ class Lexer {
                 return .description(readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
             }
         } else if let _ = lastScope {
-            return .title(readLineUntil{ $0.isSymbol }.trimmingCharacters(in: .whitespaces))
+            let title = readLineUntil{ $0.isSymbol }.trimmingCharacters(in: .whitespaces)
+            if (title.isEmpty) { //hack to get around potential infinite loop
+                advanceIndex()
+                return advanceToNextToken()
+            }
+            return .title(title)
         } else if char.isHeaderOpen {
             advanceIndex()
             let str = readLineUntil{ $0.isHeaderClosed }
@@ -121,28 +126,6 @@ class Lexer {
             advanceIndex()
             return advanceToNextToken()
         }
-        //        else if char.isNumeric {
-        //            let digits = readLineUntil{ !$0.isNumeric }
-        //            if let next = currentChar,
-        //                next.isDecimal {
-        //                advanceIndex()
-        //                let decimalDigits = readLineUntil{ !$0.isNumeric }
-        //                var isDouble = false
-        //                if let n = currentChar,
-        //                    n.isSpace {
-        //                    isDouble = true
-        //                } else { //EOF
-        //                    isDouble = true
-        //                }
-        //                if (isDouble) {
-        //                    return .double(Double(digits + "." + decimalDigits)!)
-        //                } else {
-        //                    return .integer(Int(digits)!)
-        //                }
-        //            } else {
-        //                return .integer(Int(digits)!)
-        //            }
-        //        }
     }
     
     func lex() -> [Token] {

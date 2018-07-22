@@ -35,6 +35,7 @@
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
 		CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337AA21044ACC002C361D /* CucumberTests.swift */; };
 		CAA337AF21045847002C361D /* testdata in Resources */ = {isa = PBXBuildFile; fileRef = CAA337AE21045847002C361D /* testdata */; };
+		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -80,6 +81,7 @@
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		CAA337AA21044ACC002C361D /* CucumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTests.swift; sourceTree = "<group>"; };
 		CAA337AE21045847002C361D /* testdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testdata; sourceTree = "<group>"; };
+		CAA337B02104C310002C361D /* DocstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocstringTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,19 +140,14 @@
 		AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				CAA337B32104C39B002C361D /* Extensions */,
+				CAA337B22104C368002C361D /* Gherkin */,
 				CAA337A921044ABB002C361D /* CucumberTests */,
 				CAA337AE21045847002C361D /* testdata */,
 				AD7D252F207AAB2B001B8211 /* Features */,
 				AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */,
 				AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */,
 				AD9EB4702079CF87002494C0 /* Info.plist */,
-				AD7D2528207A8B4E001B8211 /* StepTests.swift */,
-				AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */,
-				ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */,
-				ADB4D5F920FD0234005997AD /* CommentTests.swift */,
-				ADB4D5FB20FD02B8005997AD /* TagTests.swift */,
-				ADB4D5FD20FD03BF005997AD /* ParserTests.swift */,
-				5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -217,6 +214,28 @@
 				CAA337AA21044ACC002C361D /* CucumberTests.swift */,
 			);
 			path = CucumberTests;
+			sourceTree = "<group>";
+		};
+		CAA337B22104C368002C361D /* Gherkin */ = {
+			isa = PBXGroup;
+			children = (
+				AD7D2528207A8B4E001B8211 /* StepTests.swift */,
+				ADB4D5F920FD0234005997AD /* CommentTests.swift */,
+				ADB4D5FB20FD02B8005997AD /* TagTests.swift */,
+				ADB4D5FD20FD03BF005997AD /* ParserTests.swift */,
+				5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */,
+				CAA337B02104C310002C361D /* DocstringTests.swift */,
+			);
+			path = Gherkin;
+			sourceTree = "<group>";
+		};
+		CAA337B32104C39B002C361D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */,
+				ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -358,6 +377,7 @@
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
 				AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */,
+				CAA337B12104C310002C361D /* DocstringTests.swift in Sources */,
 				CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */,
 				5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */,
 				AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */,
