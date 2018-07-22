@@ -70,7 +70,7 @@ import XCTest
                         for step in scenario.steps {
                             BeforeStep?(step)
                             currentStep = step
-                            _ = XCTContext.runActivity(named: "\(step.keyword?.rawValue ?? "") \(step.match)") { _ -> String in
+                            _ = XCTContext.runActivity(named: "\(step.keyword?.toString() ?? "") \(step.match)") { _ -> String in
                                 step.execute?(step.match.matches(for: step.regex))
                                 if (step.execute != nil && step.result != .failed) {
                                     step.result = .passed
@@ -98,7 +98,11 @@ import XCTest
         features
         .flatMap { $0.scenarios.flatMap { $0.steps } }
         .filter { (step) -> Bool in
-            if (keyword == nil || keyword == step.keyword) {
+            if  let k = keyword,
+                let s = step.keyword,
+                s.contains(k) {
+                return !step.match.matches(for: regex).isEmpty
+            } else if (keyword == nil) {
                 return !step.match.matches(for: regex).isEmpty
             }
             return false

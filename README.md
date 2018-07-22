@@ -104,7 +104,6 @@ You can specify what tags are supposed to be run by using the environment variab
 - Rules
 - Data Tables outside of examples (so the ones attached to steps)
 - Docstrings
-- Keyword "*"
 - AND support for tags (currently when multiple tags are passed in it's treated as OR)
 
 ### When will it be done?

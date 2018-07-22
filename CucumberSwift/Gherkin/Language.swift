@@ -50,7 +50,6 @@ class Language {
             thenNames            ?= (language[Keys.then]            as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             andNames             ?= (language[Keys.and]             as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             butNames             ?= (language[Keys.but]             as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
-            
         }
     }
     

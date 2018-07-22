@@ -96,7 +96,7 @@ class Lexer {
                 stripSpaceIfNecessary()
                 return .scope(scope)
             } else { index = i }
-            if let keyword = Step.Keyword(rawValue: readLineUntil{ $0.isSpace }.lowercased()) {
+            if let keyword = Step.Keyword(readLineUntil{ $0.isSpace }.lowercased()) {
                 lastKeyword = keyword
                 stripSpaceIfNecessary()
                 return .keyword(keyword)

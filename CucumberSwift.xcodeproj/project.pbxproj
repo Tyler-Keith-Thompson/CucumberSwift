@@ -12,11 +12,11 @@
 		5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */; };
 		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
 		AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */; };
-		AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2528207A8B4E001B8211 /* StepTests.swift */; };
 		AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */; };
 		AD7D2530207AAB2B001B8211 /* Features in Resources */ = {isa = PBXBuildFile; fileRef = AD7D252F207AAB2B001B8211 /* Features */; };
 		AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7F1C0B2104D6B10004852A /* gherkin-languages.json */; };
 		AD7F1C0E2104DB240004852A /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0D2104DB240004852A /* Language.swift */; };
+		AD7F1C10210507420004852A /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0F210507420004852A /* StepTests.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
 		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -56,11 +56,11 @@
 		5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioOutlineParser.swift; sourceTree = "<group>"; };
 		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperatorTests.swift; sourceTree = "<group>"; };
-		AD7D2528207A8B4E001B8211 /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
 		AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
 		AD7D252F207AAB2B001B8211 /* Features */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Features; sourceTree = "<group>"; };
 		AD7F1C0B2104D6B10004852A /* gherkin-languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gherkin-languages.json"; sourceTree = "<group>"; };
 		AD7F1C0D2104DB240004852A /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		AD7F1C0F210507420004852A /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
 		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -225,12 +225,12 @@
 		CAA337B22104C368002C361D /* Gherkin */ = {
 			isa = PBXGroup;
 			children = (
-				AD7D2528207A8B4E001B8211 /* StepTests.swift */,
 				ADB4D5F920FD0234005997AD /* CommentTests.swift */,
 				ADB4D5FB20FD02B8005997AD /* TagTests.swift */,
 				ADB4D5FD20FD03BF005997AD /* ParserTests.swift */,
 				5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */,
 				CAA337B02104C310002C361D /* DocstringTests.swift */,
+				AD7F1C0F210507420004852A /* StepTests.swift */,
 			);
 			path = Gherkin;
 			sourceTree = "<group>";
@@ -384,7 +384,7 @@
 				AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */,
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
-				AD7D2529207A8B4E001B8211 /* StepTests.swift in Sources */,
+				AD7F1C10210507420004852A /* StepTests.swift in Sources */,
 				CAA337B12104C310002C361D /* DocstringTests.swift in Sources */,
 				CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */,
 				5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */,
