@@ -157,7 +157,7 @@ class MyBehaviorTests: XCTestCase {
             let dt = step.dataTable!
             let row = dt.rows[0]
             print(row[0]) //foo
-            print(row[1]) //baz
+            print(row[1]) //bar
         }
         cucumber.executeFeatures()
     }
