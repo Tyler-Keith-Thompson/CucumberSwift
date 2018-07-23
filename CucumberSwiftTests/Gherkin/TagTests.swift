@@ -71,11 +71,11 @@ class TagTests: XCTestCase {
         cucumber.environment["CUCUMBER_TAGS"] = "scenario1tag"
         
         var withTagsCalled = false
-        cucumber.Given("a scenario with tags") { _ in
+        cucumber.Given("a scenario with tags") { _, _ in
             withTagsCalled = true
         }
         var withoutTagsCalled = false
-        cucumber.Given("a scenario without tags") { _ in
+        cucumber.Given("a scenario without tags") { _, _ in
             withoutTagsCalled = true
         }
         

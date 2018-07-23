@@ -8,6 +8,25 @@
 
 import Foundation
 
+extension Sequence where Element == Token {
+    func groupedByLine() -> [[Token]] {
+        var lines = [[Token]]()
+        var line = [Token]()
+        for token in self {
+            if (token == .newLine && !line.isEmpty) {
+                lines.append(line)
+                line.removeAll()
+            } else if (token != .newLine) {
+                line.append(token)
+            }
+        }
+        if (!line.isEmpty) {
+            lines.append(line)
+        }
+        return lines
+    }
+}
+
 enum Token: Equatable {
     case newLine
 //    case integer(Int)

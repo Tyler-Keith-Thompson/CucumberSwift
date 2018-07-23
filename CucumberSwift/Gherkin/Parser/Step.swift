@@ -83,9 +83,10 @@ public class Step : NSObject {
     public private(set)  var keyword:Keyword?
     public internal(set) var tags = [String]()
     public internal(set) var scenario:Scenario?
+    public internal(set) var dataTable:DataTable?
 
     var result:Result = .pending
-    var execute:(([String]) -> Void)? = nil
+    var execute:(([String], Step) -> Void)? = nil
     var regex:String = ""
     var errorMessage:String = ""
     
@@ -99,7 +100,22 @@ public class Step : NSObject {
                 match += "\"\(s)\""
             }
         }
-        self.match = self.match.trimmingCharacters(in: .whitespaces)
+        let tableLines = node.tokens
+            .filter{ $0.isTableCell() || $0 == .newLine }
+            .groupedByLine()
+            .map { (line) -> [String] in
+                return line.filter { $0.isTableCell() }
+                    .map({ (token) -> String in
+                    if case Token.tableCell(let cellText) = token {
+                        return cellText
+                    }
+                    return ""
+                })
+        }
+        if (!tableLines.isEmpty) {
+            dataTable = DataTable(tableLines)
+        }
+        match = match.trimmingCharacters(in: .whitespaces)
     }
     
     func toJSON() -> [String:Any] {

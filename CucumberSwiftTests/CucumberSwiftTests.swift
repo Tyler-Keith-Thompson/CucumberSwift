@@ -82,7 +82,7 @@ class CucumberSwiftTests: XCTestCase {
         let bundle = Bundle(for: CucumberSwiftTests.self)
         let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
         var givenCalled = false
-        cucumber.Given("S(.)mE (?:precondition)") { matches in
+        cucumber.Given("S(.)mE (?:precondition)") { matches, _  in
             givenCalled = true
             XCTAssertEqual(matches.count, 2)
             XCTAssertEqual(matches.last, "o")
@@ -91,7 +91,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(givenCalled)
 
         var whenCalled = false
-        cucumber.When("(.*?)") { matches in
+        cucumber.When("(.*?)") { matches, _ in
             whenCalled = true
             XCTAssertEqual(matches.count, 2)
         }
@@ -99,7 +99,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(whenCalled)
 
         var thenCalled = false
-        cucumber.Then("(.*?)") { matches in
+        cucumber.Then("(.*?)") { matches, _ in
             thenCalled = true
             XCTAssertEqual(matches.count, 2)
         }
@@ -107,7 +107,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(thenCalled)
 
         var andCalled = false
-        cucumber.And("(.*?)") { matches in
+        cucumber.And("(.*?)") { matches, _ in
             andCalled = true
             XCTAssertEqual(matches.count, 2)
         }
@@ -115,7 +115,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(andCalled)
 
         var butCalled = false
-        cucumber.But("(.*?)") { matches in
+        cucumber.But("(.*?)") { matches, _ in
             butCalled = true
             XCTAssertEqual(matches.count, 1)
         }
@@ -123,7 +123,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertFalse(butCalled)
 
         var matchAllCalled = false
-        cucumber.MatchAll("(.*?)") { matches in
+        cucumber.MatchAll("(.*?)") { matches, _ in
             matchAllCalled = true
             XCTAssertEqual(matches.count, 2)
         }

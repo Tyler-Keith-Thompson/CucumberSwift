@@ -140,4 +140,46 @@ class TableTests: XCTestCase {
         XCTAssertEqual(firstScenario?.title, "the un")
         XCTAssertEqual(secondScenario?.title, "the uno")
     }
+    
+    func testTestDataAttachedToAStep() {
+        let cucumber = Cucumber(withString:"""
+    Feature: Some terse yet descriptive text of what is desired
+        Scenario: minimalistic
+            Given a simple data table
+            | foo | bar |
+            | boz | boo |
+    """)
+        let scenario = cucumber.features.first?.scenarios.first
+        let step = scenario?.steps.first
+        let table = step?.dataTable
+        let firstRow = table?.rows.first
+        let secondRow = table?.rows.last
+        XCTAssertNotNil(step?.dataTable)
+        XCTAssertEqual(table?.rows.count, 2)
+        XCTAssertEqual(firstRow?.count, 2)
+        XCTAssertEqual(secondRow?.count, 2)
+        if ((firstRow?.count ?? 0) == 2) {
+            XCTAssertEqual(firstRow?[0], "foo")
+            XCTAssertEqual(firstRow?[1], "bar")
+        }
+        if ((secondRow?.count ?? 0) == 2) {
+            XCTAssertEqual(secondRow?[0], "boz")
+            XCTAssertEqual(secondRow?[1], "boo")
+        }
+        var givenCalled = false
+        if (step?.dataTable != nil) {
+            cucumber.Given("^a simple data table$") { (_, step) in
+                givenCalled = true
+                let dt = step.dataTable!
+                let firstRow = dt.rows.first!
+                let secondRow = dt.rows.last!
+                XCTAssertEqual(firstRow[0], "foo")
+                XCTAssertEqual(firstRow[1], "bar")
+                XCTAssertEqual(secondRow[0], "boz")
+                XCTAssertEqual(secondRow[1], "boo")
+            }
+        }
+        cucumber.executeFeatures()
+        XCTAssert(givenCalled)
+    }
 }

@@ -10,8 +10,8 @@ import Foundation
 class ScenarioOutlineParser {
     static func parse(_ scenarioOutlineNode:ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[StepNode]) -> [Scenario] {
         var scenarios = [Scenario]()
-        let titleLine = groupTokensByLine(scenarioOutlineNode.tokens).first
-        var lines = groupTokensByLine(scenarioOutlineNode.tokens.filter{ $0.isTableCell() || $0 == .newLine })
+        let titleLine = scenarioOutlineNode.tokens.groupedByLine().first
+        var lines = scenarioOutlineNode.tokens.filter{ $0.isTableCell() || $0 == .newLine }.groupedByLine()
         var headerLookup:[String:Int] = [:]
         var tags = [String]()
         scenarioOutlineNode.tokens.forEach {
@@ -67,22 +67,5 @@ class ScenarioOutlineParser {
             }
         }
         return Step(with: node)
-    }
-    
-    private static func groupTokensByLine(_ tokens:[Token]) -> [[Token]] {
-        var lines = [[Token]]()
-        var line = [Token]()
-        for token in tokens {
-            if (token == .newLine && !line.isEmpty) {
-                lines.append(line)
-                line.removeAll()
-            } else if (token != .newLine) {
-                line.append(token)
-            }
-        }
-        if (!line.isEmpty) {
-            lines.append(line)
-        }
-        return lines
     }
 }

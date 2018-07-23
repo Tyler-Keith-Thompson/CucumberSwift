@@ -71,7 +71,7 @@ import XCTest
                             BeforeStep?(step)
                             currentStep = step
                             _ = XCTContext.runActivity(named: "\(step.keyword?.toString() ?? "") \(step.match)") { _ -> String in
-                                step.execute?(step.match.matches(for: step.regex))
+                                step.execute?(step.match.matches(for: step.regex), step)
                                 if (step.execute != nil && step.result != .failed) {
                                     step.result = .passed
                                 }
@@ -94,7 +94,7 @@ import XCTest
         }
     }
     
-    func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String]) -> Void)) {
+    func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String], Step) -> Void)) {
         features
         .flatMap { $0.scenarios.flatMap { $0.steps } }
         .filter { (step) -> Bool in
@@ -113,22 +113,22 @@ import XCTest
         }
     }
     
-    public func Given(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func Given(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(keyword: .given, regex: regex, callback:callback)
     }
-    public func When(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func When(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(keyword: .when, regex: regex, callback:callback)
     }
-    public func Then(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func Then(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(keyword: .then, regex: regex, callback:callback)
     }
-    public func And(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func And(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(keyword: .and, regex: regex, callback:callback)
     }
-    public func But(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func But(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(keyword: .but, regex: regex, callback:callback)
     }
-    public func MatchAll(_ regex:String, callback:@escaping (([String]) -> Void)) {
+    public func MatchAll(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
         attachClosureToSteps(regex: regex, callback:callback)
     }
     

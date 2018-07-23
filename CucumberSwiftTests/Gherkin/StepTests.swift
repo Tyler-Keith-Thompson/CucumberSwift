@@ -24,7 +24,7 @@ class StepTest: XCTestCase {
         XCTAssert(firstStep?.keyword?.contains(.given) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var givenCalled = false
-        cucumber.Given("a user with half a clue") { _ in
+        cucumber.Given("a user with half a clue") { _, _ in
             givenCalled = true
         }
         cucumber.executeFeatures()
@@ -44,7 +44,7 @@ class StepTest: XCTestCase {
         XCTAssert(firstStep?.keyword?.contains(.when) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var whenCalled = false
-        cucumber.When("a user with half a clue") { _ in
+        cucumber.When("a user with half a clue") { _, _ in
             whenCalled = true
         }
         cucumber.executeFeatures()
@@ -64,7 +64,7 @@ class StepTest: XCTestCase {
         XCTAssert(firstStep?.keyword?.contains(.then) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var thenCalled = false
-        cucumber.Then("a user with half a clue") { _ in
+        cucumber.Then("a user with half a clue") { _, _ in
             thenCalled = true
         }
         cucumber.executeFeatures()
@@ -84,7 +84,7 @@ class StepTest: XCTestCase {
         XCTAssert(firstStep?.keyword?.contains(.and) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var andCalled = false
-        cucumber.And("a user with half a clue") { _ in
+        cucumber.And("a user with half a clue") { _, _ in
             andCalled = true
         }
         cucumber.executeFeatures()
@@ -104,7 +104,7 @@ class StepTest: XCTestCase {
         XCTAssert(firstStep?.keyword?.contains(.but) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var butCalled = false
-        cucumber.But("a user with half a clue") { _ in
+        cucumber.But("a user with half a clue") { _, _ in
             butCalled = true
         }
         cucumber.executeFeatures()
@@ -123,7 +123,7 @@ class StepTest: XCTestCase {
         XCTAssertEqual(scenario?.steps.count, 1)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var matchAllCalled = false
-        cucumber.MatchAll("a user with half a clue") { _ in
+        cucumber.MatchAll("a user with half a clue") { _, _ in
             matchAllCalled = true
         }
         cucumber.executeFeatures()
