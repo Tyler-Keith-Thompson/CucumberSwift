@@ -92,8 +92,8 @@ import XCTest
             } else {
                 lookup[regex] = $0.keyword
             }
-            let kw = lookup[regex]!
-            let keyword = (kw.hasMultipleValues()) ? "MatchAll" : kw.toString()
+//            let kw = lookup[regex]!
+            let keyword = $0.keyword.toString() //(kw.hasMultipleValues()) ? "MatchAll" : kw.toString()
             var method = "cucumber.\(keyword)(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
             if (stringCount > 0) {
                 for i in 1...stringCount {
