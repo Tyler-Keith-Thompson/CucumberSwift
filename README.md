@@ -67,6 +67,7 @@ class MyBehaviorTests: XCTestCase {
 
 ### Generated step stubs
 Writing regex can be a pain, rather than make you look up everything CucumberSwift will help you out by generating swift code with stubs for step definitions
+
 ![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/Cucumber-Generated-Steps.gif)
 
 ### Hooks
