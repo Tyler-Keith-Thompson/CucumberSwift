@@ -38,7 +38,7 @@ class CucumberTests:XCTestCase {
             let tokens = Lexer(input: test.feature).lex()
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
-            let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
+                let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
                 let document = expectedAST?["gherkinDocument"] as? [String:Any] {
                 if let feature = document["feature"] as? [String:Any] {
                     let featureNode = ast.featureNodes.first
