@@ -111,7 +111,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login as \\"Dave\\"$") { _, _ in
+        cucumber.Given("^I login as \\"(.*?)\\"$") { _, _ in
         
         }
         """

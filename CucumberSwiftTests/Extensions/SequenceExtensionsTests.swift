@@ -18,4 +18,14 @@ class SequenceExtensionsTests : XCTestCase {
         XCTAssertEqual(arr[safe: 2], 3)
         XCTAssertEqual(arr[safe: 3], nil)
     }
+    
+    func testCanReturnUniqueValues() {
+        XCTAssertEqual([1, 1, 2, 3].uniqueElements, [1, 2, 3])
+    }
+    
+    func testCanRemoveDuplicateValues() {
+        var arr = [1, 1, 2, 3]
+        arr.removeDuplicates()
+        XCTAssertEqual(arr, [1, 2, 3])
+    }
 }

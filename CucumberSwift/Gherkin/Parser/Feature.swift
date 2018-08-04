@@ -41,10 +41,10 @@ public class Feature : NSObject, Taggable {
     }
     
     func containsTags(_ tags:[String]) -> Bool {
-        if (!tags.filter{ containsTag($0) }.isEmpty) {
+        if (tags.contains{ containsTag($0) }) {
             return true
         }
-        if (!scenarios.filter{ $0.containsTags(tags) }.isEmpty) {
+        if (scenarios.contains{ $0.containsTags(tags) }) {
             return true
         }
         return false

@@ -12,9 +12,6 @@ public protocol Taggable {
 }
 extension Taggable {
     func containsTag(_ tag:String) -> Bool {
-        return !tags.filter { !$0.matches(for: tag).isEmpty }.isEmpty
-    }
-    static func isTag(_ line:String) -> Bool {
-        return !line.matches(for: "^@(\\w+)(\\s*)$").isEmpty
+        return tags.contains { !$0.matches(for: tag).isEmpty }
     }
 }

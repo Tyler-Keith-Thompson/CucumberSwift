@@ -51,6 +51,7 @@ import XCTest
     }
     
     @discardableResult func generateUnimplementedStepDefinitions() -> String {
+        var methods = [String]()
         var generatedSwift = ""
         var steps = [Step]()
         if let tagNames = environment["CUCUMBER_TAGS"] {
@@ -64,18 +65,26 @@ import XCTest
                 .filter{ $0.execute == nil }
         }
         steps.forEach {
-            let regex = NSRegularExpression
-                .escapedPattern(for: $0.match)
-                .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
-                .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
-            generatedSwift += """
-            cucumber.\($0.keyword.toString())("^\(regex)$") { _, _ in
-            
+            var regex = ""
+            for token in $0.tokens {
+                if case Token.match(let m) = token {
+                    regex += NSRegularExpression
+                        .escapedPattern(for: m)
+                        .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+                        .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
+                } else if case Token.string(_) = token {
+                    regex += "\\\"(.*?)\\\""
+                }
             }
-            
-            """
+            methods.append("""
+                cucumber.\($0.keyword.toString())("^\(regex)$") { _, _ in
+                
+                }
+                """)
         }
-        if (!generatedSwift.isEmpty) {
+        methods.removeDuplicates()
+        if (!methods.isEmpty) {
+            generatedSwift = methods.joined(separator: "\n")
             XCTContext.runActivity(named: "Pending Steps") { activity in
                 let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                 attachment.lifetime = .keepAlways

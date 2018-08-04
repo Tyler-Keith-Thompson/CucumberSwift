@@ -22,8 +22,10 @@ public class Step : NSObject {
     var execute:(([String], Step) -> Void)? = nil
     var regex:String = ""
     var errorMessage:String = ""
+    var tokens = [Token]()
     
     init(with node:StepNode) {
+        tokens = node.tokens.filter{ !$0.isKeyword() }
         for token in node.tokens {
             if case Token.keyword(let kw) = token {
                 keyword = kw
