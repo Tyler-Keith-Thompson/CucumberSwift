@@ -83,7 +83,7 @@ import XCTest
                     stringCount += 1
                 }
             }
-            var method = "cucumber.\($0.keyword.toString())(\"^\(regex)$\") { \(matchesParameter), _ in\n"
+            var method = "cucumber.\($0.keyword.toString())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
             if (stringCount > 0) {
                 for i in 1...stringCount {
                     let spelledNumber = NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
