@@ -55,7 +55,7 @@ public class Step : NSObject {
         return [
             "result":["status":"\(result)", "error_message" : errorMessage],
             "name":"\(match)",
-            "keyword":"\(keyword ?? .given)"
+            "keyword":"\(keyword.toString())"
         ]
     }
 }
