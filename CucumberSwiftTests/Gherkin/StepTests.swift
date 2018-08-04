@@ -129,4 +129,33 @@ class StepTest: XCTestCase {
         cucumber.executeFeatures()
         XCTAssert(matchAllCalled)
     }
+    
+    func testKeywordHasMultipleValues() {
+        XCTAssertFalse(Step.Keyword.given.hasMultipleValues())
+        XCTAssertFalse(Step.Keyword.when.hasMultipleValues())
+        XCTAssertFalse(Step.Keyword.then.hasMultipleValues())
+        XCTAssertFalse(Step.Keyword.and.hasMultipleValues())
+        XCTAssertFalse(Step.Keyword.but.hasMultipleValues())
+        var kw:Step.Keyword = []
+        XCTAssertFalse(kw.hasMultipleValues())
+
+        kw = [.given, .when]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.given, .then]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.given, .and]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.given, .but]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.when, .then]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.when, .and]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.then, .and]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.then, .but]
+        XCTAssertTrue(kw.hasMultipleValues())
+        kw = [.and, .but]
+        XCTAssertTrue(kw.hasMultipleValues())
+    }
 }

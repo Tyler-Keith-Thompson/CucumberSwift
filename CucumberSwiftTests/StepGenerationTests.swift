@@ -133,4 +133,22 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
+    
+    func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywords() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Dave"
+               And I login as "Dave"
+             When I login as "Dave"
+             Then I login as "Dave"
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        """
+        XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
+    }
 }

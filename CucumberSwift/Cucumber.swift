@@ -67,6 +67,7 @@ import XCTest
     
     private func getStubs() -> [String] {
         var methods = [String]()
+        var lookup:[String:Step.Keyword] = [:]
         executableSteps().forEach {
             var regex = ""
             var matchesParameter = "_"
@@ -83,7 +84,17 @@ import XCTest
                     stringCount += 1
                 }
             }
-            var method = "cucumber.\($0.keyword.toString())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
+            if var keyword = lookup[regex] {
+                if (!keyword.contains($0.keyword)) {
+                    keyword.insert($0.keyword)
+                    lookup[regex] = keyword
+                }
+            } else {
+                lookup[regex] = $0.keyword
+            }
+            let kw = lookup[regex]!
+            let keyword = (kw.hasMultipleValues()) ? "MatchAll" : kw.toString()
+            var method = "cucumber.\(keyword)(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
             if (stringCount > 0) {
                 for i in 1...stringCount {
                     let spelledNumber = NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
