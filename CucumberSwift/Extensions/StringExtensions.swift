@@ -26,4 +26,26 @@ extension String {
             return []
         }
     }
+    
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).uppercased() + dropFirst()
+    }
+    
+    func lowercasingFirstLetter() -> String {
+        return prefix(1).lowercased() + dropFirst()
+    }
+    
+    func camelCasingString() -> String {
+        var str = ""
+        let words = replacingOccurrences( of:"[^a-zA-Z]", with: " ", options: .regularExpression)
+                    .components(separatedBy: .whitespaces)
+        for (i, word) in words.enumerated() {
+            if (i == 0) {
+                str += word.lowercasingFirstLetter()
+                continue
+            }
+            str += word.capitalizingFirstLetter()
+        }
+        return str
+    }
 }

@@ -50,9 +50,7 @@ import XCTest
         features.append(contentsOf: ast.featureNodes.compactMap { Feature(with: $0, uri:uri) })
     }
     
-    @discardableResult func generateUnimplementedStepDefinitions() -> String {
-        var methods = [String]()
-        var generatedSwift = ""
+    private func executableSteps() -> [Step] {
         var steps = [Step]()
         if let tagNames = environment["CUCUMBER_TAGS"] {
             let tags = tagNames.components(separatedBy: ",")
@@ -64,8 +62,15 @@ import XCTest
                 .flatMap{ $0.steps }
                 .filter{ $0.execute == nil }
         }
-        steps.forEach {
+        return steps
+    }
+    
+    private func getStubs() -> [String] {
+        var methods = [String]()
+        executableSteps().forEach {
             var regex = ""
+            var matchesParameter = "_"
+            var stringCount = 0
             for token in $0.tokens {
                 if case Token.match(let m) = token {
                     regex += NSRegularExpression
@@ -74,17 +79,33 @@ import XCTest
                         .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
                 } else if case Token.string(_) = token {
                     regex += "\\\"(.*?)\\\""
+                    matchesParameter = "matches"
+                    stringCount += 1
                 }
             }
-            methods.append("""
-                cucumber.\($0.keyword.toString())("^\(regex)$") { _, _ in
-                
+            var method = "cucumber.\($0.keyword.toString())(\"^\(regex)$\") { \(matchesParameter), _ in\n"
+            if (stringCount > 0) {
+                for i in 1...stringCount {
+                    let spelledNumber = NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
+                                                                        number: .spellOut)
+                    let varName = "string \(spelledNumber)".camelCasingString()
+                    method += "    let \(varName) = \(matchesParameter)[\(i)]\n"
                 }
-                """)
+            } else {
+                method += "\n"
+            }
+            method += "}"
+            methods.append(method)
         }
         methods.removeDuplicates()
-        if (!methods.isEmpty) {
-            generatedSwift = methods.joined(separator: "\n")
+        return methods
+    }
+    
+    @discardableResult func generateUnimplementedStepDefinitions() -> String {
+        var generatedSwift = ""
+        let stubs = getStubs()
+        if (!stubs.isEmpty) {
+            generatedSwift = stubs.joined(separator: "\n")
             XCTContext.runActivity(named: "Pending Steps") { activity in
                 let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                 attachment.lifetime = .keepAlways

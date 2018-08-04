@@ -27,4 +27,20 @@ class StringExtensionsTests : XCTestCase {
         let matches = "This is a test".matches(for: "^xc7qqv....$")
         XCTAssertEqual(matches.count, 0)
     }
+    
+    func testCapitalizingFirstLetter() {
+        XCTAssertEqual("test".capitalizingFirstLetter(), "Test")
+    }
+
+    func testLowercasingFirstLetter() {
+        XCTAssertEqual("Test".lowercasingFirstLetter(), "test")
+    }
+
+    func testCamelCaseFromSpaces() {
+        XCTAssertEqual("test one".camelCasingString(), "testOne")
+    }
+    
+    func testCamelCaseFromNonAlphanumericCharacters() {
+        XCTAssertEqual("test-two".camelCasingString(), "testTwo")
+    }
 }

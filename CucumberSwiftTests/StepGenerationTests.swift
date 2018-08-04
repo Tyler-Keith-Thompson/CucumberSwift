@@ -111,8 +111,24 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login as \\"(.*?)\\"$") { _, _ in
-        
+        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        """
+        XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
+    }
+    
+    func testGeneratedRegexWithMultipleStringLiterals() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Dave" with a password of "hello"
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+            let stringTwo = matches[2]
         }
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
