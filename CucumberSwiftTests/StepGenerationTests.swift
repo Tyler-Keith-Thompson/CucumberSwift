@@ -10,6 +10,12 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 
+extension String {
+    func stringByEscapingCharacters() -> String {
+        return self.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+//            .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
+    }
+}
 class StepGenerationTests:XCTestCase {
     func testGeneratedRegexWithGivenKeyword() {
         let cucumber = Cucumber(withString: """
@@ -22,7 +28,7 @@ class StepGenerationTests:XCTestCase {
         cucumber.Given("^Some precondition$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
     
@@ -37,7 +43,7 @@ class StepGenerationTests:XCTestCase {
         cucumber.When("^Some precondition$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
     
@@ -52,7 +58,7 @@ class StepGenerationTests:XCTestCase {
         cucumber.When("^A totally different string match$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
     
@@ -67,7 +73,7 @@ class StepGenerationTests:XCTestCase {
         cucumber.Given("^A user with an idea\\(ish\\)$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
     
@@ -86,14 +92,29 @@ class StepGenerationTests:XCTestCase {
         cucumber.And("^A PO with two$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         let notExpected = """
         cucumber.Given("^A user with an idea$") { _, _ in
         
         }
-        """.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+        """.stringByEscapingCharacters()
         
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
         XCTAssert(!actual.contains(notExpected), "\"\(actual)\" should not contain \"\(notExpected)\"")
+    }
+    
+    func testGeneratedRegexWithStringLiteral() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Dave"
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.Given("^I login as \\"Dave\\"$") { _, _ in
+        
+        }
+        """
+        XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 }

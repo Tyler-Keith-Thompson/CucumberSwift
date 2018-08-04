@@ -67,6 +67,7 @@ import XCTest
             let regex = NSRegularExpression
                 .escapedPattern(for: $0.match)
                 .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+                .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
             generatedSwift += """
             cucumber.\($0.keyword.toString())("^\(regex)$") { _, _ in
             
