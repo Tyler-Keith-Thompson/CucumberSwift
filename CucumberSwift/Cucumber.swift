@@ -50,7 +50,42 @@ import XCTest
         features.append(contentsOf: ast.featureNodes.compactMap { Feature(with: $0, uri:uri) })
     }
     
+    @discardableResult func generateUnimplementedStepDefinitions() -> String {
+        var generatedSwift = ""
+        var steps = [Step]()
+        if let tagNames = environment["CUCUMBER_TAGS"] {
+            let tags = tagNames.components(separatedBy: ",")
+            steps = features.filter { $0.containsTags(tags) }
+                .flatMap{ $0.scenarios }.filter { $0.containsTags(tags) }
+                .flatMap{ $0.steps }.filter{ $0.execute == nil }
+        } else {
+            steps = features.flatMap{ $0.scenarios }
+                .flatMap{ $0.steps }
+                .filter{ $0.execute == nil }
+        }
+        steps.forEach {
+            let regex = NSRegularExpression
+                .escapedPattern(for: $0.match)
+                .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
+            generatedSwift += """
+            cucumber.\($0.keyword.toString())("^\(regex)$") { _, _ in
+            
+            }
+            
+            """
+        }
+        if (!generatedSwift.isEmpty) {
+            XCTContext.runActivity(named: "Pending Steps") { activity in
+                let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
+                attachment.lifetime = .keepAlways
+                activity.add(attachment)
+            }
+        }
+        return generatedSwift
+    }
+    
     public func executeFeatures() {
+        generateUnimplementedStepDefinitions()
         var featuresToExecute = features
         if let tagNames = environment["CUCUMBER_TAGS"] {
             let tags = tagNames.components(separatedBy: ",")
@@ -70,7 +105,7 @@ import XCTest
                         for step in scenario.steps {
                             BeforeStep?(step)
                             currentStep = step
-                            _ = XCTContext.runActivity(named: "\(step.keyword.toString() ?? "") \(step.match)") { _ -> String in
+                            _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ -> String in
                                 step.execute?(step.match.matches(for: step.regex), step)
                                 if (step.execute != nil && step.result != .failed) {
                                     step.result = .passed
