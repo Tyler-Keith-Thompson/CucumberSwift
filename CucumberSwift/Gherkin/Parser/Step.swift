@@ -9,9 +9,58 @@
 import Foundation
 public class Step : NSObject {
     override public var description: String {
-        return "TAGS:\(tags)\n\(keyword ?? .given): \(match)"
+        return "TAGS:\(tags)\n\(keyword.toString()): \(match)"
     }
     
+    public private(set)  var match = ""
+    public private(set)  var keyword:Keyword = []
+    public internal(set) var tags = [String]()
+    public internal(set) var scenario:Scenario?
+    public internal(set) var dataTable:DataTable?
+
+    var result:Result = .pending
+    var execute:(([String], Step) -> Void)? = nil
+    var regex:String = ""
+    var errorMessage:String = ""
+    
+    init(with node:StepNode) {
+        for token in node.tokens {
+            if case Token.keyword(let kw) = token {
+                keyword = kw
+            } else if case Token.match(let m) = token {
+                match += m
+            } else if case Token.string(let s) = token {
+                match += "\"\(s)\""
+            }
+        }
+        let tableLines = node.tokens
+            .filter{ $0.isTableCell() || $0 == .newLine }
+            .groupedByLine()
+            .map { (line) -> [String] in
+                return line.filter { $0.isTableCell() }
+                    .map({ (token) -> String in
+                    if case Token.tableCell(let cellText) = token {
+                        return cellText
+                    }
+                    return ""
+                })
+        }
+        if (!tableLines.isEmpty) {
+            dataTable = DataTable(tableLines)
+        }
+        match = match.trimmingCharacters(in: .whitespaces)
+    }
+    
+    func toJSON() -> [String:Any] {
+        return [
+            "result":["status":"\(result)", "error_message" : errorMessage],
+            "name":"\(match)",
+            "keyword":"\(keyword ?? .given)"
+        ]
+    }
+}
+
+extension Step {
     public struct Keyword: OptionSet {
         public let rawValue: Int
         private var stringValue:String? = nil
@@ -77,52 +126,5 @@ public class Step : NSObject {
         case pending
         case undefined
         case ambiguous
-    }
-    
-    public private(set)  var match = ""
-    public private(set)  var keyword:Keyword?
-    public internal(set) var tags = [String]()
-    public internal(set) var scenario:Scenario?
-    public internal(set) var dataTable:DataTable?
-
-    var result:Result = .pending
-    var execute:(([String], Step) -> Void)? = nil
-    var regex:String = ""
-    var errorMessage:String = ""
-    
-    init(with node:StepNode) {
-        for token in node.tokens {
-            if case Token.keyword(let kw) = token {
-                keyword = kw
-            } else if case Token.match(let m) = token {
-                match += m
-            } else if case Token.string(let s) = token {
-                match += "\"\(s)\""
-            }
-        }
-        let tableLines = node.tokens
-            .filter{ $0.isTableCell() || $0 == .newLine }
-            .groupedByLine()
-            .map { (line) -> [String] in
-                return line.filter { $0.isTableCell() }
-                    .map({ (token) -> String in
-                    if case Token.tableCell(let cellText) = token {
-                        return cellText
-                    }
-                    return ""
-                })
-        }
-        if (!tableLines.isEmpty) {
-            dataTable = DataTable(tableLines)
-        }
-        match = match.trimmingCharacters(in: .whitespaces)
-    }
-    
-    func toJSON() -> [String:Any] {
-        return [
-            "result":["status":"\(result)", "error_message" : errorMessage],
-            "name":"\(match)",
-            "keyword":"\(keyword ?? .given)"
-        ]
     }
 }

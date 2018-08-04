@@ -21,7 +21,7 @@ class StepTest: XCTestCase {
         let scenario = feature?.scenarios.first
         let firstStep = scenario?.steps.first
         XCTAssertEqual(scenario?.steps.count, 1)
-        XCTAssert(firstStep?.keyword?.contains(.given) ?? false)
+        XCTAssert(firstStep?.keyword.contains(.given) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var givenCalled = false
         cucumber.Given("a user with half a clue") { _, _ in
@@ -41,7 +41,7 @@ class StepTest: XCTestCase {
         let scenario = feature?.scenarios.first
         let firstStep = scenario?.steps.first
         XCTAssertEqual(scenario?.steps.count, 1)
-        XCTAssert(firstStep?.keyword?.contains(.when) ?? false)
+        XCTAssert(firstStep?.keyword.contains(.when) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var whenCalled = false
         cucumber.When("a user with half a clue") { _, _ in
@@ -61,7 +61,7 @@ class StepTest: XCTestCase {
         let scenario = feature?.scenarios.first
         let firstStep = scenario?.steps.first
         XCTAssertEqual(scenario?.steps.count, 1)
-        XCTAssert(firstStep?.keyword?.contains(.then) ?? false)
+        XCTAssert(firstStep?.keyword.contains(.then) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var thenCalled = false
         cucumber.Then("a user with half a clue") { _, _ in
@@ -81,7 +81,7 @@ class StepTest: XCTestCase {
         let scenario = feature?.scenarios.first
         let firstStep = scenario?.steps.first
         XCTAssertEqual(scenario?.steps.count, 1)
-        XCTAssert(firstStep?.keyword?.contains(.and) ?? false)
+        XCTAssert(firstStep?.keyword.contains(.and) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var andCalled = false
         cucumber.And("a user with half a clue") { _, _ in
@@ -101,7 +101,7 @@ class StepTest: XCTestCase {
         let scenario = feature?.scenarios.first
         let firstStep = scenario?.steps.first
         XCTAssertEqual(scenario?.steps.count, 1)
-        XCTAssert(firstStep?.keyword?.contains(.but) ?? false)
+        XCTAssert(firstStep?.keyword.contains(.but) ?? false)
         XCTAssertEqual(firstStep?.match, "a user with half a clue")
         var butCalled = false
         cucumber.But("a user with half a clue") { _, _ in
