@@ -41,8 +41,7 @@ extension Character {
             isNewline ||
             isTagMarker ||
             isQuote ||
-//            isNumeric ||
-//            isDecimal ||
+            isNumeric ||
             isTableCellDelimiter ||
             isHeaderToken
     }

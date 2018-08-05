@@ -33,6 +33,8 @@ public class Step : NSObject {
                 match += m
             } else if case Token.string(let s) = token {
                 match += "\"\(s)\""
+            } else if case Token.integer(let n) = token {
+                match += n
             }
         }
         let tableLines = node.tokens

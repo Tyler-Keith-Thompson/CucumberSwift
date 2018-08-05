@@ -122,6 +122,8 @@ class Lexer {
             let str = readLineUntil{ $0.isQuote }
             advanceIndex()
             return .string(str)
+        } else if char.isNumeric {
+            return .integer(readLineUntil{ !$0.isNumeric })
         } else if let _ = lastKeyword {
             return .match(readLineUntil{ $0.isSymbol })
         } else {

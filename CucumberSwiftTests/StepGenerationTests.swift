@@ -175,4 +175,35 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
+    
+    func testGeneratedRegexWithIntegerLiteral() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login 1 time
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.Given("^I login (\\\\d+) time$") { matches, _ in
+            let integerOne = matches[1]
+        }
+        """
+        XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
+    }
+    
+    func testGeneratedRegexWithMultipleIntegerLiterals() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I enter 1234 then 4321
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
+            let integerOne = matches[1]
+            let integerTwo = matches[2]
+        }
+        """
+        XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
+    }
 }

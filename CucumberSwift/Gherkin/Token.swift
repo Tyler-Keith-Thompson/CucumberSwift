@@ -29,8 +29,7 @@ extension Sequence where Element == Token {
 
 enum Token: Equatable {
     case newLine
-//    case integer(Int)
-//    case double(Double)
+    case integer(String)
     case string(String)
     case match(String)
     case title(String)
@@ -53,10 +52,8 @@ enum Token: Equatable {
             return description1 == description2
         case let (.tag(tag1), .tag(tag2)):
             return tag1 == tag2
-//        case let (.integer(int1), .integer(int2)):
-//            return int1 == int2
-//        case let (.double(double1), .double(double2)):
-//            return double1 == double2
+        case let (.integer(num1), .integer(num2)):
+            return num1 == num2
         case let (.string(string1), .string(string2)):
             return string1 == string2
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
@@ -88,6 +85,12 @@ enum Token: Equatable {
     }
     func isString() -> Bool {
         if case .string(_) = self {
+            return true
+        }
+        return false
+    }
+    func isInteger() -> Bool {
+        if case .integer(_) = self {
             return true
         }
         return false

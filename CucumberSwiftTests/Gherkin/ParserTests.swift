@@ -185,5 +185,6 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(scenario?.steps[3].keyword, .then)
             XCTAssertEqual(scenario?.steps[3].match, "it works")
         }
+        cucumber.executeFeatures()
     }
 }

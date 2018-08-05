@@ -33,6 +33,8 @@ class StubGenerator {
                     .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
             } else if case Token.string(_) = token {
                 regex += "\\\"(.*?)\\\""
+            } else if case Token.integer(_) = token {
+                regex += "(\\\\d+)"
             }
         }
         return regex.trimmingCharacters(in: .whitespaces)
@@ -46,8 +48,11 @@ class StubGenerator {
         executableSteps.filter{ $0.execute == nil }.forEach {
             let regex = regexForTokens($0.tokens)
             let stringCount = $0.tokens.filter { $0.isString() }.count
-            let matchesParameter = (stringCount > 0) ? "matches" : "_"
-            var method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: [(type: "string", count: stringCount)])
+            let integerCount = $0.tokens.filter { $0.isInteger() }.count
+            let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
+            let variables = [(type: "string", count: stringCount),
+                             (type: "integer", count: integerCount)]
+            var method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
             if let m = lookup[regex] {
                 method = m
                 if (!method.keyword.contains($0.keyword)) {
