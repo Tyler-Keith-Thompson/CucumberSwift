@@ -1,0 +1,24 @@
+{
+  "name": "cucumberswift",
+  "version": "1.0.0",
+  "description": "CucumberSwift is a lightweight, swift-only Cucumber implementation. It was born out of frustration with current iOS Cucumber implementations. Because it's written in swift you avoid any bridging header frustration and it provides more feature, scenario and step hooks than other solutions.",
+  "main": "edit-plist.js",
+  "dependencies": {
+    "cucumber-html-reporter": "^4.0.3",
+    "simple-plist": "^0.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tyler-Keith-Thompson/CucumberSwift.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tyler-Keith-Thompson/CucumberSwift/issues"
+  },
+  "homepage": "https://github.com/Tyler-Keith-Thompson/CucumberSwift#readme"
+}
