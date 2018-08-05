@@ -166,10 +166,10 @@ class StepGenerationTests:XCTestCase {
         cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
-        cucumber.And("^I login as \\"(.*?)\\"$") { matches, _ in
+        cucumber.When("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
-        cucumber.When("^I login as \\"(.*?)\\"$") { matches, _ in
+        cucumber.And("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
         """

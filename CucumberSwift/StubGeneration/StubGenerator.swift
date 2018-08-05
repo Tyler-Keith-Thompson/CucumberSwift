@@ -42,6 +42,7 @@ class StubGenerator {
         var methods = [Method]()
         var lookup = [String:Method]()
         let executableSteps = self.executableSteps(for: features)
+            .sorted{ $0.keyword.rawValue < $1.keyword.rawValue }
         executableSteps.filter{ $0.execute == nil }.forEach {
             let regex = regexForTokens($0.tokens)
             let stringCount = $0.tokens.filter { $0.isString() }.count
