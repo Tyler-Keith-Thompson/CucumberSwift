@@ -12,6 +12,8 @@
 		5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */; };
 		AD01722D21160E0B00FBC9AF /* StepGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */; };
 		AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01722E2116341200FBC9AF /* SequenceExtensions.swift */; };
+		AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01723021166C3D00FBC9AF /* StubGenerator.swift */; };
+		AD017234211671D200FBC9AF /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD017233211671D200FBC9AF /* Method.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
 		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
 		AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */; };
@@ -59,6 +61,8 @@
 		5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioOutlineParser.swift; sourceTree = "<group>"; };
 		AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepGenerationTests.swift; sourceTree = "<group>"; };
 		AD01722E2116341200FBC9AF /* SequenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensions.swift; sourceTree = "<group>"; };
+		AD01723021166C3D00FBC9AF /* StubGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubGenerator.swift; sourceTree = "<group>"; };
+		AD017233211671D200FBC9AF /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
 		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperatorTests.swift; sourceTree = "<group>"; };
@@ -113,6 +117,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		AD017232211671BF00FBC9AF /* StubGeneration */ = {
+			isa = PBXGroup;
+			children = (
+				AD01723021166C3D00FBC9AF /* StubGenerator.swift */,
+				AD017233211671D200FBC9AF /* Method.swift */,
+			);
+			path = StubGeneration;
+			sourceTree = "<group>";
+		};
 		AD9EB4562079CF87002494C0 = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +148,7 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				AD017232211671BF00FBC9AF /* StubGeneration */,
 				ADD9673220FCED48000BCAA2 /* Protocols */,
 				ADD9673120FCED15000BCAA2 /* Custom Operators */,
 				CA5A7C3720FC2B0A00F4564A /* Extensions */,
@@ -377,9 +391,11 @@
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
+				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
+				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,

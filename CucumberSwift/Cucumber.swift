@@ -50,71 +50,9 @@ import XCTest
         features.append(contentsOf: ast.featureNodes.compactMap { Feature(with: $0, uri:uri) })
     }
     
-    private func executableSteps() -> [Step] {
-        var steps = [Step]()
-        if let tagNames = environment["CUCUMBER_TAGS"] {
-            let tags = tagNames.components(separatedBy: ",")
-            steps = features.filter { $0.containsTags(tags) }
-                .flatMap{ $0.scenarios }.filter { $0.containsTags(tags) }
-                .flatMap{ $0.steps }.filter{ $0.execute == nil }
-        } else {
-            steps = features.flatMap{ $0.scenarios }
-                .flatMap{ $0.steps }
-                .filter{ $0.execute == nil }
-        }
-        return steps
-    }
-    
-    private func getStubs() -> [String] {
-        var methods = [String]()
-        var lookup:[String:Step.Keyword] = [:]
-        executableSteps().forEach {
-            var regex = ""
-            var matchesParameter = "_"
-            var stringCount = 0
-            for token in $0.tokens {
-                if case Token.match(let m) = token {
-                    regex += NSRegularExpression
-                        .escapedPattern(for: m)
-                        .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
-                        .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
-                } else if case Token.string(_) = token {
-                    regex += "\\\"(.*?)\\\""
-                    matchesParameter = "matches"
-                    stringCount += 1
-                }
-            }
-            if var keyword = lookup[regex] {
-                if (!keyword.contains($0.keyword)) {
-                    keyword.insert($0.keyword)
-                    lookup[regex] = keyword
-                }
-            } else {
-                lookup[regex] = $0.keyword
-            }
-//            let kw = lookup[regex]!
-            let keyword = $0.keyword.toString() //(kw.hasMultipleValues()) ? "MatchAll" : kw.toString()
-            var method = "cucumber.\(keyword)(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
-            if (stringCount > 0) {
-                for i in 1...stringCount {
-                    let spelledNumber = NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
-                                                                        number: .spellOut)
-                    let varName = "string \(spelledNumber)".camelCasingString()
-                    method += "    let \(varName) = \(matchesParameter)[\(i)]\n"
-                }
-            } else {
-                method += "\n"
-            }
-            method += "}"
-            methods.append(method)
-        }
-        methods.removeDuplicates()
-        return methods
-    }
-    
     @discardableResult func generateUnimplementedStepDefinitions() -> String {
         var generatedSwift = ""
-        let stubs = getStubs()
+        let stubs = StubGenerator.getStubs(for: features)
         if (!stubs.isEmpty) {
             generatedSwift = stubs.joined(separator: "\n")
             XCTContext.runActivity(named: "Pending Steps") { activity in

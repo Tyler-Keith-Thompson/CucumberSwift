@@ -86,4 +86,10 @@ enum Token: Equatable {
         }
         return false
     }
+    func isString() -> Bool {
+        if case .string(_) = self {
+            return true
+        }
+        return false
+    }
 }
