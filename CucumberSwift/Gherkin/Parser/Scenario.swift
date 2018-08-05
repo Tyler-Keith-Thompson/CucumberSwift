@@ -34,11 +34,8 @@ public class Scenario : NSObject, Taggable {
         self.tags = tags
     }
     
-    func containsTags(_ tags:[String]) -> Bool {
-        if (!tags.filter{ containsTag($0) }.isEmpty) {
-            return true
-        }
-        return false
+    public func containsTags(_ tags:[String]) -> Bool {
+        return tags.contains { containsTag($0) }
     }
 
     

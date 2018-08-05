@@ -40,7 +40,7 @@ public class Feature : NSObject, Taggable {
         scenarios.forEach { $0.feature = self }
     }
     
-    func containsTags(_ tags:[String]) -> Bool {
+    public func containsTags(_ tags:[String]) -> Bool {
         if (tags.contains{ containsTag($0) }) {
             return true
         }

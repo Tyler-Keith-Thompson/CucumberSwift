@@ -47,7 +47,8 @@ import XCTest
     private func parseIntoFeatures(_ string:String, uri:String = "") {
         let tokens = Lexer(input: string).lex()
         let ast = AST(tokens)
-        features.append(contentsOf: ast.featureNodes.compactMap { Feature(with: $0, uri:uri) })
+        features.append(contentsOf: ast.featureNodes
+            .map { Feature(with: $0, uri:uri) })
     }
     
     @discardableResult func generateUnimplementedStepDefinitions() -> String {
@@ -66,20 +67,10 @@ import XCTest
     
     public func executeFeatures() {
         generateUnimplementedStepDefinitions()
-        var featuresToExecute = features
-        if let tagNames = environment["CUCUMBER_TAGS"] {
-            let tags = tagNames.components(separatedBy: ",")
-            featuresToExecute = features.filter { $0.containsTags(tags) }
-        }
-        for feature in featuresToExecute {
+        for feature in features.taggedElements(with: environment) {
             XCTContext.runActivity(named: "Feature: \(feature.title)") { _ in
                 BeforeFeature?(feature)
-                var scenariosToExecute = feature.scenarios
-                if let tagNames = environment["CUCUMBER_TAGS"] {
-                    let tags = tagNames.components(separatedBy: ",")
-                    scenariosToExecute = feature.scenarios.filter { $0.containsTags(tags) }
-                }
-                for scenario in scenariosToExecute {
+                for scenario in feature.scenarios.taggedElements(with: environment) {
                     XCTContext.runActivity(named: "Scenario: \(scenario.title)") { _ in
                         BeforeScenario?(scenario)
                         for step in scenario.steps {
