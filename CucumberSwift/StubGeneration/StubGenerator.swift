@@ -64,7 +64,14 @@ class StubGenerator {
             }
         }
         return methods.map { method in
-            let canMatchAll = !(executableSteps.filter { $0.execute != nil }.contains { !$0.match.matches(for: method.regex).isEmpty })
+            let implementedSteps = executableSteps.filter { $0.execute != nil }
+            let canMatchAll = !(implementedSteps.contains { !$0.match.matches(for: method.regex).isEmpty })
+            let overwrittenSteps = implementedSteps.filter{ method.keyword.contains($0.keyword) && !$0.match.matches(for: method.regex).isEmpty }
+            if (!overwrittenSteps.isEmpty) {
+                method.comment = "//FIXME: WARNING: This will overwite your implementation for the step(s):\n"
+                method.comment += overwrittenSteps.map { "//                \($0.keyword.toString()) \($0.match)" }.joined(separator: "\n")
+                method.comment += "\n"
+            }
             return method.generateSwift(matchAllAllowed: canMatchAll)
         }
     }

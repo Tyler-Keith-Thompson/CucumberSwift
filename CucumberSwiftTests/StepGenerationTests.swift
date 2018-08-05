@@ -133,49 +133,6 @@ class StepGenerationTests:XCTestCase {
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
     
-    func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywords() {
-        let cucumber = Cucumber(withString: """
-        Feature: Some terse yet descriptive text of what is desired
-           Scenario: Some determinable business situation
-             Given I login as "Dave"
-               And I login as "Bobby"
-             When I login as "Anne"
-             Then I login as "Robert Downey Jr"
-        """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
-        let expected = """
-        cucumber.MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
-        }
-        """
-        XCTAssertEqual(actual, expected)
-    }
-    
-    func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywordsAndSomeAreAlreadyImplemented() {
-        let cucumber = Cucumber(withString: """
-        Feature: Some terse yet descriptive text of what is desired
-           Scenario: Some determinable business situation
-             Given I login as "Dave"
-               And I login as "Bobby"
-             When I login as "Anne"
-             Then I login as "Robert Downey Jr"
-        """)
-        cucumber.Then("^I login as \"Robert Downey Jr\"$") { _, _ in }
-        let actual = cucumber.generateUnimplementedStepDefinitions()
-        let expected = """
-        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
-        }
-        cucumber.When("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
-        }
-        cucumber.And("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
-        }
-        """
-        XCTAssertEqual(actual, expected)
-    }
-    
     func testGeneratedRegexWithIntegerLiteral() {
         let cucumber = Cucumber(withString: """
         Feature: Some terse yet descriptive text of what is desired
@@ -205,5 +162,67 @@ class StepGenerationTests:XCTestCase {
         }
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
+    }
+    
+    func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywords() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Dave"
+               And I login as "Bobby"
+             When I login as "Anne"
+             Then I login as "Robert Downey Jr"
+        """)
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        """
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywordsAndSomeAreAlreadyImplemented() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Dave"
+               And I login as "Bobby"
+             When I login as "Anne"
+             Then I login as "Robert Downey Jr"
+        """)
+        cucumber.Then("^I login as \"(.*?)\"$") { _, _ in }
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        cucumber.When("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        cucumber.And("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        """
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testGeneratedRegexHasCommentsIfItWillOverwriteAnotherStepImplementation() {
+        let cucumber = Cucumber(withString: """
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given I login as "Anne"
+             Given I login as "Robert Downey Jr"
+        """)
+        cucumber.Given("^I login as \"Robert Downey Jr\"$") { _, _ in }
+        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let expected = """
+        //FIXME: WARNING: This will overwite your implementation for the step(s):
+        //                Given I login as "Robert Downey Jr"
+        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+            let stringOne = matches[1]
+        }
+        """
+        XCTAssertEqual(actual, expected)
     }
 }

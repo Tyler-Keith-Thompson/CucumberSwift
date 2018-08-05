@@ -10,6 +10,7 @@ import Foundation
 class Method {
     var keyword:Step.Keyword = []
     var keywords:[Step.Keyword] = []
+    var comment = ""
     private(set) var regex = ""
     private(set) var matchesParameter = ""
     private(set) var variables:[(type:String, count:Int)] = []
@@ -53,6 +54,6 @@ class Method {
             methodString += "}"
             methodStrings.append(methodString)
         }
-        return methodStrings.joined(separator: "\n")
+        return comment + methodStrings.joined(separator: "\n")
     }
 }
