@@ -8,21 +8,6 @@
 
 import Foundation
 class StubGenerator {
-    private static func executableSteps(for features:[Feature]) -> [Step] {
-        var environment:[String:String] = ProcessInfo.processInfo.environment
-        var steps = [Step]()
-        if let tagNames = environment["CUCUMBER_TAGS"] {
-            let tags = tagNames.components(separatedBy: ",")
-            steps = features.filter { $0.containsTags(tags) }
-                .flatMap{ $0.scenarios }.filter { $0.containsTags(tags) }
-                .flatMap{ $0.steps }
-        } else {
-            steps = features.flatMap{ $0.scenarios }
-                .flatMap{ $0.steps }
-        }
-        return steps
-    }
-    
     private static func regexForTokens(_ tokens:[Token]) -> String {
         var regex = ""
         for token in tokens {
@@ -43,7 +28,9 @@ class StubGenerator {
     static func getStubs(for features:[Feature]) -> [String] {
         var methods = [Method]()
         var lookup = [String:Method]()
-        let executableSteps = self.executableSteps(for: features)
+        let executableSteps = features.taggedElements()
+            .flatMap{ $0.scenarios }.taggedElements()
+            .flatMap{ $0.steps }
             .sorted{ $0.keyword.rawValue < $1.keyword.rawValue }
         executableSteps.filter{ $0.execute == nil }.forEach {
             let regex = regexForTokens($0.tokens)

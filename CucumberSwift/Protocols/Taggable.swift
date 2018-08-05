@@ -18,7 +18,7 @@ extension Taggable {
 }
 
 extension Array where Element : Taggable {
-    func taggedElements(with environment:[String:String]) -> [Element] {
+    func taggedElements(with environment:[String:String] = ProcessInfo.processInfo.environment) -> [Element] {
         if let tagNames = environment["CUCUMBER_TAGS"] {
             let tags = tagNames.components(separatedBy: ",")
             return filter { $0.containsTags(tags) }
