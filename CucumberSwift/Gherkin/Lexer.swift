@@ -3,36 +3,14 @@
 //  Kaleidoscope
 //
 //  Created by Tyler Thompson on 7/15/18.
-//  Copyright © 2018 Asynchrony Labs. All rights reserved.
+//  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
-class Lexer {
-    let input: String
-    var index: String.Index
+class Lexer : StringReader {
     var atLineStart = true
     var lastScope:Scope?
     var lastKeyword:Step.Keyword?
-    
-    init(input: String) {
-        self.input = input
-        self.index = input.startIndex
-    }
-    
-    var currentChar: Character? {
-        return index < input.endIndex ? input[index] : nil
-    }
-    
-    var nextChar: Character? {
-        if let i = input.index(index, offsetBy: 1, limitedBy: input.endIndex) {
-            return input[i]
-        }
-        return nil
-    }
-    
-    func advanceIndex() {
-        _ = input.formIndex(&index, offsetBy: 1, limitedBy: input.endIndex)
-    }
     
     @discardableResult func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""

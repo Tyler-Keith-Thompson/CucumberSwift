@@ -22,6 +22,8 @@
 		AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7F1C0B2104D6B10004852A /* gherkin-languages.json */; };
 		AD7F1C0E2104DB240004852A /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0D2104DB240004852A /* Language.swift */; };
 		AD7F1C10210507420004852A /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0F210507420004852A /* StepTests.swift */; };
+		AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E15CA21176F8D00FB5B6C /* StringReader.swift */; };
+		AD9E15CD21176FC500FB5B6C /* StringReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
 		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -71,6 +73,8 @@
 		AD7F1C0B2104D6B10004852A /* gherkin-languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gherkin-languages.json"; sourceTree = "<group>"; };
 		AD7F1C0D2104DB240004852A /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		AD7F1C0F210507420004852A /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
+		AD9E15CA21176F8D00FB5B6C /* StringReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReader.swift; sourceTree = "<group>"; };
+		AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReaderTests.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
 		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,6 +160,7 @@
 				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
+				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
 			);
 			path = CucumberSwift;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */,
 				AD9EB4702079CF87002494C0 /* Info.plist */,
 				AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */,
+				AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -325,7 +331,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
-				ORGANIZATIONNAME = "Asynchrony Labs";
+				ORGANIZATIONNAME = "Tyler Thompson";
 				TargetAttributes = {
 					AD9EB45F2079CF87002494C0 = {
 						CreatedOnToolsVersion = 9.2;
@@ -384,6 +390,7 @@
 				ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */,
 				CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
+				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
@@ -419,6 +426,7 @@
 				AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */,
 				ADAA739020A9358200D2344C /* SequenceExtensionsTests.swift in Sources */,
 				AD01722D21160E0B00FBC9AF /* StepGenerationTests.swift in Sources */,
+				AD9E15CD21176FC500FB5B6C /* StringReaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,7 +561,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -561,7 +569,7 @@
 				INFOPLIST_FILE = CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -577,7 +585,7 @@
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = J8YQH7AJUN;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -585,7 +593,7 @@
 				INFOPLIST_FILE = CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwift;
+				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.0;
@@ -601,7 +609,7 @@
 				DEVELOPMENT_TEAM = J8YQH7AJUN;
 				INFOPLIST_FILE = CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwiftTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Tyler.Thompson.CucumberSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -616,7 +624,7 @@
 				DEVELOPMENT_TEAM = J8YQH7AJUN;
 				INFOPLIST_FILE = CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = asynchrony.CucumberSwiftTests;
+				PRODUCT_BUNDLE_IDENTIFIER = Tyler.Thompson.CucumberSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

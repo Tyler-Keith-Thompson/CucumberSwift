@@ -3,7 +3,7 @@
 //  Kaleidoscope
 //
 //  Created by Tyler Thompson on 7/15/18.
-//  Copyright © 2018 Asynchrony Labs. All rights reserved.
+//  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
@@ -31,6 +31,7 @@ enum Token: Equatable {
     case newLine
     case integer(String)
     case string(String)
+    case docString(String)
     case match(String)
     case title(String)
     case description(String)
@@ -55,6 +56,8 @@ enum Token: Equatable {
         case let (.integer(num1), .integer(num2)):
             return num1 == num2
         case let (.string(string1), .string(string2)):
+            return string1 == string2
+        case let (.docString(string1), .docString(string2)):
             return string1 == string2
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
             return tableHeader1 == tableHeader2

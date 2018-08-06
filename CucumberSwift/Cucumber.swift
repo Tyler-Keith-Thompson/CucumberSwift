@@ -3,7 +3,7 @@
 //  CucumberSwift
 //
 //  Created by Tyler Thompson on 4/7/18.
-//  Copyright © 2018 Asynchrony Labs. All rights reserved.
+//  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
@@ -45,7 +45,7 @@ import XCTest
     }
     
     private func parseIntoFeatures(_ string:String, uri:String = "") {
-        let tokens = Lexer(input: string).lex()
+        let tokens = Lexer(string).lex()
         let ast = AST(tokens)
         features.append(contentsOf: ast.featureNodes
             .map { Feature(with: $0, uri:uri) })

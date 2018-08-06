@@ -3,7 +3,7 @@
 //  CucumberSwiftTests
 //
 //  Created by Tyler Thompson on 7/21/18.
-//  Copyright © 2018 Asynchrony Labs. All rights reserved.
+//  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
 
 import Foundation
@@ -35,7 +35,7 @@ class CucumberTests:XCTestCase {
             }
         }
         tests.forEach { (name, test) in
-            let tokens = Lexer(input: test.feature).lex()
+            let tokens = Lexer(test.feature).lex()
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
