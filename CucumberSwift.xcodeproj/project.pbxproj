@@ -39,6 +39,10 @@
 		ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5F920FD0234005997AD /* CommentTests.swift */; };
 		ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FB20FD02B8005997AD /* TagTests.swift */; };
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
+		ADCAC7E7212F9E7A00542073 /* XCTestCaseGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADCAC7E8212F9E7A00542073 /* XCTestCaseGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */; };
+		ADCAC7ED212FC43F00542073 /* XCTestCaseMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ADCAC7EE212FC43F00542073 /* XCTestCaseMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -94,6 +98,10 @@
 		ADB4D5F920FD0234005997AD /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		ADB4D5FB20FD02B8005997AD /* TagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTests.swift; sourceTree = "<group>"; };
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseGenerator.h; sourceTree = "<group>"; };
+		ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestCaseGenerator.m; sourceTree = "<group>"; };
+		ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseMethod.h; sourceTree = "<group>"; };
+		ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestCaseMethod.m; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -152,6 +160,7 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */,
 				AD017232211671BF00FBC9AF /* StubGeneration */,
 				ADD9673220FCED48000BCAA2 /* Protocols */,
 				ADD9673120FCED15000BCAA2 /* Custom Operators */,
@@ -188,6 +197,17 @@
 				AD9EB4872079FED8002494C0 /* XCTest.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */ = {
+			isa = PBXGroup;
+			children = (
+				ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */,
+				ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */,
+				ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */,
+				ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */,
+			);
+			path = XCTestCaseGenerator;
 			sourceTree = "<group>";
 		};
 		ADD9673020FCECF2000BCAA2 /* Parser */ = {
@@ -281,6 +301,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */,
+				ADCAC7ED212FC43F00542073 /* XCTestCaseMethod.h in Headers */,
+				ADCAC7E7212F9E7A00542073 /* XCTestCaseGenerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +357,7 @@
 				TargetAttributes = {
 					AD9EB45F2079CF87002494C0 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 0920;
+						LastSwiftMigration = 0940;
 						ProvisioningStyle = Automatic;
 					};
 					AD9EB4682079CF87002494C0 = {
@@ -387,6 +409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCAC7E8212F9E7A00542073 /* XCTestCaseGenerator.m in Sources */,
 				ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */,
 				CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
@@ -407,6 +430,7 @@
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
+				ADCAC7EE212FC43F00542073 /* XCTestCaseMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +596,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -596,6 +621,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

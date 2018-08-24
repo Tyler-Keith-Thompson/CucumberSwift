@@ -8,7 +8,9 @@
 
 import Foundation
 import XCTest
+
 @objc public class Cucumber: NSObject, XCTestObservation {
+
     var features = [Feature]()
     var currentStep:Step? = nil
     var reportName:String = ""
@@ -20,9 +22,63 @@ import XCTest
     public var BeforeStep     :((Step)     -> Void)?
     public var AfterStep      :((Step)     -> Void)?
 
+    override public init() {
+        super.init()
+        XCTestObservationCenter.shared.addTestObserver(self)
+    }
+    
     init(withString string:String) {
         super.init()
         parseIntoFeatures(string)
+    }
+    
+    public func testBundleWillStart(_ testBundle: Bundle) {
+        parseIntoFeatures(
+        """
+    Feature: Enrollment
+       Textual description of the business value of this feature
+       Business rules that govern the scope of the feature
+       Any additional information that will make the feature easier to understand
+
+       Background:
+         Given a global administrator named "Greg"
+           And a blog named "Greg's anti-tax rants"
+           And a customer named "Dr. Bill"
+           And a blog named "Expensive Therapy" owned by "Dr. Bill"
+
+       Scenario: Some determinable business situation
+         Given some precondition
+           And some other precondition
+         When some action by the actor
+           And some other action
+           And yet another action
+         Then some testable outcome is achieved
+
+       Scenario: Some other determinable business situation
+         Given some precondition
+           And some other precondition
+         When some action by the actor
+         Then some testable outcome is achieved
+    """)
+        let suite = XCTestSuite(name: "CucumberTests")
+//        generateUnimplementedStepDefinitions()
+        for feature in features.taggedElements(with: environment) {
+            let className = feature.title.camelCasingString().capitalizingFirstLetter() + "|"
+            for scenario in feature.scenarios.taggedElements(with: environment) {
+                for step in scenario.steps {
+                    currentStep = step
+                    let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+                        step.execute?(step.match.matches(for: step.regex), step)
+                    }))
+                    suite.addTest(testCase!)
+                }
+            }
+        }
+//        let testCase = XCTestCaseGenerator.initWithClassName("className", XCTestCaseMethod(name: "does it work".capitalizingFirstLetter().camelCasingString(), closure: {
+//            XCTAssertTrue(true)
+//        }))
+//        suite.addTest(testCase!)
+        suite.run()
     }
     
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
@@ -30,18 +86,19 @@ import XCTest
         currentStep?.errorMessage = description
     }
     
+    @available(iOS, deprecated: 1.1, message: "CucumberSwift should now be instantiated from your info.plist in your test target, please see the documentation on github for more details.")
     public init(withDirectory directory:String, inBundle bundle:Bundle, reportName:String = "CucumberTestResults.json") {
         super.init()
-        self.reportName = reportName
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
-        while let url = enumerator?.nextObject() as? URL {
-            if (url.pathExtension == "feature") {
-                if let string = try? String(contentsOf: url, encoding: .utf8) {
-                    parseIntoFeatures(string, uri: url.absoluteString)
-                }
-            }
-        }
-        XCTestObservationCenter.shared.addTestObserver(self)
+//        self.reportName = reportName
+//        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
+//        while let url = enumerator?.nextObject() as? URL {
+//            if (url.pathExtension == "feature") {
+//                if let string = try? String(contentsOf: url, encoding: .utf8) {
+//                    parseIntoFeatures(string, uri: url.absoluteString)
+//                }
+//            }
+//        }
+//        XCTestObservationCenter.shared.addTestObserver(self)
     }
     
     private func parseIntoFeatures(_ string:String, uri:String = "") {
@@ -65,6 +122,7 @@ import XCTest
         return generatedSwift
     }
     
+    @available(iOS, deprecated: 1.1, message: "Thanks to some objective-c runtime black magic this method should never be called directly. Please see the documentation for details on getting your CucumberSwift tests to run")
     public func executeFeatures() {
         generateUnimplementedStepDefinitions()
         for feature in features.taggedElements(with: environment) {
@@ -77,7 +135,9 @@ import XCTest
                             BeforeStep?(step)
                             currentStep = step
                             _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ -> String in
-                                step.execute?(step.match.matches(for: step.regex), step)
+//                                let testCase = XCTestCaseGenerator.initWithClassName(className, XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+                                    step.execute?(step.match.matches(for: step.regex), step)
+//                                }))
                                 if (step.execute != nil && step.result != .failed) {
                                     step.result = .passed
                                 }

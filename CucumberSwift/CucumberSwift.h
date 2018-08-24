@@ -15,5 +15,6 @@ FOUNDATION_EXPORT double CucumberSwiftVersionNumber;
 FOUNDATION_EXPORT const unsigned char CucumberSwiftVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <CucumberSwift/PublicHeader.h>
-
+#import "XCTestCaseGenerator.h"
+#import "XCTestCaseMethod.h"
 
