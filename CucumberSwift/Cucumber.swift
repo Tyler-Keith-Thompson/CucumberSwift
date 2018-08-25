@@ -26,6 +26,8 @@ import XCTest
     var BeforeStep     :((Step)     -> Void)?
     var AfterStep      :((Step)     -> Void)?
     var didCreateTestSuite = false
+    var hookedFeatures = [Feature]()
+    var hookedScenarios = [Scenario]()
 
     override public init() {
         super.init()
@@ -87,13 +89,29 @@ import XCTest
                 for step in scenario.steps {
                     currentStep = step
                     let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+                        Cucumber.shared.setupHooksFor(step)
+                        Cucumber.shared.BeforeStep?(step)
                         step.execute?(step.match.matches(for: step.regex), step)
+//                        Cucumber.shared.AfterStep?(step)
                     }))
                     tests.append(testCase)
                 }
             }
         }
         tests.compactMap { $0 }.forEach { testSuite.addTest($0) }
+    }
+    
+    func setupHooksFor(_ step:Step) {
+        if let feature = step.scenario?.feature,
+           !hookedFeatures.contains(where: { $0 === feature }) {
+            hookedFeatures.append(feature)
+            Cucumber.shared.BeforeFeature?(feature)
+        }
+        if let scenario = step.scenario,
+            !hookedScenarios.contains(where: { $0 === scenario }) {
+            hookedScenarios.append(scenario)
+            Cucumber.shared.BeforeScenario?(scenario)
+        }
     }
     
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {

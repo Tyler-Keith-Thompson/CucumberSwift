@@ -10,5 +10,6 @@ import Foundation
 import XCTest
 
 open class CucumberTestCase: XCTestCase {
+    //A test case needs at least one test to trigger the observer
     public final func testBehavior() { }
 }
