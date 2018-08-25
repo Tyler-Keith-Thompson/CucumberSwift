@@ -92,7 +92,7 @@ import XCTest
                         Cucumber.shared.setupHooksFor(step)
                         Cucumber.shared.BeforeStep?(step)
                         step.execute?(step.match.matches(for: step.regex), step)
-//                        Cucumber.shared.AfterStep?(step)
+                        Cucumber.shared.AfterStep?(step)
                     }))
                     tests.append(testCase)
                 }

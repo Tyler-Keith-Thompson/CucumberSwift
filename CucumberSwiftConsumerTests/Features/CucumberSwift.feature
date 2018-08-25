@@ -18,6 +18,11 @@ as expected
         When I run the tests
         Then BeforeStep gets called once per step
 
+    Scenario: After step hook works correctly
+        Given I have an after step hook
+        When I run the tests
+        Then AfterStep gets called once per step
+
     Scenario: Scenario with the same name does not collide
         Given I have a scenario defined
         When I run the tests
