@@ -24,7 +24,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^Some precondition$") { _, _ in
+        Given("^Some precondition$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
@@ -39,7 +39,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.When("^Some precondition$") { _, _ in
+        When("^Some precondition$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
@@ -54,7 +54,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.When("^A totally different string match$") { _, _ in
+        When("^A totally different string match$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
@@ -69,7 +69,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^A user with an idea\\(ish\\)$") { _, _ in
+        Given("^A user with an idea\\(ish\\)$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
@@ -88,12 +88,12 @@ class StepGenerationTests:XCTestCase {
         }
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.And("^A PO with two$") { _, _ in
+        And("^A PO with two$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
         let notExpected = """
-        cucumber.Given("^A user with an idea$") { _, _ in
+        Given("^A user with an idea$") { _, _ in
         
         }
         """.stringByEscapingCharacters()
@@ -110,7 +110,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
         """
@@ -125,7 +125,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
+        Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
             let stringTwo = matches[2]
         }
@@ -141,7 +141,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login (\\\\d+) time$") { matches, _ in
+        Given("^I login (\\\\d+) time$") { matches, _ in
             let integerOne = matches[1]
         }
         """
@@ -156,7 +156,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
+        Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
             let integerOne = matches[1]
             let integerTwo = matches[2]
         }
@@ -175,7 +175,7 @@ class StepGenerationTests:XCTestCase {
         """)
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
+        MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
         """
@@ -194,13 +194,13 @@ class StepGenerationTests:XCTestCase {
         cucumber.Then("^I login as \"(.*?)\"$") { _, _ in }
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
-        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
-        cucumber.When("^I login as \\"(.*?)\\"$") { matches, _ in
+        When("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
-        cucumber.And("^I login as \\"(.*?)\\"$") { matches, _ in
+        And("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
         """
@@ -219,7 +219,7 @@ class StepGenerationTests:XCTestCase {
         let expected = """
         //FIXME: WARNING: This will overwite your implementation for the step(s):
         //                Given I login as "Robert Downey Jr"
-        cucumber.Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
         }
         """

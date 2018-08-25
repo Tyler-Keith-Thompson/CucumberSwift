@@ -38,7 +38,7 @@ class Method {
         }
         var methodStrings = [String]()
         for keywordString in keywordStrings {
-            var methodString = "cucumber.\(keywordString)(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
+            var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
             for variable in variables {
                 guard variable.count > 0 else { continue }
                 for i in 1...variable.count {

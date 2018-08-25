@@ -67,19 +67,20 @@ class TagTests: XCTestCase {
     }
 
     func testRunWithSpecificTags() {
-        let cucumber = Cucumber(withString: featureFileWithTags)
-        cucumber.environment["CUCUMBER_TAGS"] = "scenario1tag"
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(featureFileWithTags)
+        Cucumber.shared.environment["CUCUMBER_TAGS"] = "scenario1tag"
         
         var withTagsCalled = false
-        cucumber.Given("a scenario with tags") { _, _ in
+        Given("a scenario with tags") { _, _ in
             withTagsCalled = true
         }
         var withoutTagsCalled = false
-        cucumber.Given("a scenario without tags") { _, _ in
+        Given("a scenario without tags") { _, _ in
             withoutTagsCalled = true
         }
         
-        cucumber.executeFeatures()
+        Cucumber.shared.executeFeatures()
         
         XCTAssert(withTagsCalled)
         XCTAssertFalse(withoutTagsCalled)

@@ -142,14 +142,15 @@ class TableTests: XCTestCase {
     }
     
     func testTestDataAttachedToAStep() {
-        let cucumber = Cucumber(withString:"""
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
     Feature: Some terse yet descriptive text of what is desired
         Scenario: minimalistic
             Given a simple data table
             | foo | bar |
             | boz | boo |
     """)
-        let scenario = cucumber.features.first?.scenarios.first
+        let scenario = Cucumber.shared.features.first?.scenarios.first
         let step = scenario?.steps.first
         let table = step?.dataTable
         let firstRow = table?.rows.first
@@ -168,7 +169,7 @@ class TableTests: XCTestCase {
         }
         var givenCalled = false
         if (step?.dataTable != nil) {
-            cucumber.Given("^a simple data table$") { (_, step) in
+            Given("^a simple data table$") { (_, step) in
                 givenCalled = true
                 let dt = step.dataTable!
                 let firstRow = dt.rows.first!
@@ -179,7 +180,7 @@ class TableTests: XCTestCase {
                 XCTAssertEqual(secondRow[1], "boo")
             }
         }
-        cucumber.executeFeatures()
+        Cucumber.shared.executeFeatures()
         XCTAssert(givenCalled)
     }
 }

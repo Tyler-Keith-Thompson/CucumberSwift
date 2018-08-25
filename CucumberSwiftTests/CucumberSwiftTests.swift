@@ -32,52 +32,56 @@ class CucumberSwiftTests: XCTestCase {
          Then some testable outcome is achieved
     """
     func testFeatureHooks() {
-        let cucumber = Cucumber(withString: featureFile)
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(featureFile)
         var beforeFeatureCalled = 0
-        cucumber.BeforeFeature = { _ in
+        BeforeFeature { _ in
             beforeFeatureCalled += 1
         }
         var afterFeatureCalled = 0
-        cucumber.AfterFeature = { _ in
+        AfterFeature { _ in
             afterFeatureCalled += 1
         }
-        cucumber.executeFeatures()
+        Cucumber.shared.executeFeatures()
         XCTAssertEqual(beforeFeatureCalled, 1)
         XCTAssertEqual(afterFeatureCalled, 1)
     }
 
     func testBeforeScenarioHooks() {
-        let cucumber = Cucumber(withString: featureFile)
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(featureFile)
         var beforeScenarioCalled = 0
-        cucumber.BeforeScenario = { scenario in
+        BeforeScenario { scenario in
             XCTAssertNotNil(scenario.feature)
             beforeScenarioCalled += 1
         }
         var afterScenarioCalled = 0
-        cucumber.AfterScenario = { _ in
+        AfterScenario { _ in
             afterScenarioCalled += 1
         }
-        cucumber.executeFeatures()
+        Cucumber.shared.executeFeatures()
         XCTAssertEqual(beforeScenarioCalled, 2)
         XCTAssertEqual(afterScenarioCalled, 2)
     }
 
     func testBeforeStepHooks() {
-        let cucumber = Cucumber(withString: featureFile)
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(featureFile)
         var beforeStepCalled = 0
-        cucumber.BeforeStep = { _ in
+        BeforeStep { _ in
             beforeStepCalled += 1
         }
         var afterStepCalled = 0
-        cucumber.AfterStep = { _ in
+        AfterStep { _ in
             afterStepCalled += 1
         }
-        cucumber.executeFeatures()
+        Cucumber.shared.executeFeatures()
         XCTAssertEqual(beforeStepCalled, 10)
         XCTAssertEqual(afterStepCalled, 10)
     }
 
     func testStepsGetCallbacksAttachedCorrectly() {
+        Cucumber.shared.readFromFeaturesFolder(in: Bundle(for: CucumberSwiftTests.self))
         var givenCalled = false
         Given("S(.)mE (?:precondition)") { matches, _  in
             givenCalled = true
@@ -129,14 +133,14 @@ class CucumberSwiftTests: XCTestCase {
     }
 
     func testStepFailsIfObserverCallsBackWithFailure() {
-        let cucumber = Cucumber(withString: "")
-        cucumber.currentStep = Step(with: StepNode())
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.currentStep = Step(with: StepNode())
 
-        XCTAssertEqual(cucumber.currentStep?.result, .pending)
+        XCTAssertEqual(Cucumber.shared.currentStep?.result, .pending)
 
         let errorMessage = "You did something stupid"
-        cucumber.testCase(XCTestCase(), didFailWithDescription: errorMessage, inFile: nil, atLine: 0)
-        XCTAssertEqual(cucumber.currentStep?.result, .failed)
-        XCTAssertEqual(cucumber.currentStep?.errorMessage, errorMessage)
+        Cucumber.shared.testCase(XCTestCase(), didFailWithDescription: errorMessage, inFile: nil, atLine: 0)
+        XCTAssertEqual(Cucumber.shared.currentStep?.result, .failed)
+        XCTAssertEqual(Cucumber.shared.currentStep?.errorMessage, errorMessage)
     }
 }
