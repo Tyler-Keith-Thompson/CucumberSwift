@@ -23,6 +23,11 @@ as expected
         When I run the tests
         Then AfterStep gets called once per step
 
+    Scenario: After scenario hook works correctly
+        Given I have an after scenario hook
+        When I run the tests
+        Then AfterScenario gets called once per scenario
+
     Scenario: Scenario with the same name does not collide
         Given I have a scenario defined
         When I run the tests

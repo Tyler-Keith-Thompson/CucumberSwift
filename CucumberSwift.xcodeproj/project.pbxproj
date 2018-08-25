@@ -43,6 +43,8 @@
 		ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5F920FD0234005997AD /* CommentTests.swift */; };
 		ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FB20FD02B8005997AD /* TagTests.swift */; };
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
+		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
+		ADBB36202132149B00C375E2 /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361F2132149B00C375E2 /* Deprecated.swift */; };
 		ADCAC7E7212F9E7A00542073 /* XCTestCaseGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		ADCAC7E8212F9E7A00542073 /* XCTestCaseGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */; };
 		ADCAC7ED212FC43F00542073 /* XCTestCaseMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -114,6 +116,8 @@
 		ADB4D5F920FD0234005997AD /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		ADB4D5FB20FD02B8005997AD /* TagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTests.swift; sourceTree = "<group>"; };
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		ADBB361F2132149B00C375E2 /* Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
 		ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseGenerator.h; sourceTree = "<group>"; };
 		ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestCaseGenerator.m; sourceTree = "<group>"; };
 		ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseMethod.h; sourceTree = "<group>"; };
@@ -197,6 +201,8 @@
 				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
 				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
 				ADA5D96F2132047700530826 /* CucumberTestCase.swift */,
+				ADBB361D2132145500C375E2 /* Globals.swift */,
+				ADBB361F2132149B00C375E2 /* Deprecated.swift */,
 			);
 			path = CucumberSwift;
 			sourceTree = "<group>";
@@ -489,6 +495,7 @@
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
+				ADBB36202132149B00C375E2 /* Deprecated.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
@@ -497,6 +504,7 @@
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
 				ADA5D9702132047700530826 /* CucumberTestCase.swift in Sources */,
+				ADBB361E2132145500C375E2 /* Globals.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
 				ADCAC7EE212FC43F00542073 /* XCTestCaseMethod.m in Sources */,

@@ -30,6 +30,10 @@ class CucumberSwiftConsumerTests: CucumberTestCase {
         AfterStep { _ in
             afterStepCalled += 1
         }
+        var afterScenarioCalled = 0
+        AfterScenario { _ in
+            afterScenarioCalled += 1
+        }
         Given("^I have a before feature hook$") { _, _ in
             XCTAssert(true)
         }
@@ -40,6 +44,9 @@ class CucumberSwiftConsumerTests: CucumberTestCase {
             XCTAssert(true)
         }
         Given("^I have an after step hook$") { _, _ in
+            XCTAssert(true)
+        }
+        Given("^I have an after scenario hook$") { _, _ in
             XCTAssert(true)
         }
         Given("^I have a scenario defined$") { _, _ in
@@ -59,6 +66,9 @@ class CucumberSwiftConsumerTests: CucumberTestCase {
         }
         Then("^AfterStep gets called once per step$") { _, _ in
             XCTAssertEqual(afterStepCalled, 11)
+        }
+        Then("^AfterScenario gets called once per scenario$") { _, _ in
+            XCTAssertEqual(afterScenarioCalled, 4)
         }
         Then("^The scenario runs without crashing$") { _, _ in
             XCTAssert(true)
