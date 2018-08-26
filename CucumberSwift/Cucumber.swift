@@ -26,6 +26,7 @@ import XCTest
     var BeforeStep     :((Step)     -> Void)?
     var AfterStep      :((Step)     -> Void)?
     var didCreateTestSuite = false
+    var didFail = false
     var hookedFeatures = [Feature]()
     var hookedScenarios = [Scenario]()
 
@@ -113,7 +114,7 @@ import XCTest
             for scenario in feature.scenarios.taggedElements(with: environment) {
                 for step in scenario.steps {
                     let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
-                        guard step.result != .skipped else { return }
+                        guard !Cucumber.shared.didFail else { return }
                         step.startTime = Date()
                         Cucumber.shared.currentStep = step
                         Cucumber.shared.setupBeforeHooksFor(step)
@@ -167,6 +168,7 @@ import XCTest
         Cucumber.shared.currentStep?.errorMessage = description
         Cucumber.shared.currentStep?.endTime = Date()
         Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.filter{ $0.result == .pending }.forEach { $0.result = .skipped }
+        Cucumber.shared.didFail = true
     }
     
     func parseIntoFeatures(_ string:String, uri:String = "") {
