@@ -97,16 +97,17 @@ import XCTest
         guard !Cucumber.shared.didCreateTestSuite else { return }
         Cucumber.shared.didCreateTestSuite = true
         var tests = [XCTestCase?]()
-        tests.append(XCTestCaseGenerator.initWithClassName("Generated Steps", XCTestCaseMethod(name: "GenerateStepsStubsIfNecessary", closure: {
-            let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
-            if (!generatedSwift.isEmpty) {
+        (Cucumber.shared as? StepImplementation)?.setupSteps()
+        let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
+        if (!generatedSwift.isEmpty) {
+            tests.append(XCTestCaseGenerator.initWithClassName("Generated Steps", XCTestCaseMethod(name: "GenerateStepsStubsIfNecessary", closure: {
                 XCTContext.runActivity(named: "Pending Steps") { activity in
                     let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                     attachment.lifetime = .keepAlways
                     activity.add(attachment)
                 }
-            }
-        })))
+            })))
+        }
         for feature in Cucumber.shared.features.taggedElements(with: environment) {
             let className = feature.title.camelCasingString().capitalizingFirstLetter() + "|"
             for scenario in feature.scenarios.taggedElements(with: environment) {

@@ -22,6 +22,7 @@
 		AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */ = {isa = PBXBuildFile; fileRef = AD7F1C0B2104D6B10004852A /* gherkin-languages.json */; };
 		AD7F1C0E2104DB240004852A /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0D2104DB240004852A /* Language.swift */; };
 		AD7F1C10210507420004852A /* StepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7F1C0F210507420004852A /* StepTests.swift */; };
+		AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD99DB58213269D500E57823 /* StepImplementation.swift */; };
 		AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E15CA21176F8D00FB5B6C /* StringReader.swift */; };
 		AD9E15CD21176FC500FB5B6C /* StringReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
@@ -36,7 +37,7 @@
 		ADA5D9652131EA3200530826 /* CucumberSwiftConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA5D9642131EA3200530826 /* CucumberSwiftConsumerTests.swift */; };
 		ADA5D9672131EA3200530826 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		ADA5D96E2131EAC600530826 /* Features in Resources */ = {isa = PBXBuildFile; fileRef = ADA5D96D2131EAC600530826 /* Features */; };
-		ADA5D9702132047700530826 /* CucumberTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA5D96F2132047700530826 /* CucumberTestCase.swift */; };
+		ADA5D9702132047700530826 /* CucumberTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADA5D96F2132047700530826 /* CucumberTest.swift */; };
 		ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738B20A92BB000D2344C /* Taggable.swift */; };
 		ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738D20A9356000D2344C /* CollectionExtensions.swift */; };
 		ADAA739020A9358200D2344C /* SequenceExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */; };
@@ -90,6 +91,7 @@
 		AD7F1C0B2104D6B10004852A /* gherkin-languages.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "gherkin-languages.json"; sourceTree = "<group>"; };
 		AD7F1C0D2104DB240004852A /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		AD7F1C0F210507420004852A /* StepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepTests.swift; sourceTree = "<group>"; };
+		AD99DB58213269D500E57823 /* StepImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepImplementation.swift; sourceTree = "<group>"; };
 		AD9E15CA21176F8D00FB5B6C /* StringReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReader.swift; sourceTree = "<group>"; };
 		AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReaderTests.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +100,7 @@
 		AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CucumberSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftTests.swift; sourceTree = "<group>"; };
 		AD9EB4702079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AD9EB47A2079CFA1002494C0 /* Cucumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cucumber.swift; sourceTree = "<group>"; };
+		AD9EB47A2079CFA1002494C0 /* Cucumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cucumber.swift; sourceTree = "<group>"; wrapsLines = 0; };
 		AD9EB47C2079D280002494C0 /* Feature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feature.swift; sourceTree = "<group>"; };
 		AD9EB47E2079D28E002494C0 /* Step.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step.swift; sourceTree = "<group>"; };
 		AD9EB4802079D540002494C0 /* StringExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensions.swift; sourceTree = "<group>"; };
@@ -109,7 +111,7 @@
 		ADA5D9642131EA3200530826 /* CucumberSwiftConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftConsumerTests.swift; sourceTree = "<group>"; };
 		ADA5D9662131EA3200530826 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADA5D96D2131EAC600530826 /* Features */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Features; sourceTree = "<group>"; };
-		ADA5D96F2132047700530826 /* CucumberTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTestCase.swift; sourceTree = "<group>"; };
+		ADA5D96F2132047700530826 /* CucumberTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTest.swift; sourceTree = "<group>"; };
 		ADAA738B20A92BB000D2344C /* Taggable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Taggable.swift; sourceTree = "<group>"; };
 		ADAA738D20A9356000D2344C /* CollectionExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionExtensions.swift; sourceTree = "<group>"; };
 		ADAA738F20A9358200D2344C /* SequenceExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensionsTests.swift; sourceTree = "<group>"; };
@@ -200,9 +202,10 @@
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
 				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
-				ADA5D96F2132047700530826 /* CucumberTestCase.swift */,
+				ADA5D96F2132047700530826 /* CucumberTest.swift */,
 				ADBB361D2132145500C375E2 /* Globals.swift */,
 				ADBB361F2132149B00C375E2 /* Deprecated.swift */,
+				AD99DB58213269D500E57823 /* StepImplementation.swift */,
 			);
 			path = CucumberSwift;
 			sourceTree = "<group>";
@@ -492,6 +495,7 @@
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
 				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
+				AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */,
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
@@ -503,7 +507,7 @@
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
-				ADA5D9702132047700530826 /* CucumberTestCase.swift in Sources */,
+				ADA5D9702132047700530826 /* CucumberTest.swift in Sources */,
 				ADBB361E2132145500C375E2 /* Globals.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,

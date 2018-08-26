@@ -38,3 +38,9 @@ as expected
             And The steps are slightly different
         When I run the tests
         Then The scenario runs without crashing
+
+    Scenario: Some unimplemented steps
+        Given I have some steps that have not been implemented
+        When I look in my test report
+        Then I see some PENDING steps with a swift attachment
+            And I can copy and paste the swift code into my test case

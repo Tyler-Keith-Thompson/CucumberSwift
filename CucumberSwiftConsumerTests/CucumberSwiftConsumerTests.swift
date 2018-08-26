@@ -9,11 +9,8 @@
 import XCTest
 import CucumberSwift
 
-class CucumberSwiftConsumerTests: CucumberTestCase {
-    
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+extension Cucumber: StepImplementation {
+    public func setupSteps() {
         var beforeFeatureCalled = 0
         BeforeFeature { _ in
             beforeFeatureCalled += 1
@@ -87,4 +84,8 @@ class CucumberSwiftConsumerTests: CucumberTestCase {
             XCTAssert(true)
         }
     }
+}
+
+class CucumberSwiftConsumerTests: XCTestCase {
+    
 }

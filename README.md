@@ -1,72 +1,82 @@
 ### CucumberSwift
-CucumberSwift is a lightweight, swift-only Cucumber implementation. It was born out of frustration with current iOS Cucumber implementations. Because it's written in swift you avoid any bridging header frustration and it includes the ability to generate stubs for unimplemented steps.
+CucumberSwift is a lightweight Cucumber implementation for swift. It was born out of frustration with current iOS Cucumber implementations. The whole goal is to make it easy to install and easy to use, so please feel free to give feedback.
+
+* [Installation](#installation)
+* [How do I use it?](#how-do-i-use-it)
+* [Generated step stubs](#generated-step-stubs)
+* [Hooks](#hooks)
+* [Tags](#tags)
+* [Data Tables](#data-tables)
 
 ### Installation
-##### Cocoapods
+#### Cocoapods
 Add this line to your podfile:
 ```ruby
     pod 'CucumberSwift'
 ```
 
+#### XCode
+After you install CucumberSwift open the info.plist file of your **test** target. You'll want the set the `Principal Class` to `CucumberSwift.Cucumber`. If you prefer editing your plists from source it should look like this:
+```xml
+	<key>NSPrincipalClass</key>
+	<string>CucumberSwift.Cucumber</string>
+```
+
+![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/CucumberSetup.gif)
+
 ### How do I use it?
-CucumberSwift can be used inside any class any way you like, the preffered method would be to stick it in a subclass of XCTestCase.
+CucumberSwift is designed to be run with XCTest. To start implementing some step definitions extend Cucumber with the StepImplementation protocol.
 ```swift
 import Foundation
 import XCTest
 import CucumberSwift
 
-class MyBehaviorTests: XCTestCase {
-
-    func testBehavior() {
-        let bundle = Bundle(for: MyBehaviorTests.self)
-        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
+extension Cucumber: StepImplementation {
+    public func setupSteps() {
         //Step definitions
-        cucumber.Given("Something (matches|matched)") { (matches, _) in
+        Given("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
 
-        cucumber.When("Something (matches|matched)") { (matches, _) in
+        When("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
 
-        cucumber.Then("Something (matches|matched)") { (matches, _) in
+        Then("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
 
-        cucumber.And("Something (matches|matched)") { (matches, _) in
+        And("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
 
-        cucumber.But("Something (matches|matched)") { (matches, _) in
+        But("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
 
-        cucumber.MatchAll("Something (matches|matched)") { (matches, _) in
+        MatchAll("Something (matches|matched)") { (matches, _) in
             //assuming match is "Something matched"
             print(matches[0]) //Something matched
             print(matches[1]) //matched
         }
-
-        cucumber.executeFeatures()
     }
-    
 }
 ```
 
 ### Generated step stubs
 Writing regex can be a pain, rather than make you look up everything CucumberSwift will help you out by generating swift code with stubs for step definitions
 
-![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/CucumberSwift-Generated-Steps.gif)
+![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/GenerateStubsExample.gif)
 
 ### Hooks
 CucumberSwift comes with 6 hooks, Before/After Feature Before/After Scenario and Before/After step, use them like so
@@ -75,38 +85,32 @@ import Foundation
 import XCTest
 import CucumberSwift
 
-class MyBehaviorTests: XCTestCase {
-
-    func testBehavior() {
-        let bundle = Bundle(for: MyBehaviorTests.self)
-        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
-        //hooks
-        cucumber.BeforeFeature = { feature in
+extension Cucumber: StepImplementation {
+    public func setupSteps() {
+        BeforeFeature { feature in
 
         }
         
-        cucumber.AfterFeature = { feature in
+        AfterFeature { feature in
             
         }
         
-        cucumber.BeforeScenario = { scenario in
+        BeforeScenario { scenario in
             
         }
 
-        cucumber.AfterScenario = { scenario in
+        AfterScenario { scenario in
             
         }
 
-        cucumber.BeforeStep = { step in
+        BeforeStep { step in
             
         }
 
-        cucumber.AfterStep = { step in
+        AfterStep = { step in
             
         }
-        cucumber.executeFeatures()
     }
-    
 }
 ```
 
@@ -151,20 +155,15 @@ import Foundation
 import XCTest
 import CucumberSwift
 
-class MyBehaviorTests: XCTestCase {
-
-    func testBehavior() {
-        let bundle = Bundle(for: MyBehaviorTests.self)
-        let cucumber = Cucumber(withDirectory:"Features", inBundle: bundle)
-        cucumber.Given("^a simple data table$") { (_, step) in
+extension Cucumber: StepImplementation {
+    public func setupSteps() {
+        Given("^a simple data table$") { (_, step) in
             let dt = step.dataTable!
             let row = dt.rows[0]
             print(row[0]) //foo
             print(row[1]) //bar
         }
-        cucumber.executeFeatures()
-    }
-    
+    }    
 }
 ```
 
