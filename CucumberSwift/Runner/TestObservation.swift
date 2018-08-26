@@ -72,7 +72,14 @@ extension Cucumber: XCTestObservation {
         Cucumber.shared.currentStep?.result = .failed
         Cucumber.shared.currentStep?.errorMessage = description
         Cucumber.shared.currentStep?.endTime = Date()
-        Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.filter{ $0.result == .pending }.forEach { $0.result = .skipped }
+        var foundStep = false
+        Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.forEach { (step) in
+            if step === Cucumber.shared.currentStep {
+                foundStep = true
+            } else if (foundStep && step.result == .pending) {
+                step.result = .skipped
+            }
+        }
         Cucumber.shared.didFail = true
     }
 }
