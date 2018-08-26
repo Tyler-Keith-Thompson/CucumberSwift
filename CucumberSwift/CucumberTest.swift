@@ -11,5 +11,5 @@ import XCTest
 
 class CucumberTest: XCTestCase {
     //A test case needs at least one test to trigger the observer
-    final func testBehavior() { }
+    final func validateGherkin() { }
 }
