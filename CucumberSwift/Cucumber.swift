@@ -113,19 +113,19 @@ import XCTest
             for scenario in feature.scenarios.taggedElements(with: environment) {
                 for step in scenario.steps {
                     let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+                        step.startTime = Date()
+                        Cucumber.shared.currentStep = step
                         Cucumber.shared.setupBeforeHooksFor(step)
                         Cucumber.shared.BeforeStep?(step)
                         _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
-                            Cucumber.shared.currentStep = step
-                            step.startTime = Date()
                             step.execute?(step.match.matches(for: step.regex), step)
                             if (step.execute != nil && step.result != .failed) {
                                 step.result = .passed
                             }
-                            step.endTime = Date()
                         }
                         Cucumber.shared.AfterStep?(step)
                         Cucumber.shared.setupAfterHooksFor(step)
+                        step.endTime = Date()
                     }))
                     testCase?.continueAfterFailure = false
                     tests.append(testCase)
