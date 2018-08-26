@@ -26,7 +26,7 @@ public class Step : NSObject {
     var endTime:Date?
     var duration:TimeInterval {
         guard let start = startTime, let end = endTime else { return 0 }
-        return start.timeIntervalSince1970 - end.timeIntervalSince1970
+        return end.timeIntervalSince1970 - start.timeIntervalSince1970
     }
     var tokens = [Token]()
     
