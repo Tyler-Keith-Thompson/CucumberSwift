@@ -74,7 +74,9 @@ extension Cucumber: StepImplementation {
 ```
 
 ### Generated step stubs
-Writing regex can be a pain, rather than make you look up everything CucumberSwift will help you out by generating swift code with stubs for step definitions
+Writing regex can be a pain, rather than make you look up everything CucumberSwift will help you out by generating swift code with stubs for step definitions. Take a look in your report navigator. Expand the last test run and, if there are any unimplemented steps you will see a class called `GenerateStubsIfNecessary`.
+
+If you expand that you'll see a Pending Steps section. Finally expanding that is an attachment called `GENERATED_Unimplemented_Step_Definitions.swift`. Open this attachment and you can copy/paste the swift code directly out of it.
 
 ![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/GenerateStubsExample.gif)
 
