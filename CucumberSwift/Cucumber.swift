@@ -166,7 +166,7 @@ import XCTest
         Cucumber.shared.currentStep?.result = .failed
         Cucumber.shared.currentStep?.errorMessage = description
         Cucumber.shared.currentStep?.endTime = Date()
-        Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.filter{ $0.result == .pending }.forEach { $0.result = .skipped}
+        Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.filter{ $0.result == .pending }.forEach { $0.result = .skipped }
     }
     
     func parseIntoFeatures(_ string:String, uri:String = "") {
