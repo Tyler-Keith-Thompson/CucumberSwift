@@ -112,7 +112,7 @@ import XCTest
             for scenario in feature.scenarios.taggedElements(with: environment) {
                 for step in scenario.steps {
                     let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
-                        Cucumber.shared.setupHooksFor(step)
+                        Cucumber.shared.setupBeforeHooksFor(step)
                         Cucumber.shared.BeforeStep?(step)
                         _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
                             Cucumber.shared.currentStep = step
@@ -122,6 +122,7 @@ import XCTest
                             }
                         }
                         Cucumber.shared.AfterStep?(step)
+                        Cucumber.shared.setupAfterHooksFor(step)
                     }))
                     tests.append(testCase)
                 }
@@ -130,7 +131,7 @@ import XCTest
         tests.compactMap { $0 }.forEach { testSuite.addTest($0) }
     }
     
-    func setupHooksFor(_ step:Step) {
+    func setupBeforeHooksFor(_ step:Step) {
         if let feature = step.scenario?.feature,
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
@@ -140,6 +141,19 @@ import XCTest
             !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
             Cucumber.shared.BeforeScenario?(scenario)
+        }
+    }
+    
+    func setupAfterHooksFor(_ step:Step) {
+        if let scenario = step.scenario,
+            let lastScenarioStep = scenario.steps.last,
+            lastScenarioStep === step {
+            Cucumber.shared.AfterScenario?(scenario)
+        }
+        if let feature = step.scenario?.feature,
+            let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
+            lastStep === step {
+            Cucumber.shared.AfterFeature?(feature)
         }
     }
     
