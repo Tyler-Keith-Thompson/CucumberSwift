@@ -124,6 +124,7 @@ import XCTest
                         Cucumber.shared.AfterStep?(step)
                         Cucumber.shared.setupAfterHooksFor(step)
                     }))
+                    testCase?.continueAfterFailure = false
                     tests.append(testCase)
                 }
             }
