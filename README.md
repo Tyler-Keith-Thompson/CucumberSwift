@@ -22,7 +22,7 @@ After you install CucumberSwift open the info.plist file of your **test** target
 	<string>CucumberSwift.Cucumber</string>
 ```
 
-![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/CucumberSetup.gif)
+![image](https://github.com/Tyler-Keith-Thompson/CucumberSwiftBeta/blob/master/CucumberSetup.gif)
 
 ### How do I use it?
 CucumberSwift is designed to be run with XCTest. To start implementing some step definitions extend Cucumber with the StepImplementation protocol.
@@ -76,7 +76,7 @@ extension Cucumber: StepImplementation {
 ### Generated step stubs
 Writing regex can be a pain, rather than make you look up everything CucumberSwift will help you out by generating swift code with stubs for step definitions
 
-![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/GenerateStubsExample.gif)
+![image](https://github.com/Tyler-Keith-Thompson/CucumberSwiftBeta/blob/master/GenerateStubsExample.gif)
 
 ### Hooks
 CucumberSwift comes with 6 hooks, Before/After Feature Before/After Scenario and Before/After step, use them like so
