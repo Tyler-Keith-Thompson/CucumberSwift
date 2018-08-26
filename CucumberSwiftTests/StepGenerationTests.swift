@@ -77,16 +77,17 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithSomeStepsThatAreImplmentatedAndSomeThatAreNot() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given A user with an idea
               And A PO with two
         """)
-        cucumber.Given("^A user with an idea$") { _, _ in
+        Given("^A user with an idea$") { _, _ in
             
         }
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         And("^A PO with two$") { _, _ in
         
@@ -103,12 +104,13 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithStringLiteral() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login as "Dave"
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
@@ -118,12 +120,13 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithMultipleStringLiterals() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login as "Dave" with a password of "hello"
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
@@ -134,12 +137,13 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithIntegerLiteral() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login 1 time
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login (\\\\d+) time$") { matches, _ in
             let integerOne = matches[1]
@@ -149,12 +153,13 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithMultipleIntegerLiterals() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I enter 1234 then 4321
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
             let integerOne = matches[1]
@@ -165,7 +170,8 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywords() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login as "Dave"
@@ -173,7 +179,7 @@ class StepGenerationTests:XCTestCase {
              When I login as "Anne"
              Then I login as "Robert Downey Jr"
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
@@ -183,7 +189,8 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywordsAndSomeAreAlreadyImplemented() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login as "Dave"
@@ -191,8 +198,8 @@ class StepGenerationTests:XCTestCase {
              When I login as "Anne"
              Then I login as "Robert Downey Jr"
         """)
-        cucumber.Then("^I login as \"(.*?)\"$") { _, _ in }
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        Then("^I login as \"(.*?)\"$") { _, _ in }
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let stringOne = matches[1]
@@ -208,14 +215,15 @@ class StepGenerationTests:XCTestCase {
     }
     
     func testGeneratedRegexHasCommentsIfItWillOverwriteAnotherStepImplementation() {
-        let cucumber = Cucumber(withString: """
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
         Feature: Some terse yet descriptive text of what is desired
            Scenario: Some determinable business situation
              Given I login as "Anne"
              Given I login as "Robert Downey Jr"
         """)
-        cucumber.Given("^I login as \"Robert Downey Jr\"$") { _, _ in }
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        Given("^I login as \"Robert Downey Jr\"$") { _, _ in }
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         //FIXME: WARNING: This will overwite your implementation for the step(s):
         //                Given I login as "Robert Downey Jr"

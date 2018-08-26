@@ -117,10 +117,12 @@ import XCTest
                         Cucumber.shared.BeforeStep?(step)
                         _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
                             Cucumber.shared.currentStep = step
+                            step.startTime = Date()
                             step.execute?(step.match.matches(for: step.regex), step)
                             if (step.execute != nil && step.result != .failed) {
                                 step.result = .passed
                             }
+                            step.endTime = Date()
                         }
                         Cucumber.shared.AfterStep?(step)
                         Cucumber.shared.setupAfterHooksFor(step)
@@ -162,6 +164,7 @@ import XCTest
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         Cucumber.shared.currentStep?.result = .failed
         Cucumber.shared.currentStep?.errorMessage = description
+        Cucumber.shared.currentStep?.endTime = Date()
     }
     
     func parseIntoFeatures(_ string:String, uri:String = "") {

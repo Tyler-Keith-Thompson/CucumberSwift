@@ -22,6 +22,12 @@ public class Step : NSObject {
     var execute:(([String], Step) -> Void)? = nil
     var regex:String = ""
     var errorMessage:String = ""
+    var startTime:Date?
+    var endTime:Date?
+    var duration:TimeInterval {
+        guard let start = startTime, let end = endTime else { return 0 }
+        return start.timeIntervalSince1970 - end.timeIntervalSince1970
+    }
     var tokens = [Token]()
     
     init(with node:StepNode) {
@@ -57,7 +63,7 @@ public class Step : NSObject {
     
     func toJSON() -> [String:Any] {
         return [
-            "result":["status":"\(result)", "error_message" : errorMessage],
+            "result":["status":"\(result)", "error_message" : errorMessage, "duration": duration],
             "name":"\(match)",
             "keyword":"\(keyword.toString())"
         ]
