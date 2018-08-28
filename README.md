@@ -24,6 +24,13 @@ After you install CucumberSwift open the info.plist file of your **test** target
 
 ![image](https://github.com/Tyler-Keith-Thompson/CucumberSwift/blob/master/CucumberSetup.gif)
 
+
+#### How to set up my gherkin
+Drag and drop your `Features` folder into your **test** target. Please make sure to create a folder reference, not a group.
+
+#### My folder isn't called "Features", what do I do?
+Not to fear! Info.plist is here! Just set the `FeaturesPath` property to the relative path to your folder. (Defaults to: Features)
+
 ### How do I use it?
 CucumberSwift is designed to be run with XCTest. To start implementing some step definitions extend Cucumber with the StepImplementation protocol.
 ```swift

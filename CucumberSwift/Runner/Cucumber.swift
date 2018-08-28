@@ -55,7 +55,8 @@ import XCTest
     }
     
     func readFromFeaturesFolder(in testBundle:Bundle) {
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: testBundle.bundleURL.appendingPathComponent("Features"), includingPropertiesForKeys: nil)
+        let relativePath = (testBundle.infoDictionary?["FeaturesPath"] as? String) ?? "Features"
+        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: testBundle.bundleURL.appendingPathComponent(relativePath), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if (url.pathExtension == "feature") {
                 if let string = try? String(contentsOf: url, encoding: .utf8) {
