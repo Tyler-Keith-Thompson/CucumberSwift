@@ -89,7 +89,7 @@ class Lexer : StringReader {
             advanceIndex()
             return .tableHeader(str)
         } else if let _ = lastScope {
-            let title = readLineUntil{ $0.isSymbol }
+            let title = readLineUntil{ $0.isHeaderOpen }
             if (title.isEmpty) { //hack to get around potential infinite loop
                 advanceIndex()
                 return advanceToNextToken()

@@ -127,6 +127,18 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(steps?[3].match, "some testable outcome is achieved")
         }
     }
+    
+    func testWithNonAlphanumericScenario() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation2: (with subtext)
+         Given a user with 2 ideas
+            And a PO with 1
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        XCTAssertEqual(scenario?.title, "Some determinable business situation2: (with subtext)")
+    }
 
     func testWithIntegerType() {
         let cucumber = Cucumber(withString: """
