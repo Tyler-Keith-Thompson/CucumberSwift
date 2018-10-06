@@ -143,4 +143,30 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertEqual(Cucumber.shared.currentStep?.result, .failed)
         XCTAssertEqual(Cucumber.shared.currentStep?.errorMessage, errorMessage)
     }
+    
+    func testRemainingStepsInScenarioAreSkippedIfStepFails() {
+        Cucumber.shared.features.removeAll()
+        let step1 = Step(with: StepNode())
+        step1.result = .passed
+        let step2 = Step(with: StepNode())
+        let step3 = Step(with: StepNode())
+        let scenario = Scenario(with: [
+          step1,
+          step2,
+          step3
+        ], title: "test", tags: [])
+        step1.scenario = scenario
+        step2.scenario = scenario
+        step3.scenario = scenario
+        Cucumber.shared.currentStep = step2
+        
+        XCTAssertEqual(step2.result, .pending)
+        
+        let errorMessage = "You did something stupid"
+        Cucumber.shared.testCase(XCTestCase(), didFailWithDescription: errorMessage, inFile: nil, atLine: 0)
+        XCTAssertEqual(step1.result, .passed)
+        XCTAssertEqual(step2.result, .failed)
+        XCTAssertEqual(step2.errorMessage, errorMessage)
+        XCTAssertEqual(step3.result, .skipped)
+    }
 }

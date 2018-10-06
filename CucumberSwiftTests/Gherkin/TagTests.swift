@@ -84,5 +84,6 @@ class TagTests: XCTestCase {
         
         XCTAssert(withTagsCalled)
         XCTAssertFalse(withoutTagsCalled)
+        Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
     }
 }

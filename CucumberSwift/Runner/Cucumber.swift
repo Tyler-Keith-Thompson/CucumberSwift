@@ -26,9 +26,9 @@ import XCTest
     var BeforeStep     :((Step)     -> Void)?
     var AfterStep      :((Step)     -> Void)?
     var didCreateTestSuite = false
-    var didFail = false
     var hookedFeatures = [Feature]()
     var hookedScenarios = [Scenario]()
+    var failedScenarios = [Scenario]()
 
     override public init() {
         super.init()

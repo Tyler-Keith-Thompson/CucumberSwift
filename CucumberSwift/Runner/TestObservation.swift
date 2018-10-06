@@ -46,7 +46,7 @@ extension Cucumber: XCTestObservation {
             for scenario in feature.scenarios.taggedElements(with: environment) {
                 for step in scenario.steps {
                     let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
-                        guard !Cucumber.shared.didFail else { return }
+                        guard !Cucumber.shared.failedScenarios.contains(where: { $0 === step.scenario }) else { return }
                         step.startTime = Date()
                         Cucumber.shared.currentStep = step
                         Cucumber.shared.setupBeforeHooksFor(step)
@@ -57,11 +57,13 @@ extension Cucumber: XCTestObservation {
                                 step.result = .passed
                             }
                         }
+                    }))
+                    testCase?.addTeardownBlock {
                         Cucumber.shared.AfterStep?(step)
                         Cucumber.shared.setupAfterHooksFor(step)
                         step.endTime = Date()
-                    }))
-                    testCase?.continueAfterFailure = false
+                    }
+                    testCase?.continueAfterFailure = true
                     tests.append(testCase)
                 }
             }
@@ -72,14 +74,17 @@ extension Cucumber: XCTestObservation {
         Cucumber.shared.currentStep?.result = .failed
         Cucumber.shared.currentStep?.errorMessage = description
         Cucumber.shared.currentStep?.endTime = Date()
+        guard let scenario = Cucumber.shared.currentStep?.scenario else {
+            return
+        }
+        Cucumber.shared.failedScenarios.append(scenario)
         var foundStep = false
-        Cucumber.shared.features.flatMap { $0.scenarios }.flatMap{ $0.steps }.forEach { (step) in
+        scenario.steps.forEach { (step) in
             if step === Cucumber.shared.currentStep {
                 foundStep = true
             } else if (foundStep && step.result == .pending) {
                 step.result = .skipped
             }
         }
-        Cucumber.shared.didFail = true
     }
 }
