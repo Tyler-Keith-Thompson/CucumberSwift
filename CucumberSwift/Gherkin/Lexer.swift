@@ -11,6 +11,12 @@ class Lexer : StringReader {
     var atLineStart = true
     var lastScope:Scope?
     var lastKeyword:Step.Keyword?
+    var url:URL?
+    
+    init(_ str: String, uri:String) {
+        url = URL(string: uri)
+        super.init(str)
+    }
     
     @discardableResult func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
@@ -115,6 +121,9 @@ class Lexer : StringReader {
         var toks = [Token]()
         while let tok = advanceToNextToken() {
             toks.append(tok)
+        }
+        if (!toks.contains(where: { !$0.isDescription() && $0 != .newLine })) {
+            Gherkin.errors.append("File: \(url?.lastPathComponent ?? "") does not contain any valid gherkin")
         }
         return toks
     }

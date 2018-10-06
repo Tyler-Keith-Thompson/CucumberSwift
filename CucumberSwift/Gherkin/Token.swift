@@ -98,4 +98,10 @@ enum Token: Equatable {
         }
         return false
     }
+    func isDescription() -> Bool {
+        if case .description(_) = self {
+            return true
+        }
+        return false
+    }
 }

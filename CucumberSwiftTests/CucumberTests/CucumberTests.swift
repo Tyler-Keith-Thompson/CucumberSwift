@@ -35,7 +35,7 @@ class CucumberTests:XCTestCase {
             }
         }
         tests.forEach { (name, test) in
-            let tokens = Lexer(test.feature).lex()
+            let tokens = Lexer(test.feature, uri: "test.feature").lex()
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
