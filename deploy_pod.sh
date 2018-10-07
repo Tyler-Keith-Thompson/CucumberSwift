@@ -4,7 +4,7 @@ git reset --hard origin/master
 git clean -df
 
 # do the podspec stuff
-# npm install -g podspec-bump #uncomment if you need the node package
+npm install -g podspec-bump #uncomment if you need the node package
 npm install simple-plist
 podspec-bump -w
 
