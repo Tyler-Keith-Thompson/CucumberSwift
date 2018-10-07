@@ -10,7 +10,7 @@ podspec-bump -w
 
 # commit the podspec bump
 node edit-plist.js `podspec-bump --dump-version`
-git commit -am "[CI-Skip] publishing pod version: `podspec-bump --dump-version`" 
+git commit -am "[ci skip] publishing pod version: `podspec-bump --dump-version`" 
 git tag "`podspec-bump --dump-version`"
 git push origin HEAD -u $(podspec-bump --dump-version)
 git reset --hard
