@@ -33,7 +33,7 @@ class Language {
     private var andNames = [String]()
     private var butNames = [String]()
     
-    init(_ langName:String = "en") {
+    init?(_ langName:String = "en") {
         let bundle = Bundle(for: Cucumber.self)
         if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
@@ -50,6 +50,8 @@ class Language {
             thenNames            ?= (language[Keys.then]            as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             andNames             ?= (language[Keys.and]             as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             butNames             ?= (language[Keys.but]             as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        } else {
+            return nil
         }
     }
     

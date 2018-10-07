@@ -50,7 +50,11 @@ class Lexer : StringReader {
             let str = readLineUntil { _ in false }
             let matches = str.matches(for: "^(?:\\s*)language(?:\\s*):(?:\\s*)(.*?)(?:\\s*)$")
             if (!matches.isEmpty) {
-                Scope.language = Language(matches[1])
+                if let language = Language(matches[1]) {
+                    Scope.language = language
+                } else {
+                    Gherkin.errors.append("File: \(url?.lastPathComponent ?? "") declares an unsupported language")
+                }
             }
             advanceIndex()
             return advanceToNextToken()
@@ -117,7 +121,7 @@ class Lexer : StringReader {
     }
     
     func lex() -> [Token] {
-        Scope.language = Language()
+        Scope.language = Language()!
         var toks = [Token]()
         while let tok = advanceToNextToken() {
             toks.append(tok)

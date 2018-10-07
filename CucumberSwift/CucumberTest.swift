@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-@testable import CucumberSwift
 
 class CucumberTest: XCTestCase {
     //A test case needs at least one test to trigger the observer

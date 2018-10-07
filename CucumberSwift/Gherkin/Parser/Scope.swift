@@ -8,7 +8,7 @@
 
 import Foundation
 enum Scope: Equatable {
-    static var language = Language()
+    static var language = Language()!
     
     case feature
     case background
