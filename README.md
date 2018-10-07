@@ -177,7 +177,7 @@ extension Cucumber: StepImplementation {
 ```
 
 ### What's Still Missing?
-- Gherkin language errors
+- Some Gherkin language errors
 - Rules
 - Docstrings
 - AND support for tags (currently when multiple tags are passed in it's treated as OR)
