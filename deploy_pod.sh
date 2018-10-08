@@ -1,7 +1,9 @@
 # get the latest code
-git config --global user.email "travis@travis-ci.org"
-git config --global user.name "Travis CI"
-git config --global push.default current
+if [[ -n $${TRAVIS_BRANCH} ]]; then
+    git config --global user.email "travis@travis-ci.org"
+    git config --global user.name "Travis CI"
+    git config --global push.default current
+fi
 git checkout master
 git reset --hard origin/master
 git clean -df
