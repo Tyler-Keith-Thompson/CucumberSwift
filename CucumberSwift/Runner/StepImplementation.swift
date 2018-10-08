@@ -8,6 +8,7 @@
 
 import Foundation
 
-public protocol StepImplementation {
+@objc public protocol StepImplementation {
     func setupSteps()
+    @objc optional func shouldRunWith(tags:[String]) -> Bool
 }

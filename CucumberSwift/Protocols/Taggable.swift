@@ -18,10 +18,13 @@ extension Taggable {
 }
 
 extension Array where Element : Taggable {
-    func taggedElements(with environment:[String:String] = ProcessInfo.processInfo.environment) -> [Element] {
+    func taggedElements(with environment:[String:String] = ProcessInfo.processInfo.environment, askImplementor: Bool) -> [Element] {
         if let tagNames = environment["CUCUMBER_TAGS"] {
             let tags = tagNames.components(separatedBy: ",")
             return filter { $0.containsTags(tags) }
+        } else if let shouldRunWith = (Cucumber.shared as? StepImplementation)?.shouldRunWith,
+            askImplementor {
+            return filter { shouldRunWith($0.tags) }
         }
         return self
     }

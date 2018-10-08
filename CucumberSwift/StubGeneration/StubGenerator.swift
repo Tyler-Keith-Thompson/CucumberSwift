@@ -28,8 +28,8 @@ class StubGenerator {
     static func getStubs(for features:[Feature]) -> [String] {
         var methods = [Method]()
         var lookup = [String:Method]()
-        let executableSteps = features.taggedElements()
-            .flatMap{ $0.scenarios }.taggedElements()
+        let executableSteps = features.taggedElements(askImplementor: false)
+            .flatMap{ $0.scenarios }.taggedElements(askImplementor: true)
             .flatMap{ $0.steps }
             .sorted{ $0.keyword.rawValue < $1.keyword.rawValue }
         executableSteps.filter{ $0.execute == nil }.forEach {

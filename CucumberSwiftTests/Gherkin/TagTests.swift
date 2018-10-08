@@ -66,7 +66,7 @@ class TagTests: XCTestCase {
         XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("someOtherTag") ?? false)
     }
 
-    func testRunWithSpecificTags() {
+    func testLegacyRunWithSpecificTags() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures(featureFileWithTags)
         Cucumber.shared.environment["CUCUMBER_TAGS"] = "scenario1tag"
@@ -85,5 +85,38 @@ class TagTests: XCTestCase {
         XCTAssert(withTagsCalled)
         XCTAssertFalse(withoutTagsCalled)
         Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
+    }
+    
+    func testRunWithSpecificTags() {
+        Cucumber.runningTagTests = true
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(featureFileWithTags)
+        Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
+        
+        var withTagsCalled = false
+        Given("a scenario with tags") { _, _ in
+            withTagsCalled = true
+        }
+        var withoutTagsCalled = false
+        Given("a scenario without tags") { _, _ in
+            withoutTagsCalled = true
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        XCTAssert(withTagsCalled)
+        XCTAssertFalse(withoutTagsCalled)
+        Cucumber.runningTagTests = false
+    }
+}
+
+extension Cucumber: StepImplementation {
+    static var runningTagTests:Bool = false
+    public func setupSteps() { }
+    public func shouldRunWith(tags: [String]) -> Bool {
+        if (Cucumber.runningTagTests) {
+            return tags.contains("scenario1tag")
+        }
+        return true
     }
 }

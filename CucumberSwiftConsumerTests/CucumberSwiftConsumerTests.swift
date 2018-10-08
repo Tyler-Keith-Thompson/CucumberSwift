@@ -85,7 +85,3 @@ extension Cucumber: StepImplementation {
         }
     }
 }
-
-class CucumberSwiftConsumerTests: XCTestCase {
-    
-}

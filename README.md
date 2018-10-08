@@ -124,6 +124,16 @@ extension Cucumber: StepImplementation {
 ```
 
 ### Tags
+You leverage Swift's own conditional logic to decide what tags you want to run. Simply use your current extension of Cucumber that conforms to StepImplementation and implement the following optional method
+```swift
+public func shouldRunWith(tags: [String]) -> Bool {
+    return tags.contains("MyTag")
+}
+```
+
+**NOTE:** If you use the legacy version of tagging (i.e. the environment variable listed below) the optional method *WILL NOT GET CALLED*. The environment variable wins out in order to support older versions of CucumberSwift.
+
+##### LEGACY:
 You can specify what tags are supposed to be run by using the environment variable `CUCUMBER_TAGS`. This can be set by going to edit scheme -> test -> environment variables. Pass in a comma delimited list of tags to run.
 
 ### Data Tables
@@ -180,4 +190,3 @@ extension Cucumber: StepImplementation {
 - Some Gherkin language errors
 - Rules
 - Docstrings
-- AND support for tags (currently when multiple tags are passed in it's treated as OR)
