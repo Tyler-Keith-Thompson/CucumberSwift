@@ -3,7 +3,7 @@ osx_image: xcode9.4
 xcode_project: CucumberSwift.xcodeproj # path to your xcodeproj folder
 xcode_scheme: CucumberSwift
 xcode_destination: platform=iOS Simulator,name=iPhone 8
-
+if: tag IS blank
 deploy:
   provider: script
   script: ./deploy_pod.sh
