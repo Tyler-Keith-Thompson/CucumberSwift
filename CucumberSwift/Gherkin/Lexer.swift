@@ -35,19 +35,22 @@ class Lexer : StringReader {
         return false
     }
     
+    @discardableResult private func advance<T>(_ t:@autoclosure () -> T) -> T {
+        advanceIndex()
+        return t()
+    }
+    
     func advanceToNextToken() -> Token? {
         guard let char = currentChar else {
             return nil
         }
         if (char.isNewline) {
-            advanceIndex()
             atLineStart = true
             lastScope = nil
             lastKeyword = nil
-            return .newLine
+            return advance(.newLine)
         } else if char.isComment {
-            advanceIndex()
-            let str = readLineUntil { _ in false }
+            let str = advance(readLineUntil { _ in false })
             let matches = str.matches(for: "^(?:\\s*)language(?:\\s*):(?:\\s*)(.*?)(?:\\s*)$")
             if (!matches.isEmpty) {
                 if let language = Language(matches[1]) {
@@ -56,16 +59,13 @@ class Lexer : StringReader {
                     Gherkin.errors.append("File: \(url?.lastPathComponent ?? "") declares an unsupported language")
                 }
             }
-            advanceIndex()
-            return advanceToNextToken()
+            return advance(advanceToNextToken())
         } else if char.isTagMarker {
             atLineStart = false
-            advanceIndex()
-            return .tag(readLineUntil({ !$0.isAlphanumeric }))
+            return advance(.tag(readLineUntil({ !$0.isAlphanumeric })))
         } else if char.isTableCellDelimiter {
             atLineStart = false
-            advanceIndex()
-            let tableCellContents = readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces)
+            let tableCellContents = advance(readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces))
             if (!tableCellContents.isEmpty) {
                 return .tableCell(tableCellContents)
             }
@@ -79,9 +79,8 @@ class Lexer : StringReader {
             let i = index
             let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator })
             if (scope != .unknown && !scope.isStep()) {
-                advanceIndex() //strip scope terminator
                 lastScope = scope
-                stripSpaceIfNecessary()
+                advance(stripSpaceIfNecessary())
                 return .scope(scope)
             } else if case .step(let keyword) = scope {
                 index = i
@@ -94,29 +93,23 @@ class Lexer : StringReader {
                 return .description(readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
             }
         } else if char.isHeaderOpen {
-            advanceIndex()
-            let str = readLineUntil{ $0.isHeaderClosed }
-            advanceIndex()
-            return .tableHeader(str)
+            let str = advance(readLineUntil{ $0.isHeaderClosed })
+            return advance(.tableHeader(str))
         } else if let _ = lastScope {
             let title = readLineUntil{ $0.isHeaderOpen }
             if (title.isEmpty) { //hack to get around potential infinite loop
-                advanceIndex()
-                return advanceToNextToken()
+                return advance(advanceToNextToken())
             }
             return .title(title)
         } else if char.isQuote {
-            advanceIndex()
-            let str = readLineUntil{ $0.isQuote }
-            advanceIndex()
-            return .string(str)
+            let str = advance(readLineUntil{ $0.isQuote })
+            return advance(.string(str))
         } else if char.isNumeric {
             return .integer(readLineUntil{ !$0.isNumeric })
         } else if let _ = lastKeyword {
             return .match(readLineUntil{ $0.isSymbol })
         } else {
-            advanceIndex()
-            return advanceToNextToken()
+            return advance(advanceToNextToken())
         }
     }
     
