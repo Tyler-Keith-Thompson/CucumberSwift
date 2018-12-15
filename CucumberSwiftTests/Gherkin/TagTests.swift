@@ -111,6 +111,10 @@ class TagTests: XCTestCase {
 }
 
 extension Cucumber: StepImplementation {
+    public var bundle: Bundle {
+        return Bundle(for: TagTests.self)
+    }
+    
     static var runningTagTests:Bool = false
     public func setupSteps() { }
     public func shouldRunWith(tags: [String]) -> Bool {

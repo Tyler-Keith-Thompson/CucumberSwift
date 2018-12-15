@@ -181,6 +181,7 @@
 				AD99DB58213269D500E57823 /* StepImplementation.swift */,
 				ADBB361D2132145500C375E2 /* Globals.swift */,
 				AD99DB6221335B5D00E57823 /* TestObservation.swift */,
+				ADA5D96F2132047700530826 /* CucumberTest.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -219,7 +220,6 @@
 				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
-				ADA5D96F2132047700530826 /* CucumberTest.swift */,
 				ADBB361F2132149B00C375E2 /* Deprecated.swift */,
 			);
 			path = CucumberSwift;

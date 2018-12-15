@@ -10,11 +10,6 @@ import Foundation
 import XCTest
 
 extension Cucumber: XCTestObservation {
-    public func testBundleWillStart(_ testBundle: Bundle) {
-        Cucumber.shared.features.removeAll()
-        readFromFeaturesFolder(in: testBundle)
-    }
-    
     public func testBundleDidFinish(_ testBundle: Bundle) {
         DispatchQueue.main.async {
             let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix(while: { $0 != "."}))).appending(".json")
@@ -26,58 +21,6 @@ extension Cucumber: XCTestObservation {
         }
     }
     
-    private func createTestCaseForStubs(_ tests:inout [XCTestCase?]) {
-        let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
-        if (!generatedSwift.isEmpty) {
-            tests.append(XCTestCaseGenerator.initWithClassName("Generated Steps", XCTestCaseMethod(name: "GenerateStepsStubsIfNecessary", closure: {
-                XCTContext.runActivity(named: "Pending Steps") { activity in
-                    let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
-                    attachment.lifetime = .keepAlways
-                    activity.add(attachment)
-                }
-            })))
-        }
-    }
-    
-    private func createTestCaseFor(className:String, scenario: Scenario, tests:inout [XCTestCase?]) {
-        for step in scenario.steps {
-            let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
-                guard !Cucumber.shared.failedScenarios.contains(where: { $0 === step.scenario }) else { return }
-                step.startTime = Date()
-                Cucumber.shared.currentStep = step
-                Cucumber.shared.setupBeforeHooksFor(step)
-                Cucumber.shared.BeforeStep?(step)
-                _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
-                    step.execute?(step.match.matches(for: step.regex), step)
-                    if (step.execute != nil && step.result != .failed) {
-                        step.result = .passed
-                    }
-                }
-            }))
-            testCase?.addTeardownBlock {
-                Cucumber.shared.AfterStep?(step)
-                Cucumber.shared.setupAfterHooksFor(step)
-                step.endTime = Date()
-            }
-            testCase?.continueAfterFailure = true
-            tests.append(testCase)
-        }
-    }
-    
-    public func testSuiteWillStart(_ testSuite: XCTestSuite) {
-        guard !Cucumber.shared.didCreateTestSuite else { return }
-        Cucumber.shared.didCreateTestSuite = true
-        var tests = [XCTestCase?]()
-        (Cucumber.shared as? StepImplementation)?.setupSteps()
-        createTestCaseForStubs(&tests)
-        for feature in Cucumber.shared.features.taggedElements(with: environment, askImplementor: false) {
-            let className = feature.title.camelCasingString().capitalizingFirstLetter() + "|"
-            for scenario in feature.scenarios.taggedElements(with: environment, askImplementor: true) {
-                createTestCaseFor(className:className, scenario: scenario, tests: &tests)
-            }
-        }
-        tests.compactMap { $0 }.forEach { testSuite.addTest($0) }
-    }
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
         Cucumber.shared.currentStep?.result = .failed
         Cucumber.shared.currentStep?.errorMessage = description

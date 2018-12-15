@@ -9,7 +9,13 @@
 import XCTest
 import CucumberSwift
 
+class Me { }
+
 extension Cucumber: StepImplementation {
+    public var bundle: Bundle {
+        return Bundle(for: Me.self)
+    }
+    
     public func setupSteps() {
         var beforeFeatureCalled = 0
         BeforeFeature { _ in
