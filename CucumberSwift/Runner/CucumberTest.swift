@@ -16,10 +16,10 @@ class CucumberTest: XCTestCase {
         
         var tests = [XCTestCase?]()
         Cucumber.shared.features.removeAll()
-        (Cucumber.shared as? StepImplementation)?.setupSteps()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
             Cucumber.shared.readFromFeaturesFolder(in: bundle)
         }
+        (Cucumber.shared as? StepImplementation)?.setupSteps()
         createTestCaseForStubs(&tests)
         for feature in Cucumber.shared.features.taggedElements(with: Cucumber.shared.environment, askImplementor: false) {
             let className = feature.title.camelCasingString().capitalizingFirstLetter() + "|"
