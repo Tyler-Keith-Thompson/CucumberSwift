@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
     s.source           = { :git => 'https://github.com/Tyler-Keith-Thompson/CucumberSwift.git', :tag => s.version.to_s }
   
     s.ios.deployment_target = '10.0'
-    s.swift_version = '4.0'
+    s.swift_version = '4.2'
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
     s.resources = ["CucumberSwift/**/*.{json}"]  
