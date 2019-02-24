@@ -17,6 +17,7 @@
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
+		AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */; };
 		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
 		AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */; };
 		AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */; };
@@ -89,6 +90,7 @@
 		AD2F20DF216969990041657C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
+		AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingExtensions.swift; sourceTree = "<group>"; };
 		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperatorTests.swift; sourceTree = "<group>"; };
 		AD7D252A207A8BE9001B8211 /* StringExtensionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtensionsTests.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
 				ADBB361F2132149B00C375E2 /* Deprecated.swift */,
+				AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */,
 			);
 			path = CucumberSwift;
 			sourceTree = "<group>";
@@ -526,6 +529,7 @@
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,
+				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
 				ADA5D9702132047700530826 /* CucumberTest.swift in Sources */,
 				ADBB361E2132145500C375E2 /* Globals.swift in Sources */,
