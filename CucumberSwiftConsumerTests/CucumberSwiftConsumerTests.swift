@@ -21,6 +21,10 @@ extension Cucumber: StepImplementation {
         BeforeFeature { _ in
             beforeFeatureCalled += 1
         }
+        var secondaryBeforeFeatureCalled = 0
+        BeforeFeature { _ in
+            secondaryBeforeFeatureCalled += 1
+        }
         var beforeScenarioCalled = 0
         BeforeScenario { _ in
             beforeScenarioCalled += 1
@@ -67,6 +71,7 @@ extension Cucumber: StepImplementation {
         }
         Then("^BeforeFeature gets called once per feature$") { _, _ in
             XCTAssertEqual(beforeFeatureCalled, 1)
+            XCTAssertEqual(secondaryBeforeFeatureCalled, 1)
         }
         Then("^BeforeScenario gets called once per scenario$") { _, _ in
             XCTAssertEqual(beforeScenarioCalled, 2)

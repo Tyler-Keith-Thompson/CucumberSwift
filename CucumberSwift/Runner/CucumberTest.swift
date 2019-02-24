@@ -51,7 +51,7 @@ class CucumberTest: XCTestCase {
                 step.startTime = Date()
                 Cucumber.shared.currentStep = step
                 Cucumber.shared.setupBeforeHooksFor(step)
-                Cucumber.shared.BeforeStep?(step)
+                Cucumber.shared.BeforeStepHooks.forEach { $0(step) }
                 _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
                     step.execute?(step.match.matches(for: step.regex), step)
                     if (step.execute != nil && step.result != .failed) {
@@ -60,7 +60,7 @@ class CucumberTest: XCTestCase {
                 }
             }))
             testCase?.addTeardownBlock {
-                Cucumber.shared.AfterStep?(step)
+                Cucumber.shared.AfterStepHooks.forEach { $0(step) }
                 Cucumber.shared.setupAfterHooksFor(step)
                 step.endTime = Date()
             }

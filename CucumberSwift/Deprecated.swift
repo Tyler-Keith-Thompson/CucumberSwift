@@ -14,12 +14,12 @@ extension Cucumber {
         generateUnimplementedStepDefinitions()
         for feature in features.taggedElements(with: environment, askImplementor: false) {
             XCTContext.runActivity(named: "Feature: \(feature.title)") { _ in
-                BeforeFeature?(feature)
+                BeforeFeatureHooks.forEach { $0(feature) }
                 for scenario in feature.scenarios.taggedElements(with: environment, askImplementor: true) {
                     XCTContext.runActivity(named: "Scenario: \(scenario.title)") { _ in
-                        BeforeScenario?(scenario)
+                        BeforeScenarioHooks.forEach { $0(scenario) }
                         for step in scenario.steps {
-                            BeforeStep?(step)
+                            BeforeStepHooks.forEach { $0(step) }
                             currentStep = step
                             _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ -> String in
                                 step.execute?(step.match.matches(for: step.regex), step)
@@ -28,12 +28,12 @@ extension Cucumber {
                                 }
                                 return ""
                             }
-                            AfterStep?(step)
+                            AfterStepHooks.forEach { $0(step) }
                         }
-                        AfterScenario?(scenario)
+                        AfterScenarioHooks.forEach { $0(scenario) }
                     }
                 }
-                AfterFeature?(feature)
+                AfterFeatureHooks.forEach { $0(feature) }
             }
         }
         DispatchQueue.main.async {

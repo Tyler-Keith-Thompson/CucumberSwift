@@ -19,12 +19,12 @@ import XCTest
     var currentStep:Step? = nil
     var reportName:String = "CucumberTestResultsFor"
     var environment:[String:String] = ProcessInfo.processInfo.environment
-    var BeforeFeature  :((Feature)  -> Void)?
-    var AfterFeature   :((Feature)  -> Void)?
-    var BeforeScenario :((Scenario) -> Void)?
-    var AfterScenario  :((Scenario) -> Void)?
-    var BeforeStep     :((Step)     -> Void)?
-    var AfterStep      :((Step)     -> Void)?
+    var BeforeFeatureHooks  = [(Feature)  -> Void]()
+    var AfterFeatureHooks   = [(Feature)  -> Void]()
+    var BeforeScenarioHooks = [(Scenario)  -> Void]()
+    var AfterScenarioHooks  = [(Scenario)  -> Void]()
+    var BeforeStepHooks     = [(Step)  -> Void]()
+    var AfterStepHooks      = [(Step)  -> Void]()
     var didCreateTestSuite = false
     var hookedFeatures = [Feature]()
     var hookedScenarios = [Scenario]()
@@ -83,12 +83,12 @@ import XCTest
         if let feature = step.scenario?.feature,
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
-            Cucumber.shared.BeforeFeature?(feature)
+            Cucumber.shared.BeforeFeatureHooks.forEach { $0(feature) }
         }
         if let scenario = step.scenario,
             !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
-            Cucumber.shared.BeforeScenario?(scenario)
+            Cucumber.shared.BeforeScenarioHooks.forEach { $0(scenario) }
         }
     }
     
@@ -96,12 +96,12 @@ import XCTest
         if let scenario = step.scenario,
             let lastScenarioStep = scenario.steps.last,
             lastScenarioStep === step {
-            Cucumber.shared.AfterScenario?(scenario)
+            Cucumber.shared.AfterScenarioHooks.forEach { $0(scenario) }
         }
         if let feature = step.scenario?.feature,
             let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
             lastStep === step {
-            Cucumber.shared.AfterFeature?(feature)
+            Cucumber.shared.AfterFeatureHooks.forEach { $0(feature) }
         }
     }
     

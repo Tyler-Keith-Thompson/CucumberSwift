@@ -89,6 +89,8 @@ If you expand that you'll see a Pending Steps section. Finally expanding that is
 
 ### Hooks
 CucumberSwift comes with 6 hooks, Before/After Feature Before/After Scenario and Before/After step, use them like so
+
+NOTE: Hooks can be setup in more than 1 place however each hook will only be called once
 ```swift
 import Foundation
 import XCTest
@@ -97,7 +99,7 @@ import CucumberSwift
 extension Cucumber: StepImplementation {
     public func setupSteps() {
         BeforeFeature { feature in
-
+            //called once before the feature, but can be setup in more than 1 file.
         }
         
         AfterFeature { feature in
