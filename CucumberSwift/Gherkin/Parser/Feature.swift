@@ -57,7 +57,7 @@ public class Feature : NSObject, Taggable {
             "name" : title,
             "description" : desc,
             "keyword" : "Feature",
-            "elements" : scenarios.map { $0.toJSON() }
+            "elements" : scenarios.taggedElements(askImplementor: true).map { $0.toJSON() }
         ]
     }
 }
