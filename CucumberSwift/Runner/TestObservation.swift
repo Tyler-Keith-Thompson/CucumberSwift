@@ -11,13 +11,11 @@ import XCTest
 
 extension Cucumber: XCTestObservation {
     public func testBundleDidFinish(_ testBundle: Bundle) {
-        DispatchQueue.main.async {
-            let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix(while: { $0 != "."}))).appending(".json")
-            if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
-                let data = try? JSONSerialization.data(withJSONObject: Cucumber.shared.features.taggedElements(askImplementor: true).map { $0.toJSON() }, options: JSONSerialization.WritingOptions.prettyPrinted) {
-                let fileURL = documentDirectory.appendingPathComponent(name)
-                try? data.write(to: fileURL)
-            }
+        let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix(while: { $0 != "."}))).appending(".json")
+        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false),
+            let data = try? JSONSerialization.data(withJSONObject: Cucumber.shared.features.taggedElements(askImplementor: true).map { $0.toJSON() }, options: JSONSerialization.WritingOptions.prettyPrinted) {
+            let fileURL = documentDirectory.appendingPathComponent(name)
+            try? data.write(to: fileURL)
         }
     }
     
