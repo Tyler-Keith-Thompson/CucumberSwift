@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'CucumberSwift'
-    s.version          = '2.0.25'
+    s.version          = '2.1.0'
     s.summary          = 'A lightweight swift only cucumber implementation.'
 
     s.description      = <<-DESC

@@ -31,54 +31,6 @@ class CucumberSwiftTests: XCTestCase {
          When some action by the actor
          Then some testable outcome is achieved
     """
-    func testFeatureHooks() {
-        Cucumber.shared.features.removeAll()
-        Cucumber.shared.parseIntoFeatures(featureFile)
-        var beforeFeatureCalled = 0
-        BeforeFeature { _ in
-            beforeFeatureCalled += 1
-        }
-        var afterFeatureCalled = 0
-        AfterFeature { _ in
-            afterFeatureCalled += 1
-        }
-        Cucumber.shared.executeFeatures()
-        XCTAssertEqual(beforeFeatureCalled, 1)
-        XCTAssertEqual(afterFeatureCalled, 1)
-    }
-
-    func testBeforeScenarioHooks() {
-        Cucumber.shared.features.removeAll()
-        Cucumber.shared.parseIntoFeatures(featureFile)
-        var beforeScenarioCalled = 0
-        BeforeScenario { scenario in
-            XCTAssertNotNil(scenario.feature)
-            beforeScenarioCalled += 1
-        }
-        var afterScenarioCalled = 0
-        AfterScenario { _ in
-            afterScenarioCalled += 1
-        }
-        Cucumber.shared.executeFeatures()
-        XCTAssertEqual(beforeScenarioCalled, 2)
-        XCTAssertEqual(afterScenarioCalled, 2)
-    }
-
-    func testBeforeStepHooks() {
-        Cucumber.shared.features.removeAll()
-        Cucumber.shared.parseIntoFeatures(featureFile)
-        var beforeStepCalled = 0
-        BeforeStep { _ in
-            beforeStepCalled += 1
-        }
-        var afterStepCalled = 0
-        AfterStep { _ in
-            afterStepCalled += 1
-        }
-        Cucumber.shared.executeFeatures()
-        XCTAssertEqual(beforeStepCalled, 10)
-        XCTAssertEqual(afterStepCalled, 10)
-    }
 
     func testStepsGetCallbacksAttachedCorrectly() {
         Cucumber.shared.readFromFeaturesFolder(in: Bundle(for: CucumberSwiftTests.self))
