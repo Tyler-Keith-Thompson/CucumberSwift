@@ -10,7 +10,6 @@ import Foundation
 import XCTest
 
 class CucumberTest: XCTestCase {
-    //A test case needs at least one test to trigger the observer
     override class var defaultTestSuite: XCTestSuite {
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
         
@@ -34,7 +33,7 @@ class CucumberTest: XCTestCase {
     private static func createTestCaseForStubs(_ tests:inout [XCTestCase?]) {
         let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
         if (!generatedSwift.isEmpty) {
-            tests.append(XCTestCaseGenerator.initWithClassName("Generated Steps", XCTestCaseMethod(name: "GenerateStepsStubsIfNecessary", closure: {
+            tests.append(TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "GenerateStepsStubsIfNecessary", closure: {
                 XCTContext.runActivity(named: "Pending Steps") { activity in
                     let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                     attachment.lifetime = .keepAlways
@@ -46,7 +45,7 @@ class CucumberTest: XCTestCase {
     
     private static func createTestCaseFor(className:String, scenario: Scenario, tests:inout [XCTestCase?]) {
         for step in scenario.steps {
-            let testCase = XCTestCaseGenerator.initWithClassName(className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), XCTestCaseMethod(name: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+            let testCase = TestCaseGenerator.initWith(className: className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), method: TestCaseMethod(withName: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
                 guard !Cucumber.shared.failedScenarios.contains(where: { $0 === step.scenario }) else { return }
                 step.startTime = Date()
                 Cucumber.shared.currentStep = step
@@ -68,6 +67,8 @@ class CucumberTest: XCTestCase {
             tests.append(testCase)
         }
     }
+    
+    //A test case needs at least one test to trigger the observer
     final func testGherkin() {
         XCTAssert(Gherkin.errors.isEmpty, "Gherkin language errors found:\n\(Gherkin.errors.joined(separator: "\n"))")
     }

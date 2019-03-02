@@ -14,6 +14,8 @@
 		AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01722E2116341200FBC9AF /* SequenceExtensions.swift */; };
 		AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01723021166C3D00FBC9AF /* StubGenerator.swift */; };
 		AD017234211671D200FBC9AF /* Method.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD017233211671D200FBC9AF /* Method.swift */; };
+		AD22A1B6222B10B50025E41C /* TestCaseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */; };
+		AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */; };
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
@@ -50,10 +52,6 @@
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		ADBB36202132149B00C375E2 /* Deprecated.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361F2132149B00C375E2 /* Deprecated.swift */; };
-		ADCAC7E7212F9E7A00542073 /* XCTestCaseGenerator.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ADCAC7E8212F9E7A00542073 /* XCTestCaseGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */; };
-		ADCAC7ED212FC43F00542073 /* XCTestCaseMethod.h in Headers */ = {isa = PBXBuildFile; fileRef = ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ADCAC7EE212FC43F00542073 /* XCTestCaseMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -87,6 +85,8 @@
 		AD01722E2116341200FBC9AF /* SequenceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceExtensions.swift; sourceTree = "<group>"; };
 		AD01723021166C3D00FBC9AF /* StubGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubGenerator.swift; sourceTree = "<group>"; };
 		AD017233211671D200FBC9AF /* Method.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Method.swift; sourceTree = "<group>"; };
+		AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseGenerator.swift; sourceTree = "<group>"; };
+		AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseMethod.swift; sourceTree = "<group>"; };
 		AD2F20DF216969990041657C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
@@ -128,10 +128,6 @@
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		ADBB361F2132149B00C375E2 /* Deprecated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deprecated.swift; sourceTree = "<group>"; };
-		ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseGenerator.h; sourceTree = "<group>"; };
-		ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestCaseGenerator.m; sourceTree = "<group>"; };
-		ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestCaseMethod.h; sourceTree = "<group>"; };
-		ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestCaseMethod.m; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -266,10 +262,8 @@
 		ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */ = {
 			isa = PBXGroup;
 			children = (
-				ADCAC7E5212F9E7A00542073 /* XCTestCaseGenerator.h */,
-				ADCAC7E6212F9E7A00542073 /* XCTestCaseGenerator.m */,
-				ADCAC7EB212FC43F00542073 /* XCTestCaseMethod.h */,
-				ADCAC7EC212FC43F00542073 /* XCTestCaseMethod.m */,
+				AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */,
+				AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */,
 			);
 			path = XCTestCaseGenerator;
 			sourceTree = "<group>";
@@ -367,8 +361,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */,
-				ADCAC7ED212FC43F00542073 /* XCTestCaseMethod.h in Headers */,
-				ADCAC7E7212F9E7A00542073 /* XCTestCaseGenerator.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,9 +500,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADCAC7E8212F9E7A00542073 /* XCTestCaseGenerator.m in Sources */,
 				ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */,
 				CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */,
+				AD22A1B6222B10B50025E41C /* TestCaseGenerator.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
 				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
@@ -531,12 +523,12 @@
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
+				AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */,
 				ADA5D9702132047700530826 /* CucumberTest.swift in Sources */,
 				ADBB361E2132145500C375E2 /* Globals.swift in Sources */,
 				AD99DB6321335B5D00E57823 /* TestObservation.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
-				ADCAC7EE212FC43F00542073 /* XCTestCaseMethod.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

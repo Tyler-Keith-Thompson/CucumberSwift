@@ -25,10 +25,9 @@ import XCTest
     var AfterScenarioHooks  = [(Scenario)  -> Void]()
     var BeforeStepHooks     = [(Step)  -> Void]()
     var AfterStepHooks      = [(Step)  -> Void]()
-    var didCreateTestSuite = false
-    var hookedFeatures = [Feature]()
-    var hookedScenarios = [Scenario]()
-    var failedScenarios = [Scenario]()
+    var hookedFeatures      = [Feature]()
+    var hookedScenarios     = [Scenario]()
+    var failedScenarios     = [Scenario]()
 
     override public init() {
         super.init()
@@ -69,7 +68,7 @@ import XCTest
     func generateStubsInTestSuite(_ suite:XCTestSuite) {
         let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
         if (!generatedSwift.isEmpty) {
-            suite.addTest(XCTestCaseGenerator.initWithClassName("Generated Steps", XCTestCaseMethod(name: "Generated Steps", closure: {
+            suite.addTest(TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "Generated Steps", closure: {
                 XCTContext.runActivity(named: "Pending Steps") { activity in
                     let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                     attachment.lifetime = .keepAlways

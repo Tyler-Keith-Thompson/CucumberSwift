@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import XCTest
 //Where methods go to die
 extension Cucumber {
     @available(*, deprecated: 1.1, message: "Thanks to some objective-c runtime black magic this method should never be called directly. Set CucumberSwift.Cucumber as your principal class from your info.plist and your cucumber tests will simply run. If you do continue to use this method be aware generated stubs will no longer work.")
