@@ -20,7 +20,10 @@ Pod::Spec.new do |s|
 
     s.script_phases = [
       { :name => 'Copy Snippets',
-        :script => '${PODS_TARGET_SRCROOT}/copy_snippets.sh',
+        :script => '
+          mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
+          find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
+        ',
         :execution_position => :before_compile
       } #,
       # { :name => ‘Postcompile’,

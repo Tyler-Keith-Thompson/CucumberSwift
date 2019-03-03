@@ -89,7 +89,6 @@
 		AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseGenerator.swift; sourceTree = "<group>"; };
 		AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseMethod.swift; sourceTree = "<group>"; };
 		AD22A1B9222B21830025E41C /* CucumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberExtensions.swift; sourceTree = "<group>"; };
-		AD22A1BD222C58B30025E41C /* copy_snippets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_snippets.sh; sourceTree = "<group>"; };
 		AD22A1BE222C599F0025E41C /* Snippets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Snippets; sourceTree = "<group>"; };
 		AD2F20DF216969990041657C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
@@ -175,14 +174,6 @@
 			path = StubGeneration;
 			sourceTree = "<group>";
 		};
-		AD22A1BC222C58930025E41C /* Bash */ = {
-			isa = PBXGroup;
-			children = (
-				AD22A1BD222C58B30025E41C /* copy_snippets.sh */,
-			);
-			path = Bash;
-			sourceTree = "<group>";
-		};
 		AD99DB6121335B2100E57823 /* Runner */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,7 +210,6 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
-				AD22A1BC222C58930025E41C /* Bash */,
 				AD22A1BE222C599F0025E41C /* Snippets */,
 				AD99DB6121335B2100E57823 /* Runner */,
 				ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */,
