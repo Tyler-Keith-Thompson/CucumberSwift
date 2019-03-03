@@ -24,7 +24,7 @@ Pod::Spec.new do |s|
         { :name => 'Copy Snippets',
           :script => '
             mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
-            find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
+            find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp -f {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
           ',
           :execution_position => :before_compile
         }
