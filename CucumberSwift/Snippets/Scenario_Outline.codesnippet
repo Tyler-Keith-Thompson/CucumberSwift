@@ -3,28 +3,26 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>Feature</string>
+	<string>Scenario Outline</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>CodeBlock</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-    <string>Feature: &lt;#title#&gt;
-    Description: &lt;#description#&gt;
-    
-        Scenario: &lt;#title#&gt;
-            Given &lt;#precondition#&gt;
-            When &lt;#action#&gt;
-            Then &lt;#testable result#&gt;
+    <string>Scenario Outline: &lt;#description#&gt;
+            &lt;#keyword#&gt; &lt;#precondition#&gt;
+                Examples:
+                | &lt;#header#&gt; | &lt;#header#&gt;  |
+                |  &lt;#cell#&gt;  |  &lt;#cell#&gt;   |
     </string>
 	<key>IDECodeSnippetIdentifier</key>
-    <string>61e99da6-829f-47aa-afb1-ca677e220315</string>
+	<string>e944b9fc-7ede-47b4-b5d5-d5d7156443f9</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Generic</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>Used for creating a feature in gherkin</string>
+	<string>Used for creating a scenario in gherkin</string>
 	<key>IDECodeSnippetTitle</key>
-	<string>Feature</string>
+	<string>Scenario Outline</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
