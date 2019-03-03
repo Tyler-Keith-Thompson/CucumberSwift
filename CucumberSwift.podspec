@@ -19,7 +19,7 @@ Pod::Spec.new do |s|
     s.resources = ["CucumberSwift/**/*.{json}"]
 
     s.subspec 'snippets' do |ss| 
-      ss.resources = ["CucumberSwift/**/*.{sh,codesnippet}"]
+      ss.resources = ["CucumberSwift/**/*.{codesnippet}"]
       ss.script_phases = [
         { :name => 'Copy Snippets',
           :script => '
@@ -29,6 +29,9 @@ Pod::Spec.new do |s|
           :execution_position => :before_compile
         }
       ]
+    end
+    s.subspec 'syntax' do |ss| 
+      ss.resources = ["CucumberSwift/**/*.{xclangspec,sh}"]
     end
     s.framework = "XCTest"
     s.pod_target_xcconfig = {
