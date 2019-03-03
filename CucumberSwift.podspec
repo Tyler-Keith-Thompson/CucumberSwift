@@ -16,21 +16,20 @@ Pod::Spec.new do |s|
     s.swift_version = '4.2'
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
-    s.resources = ["CucumberSwift/**/*.{json,sh,codesnippet}"]
+    s.resources = ["CucumberSwift/**/*.{json}"]
 
-    s.script_phases = [
-      { :name => 'Copy Snippets',
-        :script => '
-          mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
-          find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
-        ',
-        :execution_position => :before_compile
-      } #,
-      # { :name => ‘Postcompile’,
-      #   :script => ‘echo “yay!“’,
-      #   :execution_position => :after_compile
-      # }
-     ]
+    s.subspec 'snippets' do |ss| 
+      ss.resources = ["CucumberSwift/**/*.{sh,codesnippet}"]
+      ss.script_phases = [
+        { :name => 'Copy Snippets',
+          :script => '
+            mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
+            find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
+          ',
+          :execution_position => :before_compile
+        }
+      ]
+    end
     s.framework = "XCTest"
     s.pod_target_xcconfig = {
       'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
