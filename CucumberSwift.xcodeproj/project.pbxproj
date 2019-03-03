@@ -17,6 +17,7 @@
 		AD22A1B6222B10B50025E41C /* TestCaseGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */; };
 		AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */; };
 		AD22A1BA222B21830025E41C /* CucumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B9222B21830025E41C /* CucumberExtensions.swift */; };
+		AD22A1BF222C599F0025E41C /* Snippets in Resources */ = {isa = PBXBuildFile; fileRef = AD22A1BE222C599F0025E41C /* Snippets */; };
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
@@ -88,6 +89,8 @@
 		AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseGenerator.swift; sourceTree = "<group>"; };
 		AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCaseMethod.swift; sourceTree = "<group>"; };
 		AD22A1B9222B21830025E41C /* CucumberExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberExtensions.swift; sourceTree = "<group>"; };
+		AD22A1BD222C58B30025E41C /* copy_snippets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_snippets.sh; sourceTree = "<group>"; };
+		AD22A1BE222C599F0025E41C /* Snippets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Snippets; sourceTree = "<group>"; };
 		AD2F20DF216969990041657C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
@@ -172,6 +175,14 @@
 			path = StubGeneration;
 			sourceTree = "<group>";
 		};
+		AD22A1BC222C58930025E41C /* Bash */ = {
+			isa = PBXGroup;
+			children = (
+				AD22A1BD222C58B30025E41C /* copy_snippets.sh */,
+			);
+			path = Bash;
+			sourceTree = "<group>";
+		};
 		AD99DB6121335B2100E57823 /* Runner */ = {
 			isa = PBXGroup;
 			children = (
@@ -208,6 +219,8 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				AD22A1BC222C58930025E41C /* Bash */,
+				AD22A1BE222C599F0025E41C /* Snippets */,
 				AD99DB6121335B2100E57823 /* Runner */,
 				ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */,
 				AD017232211671BF00FBC9AF /* StubGeneration */,
@@ -472,6 +485,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD22A1BF222C599F0025E41C /* Snippets in Resources */,
 				AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,8 +16,18 @@ Pod::Spec.new do |s|
     s.swift_version = '4.2'
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
-    s.resources = ["CucumberSwift/**/*.{json}"]  
+    s.resources = ["CucumberSwift/**/*.{json,sh,codesnippet}"]
 
+    s.script_phases = [
+      { :name => 'Copy Snippets',
+        :script => '${PODS_TARGET_SRCROOT}/copy_snippets.sh',
+        :execution_position => :before_compile
+      } #,
+      # { :name => ‘Postcompile’,
+      #   :script => ‘echo “yay!“’,
+      #   :execution_position => :after_compile
+      # }
+     ]
     s.framework = "XCTest"
     s.pod_target_xcconfig = {
       'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',
