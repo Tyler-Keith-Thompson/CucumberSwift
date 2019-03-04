@@ -7,6 +7,7 @@ CucumberSwift is a lightweight Cucumber implementation for swift. It was born ou
 * [Hooks](#hooks)
 * [Tags](#tags)
 * [Data Tables](#data-tables)
+* [Gherkin Syntax Highlighting](#gherkin-syntax-highlighting)
 
 ### Installation
 #### Cocoapods
@@ -186,6 +187,40 @@ extension Cucumber: StepImplementation {
         }
     }    
 }
+```
+
+### Gherkin Syntax Highlighting
+CucumberSwift supports syntax highlighting for Gherkin! In order to take advantage of it add this line to your podfile:
+```ruby
+pod 'CucumberSwift/syntax'
+```
+
+Then add this post-install hook
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name.include? 'CucumberSwift'
+      system("cd Pods/CucumberSwift/CucumberSwift/Gherkin/XCode-Specific && sudo ./gherkin_colors_xcode.sh")
+    end
+  end
+end
+```
+
+### Gherkin Snippets
+CucumberSwift supports gherkin code snippets! This allows for easy automcplete or a drag-and-drop gherkin block to easily create new features and scenarios. In order to take advantage of it add this line to your podfile:
+```ruby
+pod 'CucumberSwift/snippets'
+```
+
+Then add this post-install hook
+```ruby
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name.include? 'CucumberSwift'
+      system("cd Pods/CucumberSwift/CucumberSwift/Gherkin/XCode-Specific && sudo ./copy_snippets.sh")
+    end
+  end
+end
 ```
 
 ### What's Still Missing?

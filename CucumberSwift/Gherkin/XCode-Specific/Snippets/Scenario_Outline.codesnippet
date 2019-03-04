@@ -18,7 +18,7 @@
 	<key>IDECodeSnippetIdentifier</key>
 	<string>e944b9fc-7ede-47b4-b5d5-d5d7156443f9</string>
 	<key>IDECodeSnippetLanguage</key>
-	<string>Xcode.SourceCodeLanguage.Generic</string>
+	<string>Xcode.SourceCodeLanguage.Gherkin</string>
 	<key>IDECodeSnippetSummary</key>
 	<string>Used for creating a scenario in gherkin</string>
 	<key>IDECodeSnippetTitle</key>

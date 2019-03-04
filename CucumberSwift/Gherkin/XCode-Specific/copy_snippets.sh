@@ -8,3 +8,5 @@
 
 mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
 find . -name "*.codesnippet" -exec cp -f {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
+
+echo "Please restart xcode to get gherkin snippets"

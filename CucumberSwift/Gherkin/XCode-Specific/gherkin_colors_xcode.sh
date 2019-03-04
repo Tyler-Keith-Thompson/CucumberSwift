@@ -15,3 +15,5 @@ fi
 
 cp -r Gherkin.ideplugin $plugins_dir
 cp Gherkin.xclangspec $spec_dir
+
+echo "Please restart xcode to get gherkin syntax highlighting"
