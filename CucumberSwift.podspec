@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
       ]
     end
     s.subspec 'syntax' do |ss| 
-      ss.resources = ["CucumberSwift/**/*.{xclangspec,sh}"]
+      ss.resources = ["CucumberSwift/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
     end
     s.framework = "XCTest"
     s.pod_target_xcconfig = {

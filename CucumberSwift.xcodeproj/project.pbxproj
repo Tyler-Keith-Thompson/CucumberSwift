@@ -54,6 +54,7 @@
 		ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5F920FD0234005997AD /* CommentTests.swift */; };
 		ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FB20FD02B8005997AD /* TagTests.swift */; };
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
+		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
@@ -133,6 +134,7 @@
 		ADB4D5F920FD0234005997AD /* CommentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTests.swift; sourceTree = "<group>"; };
 		ADB4D5FB20FD02B8005997AD /* TagTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagTests.swift; sourceTree = "<group>"; };
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
+		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
@@ -181,6 +183,7 @@
 		AD831B6A222C9742003EE136 /* XCode-Specific */ = {
 			isa = PBXGroup;
 			children = (
+				ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */,
 				AD831B66222C961A003EE136 /* Gherkin.xclangspec */,
 				AD831B68222C9736003EE136 /* gherkin_colors_xcode.sh */,
 			);
@@ -492,6 +495,7 @@
 				AD831B67222C961A003EE136 /* Gherkin.xclangspec in Resources */,
 				AD22A1BF222C599F0025E41C /* Snippets in Resources */,
 				AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */,
+				ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */,
 				AD831B69222C9736003EE136 /* gherkin_colors_xcode.sh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
