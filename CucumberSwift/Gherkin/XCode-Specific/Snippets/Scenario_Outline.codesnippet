@@ -6,7 +6,7 @@
 	<string>gherkin-scenario-outline</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>CodeBlock</string>
+		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
     <string>Scenario Outline: &lt;#description#&gt;

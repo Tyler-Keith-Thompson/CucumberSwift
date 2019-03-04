@@ -6,7 +6,7 @@
 	<string>gherkin-scenario</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
-		<string>CodeBlock</string>
+		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
     <string>Feature: &lt;#title#&gt;
