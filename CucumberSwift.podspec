@@ -19,16 +19,7 @@ Pod::Spec.new do |s|
     s.resources = ["CucumberSwift/**/*.{json}"]
 
     s.subspec 'snippets' do |ss| 
-      ss.resources = ["CucumberSwift/**/*.{codesnippet}"]
-      ss.script_phases = [
-        { :name => 'Copy Snippets',
-          :script => '
-            mkdir -p ~/Library/Developer/Xcode/UserData/CodeSnippets/
-            find ${PODS_TARGET_SRCROOT} -name "*.codesnippet" -exec cp -f {} ~/Library/Developer/Xcode/UserData/CodeSnippets/ \;
-          ',
-          :execution_position => :before_compile
-        }
-      ]
+      ss.resources = ["CucumberSwift/**/*.{codesnippet,sh}"]
     end
     s.subspec 'syntax' do |ss| 
       ss.resources = ["CucumberSwift/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
