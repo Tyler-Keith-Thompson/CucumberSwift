@@ -223,6 +223,8 @@ post_install do |installer|
 end
 ```
 
+The snippets are all prefexied with `gherkin` so to easily use them start typing `gherkin-` and you'll see several autocomplete options
+
 ### What's Still Missing?
 - Some Gherkin language errors
 - Rules
