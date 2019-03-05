@@ -9,13 +9,13 @@
 import Foundation
 import XCTest
 
-extension Cucumber {
+public extension Cucumber {
     /// Create an unfulfilled expectation.
     ///
     /// - Parameter description: the expectation description
     /// - Returns: the new expectation
     ///
-    func expectation(description: String) -> XCTestExpectation {
+    public func expectation(description: String) -> XCTestExpectation {
         return XCTestExpectation(description: description)
     }
     
@@ -25,7 +25,7 @@ extension Cucumber {
     ///   - expectations: the expectations to wait for
     ///   - seconds: the wait timeout
     ///
-    func wait(for expectations: [XCTestExpectation], timeout seconds: TimeInterval) {
+    public func wait(for expectations: [XCTestExpectation], timeout seconds: TimeInterval) {
         XCTWaiter().wait(for: expectations, timeout: seconds)
     }
 }
