@@ -59,7 +59,7 @@ class Reporter {
               features.count > fIndex else { return nil }
         var featureJSON = features[fIndex]
         var elements = featureJSON["elements"] as? [[String:Any]] ?? []
-        let scenarioIndex = feature.scenarios.enumerated().first { (_, s) -> Bool in
+        let scenarioIndex = feature.scenarios.taggedElements(askImplementor: true).enumerated().first { (_, s) -> Bool in
             return s === scenario
         }?.offset
         guard let sIndex = scenarioIndex else { return nil }
