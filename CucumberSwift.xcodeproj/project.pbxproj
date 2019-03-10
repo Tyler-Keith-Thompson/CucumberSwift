@@ -21,6 +21,9 @@
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
+		AD4E772F2235963D005938B7 /* Reporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E772E2235963D005938B7 /* Reporter.swift */; };
+		AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E773022359C6B005938B7 /* ReporterTests.swift */; };
+		AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E77322235A04B005938B7 /* WaitUntil.swift */; };
 		AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */; };
 		AD7D2525207A7B72001B8211 /* Scope.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2524207A7B72001B8211 /* Scope.swift */; };
 		AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */; };
@@ -97,6 +100,9 @@
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
 		AD4B2E0A222CB2BC001946F1 /* copy_snippets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_snippets.sh; sourceTree = "<group>"; };
+		AD4E772E2235963D005938B7 /* Reporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reporter.swift; sourceTree = "<group>"; };
+		AD4E773022359C6B005938B7 /* ReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporterTests.swift; sourceTree = "<group>"; };
+		AD4E77322235A04B005938B7 /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingExtensions.swift; sourceTree = "<group>"; };
 		AD7D2524207A7B72001B8211 /* Scope.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scope.swift; sourceTree = "<group>"; };
 		AD7D2526207A8AEB001B8211 /* MightEqualOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MightEqualOperatorTests.swift; sourceTree = "<group>"; };
@@ -181,6 +187,14 @@
 			path = StubGeneration;
 			sourceTree = "<group>";
 		};
+		AD4E772D2235962F005938B7 /* Reporter */ = {
+			isa = PBXGroup;
+			children = (
+				AD4E772E2235963D005938B7 /* Reporter.swift */,
+			);
+			path = Reporter;
+			sourceTree = "<group>";
+		};
 		AD831B6A222C9742003EE136 /* XCode-Specific */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +243,7 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				AD4E772D2235962F005938B7 /* Reporter */,
 				AD99DB6121335B2100E57823 /* Runner */,
 				ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */,
 				AD017232211671BF00FBC9AF /* StubGeneration */,
@@ -247,6 +262,7 @@
 		AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				AD4E77322235A04B005938B7 /* WaitUntil.swift */,
 				CAA337B32104C39B002C361D /* Extensions */,
 				CAA337B22104C368002C361D /* Gherkin */,
 				CAA337A921044ABB002C361D /* CucumberTests */,
@@ -257,6 +273,7 @@
 				AD9EB4702079CF87002494C0 /* Info.plist */,
 				AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */,
 				AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */,
+				AD4E773022359C6B005938B7 /* ReporterTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -541,6 +558,7 @@
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
+				AD4E772F2235963D005938B7 /* Reporter.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
@@ -565,6 +583,8 @@
 				AD7D252B207A8BE9001B8211 /* StringExtensionsTests.swift in Sources */,
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
+				AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */,
+				AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */,
 				AD22A1BA222B21830025E41C /* CucumberExtensions.swift in Sources */,
 				AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */,
 				AD7F1C10210507420004852A /* StepTests.swift in Sources */,

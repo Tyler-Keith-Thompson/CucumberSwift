@@ -46,7 +46,7 @@ public class Scenario : NSObject, Taggable {
             "type" : "scenario",
             "name" : title,
             "description" : "",
-            "steps" : steps.map { $0.toJSON() }
+            "steps" : []
         ]
     }
 }

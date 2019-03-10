@@ -14,6 +14,7 @@ class CucumberTest: XCTestCase {
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
         
         var tests = [XCTestCase?]()
+        Reporter.shared.reset()
         Cucumber.shared.features.removeAll()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
             Cucumber.shared.readFromFeaturesFolder(in: bundle)
@@ -56,6 +57,7 @@ class CucumberTest: XCTestCase {
                     if (step.execute != nil && step.result != .failed) {
                         step.result = .passed
                     }
+                    Reporter.shared.writeStep(step)
                 }
             }))
             testCase?.addTeardownBlock {

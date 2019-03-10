@@ -40,6 +40,10 @@ public class Feature : NSObject, Taggable {
         scenarios.forEach { $0.feature = self }
     }
     
+    internal func addScenario(_ scenario:Scenario) {
+        scenarios.append(scenario)
+    }
+    
     public func containsTags(_ tags:[String]) -> Bool {
         if (tags.contains{ containsTag($0) }) {
             return true
@@ -57,7 +61,7 @@ public class Feature : NSObject, Taggable {
             "name" : title,
             "description" : desc,
             "keyword" : "Feature",
-            "elements" : scenarios.taggedElements(askImplementor: true).map { $0.toJSON() }
+            "elements" : []
         ]
     }
 }
