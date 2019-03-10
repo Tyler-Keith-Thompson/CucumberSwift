@@ -31,8 +31,8 @@ class Reporter {
             let (fIndex, scIndex) = writeScenarioIfNecessary(scenario),
             var features = currentJSON,
             features.count > fIndex else { return }
-        let stepIndex = scenario.steps.enumerated().first { (_, step) -> Bool in
-            return step === step
+        let stepIndex = scenario.steps.enumerated().first { (_, s) -> Bool in
+            return s === step
         }?.offset
         var featureJSON = features[fIndex]
         guard let sIndex = stepIndex,
@@ -59,13 +59,11 @@ class Reporter {
               features.count > fIndex else { return nil }
         var featureJSON = features[fIndex]
         var elements = featureJSON["elements"] as? [[String:Any]] ?? []
-        let scenarioIndex = feature.scenarios.enumerated().first { (_, scenario) -> Bool in
-            return scenario === scenario
+        let scenarioIndex = feature.scenarios.enumerated().first { (_, s) -> Bool in
+            return s === scenario
         }?.offset
         guard let sIndex = scenarioIndex else { return nil }
-        if elements.count-1 >= sIndex {
-            elements[sIndex] = scenario.toJSON()
-        } else {
+        if elements.count == sIndex {
             elements.append(scenario.toJSON())
         }
         featureJSON["elements"] = elements

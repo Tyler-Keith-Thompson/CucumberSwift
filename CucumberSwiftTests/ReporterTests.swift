@@ -29,7 +29,7 @@
 //        try? FileManager.default.removeItem(at: reporter.reportURL!)
 //        XCTAssertNil(reporter.currentJSON)
 //    }
-//    
+//
 //    func testFeatureIsOnlyWrittenIfItIsNotInFile() {
 //        let reporter = Reporter()
 //        let feature = Feature(uri: "findme")
@@ -41,43 +41,47 @@
 //        reporter.writeFeatureIfNecessary(feature)
 //        XCTAssertEqual(reporter.currentJSON?.count, 1)
 //    }
-//    
+//
 //    func testScenarioIsOnlyWrittenIfItIsNotInFile() {
 //        let reporter = Reporter()
 //        let feature = Feature(uri: "findme")
 //        let scenario = Scenario(with: [], title: "findscn", tags: [])
 //        feature.addScenario(scenario)
 //        scenario.feature = feature
-//        
+//
 //        reporter.writeScenarioIfNecessary(scenario)
 //
 //        let featureJSON = reporter.currentJSON?.first
 //        XCTAssertNotNil(featureJSON)
-//        
+//
 //        let scenarios = featureJSON?["elements"] as? [[String:Any]]
 //        XCTAssertNotNil(scenarios?.first)
 //
 //        reporter.writeScenarioIfNecessary(scenario)
 //        XCTAssertEqual((reporter.currentJSON?.first?["elements"] as? [[String:Any]])?.count, 1)
 //    }
-//    
+//
 //    func testStepIsWrittenToFile() {
 //        let reporter = Reporter()
 //        let step = Step(with: StepNode(node: Node()))
+//        let step2 = Step(with: StepNode(node: Node()))
 //        let feature = Feature(uri: "findme")
-//        let scenario = Scenario(with: [step], title: "findscn", tags: [])
+//        let scenario = Scenario(with: [step, step2], title: "findscn", tags: [])
 //        step.scenario = scenario
+//        step2.scenario = scenario
 //        feature.addScenario(scenario)
 //        scenario.feature = feature
 //
 //        reporter.writeStep(step)
+//        reporter.writeStep(step2)
 //        let featureJSON = reporter.currentJSON?.first
 //        XCTAssertNotNil(featureJSON)
-//        
+//
 //        let scenarios = featureJSON?["elements"] as? [[String:Any]]
 //        XCTAssertNotNil(scenarios?.first)
 //
 //        let steps = scenarios?.first?["steps"] as? [[String:Any]]
 //        XCTAssertNotNil(steps?.first)
+//        XCTAssertEqual(steps?.count, 2)
 //    }
 //}
