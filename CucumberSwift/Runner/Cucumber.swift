@@ -137,4 +137,23 @@ import XCTest
             step.regex = regex
         }
     }
+    
+    func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, class:AnyClass, selector:Selector) {
+        features
+            .flatMap { $0.scenarios.flatMap { $0.steps } }
+            .filter { (step) -> Bool in
+                if  let k = keyword,
+                    step.keyword.contains(k) {
+                    return !step.match.matches(for: regex).isEmpty
+                } else if (keyword == nil) {
+                    return !step.match.matches(for: regex).isEmpty
+                }
+                return false
+            }.forEach { (step) in
+                step.result = .undefined
+                step.executeSelector = selector
+                step.executeClass = `class`
+                step.regex = regex
+        }
+    }
 }

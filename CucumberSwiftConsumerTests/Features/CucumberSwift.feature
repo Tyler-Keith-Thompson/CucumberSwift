@@ -44,3 +44,8 @@ as expected
         When I look in my test report
         Then I see some PENDING steps with a swift attachment
             And I can copy and paste the swift code into my test case
+
+    Scenario: Something that can't be easily tested
+        Given I point my step to a unit test
+        When I run the tests
+        Then The unit test runs

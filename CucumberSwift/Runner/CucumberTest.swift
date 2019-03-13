@@ -53,7 +53,17 @@ class CucumberTest: XCTestCase {
                 Cucumber.shared.setupBeforeHooksFor(step)
                 Cucumber.shared.BeforeStepHooks.forEach { $0(step) }
                 _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
-                    step.execute?(step.match.matches(for: step.regex), step)
+                    if let `class` = step.executeClass, let selector = step.executeSelector {
+                        step.executeInstance = (`class` as? NSObject.Type)?.init()
+                        if let instance = step.executeInstance {
+                            if instance.responds(to: selector) {
+                                (step.executeInstance as? XCTestCase)?.setUp()
+                                instance.perform(selector)
+                            }
+                        }
+                    } else {
+                        step.execute?(step.match.matches(for: step.regex), step)
+                    }
                     if (step.execute != nil && step.result != .failed) {
                         step.result = .passed
                     }
@@ -61,6 +71,7 @@ class CucumberTest: XCTestCase {
                 }
             }))
             testCase?.addTeardownBlock {
+                (step.executeInstance as? XCTestCase)?.tearDown()
                 Cucumber.shared.AfterStepHooks.forEach { $0(step) }
                 Cucumber.shared.setupAfterHooksFor(step)
                 step.endTime = Date()

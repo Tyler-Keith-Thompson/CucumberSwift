@@ -20,6 +20,9 @@ public class Step : NSObject {
 
     var result:Result = .pending
     var execute:(([String], Step) -> Void)? = nil
+    var executeSelector:Selector?
+    var executeClass:AnyClass?
+    var executeInstance:NSObject?
     var regex:String = ""
     var errorMessage:String = ""
     var startTime:Date?

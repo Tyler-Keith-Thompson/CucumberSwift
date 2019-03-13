@@ -9,7 +9,23 @@
 import XCTest
 import CucumberSwift
 
-class Me { }
+class Me:XCTestCase {
+    static var unitTestSetupCalled = 0
+    static var unitTestExecuted = false
+    static var unitTestTearDownCalled = 0
+    
+    override func setUp() {
+        Me.unitTestSetupCalled += 1
+    }
+    
+    func unitTestIsExecuted() {
+        Me.unitTestExecuted = true
+    }
+    
+    override func tearDown() {
+        Me.unitTestTearDownCalled += 1
+    }
+}
 
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
@@ -66,9 +82,12 @@ extension Cucumber: StepImplementation {
         Given("^I have a scenario defined$") { _, _ in
             XCTAssert(true)
         }
+        Given("^I point my step to a unit test$", class:Me.self, selector: #selector(Me.unitTestIsExecuted))
+
         When("^I run the tests$") { _, _ in
             XCTAssert(true)
         }
+        
         Then("^BeforeFeature gets called once per feature$") { _, _ in
             XCTAssertEqual(beforeFeatureCalled, 1)
             XCTAssertEqual(secondaryBeforeFeatureCalled, 1)
@@ -90,6 +109,11 @@ extension Cucumber: StepImplementation {
         }
         Then("^The scenario runs without crashing$") { _, _ in
             XCTAssert(true)
+        }
+        Then("^The unit test runs$") { _, _ in
+            XCTAssertEqual(Me.unitTestSetupCalled, 1)
+            XCTAssert(Me.unitTestExecuted, "Unit test did not run")
+            XCTAssertEqual(Me.unitTestTearDownCalled, 1)
         }
         And("^The steps are slightly different$") { _, _ in
             XCTAssert(true)

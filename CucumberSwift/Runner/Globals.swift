@@ -47,3 +47,22 @@ public func But(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
 public func MatchAll(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
     Cucumber.shared.attachClosureToSteps(regex: regex, callback:callback)
 }
+
+public func Given(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(keyword: .given, regex: regex, class:`class`, selector:selector)
+}
+public func When(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(keyword: .when, regex: regex, class:`class`, selector:selector)
+}
+public func Then(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(keyword: .then, regex: regex, class:`class`, selector:selector)
+}
+public func And(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(keyword: .and, regex: regex, class:`class`, selector:selector)
+}
+public func But(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(keyword: .but, regex: regex, class:`class`, selector:selector)
+}
+public func MatchAll(_ regex:String, class:AnyClass, selector:Selector) {
+    Cucumber.shared.attachClosureToSteps(regex: regex, class:`class`, selector:selector)
+}
