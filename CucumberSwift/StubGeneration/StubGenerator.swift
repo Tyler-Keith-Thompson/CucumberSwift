@@ -32,7 +32,7 @@ class StubGenerator {
             .flatMap{ $0.scenarios }.taggedElements(askImplementor: true)
             .flatMap{ $0.steps }
             .sorted{ $0.keyword.rawValue < $1.keyword.rawValue }
-        executableSteps.filter{ $0.execute == nil }.forEach {
+        executableSteps.filter{ $0.execute == nil && $0.executeClass == nil && $0.executeSelector == nil }.forEach {
             let regex = regexForTokens($0.tokens)
             let stringCount = $0.tokens.filter { $0.isString() }.count
             let integerCount = $0.tokens.filter { $0.isInteger() }.count
