@@ -18,6 +18,7 @@
 		AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */; };
 		AD22A1BA222B21830025E41C /* CucumberExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD22A1B9222B21830025E41C /* CucumberExtensions.swift */; };
 		AD22A1BF222C599F0025E41C /* Snippets in Resources */ = {isa = PBXBuildFile; fileRef = AD22A1BE222C599F0025E41C /* Snippets */; };
+		AD26922B223ADC8D00134D02 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4872079FED8002494C0 /* XCTest.framework */; };
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
@@ -156,6 +157,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD26922B223ADC8D00134D02 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -751,6 +753,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -776,6 +779,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
