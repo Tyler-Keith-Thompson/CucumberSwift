@@ -6,6 +6,6 @@ xcode_destination: platform=iOS Simulator,name=iPhone 8
 if: tag IS blank
 deploy:
   provider: script
-  script: ./deploy_pod.sh
+  script: carthage update --platform iOS && ./deploy_pod.sh
   on:
     branch: master
