@@ -16,6 +16,12 @@ Add this line to your podfile:
     pod 'CucumberSwift'
 ```
 
+#### Carthage
+Add this line to your cartfile:
+```ruby
+    github "Tyler-Keith-Thompson/CucumberSwift"
+```
+
 #### XCode
 After you install CucumberSwift open the info.plist file of your **test** target. You'll want the set the `Principal Class` to `CucumberSwift.Cucumber`. If you prefer editing your plists from source it should look like this:
 ```xml
