@@ -14,30 +14,15 @@ extension Collection where Element == Token {
     public var text:String {
         return compactMap { (token) -> String? in
             switch token {
-            case .newLine:
-                return nil
             case .integer(let t):
                 return t
             case .string(let t):
                 return t
-            case .docString(_):
-                return nil
             case .match(let t):
                 return t
-            case .title(_):
-                return nil
-            case .description(_):
-                return nil
-            case .tag(_):
-                return nil
             case .tableHeader(let t):
                 return "<\(t)>"
-            case .tableCell(_):
-                return nil
-            case .scope(_):
-                return nil
-            case .keyword(_):
-                return nil
+            default: return nil
             }
         }.joined()
     }
@@ -71,19 +56,11 @@ class CucumberTests:XCTestCase {
         return tests
     }
     
-    private func testBackground(node:Node?, child:[String:Any], fileName:String) {
-        if let background = child["background"] as? [String:Any] {
-            guard let backgroundNode = node as? BackgroundNode else { XCTFail("No background node found");return }
-            let backgroundSteps:[Step] = backgroundNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
-            testSteps(scope: background, stepObjects: backgroundSteps, fileName: fileName)
-        }
-    }
-    
     private func testSteps(scope:[String:Any], stepObjects:[Step], fileName:String) {
         if let steps = scope["steps"] as? [[String:Any]] {
             XCTAssertEqual(steps.count, stepObjects.count, "Step count is not the same")
-            for (i, step) in steps.enumerated() {
-                let stepObject = stepObjects[safe: i]
+            for (stepIndex, step) in steps.enumerated() {
+                let stepObject = stepObjects[safe: stepIndex]
                 if let keyword = step["keyword"] as? String {
                     if (keyword.trimmingCharacters(in: .whitespaces) == "*") { return }
                     if (keyword.trimmingCharacters(in: .whitespaces) == "Gitt") {
@@ -103,6 +80,22 @@ class CucumberTests:XCTestCase {
                 if let text = step["text"] as? String {
                     XCTAssertEqual(text, stepObject?.tokens.text, "Text does not match in: \(fileName)")
                 }
+                if let dataTable = step["dataTable"] as? [String:Any],
+                    let rows = dataTable["rows"] as? [[String:Any]] {
+                    guard let dataTable = stepObject?.dataTable else { XCTFail("Step does not have a datatable"); return }
+                    XCTAssertEqual(dataTable.rows.count, rows.count, "Rows don't match in: \(fileName)")
+                    for (rowIndex, row) in rows.enumerated() {
+                        let dRow = dataTable.rows[safe: rowIndex]
+                        if let cells = row["cells"] as? [[String:Any]] {
+                            XCTAssertEqual(dRow?.count, cells.count, "Row on DataTable doesn't have correct cells in: \(fileName)")
+                            for (cellIndex, cell) in cells.enumerated() {
+                                if let value = cell["value"] as? String {
+                                    XCTAssertEqual(value, dRow?[safe: cellIndex])
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -111,7 +104,9 @@ class CucumberTests:XCTestCase {
         let tests:[String:TestType] = getTests(atPath: "testdata/good")
 
         tests.forEach { (name, test) in
-            guard !name.contains("rule"), !name.contains("Tags/tags") else { return }
+            guard !name.contains("rule"),
+                !name.contains("Tags/tags"),
+                !name.contains("EscapedPipes/escaped_pipes") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
@@ -127,11 +122,19 @@ class CucumberTests:XCTestCase {
                         XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(name)")
                         for (childIndex, child) in children.enumerated() {
                             let node = featureNode.children[safe: childIndex]
-                            testBackground(node: node, child: child, fileName: name)
+                            if let background = child["background"] as? [String:Any] {
+                                guard let backgroundNode = node as? BackgroundNode else { XCTFail("No background node found");return }
+                                let backgroundSteps:[Step] = backgroundNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+                                testSteps(scope: background, stepObjects: backgroundSteps, fileName: name)
+                            }
                             if let scenario = child["scenario"] as? [String:Any] {
                                 guard let scenarioType = scenario["keyword"] as? String else { return }
                                 if (scenarioType == "Scenario") {
                                     guard let scenarioNode = node as? ScenarioNode else { XCTFail("No scenario node found in file: \(name)");return }
+                                    let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+                                    testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
+                                } else if (scenarioType == "Scenario Outline") {
+                                    guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
                                     let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
                                     testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
                                 }

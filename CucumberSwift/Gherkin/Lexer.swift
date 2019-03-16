@@ -66,10 +66,10 @@ class Lexer : StringReader {
         } else if char.isTableCellDelimiter {
             atLineStart = false
             let tableCellContents = advance(readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces))
-            if (!tableCellContents.isEmpty) {
-                return .tableCell(tableCellContents)
+            if (currentChar != Character.tableCellDelimiter) {
+                return advanceToNextToken()
             }
-            return advanceToNextToken()
+            return .tableCell(tableCellContents)
         }
         if (atLineStart) {
             if (stripSpaceIfNecessary()) {

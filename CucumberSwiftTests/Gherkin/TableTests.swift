@@ -183,4 +183,27 @@ class TableTests: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(givenCalled)
     }
+    
+    func testTestDataAttachedToAStepWithEmptyCell() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+    Feature: Some terse yet descriptive text of what is desired
+        Scenario: minimalistic
+            Given a simple data table
+            | foo || bar |
+    """)
+        let scenario = Cucumber.shared.features.first?.scenarios.first
+        let step = scenario?.steps.first
+        let table = step?.dataTable
+        let firstRow = table?.rows.first
+        XCTAssertNotNil(step?.dataTable)
+        XCTAssertEqual(table?.rows.count, 1)
+        XCTAssertEqual(firstRow?.count, 3)
+        if ((firstRow?.count ?? 0) == 3) {
+            XCTAssertEqual(firstRow?[0], "foo")
+            XCTAssertEqual(firstRow?[1], "")
+            XCTAssertEqual(firstRow?[2], "bar")
+        }
+        Cucumber.shared.executeFeatures()
+    }
 }
