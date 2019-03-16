@@ -76,7 +76,8 @@ class CucumberTest: XCTestCase {
                 Cucumber.shared.setupAfterHooksFor(step)
                 step.endTime = Date()
             }
-            testCase?.continueAfterFailure = true
+            step.continueAfterFailure ?= (Cucumber.shared as? StepImplementation)?.continueTestingAfterFailure ?? testCase?.continueAfterFailure
+            step.testCase = testCase
             tests.append(testCase)
         }
     }

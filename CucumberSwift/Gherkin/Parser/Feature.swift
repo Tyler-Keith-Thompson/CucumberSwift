@@ -26,8 +26,7 @@ public class Feature : NSObject, Taggable {
                 self.tags.append(tag)
             }
         }
-        let backgroundSteps:[StepNode] = node.children.filter { $0 is BackgroundNode }
-                                        .map { $0 as! BackgroundNode }
+        let backgroundSteps:[StepNode] = node.children.compactMap { $0 as? BackgroundNode }
                                         .flatMap { $0.children as! [StepNode] }
         node.children.forEach { (node) in
             if let sn = node as? ScenarioNode {

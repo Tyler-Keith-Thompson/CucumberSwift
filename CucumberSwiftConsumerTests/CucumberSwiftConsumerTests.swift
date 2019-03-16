@@ -88,7 +88,7 @@ extension Cucumber: StepImplementation {
             XCTAssert(true)
         }
         
-        Then("^BeforeFeature gets called once per feature$") { _, _ in
+        Then("^BeforeFeature gets called once per feature$") { _, step in
             XCTAssertEqual(beforeFeatureCalled, 1)
             XCTAssertEqual(secondaryBeforeFeatureCalled, 1)
         }

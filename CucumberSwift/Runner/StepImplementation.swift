@@ -12,4 +12,5 @@ import Foundation
     func setupSteps()
     var bundle:Bundle { get }
     @objc optional func shouldRunWith(tags:[String]) -> Bool
+    @objc optional var continueTestingAfterFailure:Bool { get }
 }

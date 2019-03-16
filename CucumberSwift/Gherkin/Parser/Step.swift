@@ -7,11 +7,19 @@
 //
 
 import Foundation
+import XCTest
+
 public class Step : NSObject {
     override public var description: String {
         return "TAGS:\(tags)\n\(keyword.toString()): \(match)"
     }
     
+    public var continueAfterFailure:Bool = true {
+        willSet {
+            testCase?.continueAfterFailure = newValue
+        }
+    }
+
     public private(set)  var match = ""
     public private(set)  var keyword:Keyword = []
     public internal(set) var tags = [String]()
@@ -23,6 +31,7 @@ public class Step : NSObject {
     var executeSelector:Selector?
     var executeClass:AnyClass?
     var executeInstance:NSObject?
+    var testCase:XCTestCase?
     var regex:String = ""
     var errorMessage:String = ""
     var startTime:Date?
