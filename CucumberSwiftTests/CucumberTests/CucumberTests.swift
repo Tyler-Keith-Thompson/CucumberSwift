@@ -93,7 +93,6 @@ class CucumberTests:XCTestCase {
 
         tests.forEach { (name, test) in
             guard !name.contains("rule"),
-                !name.contains("EscapedPipes/escaped_pipes"),
                 !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
             let ast = AST(tokens)

@@ -17,6 +17,7 @@ extension Character {
     static let comment:Character = "#"
     static let tableCellDelimiter:Character = "|"
     static let decimal:Character = "."
+    static let escapeCharacter:Character = "\\"
     
     var value: Int32 {
         return Int32(scalar.value)
@@ -51,7 +52,7 @@ extension Character {
             isHeaderToken
     }
     var isHeaderToken: Bool {
-        return self == Character.tableHeaderOpen || self == Character.tableHeaderClose
+        return isHeaderOpen || isHeaderClosed
     }
     var isHeaderOpen: Bool {
         return self == Character.tableHeaderOpen
@@ -76,5 +77,8 @@ extension Character {
     }
     var isTableCellDelimiter: Bool {
         return self == Character.tableCellDelimiter
+    }
+    var isEscapeCharacter: Bool {
+        return self == Character.escapeCharacter
     }
 }

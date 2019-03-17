@@ -141,6 +141,20 @@ class TableTests: XCTestCase {
         XCTAssertEqual(secondScenario?.title, "the uno")
     }
     
+    func testTableCellWithEscapeCharacter() {
+        let cucumber = Cucumber(withString:"""
+    Feature: Some terse yet descriptive text of what is desired
+      Scenario Outline: the <one>
+        Given the <two>
+            
+            Examples:
+              | one   | two  |
+              | u\\|o | dos  |
+    """)
+        let firstScenario = cucumber.features.first?.scenarios.first
+        XCTAssertEqual(firstScenario?.title, "the u|o")
+    }
+    
     func testTableGetAttachedToSteps() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""

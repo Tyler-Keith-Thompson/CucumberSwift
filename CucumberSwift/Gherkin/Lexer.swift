@@ -27,6 +27,31 @@ class Lexer : StringReader {
         return str
     }
     
+    //table cells have weird rules I don't necessarily agree with...
+    @discardableResult func readCellUntil(_ evaluation:((Character) -> Bool)) -> String {
+        var str = ""
+        while let char = currentChar, !char.isNewline {
+            if char.isEscapeCharacter,
+                let next = nextChar,
+                next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter {
+                if (next == "n") {
+                    str.append("\n")
+                } else {
+                    str.append(next)
+                }
+                advanceIndex()
+                advanceIndex()
+                continue
+            }
+            if (evaluation(char)) {
+                break
+            }
+            str.append(char)
+            advanceIndex()
+        }
+        return str
+    }
+    
     @discardableResult func stripSpaceIfNecessary() -> Bool {
         if let c = currentChar, c.isSpace {
             readLineUntil { !$0.isSpace }
@@ -65,7 +90,7 @@ class Lexer : StringReader {
             return advance(.tag(readLineUntil({ !$0.isTagCharacter })))
         } else if char.isTableCellDelimiter {
             atLineStart = false
-            let tableCellContents = advance(readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces))
+            let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces))
             if (currentChar != Character.tableCellDelimiter) {
                 return advanceToNextToken()
             }
