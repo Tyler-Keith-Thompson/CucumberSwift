@@ -141,6 +141,33 @@ class TableTests: XCTestCase {
         XCTAssertEqual(secondScenario?.title, "the uno")
     }
     
+    func testTableGetAttachedToSteps() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+    Feature: Some terse yet descriptive text of what is desired
+      Scenario Outline: Some Table
+        Given the <one>
+            
+            Examples:
+              | one | two  |
+              | un  | deux |
+              | uno | dos  |
+    """)
+        var firstGivenCalled = false
+        Given("the un") { (_, _) in
+            firstGivenCalled = true
+        }
+        var secondGivenCalled = false
+        Given("the uno") { (_, _) in
+            secondGivenCalled = true
+        }
+        Cucumber.shared.executeFeatures()
+        waitUntil(firstGivenCalled)
+        waitUntil(secondGivenCalled)
+        XCTAssert(firstGivenCalled)
+        XCTAssert(secondGivenCalled)
+    }
+    
     func testTestDataAttachedToAStep() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
