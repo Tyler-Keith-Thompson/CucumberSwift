@@ -17,7 +17,7 @@ extension Collection where Element == Token {
             case .integer(let t):
                 return t
             case .string(let t):
-                return t
+                return "\"\(t)\""
             case .match(let t):
                 return t
             case .tableHeader(let t):
@@ -63,18 +63,6 @@ class CucumberTests:XCTestCase {
                 let stepObject = stepObjects[safe: stepIndex]
                 if let keyword = step["keyword"] as? String {
                     if (keyword.trimmingCharacters(in: .whitespaces) == "*") { return }
-                    if (keyword.trimmingCharacters(in: .whitespaces) == "Gitt") {
-                        XCTAssert(stepObject?.keyword == .given)
-                        return
-                    }
-                    if (keyword.trimmingCharacters(in: .whitespaces) == "Når") {
-                        XCTAssert(stepObject?.keyword == .when)
-                        return
-                    }
-                    if (keyword.trimmingCharacters(in: .whitespaces) == "Så") {
-                        XCTAssert(stepObject?.keyword == .then)
-                        return
-                    }
                     XCTAssertEqual(keyword.trimmingCharacters(in: .whitespaces), stepObject?.keyword.toString())
                 }
                 if let text = step["text"] as? String {
@@ -106,7 +94,8 @@ class CucumberTests:XCTestCase {
         tests.forEach { (name, test) in
             guard !name.contains("rule"),
                 !name.contains("Tags/tags"),
-                !name.contains("EscapedPipes/escaped_pipes") else { return }
+                !name.contains("EscapedPipes/escaped_pipes"),
+                !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
@@ -136,6 +125,35 @@ class CucumberTests:XCTestCase {
                                 } else if (scenarioType == "Scenario Outline") {
                                     guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
                                     let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+                                    if let examples = scenario["examples"] as? [[String:Any]] {
+                                        for example in examples {
+                                            let lines = node?.tokens.filter{ $0.isTableCell() || $0 == .newLine }.groupedByLine()
+                                            if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
+                                                let headerTokens = lines?.first
+                                                XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(name)")
+                                                for (cellIndex, cell) in header.enumerated() {
+                                                    let headerToken = headerTokens?[safe: cellIndex]
+                                                    if let token = headerToken, case .tableCell(let value) = token {
+                                                        XCTAssertEqual(cell["value"] as? String, value)
+                                                    }
+                                                }
+                                            }
+                                            if let tableBody = (example["tableBody"] as? [[String:Any]]) {
+                                                for (rowIndex, row) in tableBody.enumerated() {
+                                                    if let cells = row["cells"] as? [[String:Any]] {
+                                                        let lineTokens = Array(lines?.dropFirst() ?? [])[safe: rowIndex]
+                                                        XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(name)")
+                                                        for (cellIndex, cell) in cells.enumerated() {
+                                                            let cellToken = lineTokens?[safe: cellIndex]
+                                                            if let token = cellToken, case .tableCell(let value) = token {
+                                                                XCTAssertEqual(cell["value"] as? String, value)
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
                                     testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
                                 }
                             }

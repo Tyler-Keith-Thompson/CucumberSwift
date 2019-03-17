@@ -117,19 +117,19 @@ extension Step {
                 return str
             }
             if (contains(Keyword.given)) {
-                return "Given"
+                return Scope.language.given
             }
             if (contains(Keyword.when)) {
-                return "When"
+                return Scope.language.when
             }
             if (contains(Keyword.then)) {
-                return "Then"
+                return Scope.language.then
             }
             if (contains(Keyword.and)) {
-                return "And"
+                return Scope.language.and
             }
             if (contains(Keyword.but)) {
-                return "But"
+                return Scope.language.but
             }
             return "UNKNOWN"
         }

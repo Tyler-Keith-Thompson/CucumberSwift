@@ -28,6 +28,7 @@ class Method {
     }
     
     func generateSwift(matchAllAllowed:Bool = true) -> String {
+        Scope.language ?= Language()
         var keywordStrings = [String]()
         if (keyword.hasMultipleValues() && matchAllAllowed) {
             keywordStrings.append("MatchAll")

@@ -33,6 +33,22 @@ class Language {
     private var andNames = [String]()
     private var butNames = [String]()
     
+    public var given:String {
+        return givenNames.last?.capitalizingFirstLetter() ?? "Given"
+    }
+    public var when:String {
+        return whenNames.last?.capitalizingFirstLetter() ?? "When"
+    }
+    public var then:String {
+        return thenNames.last?.capitalizingFirstLetter() ?? "Then"
+    }
+    public var and:String {
+        return andNames.last?.capitalizingFirstLetter() ?? "And"
+    }
+    public var but:String {
+        return butNames.last?.capitalizingFirstLetter() ?? "But"
+    }
+
     init?(_ langName:String = "en") {
         let bundle = Bundle(for: Cucumber.self)
         if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
