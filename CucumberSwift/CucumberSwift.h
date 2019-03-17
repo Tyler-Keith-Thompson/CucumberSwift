@@ -6,7 +6,7 @@
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for CucumberSwift.
 FOUNDATION_EXPORT double CucumberSwiftVersionNumber;
