@@ -62,7 +62,7 @@ class Lexer : StringReader {
             return advance(advanceToNextToken())
         } else if char.isTagMarker {
             atLineStart = false
-            return advance(.tag(readLineUntil({ !$0.isAlphanumeric })))
+            return advance(.tag(readLineUntil({ !$0.isTagCharacter })))
         } else if char.isTableCellDelimiter {
             atLineStart = false
             let tableCellContents = advance(readLineUntil({ $0.isTableCellDelimiter }).trimmingCharacters(in: .whitespaces))

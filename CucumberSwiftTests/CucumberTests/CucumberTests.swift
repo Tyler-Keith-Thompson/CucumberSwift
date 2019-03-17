@@ -93,7 +93,6 @@ class CucumberTests:XCTestCase {
 
         tests.forEach { (name, test) in
             guard !name.contains("rule"),
-                !name.contains("Tags/tags"),
                 !name.contains("EscapedPipes/escaped_pipes"),
                 !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
@@ -125,8 +124,9 @@ class CucumberTests:XCTestCase {
                                 } else if (scenarioType == "Scenario Outline") {
                                     guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
                                     let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
-                                    if let examples = scenario["examples"] as? [[String:Any]] {
-                                        for example in examples {
+                                    if let examples = scenario["examples"] as? [[String:Any]],
+                                        let example = examples.first {
+//                                        for example in examples {
                                             let lines = node?.tokens.filter{ $0.isTableCell() || $0 == .newLine }.groupedByLine()
                                             if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
                                                 let headerTokens = lines?.first
@@ -152,7 +152,7 @@ class CucumberTests:XCTestCase {
                                                     }
                                                 }
                                             }
-                                        }
+//                                        }
                                     }
                                     testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
                                 }

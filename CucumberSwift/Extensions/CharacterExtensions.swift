@@ -30,6 +30,11 @@ extension Character {
     var isAlphanumeric: Bool {
         return isalnum(value) != 0
     }
+    var isTagCharacter: Bool {
+        return isAlphanumeric
+            || self == "_"
+            || self == "-"
+    }
     var isNumeric: Bool {
         return isnumber(value) != 0
     }
