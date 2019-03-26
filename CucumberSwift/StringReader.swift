@@ -22,6 +22,7 @@ public class StringReader {
     
     public var nextChar: Character? {
         if let i = input.index(index, offsetBy: 1, limitedBy: input.endIndex) {
+            guard i != input.endIndex else { return input.last }
             return input[i]
         }
         return nil

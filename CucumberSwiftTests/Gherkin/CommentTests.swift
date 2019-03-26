@@ -35,4 +35,37 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(steps?.first?.match, "some precondition")
         XCTAssertEqual(steps?.count, 1)
     }
+    
+    func testLanguageIsParsed() {
+        let cucumber = Cucumber(withString: """
+    #language:en
+
+    Feature: Explicit language specification
+
+      Scenario: minimalistic
+        Given the minimalism
+    """)
+        XCTAssertEqual(cucumber.features.count, 1)
+        XCTAssertEqual(cucumber.features.first?.title, "Explicit language specification")
+        XCTAssertEqual(cucumber.features.first?.scenarios.first?.title, "minimalistic")
+        XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.keyword, .given)
+        XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.match, "the minimalism")
+        XCTAssertEqual(Scope.language.given, "Given")
+    }
+    
+    func testEmojiLanguageIsParsed() {
+        let cucumber = Cucumber(withString: """
+    # language: em
+    📚: 🙈🙉🙊
+
+      📕: 💃
+        😐🎸
+    """)
+        XCTAssertEqual(cucumber.features.count, 1)
+        XCTAssertEqual(cucumber.features.first?.title, "🙈🙉🙊")
+        XCTAssertEqual(cucumber.features.first?.scenarios.first?.title, "💃")
+//        XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.keyword, .given)
+//        XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.match, "🎸")
+        XCTAssertEqual(Scope.language.given, "😐")
+    }
 }
