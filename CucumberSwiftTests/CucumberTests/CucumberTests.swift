@@ -98,7 +98,7 @@ class CucumberTests:XCTestCase {
             let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
-                let document = expectedAST?["gherkinDocument"] as? [String:Any] {
+                let document = expectedAST["gherkinDocument"] as? [String:Any] {
                 if let feature = document["feature"] as? [String:Any] {
                     guard let featureNode = ast.featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
                     let featureObj = Feature(with: featureNode)

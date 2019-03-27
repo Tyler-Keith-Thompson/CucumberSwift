@@ -15,7 +15,7 @@ public extension Cucumber {
     /// - Parameter description: the expectation description
     /// - Returns: the new expectation
     ///
-    public func expectation(description: String) -> XCTestExpectation {
+    func expectation(description: String) -> XCTestExpectation {
         return XCTestExpectation(description: description)
     }
     
@@ -25,7 +25,7 @@ public extension Cucumber {
     ///   - expectations: the expectations to wait for
     ///   - seconds: the wait timeout
     ///
-    public func wait(for expectations: [XCTestExpectation], timeout seconds: TimeInterval) {
+    func wait(for expectations: [XCTestExpectation], timeout seconds: TimeInterval) {
         XCTWaiter().wait(for: expectations, timeout: seconds)
     }
 }

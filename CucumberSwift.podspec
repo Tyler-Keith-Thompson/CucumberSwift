@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'CucumberSwift'
-    s.version          = '2.1.35'
+    s.version          = '2.2.0'
     s.summary          = 'A lightweight swift only cucumber implementation.'
 
     s.description      = <<-DESC
@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '8.0'
     s.osx.deployment_target = '10.9'
     s.tvos.deployment_target = '9.0'
-    s.swift_version = '4.2'
+    s.swift_version = '5.0'
   
     s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
     s.resources = ["CucumberSwift/**/*.{json}"]

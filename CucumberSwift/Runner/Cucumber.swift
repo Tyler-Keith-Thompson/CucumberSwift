@@ -38,20 +38,6 @@ import XCTest
         super.init()
         parseIntoFeatures(string)
     }
-    @available(*, deprecated: 1.1, message: "CucumberSwift no longer needs to be instantiated directly, check out the docs for more information")
-    public init(withDirectory directory:String, inBundle bundle:Bundle, reportName:String = "CucumberTestResults.json") {
-        super.init()
-        self.reportName = reportName
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(directory), includingPropertiesForKeys: nil)
-        while let url = enumerator?.nextObject() as? URL {
-            if (url.pathExtension == "feature") {
-                if let string = try? String(contentsOf: url, encoding: .utf8) {
-                    parseIntoFeatures(string, uri: url.absoluteString)
-                }
-            }
-        }
-        XCTestObservationCenter.shared.addTestObserver(self)
-    }
     
     func readFromFeaturesFolder(in testBundle:Bundle) {
         let relativePath = (testBundle.infoDictionary?["FeaturesPath"] as? String) ?? "Features"

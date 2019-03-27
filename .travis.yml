@@ -1,5 +1,5 @@
 language: swift
-osx_image: xcode10.1
+osx_image: xcode10.2
 xcode_project: CucumberSwift.xcodeproj # path to your xcodeproj folder
 xcode_scheme: CucumberSwift
 xcode_destination: platform=iOS Simulator,name=iPhone 8

@@ -62,10 +62,10 @@ class ParserTests: XCTestCase {
     """
     
     func testSpeed() {
+        let features = repeatElement(featureFile, count: 100)
+                        .joined(separator: "\n")
         self.measure {
-            _ = Cucumber(withString:
-                repeatElement(featureFile, count: 100)
-                    .joined(separator: "\n"))
+            _ = Cucumber(withString: features)
         }
     }
     
