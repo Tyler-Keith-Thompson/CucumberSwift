@@ -85,5 +85,8 @@ class CucumberTest: XCTestCase {
     //A test case needs at least one test to trigger the observer
     final func testGherkin() {
         XCTAssert(Gherkin.errors.isEmpty, "Gherkin language errors found:\n\(Gherkin.errors.joined(separator: "\n"))")
+        Gherkin.errors.forEach {
+            XCTFail($0)
+        }
     }
 }
