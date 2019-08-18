@@ -8,10 +8,19 @@ as expected
         When I run the tests
         Then BeforeFeature gets called once per feature
 
-    Scenario: Before scenario hook works correctly
-        Given I have a before scenario hook
+    Scenario Outline: Before <scn> hook works correctly
+        Given I have a before <scn> hook
         When I run the tests
         Then BeforeScenario gets called once per scenario
+
+    Examples:
+    |        scn       |
+    | scenario outline |
+
+    Scenario: Before scenario outline hook works correctly
+        Given I have a before scenario hook
+        When I run the tests
+        Then BeforeScenario gets called once per scenario outline
 
     Scenario: Before step hook works correctly
         Given I have a before step hook

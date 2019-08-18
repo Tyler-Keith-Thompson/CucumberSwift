@@ -42,7 +42,7 @@ extension Cucumber: StepImplementation {
             secondaryBeforeFeatureCalled += 1
         }
         var beforeScenarioCalled = 0
-        BeforeScenario { _ in
+        BeforeScenario { scenario in
             beforeScenarioCalled += 1
         }
         var beforeStepCalled = 0
@@ -62,6 +62,9 @@ extension Cucumber: StepImplementation {
             afterFeatureCalled += 1
         }
         Given("^I have a before feature hook$") { _, _ in
+            XCTAssert(true)
+        }
+        Given("^I have a before scenario outline hook$") { _, _ in
             XCTAssert(true)
         }
         Given("^I have a before scenario hook$") { _, _ in
@@ -95,14 +98,17 @@ extension Cucumber: StepImplementation {
         Then("^BeforeScenario gets called once per scenario$") { _, _ in
             XCTAssertEqual(beforeScenarioCalled, 2)
         }
+        Then("^BeforeScenario gets called once per scenario outline$") { _, _ in
+            XCTAssertEqual(beforeScenarioCalled, 3)
+        }
         Then("^BeforeStep gets called once per step$") { _, _ in
-            XCTAssertEqual(beforeStepCalled, 9)
+            XCTAssertEqual(beforeStepCalled, 12)
         }
         Then("^AfterStep gets called once per step$") { _, _ in
-            XCTAssertEqual(afterStepCalled, 11)
+            XCTAssertEqual(afterStepCalled, 14)
         }
         Then("^AfterScenario gets called once per scenario$") { _, _ in
-            XCTAssertEqual(afterScenarioCalled, 4)
+            XCTAssertEqual(afterScenarioCalled, 5)
         }
         Then("^AfterFeature gets called once per feature$") { _, _ in
             XCTAssertEqual(afterFeatureCalled, 1)

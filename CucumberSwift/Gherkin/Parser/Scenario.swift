@@ -29,9 +29,11 @@ public class Scenario : NSObject, Taggable {
     }
     
     init(with steps:[Step], title:String, tags:[String]) {
+        super.init()
         self.steps = steps
         self.title = title
         self.tags = tags
+        self.steps.forEach { [weak self] in $0.scenario = self }
     }
     
     public func containsTags(_ tags:[String]) -> Bool {
