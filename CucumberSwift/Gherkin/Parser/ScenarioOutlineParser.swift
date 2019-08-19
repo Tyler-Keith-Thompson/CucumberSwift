@@ -49,6 +49,7 @@ class ScenarioOutlineParser {
             for stepNode in stepNodes {
                 steps.append(getStepFromLine(line, lookup: headerLookup, stepNode: stepNode))
             }
+            tags.append(contentsOf: featureTags)
             scenarios.append(Scenario(with: steps, title:title, tags: tags))
         }
         return scenarios

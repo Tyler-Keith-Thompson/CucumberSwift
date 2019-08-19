@@ -35,8 +35,9 @@ class TagTests: XCTestCase {
     
     func testTagedWorkForScenarioOutlines() {
         let cucumber = Cucumber(withString: """
+    @scenario1tag
     Feature: Some terse yet descriptive text of what is desired
-       @scenario1tag @someOtherTag
+        @someOtherTag
        Scenario Outline: Some determinable business situation
          Given a <thing> with tags
 
