@@ -33,6 +33,22 @@ class TagTests: XCTestCase {
         XCTAssert(!(cucumber.features.first?.scenarios.last?.containsTag("scenario1tag") ?? true))
     }
     
+    func testTagedWorkForScenarioOutlines() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some terse yet descriptive text of what is desired
+       @scenario1tag @someOtherTag
+       Scenario Outline: Some determinable business situation
+         Given a <thing> with tags
+
+        Examples:
+        |  thing   |
+        | scenario |
+    """)
+        XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.match, "a scenario with tags")
+        XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("scenario1tag") ?? false)
+        XCTAssert(cucumber.features.first?.scenarios.first?.containsTag("someOtherTag") ?? false)
+    }
+    
     func testMultipleTagsSpaceSeparated() {
         let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
