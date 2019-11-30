@@ -19,14 +19,13 @@ public class Lexer : StringReader {
     }
     
     @discardableResult internal func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
-        var str = ""
-        while let char = currentChar, !char.isNewline, !evaluation(char) {
-            str.append(char)
-            advanceIndex()
-        }
-        return str
+        return readUntil { $0.isNewline || evaluation($0) }
     }
-    
+
+    @discardableResult internal func lookAheadAtLineUntil(_ evaluation:((Character) -> Bool)) -> String {
+        return lookAheadUntil { $0.isNewline || evaluation($0) }
+    }
+
     //table cells have weird rules I don't necessarily agree with...
     @discardableResult internal func readCellUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
@@ -126,20 +125,19 @@ public class Lexer : StringReader {
             return advanceToNextToken()
         }
         atLineStart = false
-        let i = index
-        let scope = Scope.scopeFor(str: readLineUntil{ $0.isScopeTerminator })
+        let sc = lookAheadAtLineUntil{ $0.isScopeTerminator }
+        let scope = Scope.scopeFor(str: sc)
         if (scope != .unknown && !scope.isStep()) {
             lastScope = scope
+            readUntil{ $0.isScopeTerminator }
             advance(stripSpaceIfNecessary())
             return .scope(position, scope)
         } else if case .step(let keyword) = scope {
-            index = i
             readLineUntil { $0.isSpace }
             lastKeyword = keyword
             stripSpaceIfNecessary()
             return .keyword(position, keyword)
         } else {
-            index = i
             return .description(position, readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
         }
     }

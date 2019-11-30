@@ -130,7 +130,7 @@ class TagTests: XCTestCase {
     
     func testRunOnSpecificExampleWithScenarioOutlines() {
         Cucumber.shouldRunWith = { scenario, _ in
-            scenario?.location.line == 8
+            scenario?.location.line == 9
         }
 
         Cucumber.shared.features.removeAll()
@@ -138,15 +138,18 @@ class TagTests: XCTestCase {
         Feature: Some terse yet descriptive text of what is desired
            Scenario Outline: Some determinable business situation
              Given a <thing> with tags
+             Then something different
 
             Examples:
             |  thing   |
             | scenario |
-            | scenari0 | #line 8
+            | scenari0 | #line 9
         """)
         Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
 
-        
+        XCTAssertEqual(Cucumber.shared.features.first?.scenarios.first?.location.line, 8)
+        XCTAssertEqual(Cucumber.shared.features.first?.scenarios.last?.location.line, 9)
+
         var scenarioCalled = false
         Given("a scenario with tags") { _, _ in
             scenarioCalled = true
