@@ -25,6 +25,7 @@ public class Step : NSObject {
     public internal(set) var tags = [String]()
     public internal(set) var scenario:Scenario?
     public internal(set) var dataTable:DataTable?
+    public private(set)  var location:Lexer.Position
 
     var result:Result = .pending
     var execute:(([String], Step) -> Void)? = nil
@@ -43,27 +44,28 @@ public class Step : NSObject {
     var tokens = [Token]()
     
     init(with node:StepNode) {
+        location = node.tokens.first { $0.isKeyword() }?.position ?? .start
         tokens = node.tokens.filter{ !$0.isKeyword() }
         for token in node.tokens {
-            if case Token.keyword(let kw) = token {
+            if case Token.keyword(_, let kw) = token {
                 keyword = kw
-            } else if case Token.match(let m) = token {
+            } else if case Token.match(_, let m) = token {
                 match += m
-            } else if case Token.string(let s) = token {
+            } else if case Token.string(_, let s) = token {
                 match += "\"\(s)\""
-            } else if case Token.integer(let n) = token {
+            } else if case Token.integer(_, let n) = token {
                 match += n
-            } else if case Token.tableHeader(let h) = token {
+            } else if case Token.tableHeader(_, let h) = token {
                 match += h
             }
         }
         let tableLines = node.tokens
-            .filter{ $0.isTableCell() || $0 == .newLine }
+            .filter{ $0.isTableCell() || $0.isNewline() }
             .groupedByLine()
             .map { (line) -> [String] in
                 return line.filter { $0.isTableCell() }
                     .map({ (token) -> String in
-                    if case Token.tableCell(let cellText) = token {
+                    if case Token.tableCell(_, let cellText) = token {
                         return cellText
                     }
                     return ""

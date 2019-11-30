@@ -14,13 +14,13 @@ extension Collection where Element == Token {
     public var text:String {
         return compactMap { (token) -> String? in
             switch token {
-            case .integer(let t):
+            case .integer(_, let t):
                 return t
-            case .string(let t):
+            case .string(_, let t):
                 return "\"\(t)\""
-            case .match(let t):
+            case .match(_, let t):
                 return t
-            case .tableHeader(let t):
+            case .tableHeader(_, let t):
                 return "<\(t)>"
             default: return nil
             }
@@ -67,6 +67,11 @@ class CucumberTests:XCTestCase {
                 }
                 if let text = step["text"] as? String {
                     XCTAssertEqual(text, stepObject?.tokens.text, "Text does not match in: \(fileName)")
+                }
+                if let location = step["location"] as? [String:Any],
+                   let line = location["line"] as? UInt,
+                    let column = location["column"] as? UInt {
+                    XCTAssertEqual(Lexer.Position(line: line, column: column).line, stepObject?.location.line)
                 }
                 if let dataTable = step["dataTable"] as? [String:Any],
                     let rows = dataTable["rows"] as? [[String:Any]] {
@@ -126,13 +131,13 @@ class CucumberTests:XCTestCase {
                                     if let examples = scenario["examples"] as? [[String:Any]],
                                         let example = examples.first {
 //                                        for example in examples {
-                                            let lines = node?.tokens.filter{ $0.isTableCell() || $0 == .newLine }.groupedByLine()
+                                        let lines = node?.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
                                             if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
                                                 let headerTokens = lines?.first
                                                 XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(name)")
                                                 for (cellIndex, cell) in header.enumerated() {
                                                     let headerToken = headerTokens?[safe: cellIndex]
-                                                    if let token = headerToken, case .tableCell(let value) = token {
+                                                    if let token = headerToken, case .tableCell(_, let value) = token {
                                                         XCTAssertEqual(cell["value"] as? String, value)
                                                     }
                                                 }
@@ -144,7 +149,7 @@ class CucumberTests:XCTestCase {
                                                         XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(name)")
                                                         for (cellIndex, cell) in cells.enumerated() {
                                                             let cellToken = lineTokens?[safe: cellIndex]
-                                                            if let token = cellToken, case .tableCell(let value) = token {
+                                                            if let token = cellToken, case .tableCell(_, let value) = token {
                                                                 XCTAssertEqual(cell["value"] as? String, value)
                                                             }
                                                         }

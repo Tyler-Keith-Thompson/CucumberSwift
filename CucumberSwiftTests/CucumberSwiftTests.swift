@@ -106,7 +106,7 @@ class CucumberSwiftTests: XCTestCase {
           step1,
           step2,
           step3
-        ], title: "test", tags: [])
+        ], title: "test", tags: [], position: .start)
         step1.scenario = scenario
         step2.scenario = scenario
         step3.scenario = scenario

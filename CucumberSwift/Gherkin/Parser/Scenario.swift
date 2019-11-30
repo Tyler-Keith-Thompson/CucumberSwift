@@ -12,14 +12,16 @@ public class Scenario : NSObject, Taggable {
     public private(set)  var tags = [String]()
     public internal(set) var steps = [Step]()
     public internal(set) var feature:Feature?
-    
+    public private(set)  var location:Lexer.Position
+
     init(with node:ScenarioNode, tags:[String], stepNodes:[StepNode]) {
+        location = node.tokens.first?.position ?? .start
         super.init()
         self.tags = tags
         for token in node.tokens {
-            if case Token.title(let t) = token {
+            if case Token.title(_, let t) = token {
                 title = t
-            } else if case Token.tag(let tag) = token {
+            } else if case Token.tag(_, let tag) = token {
                 self.tags.append(tag)
             }
         }
@@ -28,7 +30,8 @@ public class Scenario : NSObject, Taggable {
         steps.forEach { $0.scenario = self }
     }
     
-    init(with steps:[Step], title:String, tags:[String]) {
+    init(with steps:[Step], title:String, tags:[String], position:Lexer.Position) {
+        location = position
         super.init()
         self.steps = steps
         self.title = title

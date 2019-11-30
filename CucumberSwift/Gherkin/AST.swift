@@ -36,7 +36,7 @@ class AST {
         var scenario:Node = ScenarioNode()
         var currentNode:Node?
         for token in tokens {
-            if case Token.scope(let scope) = token {
+            if case Token.scope(_, let scope) = token {
                 switch scope {
                 case .feature:
                     feature = FeatureNode()

@@ -105,7 +105,9 @@ class TagTests: XCTestCase {
     }
     
     func testRunWithSpecificTags() {
-        Cucumber.runningTagTests = true
+        Cucumber.shouldRunWith = { _, tags in
+            tags.contains("scenario1tag")
+        }
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures(featureFileWithTags)
         Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
@@ -123,7 +125,42 @@ class TagTests: XCTestCase {
         
         XCTAssert(withTagsCalled)
         XCTAssertFalse(withoutTagsCalled)
-        Cucumber.runningTagTests = false
+        Cucumber.shouldRunWith = { _, _ in true }
+    }
+    
+    func testRunOnSpecificExampleWithScenarioOutlines() {
+        Cucumber.shouldRunWith = { scenario, _ in
+            scenario?.location.line == 8
+        }
+
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario Outline: Some determinable business situation
+             Given a <thing> with tags
+
+            Examples:
+            |  thing   |
+            | scenario |
+            | scenari0 | #line 8
+        """)
+        Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
+
+        
+        var scenarioCalled = false
+        Given("a scenario with tags") { _, _ in
+            scenarioCalled = true
+        }
+        var scenari0Called = false
+        Given("a scenari0 with tags") { _, _ in
+            scenari0Called = true
+        }
+
+        Cucumber.shared.executeFeatures()
+        
+        XCTAssertFalse(scenarioCalled)
+        XCTAssert(scenari0Called)
+        Cucumber.shouldRunWith = { _, _ in true }
     }
 }
 
@@ -131,13 +168,9 @@ extension Cucumber: StepImplementation {
     public var bundle: Bundle {
         return Bundle(for: TagTests.self)
     }
-    
-    static var runningTagTests:Bool = false
+    static var shouldRunWith:(Scenario?, [String]) -> Bool = { _, _ in true }
     public func setupSteps() { }
-    public func shouldRunWith(tags: [String]) -> Bool {
-        if (Cucumber.runningTagTests) {
-            return tags.contains("scenario1tag")
-        }
-        return true
+    public func shouldRunWith(scenario:Scenario?, tags: [String]) -> Bool {
+        return Cucumber.shouldRunWith(scenario, tags)
     }
 }

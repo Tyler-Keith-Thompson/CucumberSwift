@@ -13,16 +13,18 @@ public class Feature : NSObject, Taggable {
     public private(set)  var scenarios = [Scenario]()
     public private(set)  var uri:String = ""
     public internal(set) var tags = [String]()
+    public private(set)  var location:Lexer.Position
     
     init(with node:FeatureNode, uri:String = "") {
+        location = node.tokens.first?.position ?? .start
         super.init()
         self.uri = uri
         for token in node.tokens {
-            if case Token.title(let t) = token {
+            if case Token.title(_, let t) = token {
                 title = t
-            } else if case Token.description(let description) = token {
+            } else if case Token.description(_, let description) = token {
                 desc += description + "\n"
-            } else if case Token.tag(let tag) = token {
+            } else if case Token.tag(_, let tag) = token {
                 self.tags.append(tag)
             }
         }

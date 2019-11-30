@@ -24,7 +24,7 @@ extension Array where Element : Taggable {
             return filter { $0.containsTags(tags) }
         } else if let shouldRunWith = (Cucumber.shared as? StepImplementation)?.shouldRunWith,
             askImplementor {
-            return filter { shouldRunWith($0.tags) }
+            return filter { shouldRunWith($0 as? Scenario, $0.tags) }
         }
         return self
     }

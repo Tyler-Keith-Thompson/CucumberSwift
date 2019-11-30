@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1DE862E02391F7F70027326A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE862DF2391F7F70027326A /* Position.swift */; };
 		5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */; };
 		5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BE20FE7EE7000DDD48 /* AST.swift */; };
 		5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */; };
@@ -86,6 +87,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1DE862DF2391F7F70027326A /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTests.swift; sourceTree = "<group>"; };
 		5AE2C0BE20FE7EE7000DDD48 /* AST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AST.swift; sourceTree = "<group>"; };
 		5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioOutlineParser.swift; sourceTree = "<group>"; };
@@ -180,6 +182,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1DE862DE2391F7E90027326A /* Lexer */ = {
+			isa = PBXGroup;
+			children = (
+				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
+				CA5A7C3A20FC2B2300F4564A /* Lexer.swift */,
+				1DE862DF2391F7F70027326A /* Position.swift */,
+			);
+			path = Lexer;
+			sourceTree = "<group>";
+		};
 		AD017232211671BF00FBC9AF /* StubGeneration */ = {
 			isa = PBXGroup;
 			children = (
@@ -255,7 +267,6 @@
 				CA5A7C3620FC2AF600F4564A /* Gherkin */,
 				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
-				AD9E15CA21176F8D00FB5B6C /* StringReader.swift */,
 				AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */,
 			);
 			path = CucumberSwift;
@@ -339,10 +350,10 @@
 		CA5A7C3620FC2AF600F4564A /* Gherkin */ = {
 			isa = PBXGroup;
 			children = (
+				1DE862DE2391F7E90027326A /* Lexer */,
 				AD831B6A222C9742003EE136 /* XCode-Specific */,
 				ADD9673020FCECF2000BCAA2 /* Parser */,
 				CA5A7C3C20FC2B2900F4564A /* Token.swift */,
-				CA5A7C3A20FC2B2300F4564A /* Lexer.swift */,
 				5AE2C0BE20FE7EE7000DDD48 /* AST.swift */,
 				AD7F1C0D2104DB240004852A /* Language.swift */,
 				AD7F1C0B2104D6B10004852A /* gherkin-languages.json */,
@@ -554,6 +565,7 @@
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
+				1DE862E02391F7F70027326A /* Position.swift in Sources */,
 				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
 				AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */,
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,

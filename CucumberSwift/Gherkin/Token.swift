@@ -13,10 +13,10 @@ extension Sequence where Element == Token {
         var lines = [[Token]]()
         var line = [Token]()
         for token in self {
-            if (token == .newLine && !line.isEmpty) {
+            if (token.isNewline() && !line.isEmpty) {
                 lines.append(line)
                 line.removeAll()
-            } else if (token != .newLine) {
+            } else if (!token.isNewline()) {
                 line.append(token)
             }
         }
@@ -28,18 +28,35 @@ extension Sequence where Element == Token {
 }
 
 enum Token: Equatable {
-    case newLine
-    case integer(String)
-    case string(String)
-    case docString(String)
-    case match(String)
-    case title(String)
-    case description(String)
-    case tag(String)
-    case tableHeader(String)
-    case tableCell(String)
-    case scope(Scope)
-    case keyword(Step.Keyword)
+    case newLine(Lexer.Position)
+    case integer(Lexer.Position, String)
+    case string(Lexer.Position, String)
+    case docString(Lexer.Position, String)
+    case match(Lexer.Position, String)
+    case title(Lexer.Position, String)
+    case description(Lexer.Position, String)
+    case tag(Lexer.Position, String)
+    case tableHeader(Lexer.Position, String)
+    case tableCell(Lexer.Position, String)
+    case scope(Lexer.Position, Scope)
+    case keyword(Lexer.Position, Step.Keyword)
+    
+    var position:Lexer.Position {
+        switch self {
+            case .newLine(let pos): return pos
+            case .integer(let pos, _): return pos
+            case .string(let pos, _): return pos
+            case .docString(let pos, _): return pos
+            case .match(let pos, _): return pos
+            case .title(let pos, _): return pos
+            case .description(let pos, _): return pos
+            case .tag(let pos, _): return pos
+            case .tableHeader(let pos, _): return pos
+            case .tableCell(let pos, _): return pos
+            case .scope(let pos, _): return pos
+            case .keyword(let pos, _): return pos
+        }
+    }
     
     static func ==(lhs: Token, rhs: Token) -> Bool {
         switch (lhs, rhs) {
@@ -66,6 +83,13 @@ enum Token: Equatable {
         default:
             return false
         }
+    }
+    
+    func isNewline() -> Bool {
+        if case .newLine(_) = self {
+            return true
+        }
+        return false
     }
     
     func isTableCell() -> Bool {

@@ -7,18 +7,18 @@
 //
 
 import Foundation
-class Lexer : StringReader {
-    var atLineStart = true
-    var lastScope:Scope?
-    var lastKeyword:Step.Keyword?
-    var url:URL?
+public class Lexer : StringReader {
+    internal var atLineStart = true
+    internal var lastScope:Scope?
+    internal var lastKeyword:Step.Keyword?
+    internal var url:URL?
     
-    init(_ str: String, uri:String) {
+    internal init(_ str: String, uri:String) {
         url = URL(string: uri)
         super.init(str)
     }
     
-    @discardableResult func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
+    @discardableResult internal func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
         while let char = currentChar, !char.isNewline, !evaluation(char) {
             str.append(char)
@@ -28,7 +28,7 @@ class Lexer : StringReader {
     }
     
     //table cells have weird rules I don't necessarily agree with...
-    @discardableResult func readCellUntil(_ evaluation:((Character) -> Bool)) -> String {
+    @discardableResult internal func readCellUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
         while let char = currentChar, !char.isNewline {
             if char.isEscapeCharacter,
@@ -52,7 +52,7 @@ class Lexer : StringReader {
         return str
     }
     
-    @discardableResult func stripSpaceIfNecessary() -> Bool {
+    @discardableResult internal func stripSpaceIfNecessary() -> Bool {
         if let c = currentChar, c.isSpace {
             readLineUntil { !$0.isSpace }
             return true
@@ -65,7 +65,7 @@ class Lexer : StringReader {
         return t()
     }
     
-    func advanceToNextToken() -> Token? {
+    internal func advanceToNextToken() -> Token? {
         guard let char = currentChar else { return nil }
         defer {
             if (char.isNewline) {
@@ -78,31 +78,31 @@ class Lexer : StringReader {
         }
         
         switch (char) {
-        case .newLine: return advance(.newLine)
+        case .newLine: return advance(.newLine(position))
         case .comment: return readComment()
-        case .tagMarker: return advance(.tag(readLineUntil({ !$0.isTagCharacter })))
+        case .tagMarker: return advance(.tag(position, readLineUntil({ !$0.isTagCharacter })))
         case .tableCellDelimiter:
             let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter })
                                             .trimmingCharacters(in: .whitespaces))
             if (currentChar != Character.tableCellDelimiter) {
                 return advanceToNextToken()
             }
-            return .tableCell(tableCellContents)
+            return .tableCell(position, tableCellContents)
         case _ where atLineStart: return readScope()
         case .tableHeaderOpen:
             let str = advance(readLineUntil{ $0.isHeaderClosed })
-            return advance(.tableHeader(str))
+            return advance(.tableHeader(position, str))
         case _ where lastScope != nil:
             let title = readLineUntil{ $0.isHeaderOpen }
             if (title.isEmpty) { //hack to get around potential infinite loop
                 return advance(advanceToNextToken())
             }
-            return .title(title)
+            return .title(position, title)
         case .quote:
             let str = advance(readLineUntil{ $0.isQuote })
-            return advance(.string(str))
-        case _ where char.isNumeric: return .integer(readLineUntil{ !$0.isNumeric })
-        case _ where lastKeyword != nil: return .match(readLineUntil{ $0.isSymbol })
+            return advance(.string(position, str))
+        case _ where char.isNumeric: return .integer(position, readLineUntil{ !$0.isNumeric })
+        case _ where lastKeyword != nil: return .match(position, readLineUntil{ $0.isSymbol })
         default: return advance(advanceToNextToken())
         }
     }
@@ -131,26 +131,26 @@ class Lexer : StringReader {
         if (scope != .unknown && !scope.isStep()) {
             lastScope = scope
             advance(stripSpaceIfNecessary())
-            return .scope(scope)
+            return .scope(position, scope)
         } else if case .step(let keyword) = scope {
             index = i
             readLineUntil { $0.isSpace }
             lastKeyword = keyword
             stripSpaceIfNecessary()
-            return .keyword(keyword)
+            return .keyword(position, keyword)
         } else {
             index = i
-            return .description(readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
+            return .description(position, readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
         }
     }
     
-    func lex() -> [Token] {
+    internal func lex() -> [Token] {
         Scope.language = Language()!
         var toks = [Token]()
         while let tok = advanceToNextToken() {
             toks.append(tok)
         }
-        if (!toks.contains(where: { !$0.isDescription() && $0 != .newLine })) {
+        if (!toks.contains(where: { !$0.isDescription() && !$0.isNewline() })) {
             Gherkin.errors.append("File: \(url?.lastPathComponent ?? "") does not contain any valid gherkin")
         }
         return toks

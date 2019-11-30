@@ -11,7 +11,7 @@ class StubGenerator {
     private static func regexForTokens(_ tokens:[Token]) -> String {
         var regex = ""
         for token in tokens {
-            if case Token.match(let m) = token {
+            if case Token.match(_, let m) = token {
                 regex += NSRegularExpression
                     .escapedPattern(for: m)
                     .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
