@@ -25,7 +25,7 @@ public class Scenario : NSObject, Taggable {
                 self.tags.append(tag)
             }
         }
-        steps ?= ((node.children as? [StepNode])?.compactMap{ Step(with: $0) })
+        steps ?= node.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
         steps.forEach { $0.scenario = self }
     }

@@ -64,12 +64,12 @@ public class Step : NSObject {
             .groupedByLine()
             .map { (line) -> [String] in
                 return line.filter { $0.isTableCell() }
-                    .map({ (token) -> String in
+                    .map { (token) -> String in
                     if case Token.tableCell(_, let cellText) = token {
                         return cellText
                     }
                     return ""
-                })
+                }
         }
         if (!tableLines.isEmpty) {
             dataTable = DataTable(tableLines)

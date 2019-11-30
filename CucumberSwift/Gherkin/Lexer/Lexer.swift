@@ -125,11 +125,10 @@ public class Lexer : StringReader {
             return advanceToNextToken()
         }
         atLineStart = false
-        let sc = lookAheadAtLineUntil{ $0.isScopeTerminator }
-        let scope = Scope.scopeFor(str: sc)
+        let scope = Scope.scopeFor(str: lookAheadAtLineUntil{ $0.isScopeTerminator } )
         if (scope != .unknown && !scope.isStep()) {
             lastScope = scope
-            readUntil{ $0.isScopeTerminator }
+            readUntil { $0.isScopeTerminator }
             advance(stripSpaceIfNecessary())
             return .scope(position, scope)
         } else if case .step(let keyword) = scope {

@@ -27,8 +27,7 @@ class ScenarioOutlineParser {
             }
             lines.removeFirst()
         }
-        let stepNodes = scenarioOutlineNode.children.filter { $0 is StepNode }
-                        .map { $0 as! StepNode }
+        let stepNodes = scenarioOutlineNode.children.compactMap { $0 as? StepNode }
         for line in lines {
             var title = ""
             if let titleTokens = titleLine {
