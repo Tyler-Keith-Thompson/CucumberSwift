@@ -7,17 +7,18 @@
 //
 
 import Foundation
-public class Feature : NSObject, Taggable {
+public class Feature : Taggable, Positionable {
     public private(set)  var title = ""
     public private(set)  var desc = ""
     public private(set)  var scenarios = [Scenario]()
     public private(set)  var uri:String = ""
     public internal(set) var tags = [String]()
     public private(set)  var location:Lexer.Position
+    public private(set)  var endLocation: Lexer.Position
     
     init(with node:FeatureNode, uri:String = "") {
         location = node.tokens.first?.position ?? .start
-        super.init()
+        endLocation = .start
         self.uri = uri
         for token in node.tokens {
             if case Token.title(_, let t) = token {
@@ -39,6 +40,7 @@ public class Feature : NSObject, Taggable {
             }
         }
         scenarios.forEach { $0.feature = self }
+        endLocation ?= scenarios.last?.endLocation
     }
     
     internal func addScenario(_ scenario:Scenario) {

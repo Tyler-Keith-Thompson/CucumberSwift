@@ -9,8 +9,8 @@
 import Foundation
 import XCTest
 
-public class Step : NSObject {
-    override public var description: String {
+public class Step: CustomStringConvertible {
+    public var description: String {
         return "TAGS:\(tags)\n\(keyword.toString()): \(match)"
     }
     

@@ -13,8 +13,8 @@ public extension Lexer {
         static let start:Position = {
             return Position(line: 0, column: 0)
         }()
-        var line:UInt
-        var column:UInt
+        internal var line:UInt
+        internal var column:UInt
     }
 }
 

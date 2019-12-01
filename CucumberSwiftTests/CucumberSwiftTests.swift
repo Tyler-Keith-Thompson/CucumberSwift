@@ -122,3 +122,14 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertEqual(step3.result, .skipped)
     }
 }
+
+extension Cucumber: StepImplementation {
+    public var bundle: Bundle {
+        return Bundle(for: CucumberSwiftTests.self)
+    }
+    static var shouldRunWith:(Scenario?, [String]) -> Bool = { _, _ in true }
+    public func setupSteps() { }
+    public func shouldRunWith(scenario:Scenario?, tags: [String]) -> Bool {
+        return Cucumber.shouldRunWith(scenario, tags)
+    }
+}
