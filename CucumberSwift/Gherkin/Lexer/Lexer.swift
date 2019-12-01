@@ -117,8 +117,7 @@ public class Lexer : StringReader {
                 return advance(advanceToNextToken())
             }
             return .title(position, title)
-        case .quote:
-            return readString()
+        case .quote: return readString()
         case _ where char.isNumeric: return .integer(position, readLineUntil{ !$0.isNumeric })
         case _ where lastKeyword != nil: return .match(position, readLineUntil{ $0.isSymbol })
         default: return advance(advanceToNextToken())

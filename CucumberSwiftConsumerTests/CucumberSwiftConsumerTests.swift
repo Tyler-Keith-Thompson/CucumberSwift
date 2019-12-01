@@ -114,6 +114,9 @@ extension Cucumber: StepImplementation {
             XCTAssertEqual(afterFeatureCalled, 1)
         }
         Then("^The scenario runs without crashing$") { _, _ in
+            let expectation = self.expectation(description: "waiting")
+            expectation.fulfill()
+            self.wait(for: [expectation], timeout: 3)
             XCTAssert(true)
         }
         Then("^The unit test runs$") { _, _ in
