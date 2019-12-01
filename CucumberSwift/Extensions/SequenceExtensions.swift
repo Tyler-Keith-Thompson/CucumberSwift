@@ -21,14 +21,14 @@ extension Sequence where Iterator.Element: Equatable {
 }
 
 extension Array {
-    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Self {
-        var new = self
+    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Array.SubSequence {
+        var new = self.dropFirst(0)
         var count = k
         while (count > 0) {
             count -= 1
             guard let first = new.first else { break }
             if (try predicate(first)) {
-                new = Array<Iterator.Element>(new.dropFirst())
+                new = new.dropFirst()
             } else {
                 break
             }
@@ -36,14 +36,14 @@ extension Array {
         return new
     }
     
-    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Self {
-        var new = self
+    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Array.SubSequence {
+        var new = self.dropLast(0)
         var count = k
         while (count > 0) {
             count -= 1
             guard let last = new.last else { break }
             if (try predicate(last)) {
-                new = Array<Iterator.Element>(new.dropLast())
+                new = new.dropLast()
             } else {
                 break
             }
