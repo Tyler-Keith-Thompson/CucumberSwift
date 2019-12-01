@@ -39,14 +39,22 @@ class Method {
         }
         var methodStrings = [String]()
         for keywordString in keywordStrings {
-            var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), _ in\n"
+            let variablesOnStepObject = variables.filter { $0.type == "dataTable" || $0.type == "docString" }.filter { $0.count > 0 }
+            let stepParameter = (variablesOnStepObject.count > 0) ? "step" : "_"
+            var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), \(stepParameter) in\n"
             for variable in variables {
                 guard variable.count > 0 else { continue }
                 for i in 1...variable.count {
-                    let spelledNumber = NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
-                                                                        number: .spellOut)
+                    let spelledNumber = (i > 1) ? NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
+                                                                                  number: .spellOut) : ""
                     let varName = "\(variable.type) \(spelledNumber)".camelCasingString()
-                    methodString += "    let \(varName) = \(matchesParameter)[\(i)]\n"
+                    if (variable.type != "dataTable" && variable.type != "docString") {
+                        methodString += "    let \(varName) = \(matchesParameter)[\(i)]\n"
+                    } else if variable.type == "docString" {
+                        methodString += "    let \(varName) = step.docString\n"
+                    } else if variable.type == "dataTable" {
+                        methodString += "    let \(varName) = step.dataTable\n"
+                    }
                 }
             }
             if (variables.reduce(0) { $0 + $1.count } <= 0) {

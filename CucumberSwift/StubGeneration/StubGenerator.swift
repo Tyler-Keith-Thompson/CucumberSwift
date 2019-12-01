@@ -37,8 +37,14 @@ class StubGenerator {
             let stringCount = $0.tokens.filter { $0.isString() }.count
             let integerCount = $0.tokens.filter { $0.isInteger() }.count
             let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
+            let step = $0
+            if (step.docString != nil) {
+                print("")
+            }
             let variables = [(type: "string", count: stringCount),
-                             (type: "integer", count: integerCount)]
+                             (type: "integer", count: integerCount),
+                             (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
+                             (type: "docString", count: $0.docString != nil ? 1 : 0)]
             var method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
             if let m = lookup[regex] {
                 method = m

@@ -58,3 +58,22 @@ as expected
         Given I point my step to a unit test
         When I run the tests
         Then The unit test runs
+
+    Scenario: Unimplemented scenario with DocString
+        Given a DocString of some kind that is not implemented
+        """xml
+        <foo>
+            <bar />
+        </foo>
+        """
+        When I look in my test report
+        Then I see some PENDING steps with a swift attachment
+            And I can copy and paste the swift code into my test case
+            
+    Scenario: Unimplemented scenario with data table
+        Given I have some data table that is not implemented
+            | tbl |
+            | foo |
+        When I look in my test report
+        Then I see some PENDING steps with a swift attachment
+            And I can copy and paste the swift code into my test case

@@ -113,7 +113,7 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
         }
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
@@ -129,7 +129,7 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
             let stringTwo = matches[2]
         }
         """
@@ -146,7 +146,7 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login (\\\\d+) time$") { matches, _ in
-            let integerOne = matches[1]
+            let integer = matches[1]
         }
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
@@ -162,7 +162,7 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
-            let integerOne = matches[1]
+            let integer = matches[1]
             let integerTwo = matches[2]
         }
         """
@@ -182,7 +182,7 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
         }
         """
         XCTAssertEqual(actual, expected)
@@ -202,13 +202,13 @@ class StepGenerationTests:XCTestCase {
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
         }
         When("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
         }
         And("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
         }
         """
         XCTAssertEqual(actual, expected)
@@ -228,7 +228,77 @@ class StepGenerationTests:XCTestCase {
         //FIXME: WARNING: This will overwite your implementation for the step(s):
         //                Given I login as "Robert Downey Jr"
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
-            let stringOne = matches[1]
+            let string = matches[1]
+        }
+        """
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testGeneratedImplementationWhenStepContainsADataTable() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Unimplemented scenario with data table
+               Given I have some data table that is not implemented
+                   | tbl |
+                   | foo |
+        """)
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let expected = """
+        Given("^I have some data table that is not implemented$") { _, step in
+            let dataTable = step.dataTable
+        }
+        """
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testGeneratedImplementationWhenStepContainsADocString() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Unimplemented scenario with DocString
+               Given a DocString of some kind that is not implemented
+               ```xml
+               <foo>
+                   <bar />
+               </foo>
+               ```
+        """)
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let expected = """
+        Given("^a DocString of some kind that is not implemented$") { _, step in
+            let docString = step.docString
+        }
+        """
+        XCTAssertEqual(actual, expected)
+    }
+    
+    func testComplexGenerationWithManyValues() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+            Scenario: Unimplemented scenario with data table
+                Given I have some data table that is not implemented and some string "blah" and some other string "lbah"
+                   | tbl |
+                   | foo |
+                    And a DocString with the number 123 and another number 456
+                    ```xml
+                    <foo>
+                        <bar />
+                    </foo>
+                    ```
+        """)
+        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let expected = """
+        Given("^I have some data table that is not implemented and some string \\"(.*?)\\" and some other string \\"(.*?)\\"$") { matches, step in
+            let string = matches[1]
+            let stringTwo = matches[2]
+            let dataTable = step.dataTable
+        }
+        And("^a DocString with the number (\\\\d+) and another number (\\\\d+)$") { matches, step in
+            let integer = matches[1]
+            let integerTwo = matches[2]
+            let docString = step.docString
         }
         """
         XCTAssertEqual(actual, expected)
