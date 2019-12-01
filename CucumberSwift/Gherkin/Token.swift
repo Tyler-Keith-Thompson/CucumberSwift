@@ -31,7 +31,7 @@ enum Token: Equatable {
     case newLine(Lexer.Position)
     case integer(Lexer.Position, String)
     case string(Lexer.Position, String)
-    case docString(Lexer.Position, String)
+    case docString(Lexer.Position, DocString)
     case match(Lexer.Position, String)
     case title(Lexer.Position, String)
     case description(Lexer.Position, String)
@@ -74,8 +74,8 @@ enum Token: Equatable {
             return num1 == num2
         case let (.string(string1), .string(string2)):
             return string1 == string2
-        case let (.docString(string1), .docString(string2)):
-            return string1 == string2
+        case let (.docString(_, string1), .docString(_, string2)):
+            return string1.literal == string2.literal
         case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
             return tableHeader1 == tableHeader2
         case let (.tableCell(tableCell1), .tableCell(tableCell2)):

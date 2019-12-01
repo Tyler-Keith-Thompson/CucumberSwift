@@ -112,18 +112,17 @@ public class Lexer : StringReader {
         let open = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
         if open.isDocStringLiteral() {
             readLineUntil { !$0.isDocStringLiteral }
-            let docStringValue = readUntil {
+            let docStringValues = readUntil {
                 if ($0.isDocStringLiteral) {
                     let close = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
                     if close == open { return true }
                 }
                 return false
             }.components(separatedBy: "\n")
-                .dropFirst { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
                 .enumerated()
                 .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { (res, e) in
                     let (offset, line) = e
-                    if (offset == 0) {
+                    if (offset == 1) {
                         res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
                     }
                     let str = line.map { $0 }.dropFirst(res.whitespaceCount) {
@@ -133,9 +132,10 @@ public class Lexer : StringReader {
                 }
                 .trimmedLines
                 .dropLast { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
-                .joined(separator: "\n")
+
             readLineUntil { !$0.isDocStringLiteral }
-            return advance(.docString(position, docStringValue))
+            return advance(.docString(position, DocString(literal: docStringValues.dropFirst().joined(separator: "\n"),
+                                                          contentType: docStringValues.first?.trimmingCharacters(in: .whitespacesAndNewlines))))
         } else if char == .quote {
             let str = advance(readLineUntil{ $0.isQuote })
             return advance(.string(position, str))

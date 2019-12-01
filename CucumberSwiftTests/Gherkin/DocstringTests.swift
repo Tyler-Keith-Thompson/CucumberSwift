@@ -26,7 +26,7 @@ class DocstringTests: XCTestCase {
                 \"""
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         first line (no indent)
           second line (indented with two spaces)
 
@@ -34,26 +34,27 @@ class DocstringTests: XCTestCase {
         """)
     }
     
-//    func testDocStringWithContentType() {
-//        let cucumber = Cucumber(withString:
-//            """
-//            Feature: DocString variations
-//
-//            Scenario: minimalistic
-//              Given a DocString with content type
-//                \"""xml
-//                <foo>
-//                  <bar />
-//                </foo>
-//                \"""
-//            """)
-//        let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-//        XCTAssertEqual(firstStep?.docString, """
-//        <foo>
-//          <bar />
-//        </foo>
-//        """)
-//    }
+    func testDocStringWithContentType() {
+        let cucumber = Cucumber(withString:
+            """
+            Feature: DocString variations
+
+            Scenario: minimalistic
+              Given a DocString with content type
+                \"""xml
+                <foo>
+                  <bar />
+                </foo>
+                \"""
+            """)
+        let firstStep = cucumber.features.first?.scenarios.first?.steps.first
+        XCTAssertEqual(firstStep?.docString?.literal, """
+        <foo>
+          <bar />
+        </foo>
+        """)
+        XCTAssertEqual(firstStep?.docString?.contentType, "xml")
+    }
     
     func testDocStringWithWrongIndentation() {
         let cucumber = Cucumber(withString:
@@ -67,7 +68,7 @@ class DocstringTests: XCTestCase {
                 \"""
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         wrongly indented line
         """)
     }
@@ -85,7 +86,7 @@ class DocstringTests: XCTestCase {
                 ```
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         first line
         second line
         """)
@@ -105,7 +106,7 @@ class DocstringTests: XCTestCase {
                 ```
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         first line
         \"""
         third line
@@ -126,7 +127,7 @@ class DocstringTests: XCTestCase {
                 \"""
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         first line
         ```
         third line
@@ -147,7 +148,7 @@ class DocstringTests: XCTestCase {
                   \"""
             """)
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
-        XCTAssertEqual(firstStep?.docString, """
+        XCTAssertEqual(firstStep?.docString?.literal, """
         first line
         \\"\\"\\"
         third line

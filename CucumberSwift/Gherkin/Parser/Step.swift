@@ -25,7 +25,7 @@ public class Step: CustomStringConvertible {
     public internal(set) var tags = [String]()
     public internal(set) var scenario:Scenario?
     public internal(set) var dataTable:DataTable?
-    public private(set)  var docString:String?
+    public private(set)  var docString:DocString?
     public private(set)  var location:Lexer.Position
 
     var result:Result = .pending

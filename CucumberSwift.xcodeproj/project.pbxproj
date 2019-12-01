@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1DA7619923933BCB001CBA5B /* RunWithLineNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */; };
 		1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619A23933F18001CBA5B /* Positionable.swift */; };
+		1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619C2393C5AB001CBA5B /* DocString.swift */; };
 		1DE862E02391F7F70027326A /* Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DE862DF2391F7F70027326A /* Position.swift */; };
 		5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */; };
 		5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BE20FE7EE7000DDD48 /* AST.swift */; };
@@ -91,6 +92,7 @@
 /* Begin PBXFileReference section */
 		1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunWithLineNumberTests.swift; sourceTree = "<group>"; };
 		1DA7619A23933F18001CBA5B /* Positionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Positionable.swift; sourceTree = "<group>"; };
+		1DA7619C2393C5AB001CBA5B /* DocString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocString.swift; sourceTree = "<group>"; };
 		1DE862DF2391F7F70027326A /* Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Position.swift; sourceTree = "<group>"; };
 		5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTests.swift; sourceTree = "<group>"; };
 		5AE2C0BE20FE7EE7000DDD48 /* AST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AST.swift; sourceTree = "<group>"; };
@@ -372,6 +374,7 @@
 				AD7F1C0D2104DB240004852A /* Language.swift */,
 				AD7F1C0B2104D6B10004852A /* gherkin-languages.json */,
 				AD2F20DF216969990041657C /* Errors.swift */,
+				1DA7619C2393C5AB001CBA5B /* DocString.swift */,
 			);
 			path = Gherkin;
 			sourceTree = "<group>";
@@ -594,6 +597,7 @@
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,
+				1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
 				AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */,
