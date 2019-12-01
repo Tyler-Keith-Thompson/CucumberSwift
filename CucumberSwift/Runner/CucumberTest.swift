@@ -78,6 +78,7 @@ class CucumberTest: XCTestCase {
             }
             step.continueAfterFailure ?= (Cucumber.shared as? StepImplementation)?.continueTestingAfterFailure ?? testCase?.continueAfterFailure
             step.testCase = testCase
+            testCase?.continueAfterFailure = step.continueAfterFailure
             tests.append(testCase)
         }
     }
