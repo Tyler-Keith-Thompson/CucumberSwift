@@ -25,6 +25,7 @@ public class Step: CustomStringConvertible {
     public internal(set) var tags = [String]()
     public internal(set) var scenario:Scenario?
     public internal(set) var dataTable:DataTable?
+    public private(set)  var docString:String?
     public private(set)  var location:Lexer.Position
 
     var result:Result = .pending
@@ -57,6 +58,8 @@ public class Step: CustomStringConvertible {
                 match += n
             } else if case Token.tableHeader(_, let h) = token {
                 match += h
+            } else if case Token.docString(_, let s) = token {
+                docString = s
             }
         }
         let tableLines = node.tokens

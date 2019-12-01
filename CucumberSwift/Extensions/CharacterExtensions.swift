@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+extension CharacterSet {
+    static let docStrings = CharacterSet(charactersIn: "\"`")
+}
+
 extension Character {
     static let tableHeaderOpen:Character = "<"
     static let tableHeaderClose:Character = ">"
@@ -80,5 +85,9 @@ extension Character {
     }
     var isEscapeCharacter: Bool {
         return self == Character.escapeCharacter
+    }
+    var isDocStringLiteral: Bool {
+        guard let scalar = unicodeScalars.first else { return false }
+        return CharacterSet.docStrings.contains(scalar)
     }
 }

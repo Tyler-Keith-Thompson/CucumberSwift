@@ -48,4 +48,10 @@ extension String {
         }
         return str
     }
+    
+    func isDocStringLiteral() -> Bool {
+        guard count == 3 else { return false }
+        return !compactMap{ $0.unicodeScalars.first }
+                .contains { !CharacterSet.docStrings.contains($0) }
+    }
 }

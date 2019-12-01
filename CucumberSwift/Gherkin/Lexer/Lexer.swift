@@ -98,12 +98,49 @@ public class Lexer : StringReader {
             }
             return .title(position, title)
         case .quote:
-            let str = advance(readLineUntil{ $0.isQuote })
-            return advance(.string(position, str))
+            return readString()
         case _ where char.isNumeric: return .integer(position, readLineUntil{ !$0.isNumeric })
         case _ where lastKeyword != nil: return .match(position, readLineUntil{ $0.isSymbol })
         default: return advance(advanceToNextToken())
         }
+    }
+    
+    private func readString() -> Token? {
+        guard let char = currentChar,
+                char.isDocStringLiteral else { return nil }
+        let position = self.position
+        let open = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
+        if open.isDocStringLiteral() {
+            readLineUntil { !$0.isDocStringLiteral }
+            let docStringValue = readUntil {
+                if ($0.isDocStringLiteral) {
+                    let close = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
+                    if close == open { return true }
+                }
+                return false
+            }.components(separatedBy: "\n")
+                .dropFirst { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                .enumerated()
+                .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { (res, e) in
+                    let (offset, line) = e
+                    if (offset == 0) {
+                        res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
+                    }
+                    let str = line.map { $0 }.dropFirst(res.whitespaceCount) {
+                        $0.isWhitespace
+                    }
+                    res.trimmedLines.append(String(str))
+                }
+                .trimmedLines
+                .dropLast { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                .joined(separator: "\n")
+            readLineUntil { !$0.isDocStringLiteral }
+            return advance(.docString(position, docStringValue))
+        } else if char == .quote {
+            let str = advance(readLineUntil{ $0.isQuote })
+            return advance(.string(position, str))
+        }
+        return nil
     }
     
     private func readComment() -> Token? {
@@ -123,6 +160,9 @@ public class Lexer : StringReader {
     private func readScope() -> Token? {
         if (stripSpaceIfNecessary()) {
             return advanceToNextToken()
+        }
+        if let stringToken = readString() {
+            return stringToken
         }
         atLineStart = false
         let position = self.position

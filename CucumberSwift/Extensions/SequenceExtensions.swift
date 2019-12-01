@@ -19,3 +19,35 @@ extension Sequence where Iterator.Element: Equatable {
         self ?= uniqueElements as? Self
     }
 }
+
+extension Array {
+    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Self {
+        var new = self
+        var count = k
+        while (count > 0) {
+            count -= 1
+            guard let first = new.first else { break }
+            if (try predicate(first)) {
+                new = Array<Iterator.Element>(new.dropFirst())
+            } else {
+                break
+            }
+        }
+        return new
+    }
+    
+    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Self {
+        var new = self
+        var count = k
+        while (count > 0) {
+            count -= 1
+            guard let last = new.last else { break }
+            if (try predicate(last)) {
+                new = Array<Iterator.Element>(new.dropLast())
+            } else {
+                break
+            }
+        }
+        return new
+    }
+}
