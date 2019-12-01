@@ -1,4 +1,4 @@
-![Build Status](https://img.shields.io/travis/Tyler-Keith-Thompson/CucumberSwift/master?style=popout)
+![Build Status](https://img.shields.io/travis/com/Tyler-Keith-Thompson/CucumberSwift/master?style=popout) 
 ![Pod Platform](https://img.shields.io/cocoapods/p/CucumberSwift.svg?style=popout) ![Pod Version](https://img.shields.io/cocoapods/v/CucumberSwift.svg?style=popout)
 
 ### Welcome to CucumberSwift
