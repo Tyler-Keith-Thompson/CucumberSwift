@@ -125,6 +125,7 @@ public class Lexer : StringReader {
             return advanceToNextToken()
         }
         atLineStart = false
+        let position = self.position
         let scope = Scope.scopeFor(str: lookAheadAtLineUntil{ $0.isScopeTerminator } )
         if (scope != .unknown && !scope.isStep()) {
             lastScope = scope

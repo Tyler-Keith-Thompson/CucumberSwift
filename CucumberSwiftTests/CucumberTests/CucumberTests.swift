@@ -71,7 +71,7 @@ class CucumberTests:XCTestCase {
                 if let location = step["location"] as? [String:Any],
                    let line = location["line"] as? UInt,
                     let column = location["column"] as? UInt {
-                    XCTAssertEqual(Lexer.Position(line: line, column: column).line, stepObject?.location.line)
+                    XCTAssertEqual(Lexer.Position(line: line, column: column), stepObject?.location)
                 }
                 if let dataTable = step["dataTable"] as? [String:Any],
                     let rows = dataTable["rows"] as? [[String:Any]] {
@@ -93,6 +93,71 @@ class CucumberTests:XCTestCase {
         }
     }
     
+    private func testFeature(_ feature:[String:Any], ast:AST, fileName:String) {
+        guard let featureNode = ast.featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
+        let featureObj = Feature(with: featureNode)
+        if let name = feature["name"] as? String {
+            XCTAssertEqual(name, featureObj.title)
+        }
+        if let children = feature["children"] as? [[String:Any]] {
+            XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(name)")
+            for (childIndex, child) in children.enumerated() {
+                let node = featureNode.children[safe: childIndex]
+                if let background = child["background"] as? [String:Any] {
+                    guard let backgroundNode = node as? BackgroundNode else { XCTFail("No background node found");return }
+                    let backgroundSteps:[Step] = backgroundNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+                    testSteps(scope: background, stepObjects: backgroundSteps, fileName: name)
+                }
+                if let scenario = child["scenario"] as? [String:Any] {
+                    guard let scenarioType = scenario["keyword"] as? String else { return }
+                    if (scenarioType == "Scenario") {
+                        guard let scenarioNode = node as? ScenarioNode else { XCTFail("No scenario node found in file: \(name)");return }
+                        let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+                        testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
+                    } else if (scenarioType == "Scenario Outline") {
+                        testScenarioOutline(scenario, node: node, fileName: fileName)
+                    }
+                }
+            }
+        }
+    }
+    
+    private func testScenarioOutline(_ scenarioOutline:[String:Any], node:Node?, fileName:String) {
+        guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
+        let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+        if let examples = scenarioOutline["examples"] as? [[String:Any]],
+            let example = examples.first {
+//                                        for example in examples {
+            let lines = node?.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
+                if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
+                    let headerTokens = lines?.first
+                    XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(name)")
+                    for (cellIndex, cell) in header.enumerated() {
+                        let headerToken = headerTokens?[safe: cellIndex]
+                        if let token = headerToken, case .tableCell(_, let value) = token {
+                            XCTAssertEqual(cell["value"] as? String, value)
+                        }
+                    }
+                }
+                if let tableBody = (example["tableBody"] as? [[String:Any]]) {
+                    for (rowIndex, row) in tableBody.enumerated() {
+                        if let cells = row["cells"] as? [[String:Any]] {
+                            let lineTokens = Array(lines?.dropFirst() ?? [])[safe: rowIndex]
+                            XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(name)")
+                            for (cellIndex, cell) in cells.enumerated() {
+                                let cellToken = lineTokens?[safe: cellIndex]
+                                if let token = cellToken, case .tableCell(_, let value) = token {
+                                    XCTAssertEqual(cell["value"] as? String, value)
+                                }
+                            }
+                        }
+                    }
+                }
+//                                        }
+        }
+        testSteps(scope: scenarioOutline, stepObjects: scenarioSteps, fileName: fileName)
+    }
+    
     func testGoodExamples() {
         let tests:[String:TestType] = getTests(atPath: "testdata/good")
 
@@ -105,64 +170,7 @@ class CucumberTests:XCTestCase {
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
                 let document = expectedAST["gherkinDocument"] as? [String:Any] {
                 if let feature = document["feature"] as? [String:Any] {
-                    guard let featureNode = ast.featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
-                    let featureObj = Feature(with: featureNode)
-                    if let name = feature["name"] as? String {
-                        XCTAssertEqual(name, featureObj.title)
-                    }
-                    if let children = feature["children"] as? [[String:Any]] {
-                        XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(name)")
-                        for (childIndex, child) in children.enumerated() {
-                            let node = featureNode.children[safe: childIndex]
-                            if let background = child["background"] as? [String:Any] {
-                                guard let backgroundNode = node as? BackgroundNode else { XCTFail("No background node found");return }
-                                let backgroundSteps:[Step] = backgroundNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
-                                testSteps(scope: background, stepObjects: backgroundSteps, fileName: name)
-                            }
-                            if let scenario = child["scenario"] as? [String:Any] {
-                                guard let scenarioType = scenario["keyword"] as? String else { return }
-                                if (scenarioType == "Scenario") {
-                                    guard let scenarioNode = node as? ScenarioNode else { XCTFail("No scenario node found in file: \(name)");return }
-                                    let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
-                                    testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
-                                } else if (scenarioType == "Scenario Outline") {
-                                    guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
-                                    let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
-                                    if let examples = scenario["examples"] as? [[String:Any]],
-                                        let example = examples.first {
-//                                        for example in examples {
-                                        let lines = node?.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
-                                            if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
-                                                let headerTokens = lines?.first
-                                                XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(name)")
-                                                for (cellIndex, cell) in header.enumerated() {
-                                                    let headerToken = headerTokens?[safe: cellIndex]
-                                                    if let token = headerToken, case .tableCell(_, let value) = token {
-                                                        XCTAssertEqual(cell["value"] as? String, value)
-                                                    }
-                                                }
-                                            }
-                                            if let tableBody = (example["tableBody"] as? [[String:Any]]) {
-                                                for (rowIndex, row) in tableBody.enumerated() {
-                                                    if let cells = row["cells"] as? [[String:Any]] {
-                                                        let lineTokens = Array(lines?.dropFirst() ?? [])[safe: rowIndex]
-                                                        XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(name)")
-                                                        for (cellIndex, cell) in cells.enumerated() {
-                                                            let cellToken = lineTokens?[safe: cellIndex]
-                                                            if let token = cellToken, case .tableCell(_, let value) = token {
-                                                                XCTAssertEqual(cell["value"] as? String, value)
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-//                                        }
-                                    }
-                                    testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
-                                }
-                            }
-                        }
-                    }
+                    testFeature(feature, ast: ast, fileName:name)
                 }
             }
         }
