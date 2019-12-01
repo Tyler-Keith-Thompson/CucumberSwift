@@ -150,7 +150,7 @@ class DocstringTests: XCTestCase {
         let firstStep = cucumber.features.first?.scenarios.first?.steps.first
         XCTAssertEqual(firstStep?.docString?.literal, """
         first line
-        \\"\\"\\"
+        \"""
         third line
         """)
     }

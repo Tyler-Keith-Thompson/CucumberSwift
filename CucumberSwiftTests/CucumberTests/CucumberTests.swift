@@ -73,6 +73,13 @@ class CucumberTests:XCTestCase {
                     let column = location["column"] as? UInt {
                     XCTAssertEqual(Lexer.Position(line: line, column: column), stepObject?.location)
                 }
+                if let docString = step["docString"] as? [String:Any],
+                    let content = docString["content"] as? String {
+                    XCTAssertEqual(content, stepObject?.docString?.literal)
+                    if let contentType = docString["contentType"] as? String {
+                        XCTAssertEqual(contentType, stepObject?.docString?.contentType)
+                    }
+                }
                 if let dataTable = step["dataTable"] as? [String:Any],
                     let rows = dataTable["rows"] as? [[String:Any]] {
                     guard let dataTable = stepObject?.dataTable else { XCTFail("Step does not have a datatable"); return }

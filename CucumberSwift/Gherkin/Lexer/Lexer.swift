@@ -51,6 +51,26 @@ public class Lexer : StringReader {
         return str
     }
     
+    @discardableResult internal func readDocString(_ evaluation:((Character) -> Bool)) -> String {
+        var str = ""
+        while let char = currentChar {
+            if char.isEscapeCharacter,
+                let next = nextChar,
+                next.isDocStringLiteral {
+                str.append(next)
+                advanceIndex()
+                advanceIndex()
+                continue
+            }
+            if (evaluation(char)) {
+                break
+            }
+            str.append(char)
+            advanceIndex()
+        }
+        return str
+    }
+    
     @discardableResult internal func stripSpaceIfNecessary() -> Bool {
         if let c = currentChar, c.isSpace {
             readLineUntil { !$0.isSpace }
@@ -112,7 +132,7 @@ public class Lexer : StringReader {
         let open = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
         if open.isDocStringLiteral() {
             readLineUntil { !$0.isDocStringLiteral }
-            let docStringValues = readUntil {
+            let docStringValues = readDocString {
                 if ($0.isDocStringLiteral) {
                     let close = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
                     if close == open { return true }
