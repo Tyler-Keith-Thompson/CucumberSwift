@@ -120,6 +120,6 @@ public class StringReader {
             str.append(char)
             reduceIndex()
         }
-        return str
+        return String(str.reversed())
     }
 }

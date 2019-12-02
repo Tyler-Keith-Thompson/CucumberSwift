@@ -342,6 +342,7 @@
 				AD9EB4822079D606002494C0 /* Scenario.swift */,
 				5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */,
 				AD406F7E2105514600D9B011 /* DataTable.swift */,
+				1DA7619C2393C5AB001CBA5B /* DocString.swift */,
 			);
 			path = Parser;
 			sourceTree = "<group>";
@@ -374,7 +375,6 @@
 				AD7F1C0D2104DB240004852A /* Language.swift */,
 				AD7F1C0B2104D6B10004852A /* gherkin-languages.json */,
 				AD2F20DF216969990041657C /* Errors.swift */,
-				1DA7619C2393C5AB001CBA5B /* DocString.swift */,
 			);
 			path = Gherkin;
 			sourceTree = "<group>";
