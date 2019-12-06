@@ -10,6 +10,7 @@ import Foundation
 extension AST {
     enum Token:Int {
         case feature
+        case rule
         case background
         case scenario
         case scenarioOutline
@@ -19,6 +20,7 @@ extension AST {
         var priority:UInt {
             switch self {
                 case .feature: return 0
+                case .rule: return 1
                 case .background: return 2
                 case .scenario: return 2
                 case .scenarioOutline: return 2
@@ -33,6 +35,7 @@ extension AST {
             } else if case Lexer.Token.scope(_, let scope) = token {
                 switch (scope) {
                     case .feature: self = .feature
+                    case .rule: self = .rule
                     case .background: self = .background
                     case .scenario: self = .scenario
                     case .scenarioOutline: self = .scenarioOutline

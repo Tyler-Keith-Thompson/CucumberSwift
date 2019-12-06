@@ -14,6 +14,8 @@ class AST {
         .ruleFor(.feature, Rule.cleanAST
                                 .then(.createNewNode)
                                 .then(.appendTags))
+        .ruleFor(.rule, Rule.createNewNode
+                            .then(.addToNearestParent))
         .ruleFor(.background, Rule.createNewNode
                                 .then(.addToNearestParent))
         .ruleFor(.scenario, Rule.createNewNode
