@@ -8,17 +8,17 @@
 
 import Foundation
 class StubGenerator {
-    private static func regexForTokens(_ tokens:[Token]) -> String {
+    private static func regexForTokens(_ tokens:[Lexer.Token]) -> String {
         var regex = ""
         for token in tokens {
-            if case Token.match(_, let m) = token {
+            if case Lexer.Token.match(_, let m) = token {
                 regex += NSRegularExpression
                     .escapedPattern(for: m)
                     .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
                     .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
-            } else if case Token.string(_) = token {
+            } else if case Lexer.Token.string(_) = token {
                 regex += "\\\"(.*?)\\\""
-            } else if case Token.integer(_) = token {
+            } else if case Lexer.Token.integer(_) = token {
                 regex += "(\\\\d+)"
             }
         }

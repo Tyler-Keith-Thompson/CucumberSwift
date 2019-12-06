@@ -42,23 +42,23 @@ public class Step: CustomStringConvertible {
         guard let start = startTime, let end = endTime else { return 0 }
         return end.timeIntervalSince1970 - start.timeIntervalSince1970
     }
-    var tokens = [Token]()
+    var tokens = [Lexer.Token]()
     
-    init(with node:StepNode) {
+    init(with node:AST.StepNode) {
         location = node.tokens.first { $0.isKeyword() }?.position ?? .start
         tokens = node.tokens.filter{ !$0.isKeyword() }
         for token in node.tokens {
-            if case Token.keyword(_, let kw) = token {
+            if case Lexer.Token.keyword(_, let kw) = token {
                 keyword = kw
-            } else if case Token.match(_, let m) = token {
+            } else if case Lexer.Token.match(_, let m) = token {
                 match += m
-            } else if case Token.string(_, let s) = token {
+            } else if case Lexer.Token.string(_, let s) = token {
                 match += "\"\(s)\""
-            } else if case Token.integer(_, let n) = token {
+            } else if case Lexer.Token.integer(_, let n) = token {
                 match += n
-            } else if case Token.tableHeader(_, let h) = token {
+            } else if case Lexer.Token.tableHeader(_, let h) = token {
                 match += h
-            } else if case Token.docString(_, let s) = token {
+            } else if case Lexer.Token.docString(_, let s) = token {
                 docString = s
             }
         }
@@ -68,7 +68,7 @@ public class Step: CustomStringConvertible {
             .map { (line) -> [String] in
                 return line.filter { $0.isTableCell() }
                     .map { (token) -> String in
-                    if case Token.tableCell(_, let cellText) = token {
+                    if case Lexer.Token.tableCell(_, let cellText) = token {
                         return cellText
                     }
                     return ""

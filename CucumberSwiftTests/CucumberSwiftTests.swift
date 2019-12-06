@@ -86,7 +86,7 @@ class CucumberSwiftTests: XCTestCase {
 
     func testStepFailsIfObserverCallsBackWithFailure() {
         Cucumber.shared.features.removeAll()
-        Cucumber.shared.currentStep = Step(with: StepNode())
+        Cucumber.shared.currentStep = Step(with: AST.StepNode())
 
         XCTAssertEqual(Cucumber.shared.currentStep?.result, .pending)
 
@@ -98,10 +98,10 @@ class CucumberSwiftTests: XCTestCase {
     
     func testRemainingStepsInScenarioAreSkippedIfStepFails() {
         Cucumber.shared.features.removeAll()
-        let step1 = Step(with: StepNode())
+        let step1 = Step(with: AST.StepNode())
         step1.result = .passed
-        let step2 = Step(with: StepNode())
-        let step3 = Step(with: StepNode())
+        let step2 = Step(with: AST.StepNode())
+        let step3 = Step(with: AST.StepNode())
         let scenario = Scenario(with: [
           step1,
           step2,

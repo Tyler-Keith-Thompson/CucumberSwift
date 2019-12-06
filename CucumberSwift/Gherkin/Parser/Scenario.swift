@@ -15,19 +15,19 @@ public class Scenario : NSObject, Taggable, Positionable {
     public private(set)  var location:Lexer.Position
     public private(set)  var endLocation: Lexer.Position
 
-    init(with node:ScenarioNode, tags:[String], stepNodes:[StepNode]) {
+    init(with node:AST.ScenarioNode, tags:[String], stepNodes:[AST.StepNode]) {
         location = node.tokens.first?.position ?? .start
         endLocation = .start
         super.init()
         self.tags = tags
         for token in node.tokens {
-            if case Token.title(_, let t) = token {
+            if case Lexer.Token.title(_, let t) = token {
                 title = t
-            } else if case Token.tag(_, let tag) = token {
+            } else if case Lexer.Token.tag(_, let tag) = token {
                 self.tags.append(tag)
             }
         }
-        steps ?= node.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
+        steps ?= node.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
         steps.forEach { $0.scenario = self }
         endLocation ?= steps.last?.location
