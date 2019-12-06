@@ -92,8 +92,7 @@ import XCTest
     
     func parseIntoFeatures(_ string:String, uri:String = "") {
         let tokens = Lexer(string, uri:uri).lex()
-        let ast = AST(tokens)
-        features.append(contentsOf: ast.featureNodes
+        features.append(contentsOf: AST.standard.parse(tokens)
             .map { Feature(with: $0, uri:uri) })
     }
     

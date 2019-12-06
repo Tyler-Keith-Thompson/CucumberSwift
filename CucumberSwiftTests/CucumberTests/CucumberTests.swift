@@ -100,8 +100,8 @@ class CucumberTests:XCTestCase {
         }
     }
     
-    private func testFeature(_ feature:[String:Any], ast:AST, fileName:String) {
-        guard let featureNode = ast.featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
+    private func testFeature(_ feature:[String:Any], featureNodes:[FeatureNode], fileName:String) {
+        guard let featureNode = featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
         let featureObj = Feature(with: featureNode)
         if let name = feature["name"] as? String {
             XCTAssertEqual(name, featureObj.title)
@@ -130,7 +130,7 @@ class CucumberTests:XCTestCase {
     }
     
     private func testScenarioOutline(_ scenarioOutline:[String:Any], node:Node?, fileName:String) {
-        guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(name)");return }
+        guard let scenarioNode = node as? ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(fileName)");return }
         let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? StepNode }.map { Step(with: $0) }
         if let examples = scenarioOutline["examples"] as? [[String:Any]],
             let example = examples.first {
@@ -138,7 +138,7 @@ class CucumberTests:XCTestCase {
             let lines = node?.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
                 if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
                     let headerTokens = lines?.first
-                    XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(name)")
+                    XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(fileName)")
                     for (cellIndex, cell) in header.enumerated() {
                         let headerToken = headerTokens?[safe: cellIndex]
                         if let token = headerToken, case .tableCell(_, let value) = token {
@@ -150,7 +150,7 @@ class CucumberTests:XCTestCase {
                     for (rowIndex, row) in tableBody.enumerated() {
                         if let cells = row["cells"] as? [[String:Any]] {
                             let lineTokens = Array(lines?.dropFirst() ?? [])[safe: rowIndex]
-                            XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(name)")
+                            XCTAssertEqual(cells.count, lineTokens?.count, "Wrong number of cells in table body in file: \(fileName)")
                             for (cellIndex, cell) in cells.enumerated() {
                                 let cellToken = lineTokens?[safe: cellIndex]
                                 if let token = cellToken, case .tableCell(_, let value) = token {
@@ -172,12 +172,11 @@ class CucumberTests:XCTestCase {
             guard !name.contains("rule"),
                 !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
-            let ast = AST(tokens)
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
                 let document = expectedAST["gherkinDocument"] as? [String:Any] {
                 if let feature = document["feature"] as? [String:Any] {
-                    testFeature(feature, ast: ast, fileName:name)
+                    testFeature(feature, featureNodes: AST.standard.parse(tokens), fileName:name)
                 }
             }
         }
