@@ -118,8 +118,8 @@ public class Lexer : StringReader {
             }
             return .title(position, title)
         case .quote: return readString()
-        case _ where char.isNumeric: return .integer(position, readLineUntil{ !$0.isNumeric })
-        case _ where lastKeyword != nil: return .match(position, readLineUntil{ $0.isSymbol })
+        case _ where char.isNumeric: return .integer(position, readLineUntil { !$0.isNumeric })
+        case _ where lastKeyword != nil: return .match(position, readLineUntil { $0.isSymbol })
         default: return advance(advanceToNextToken())
         }
     }
@@ -185,7 +185,7 @@ public class Lexer : StringReader {
         }
         atLineStart = false
         let position = self.position
-        let scope = Scope.scopeFor(str: lookAheadAtLineUntil{ $0.isScopeTerminator } )
+        let scope = Scope.scopeFor(str: lookAheadAtLineUntil { $0.isScopeTerminator } )
         if (scope != .unknown && !scope.isStep()) {
             lastScope = scope
             readUntil { $0.isScopeTerminator }
@@ -197,7 +197,7 @@ public class Lexer : StringReader {
             stripSpaceIfNecessary()
             return .keyword(position, keyword)
         } else {
-            return .description(position, readLineUntil{ $0.isNewline }.trimmingCharacters(in: .whitespaces))
+            return .description(position, readLineUntil { $0.isNewline }.trimmingCharacters(in: .whitespaces))
         }
     }
     
