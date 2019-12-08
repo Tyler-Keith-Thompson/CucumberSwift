@@ -1,20 +1,22 @@
 language: swift
 osx_image: xcode10.2
-secure: "f3OdyNuWf0k//+dEOm+mvqj/o4buaJx2JG3G4kd76AZipSP99Z0gOHxGS7WYBj9AoE432YNXR3Uv7b7b6ZsNbQ5uuti8P8zRgWdSPvWna+9P7UuQ1Y1xxDe+kWTecABZP1+ugufaHGbnA7eOrxId4WGcpKfZVSPAPcvh/ihRw87yV+HyZRdgQRRVfYerd0UikpGeyXjOeZ+Ub5/R14zB0LCZY9IHHMF41v6jkmFei0Y6xCOOZfb54tLQ8oY65C9tTIWhIwGlXYIDzvHiYf/wWv5cWZnoc9VrYhxAo2aacckxromdPWkXfOmMe0EEgEpb3fTmpEGpYPQAb/g+mYFRWzFFP/vPDEnOrcpp0nN8yv3L9BuFMro87DyfoBQII+dUWCuRqTKrzIEg+z6+8w5ihIOKdekmoTCkpsQzHnpXOkEptCPnPK79rY3OKpxBkKJ6yDZfw14Zes/583wivgWCmGzwEMltQWOyJi63UeBXTS97K2HHS03SUSn20/bUE8UTEqo4g2Ud+N4yzH/r5kXbBRXlhT7bCShl8+U6EGoR+Vvn1DcilfAIg5eP0iDGhfm4YnbiQ5dm2GC4wtEvNcmyPLr7N3V9higZKTLFDMf6LcbSpoAa6CpXpD2LdLN+WXmIHhnXt7UmjuNLev8r/OkdxJ4QsmBVoOKNJM2HVuwq++k="
-xcode_project: CucumberSwift.xcodeproj # path to your xcodeproj folder
+secure: "uhg/nNJbBxVVdXscKoJ/o3C5z+OpMtUscdMaqs7EZysHlf8zFmkz+q71YJOJ2LayGelKWTf3rWtNkq+cge6n1oNYWp+jGKhZ4xII4yZuNenl9mESF/tFOTD93edJqI7/Prc2xNHqHCMKaiwERinNhqtU77f/S8EvjXrDVuxrI1v97GP1cpuVau5BHXg3E9BY8iM92NTom+KF4xMldp9qxYpkcZp7qOdGylTZlbv2oBUiNzhtmpuPcWm/52FLfmlq5hVOxiC2M3SHowpOStL32st8Drt4AaFS+8h5+WVXKWeQTjHjtmFLggtoQjAE1Of1ULY2iPt8K8plRGYuXNSaQxIa6//XEjmDpsz+k1IZPZvDbVwhCqhPJUVPmXDIGYiyR6w/hLuW7vQJk5RWkB12P380ydmXYWNdh0aL83lTEMkyMjAUjBpxN+TpR+mavKmH6IqlStjNt8MqVP47jgZj2NyieVvg0rwdQbcmbK9TmR6gTQ8ubCUpfgWjSREbMO+vXgLFbK3GITuC7DaJSeoiHDOVMPeW4EtxtdidYDqVSPGZd5eJacKQx0PGEvf/wVdTT11clqLsASilc802/oODxLd3dn62uHG4w7E6dNW0i0Y3hwRtjvNjfXg9mBOflqx/JdqEkitD6T/AaEnCYJ03rJ+QRodLo8zKonoRsNtlc0g="
+xcode_project: CucumberSwift.xcodeproj
 xcode_scheme: CucumberSwift
 xcode_destination: platform=iOS Simulator,name=iPhone 8
 addons:
   sonarcloud:
-    organization: "tyler-keith-thompson"
+    organization: tyler-keith-thompson
     token:
-      secure: "**************************" # encrypted value of your token
+      secure: "**************************"
 script:
-  # the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
-  - sonar-scanner
+- sonar-scanner
 if: tag IS blank
 deploy:
   provider: script
   script: carthage build --no-skip-current && gem install cocoapods && ./deploy_pod.sh
   on:
     branch: master
+env:
+  global:
+    secure: Tg+Nke1hzm/WJSFnVOmqAHK3yP89nIjtmdyDIHfvrahMKhaW8QOKFWN7dhTfBi6XKsCF5zIgZnGQQnGHKNf9hNQEiMRD7DX5UpIM54oGpozYhhf2gXa5SKsaHArQCQ1lpS+Q7qnGWSQt7fD0ME9ySaZiK45Xef5acNrD2Y5kk2o+4893/tkGi91X+ToZOJzUKcChciw27/KxGH2YDkQpQOwpAcR+F4NFILvEYKRj8/2VP26mZOdT3brGGMeSMptnduh2Ve8LXpYPSwrIBnGe+aC1XFP+f2xfJXZoKs7DnzE4FDqZC3oDVR+KgQFsRtBKIalScm0pnEWPdbXp0A0+fD25OkrbbQ+pOnK/bJIOrQ93xeXdADb1mbXkdxWjqErAg6kr9eB5DfTg9+lmN+vDwUvkH2MH38yb45moA30lau/YaPohSkuriuCI9OPo6BUa/o37PQGjabG9l1LNo2bEGNYJUq7rJfFsOF30tsow8jvcnh3k5WE45UWzuuSKdSigLuvxAL5RyysfbynHyD6TBZncETfx8q59XFE8H3cJC1DWqr58hvVMmsDKePyW1Hyo1e04i+SukUecF9fZMbunGd80oThgxv4+XubjRyZew++3z6RdRx8+droyeiFU9G5oeUynICnO18y0kaKd3Bi5MWkT2TglvH844/Wp/e0Qdaw=
