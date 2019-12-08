@@ -14,4 +14,3 @@ NOTE: We all want watchOS support, as of watchOS 5 Apple still doesn't allow uni
 
 ### What's Still Missing?
 - Some Gherkin language errors
-- Rules
