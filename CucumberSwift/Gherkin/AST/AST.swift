@@ -24,7 +24,8 @@ class AST {
         .ruleFor(.scenarioOutline, Rule.createNewNode
                                        .then(.appendTags)
                                        .then(.addToNearestParent))
-        .ruleFor(.examples, Rule.traverseToAppropriateDepth)
+        .ruleFor(.examples, Rule.traverseToAppropriateDepth
+                                .then(.appendTags))
         .ruleFor(.step, Rule.createNewNode
                             .then(.addToNearestParent))
     }

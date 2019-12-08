@@ -129,5 +129,13 @@ extension Lexer {
             }
             return false
         }
+        
+        func isExampleScope() -> Bool {
+            if case .scope(_, let scope) = self,
+                scope == .examples {
+                return true
+            }
+            return false
+        }
     }
 }

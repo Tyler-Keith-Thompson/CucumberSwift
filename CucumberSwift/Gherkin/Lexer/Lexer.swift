@@ -144,7 +144,7 @@ public class Lexer : StringReader {
                     if (offset == 1) {
                         res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
                     }
-                    let str = line.map { $0 }.dropFirst(res.whitespaceCount) {
+                    let str = line.map { $0 }.dropFirst(upTo: res.whitespaceCount) {
                         $0.isWhitespace
                     }
                     res.trimmedLines.append(String(str))

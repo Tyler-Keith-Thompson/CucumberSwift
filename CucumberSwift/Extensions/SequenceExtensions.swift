@@ -21,9 +21,9 @@ extension Sequence where Element: Equatable {
 }
 
 extension Array {
-    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
+    @inlinable public func dropFirst(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = self.dropFirst(0)
-        var count = k
+        var count = k ?? self.count
         while (count > 0) {
             count -= 1
             guard let first = new.first else { break }
@@ -36,9 +36,9 @@ extension Array {
         return new
     }
     
-    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
+    @inlinable public func dropLast(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = self.dropLast(0)
-        var count = k
+        var count = k ?? self.count
         while (count > 0) {
             count -= 1
             guard let last = new.last else { break }

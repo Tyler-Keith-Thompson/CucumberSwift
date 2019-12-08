@@ -7,18 +7,58 @@
 //
 
 import Foundation
-class ScenarioOutlineParser {
-    static func parse(_ scenarioOutlineNode:AST.ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
-        var scenarios = [Scenario]()
-        let titleLine = scenarioOutlineNode.tokens.groupedByLine().first
-        var lines = scenarioOutlineNode.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
-        var headerLookup:[String:Int] = [:]
-        var tags = [String]()
-        scenarioOutlineNode.tokens.forEach {
-            if case Lexer.Token.tag(_, let tag) = $0 {
-                tags.append(tag)
+
+fileprivate extension Sequence where Element == Lexer.Token {
+    func groupedByExample() -> [[Lexer.Token]] {
+        var examples = [[Lexer.Token]]()
+        var example = [Lexer.Token]()
+        for token in self {
+            if (token.isExampleScope() && !example.isEmpty) {
+                examples.append(example)
+                example.removeAll()
+            } else {
+                example.append(token)
             }
         }
+        if (!example.isEmpty) {
+            examples.append(example)
+        }
+        return examples
+    }
+}
+
+class ScenarioOutlineParser {
+    static func parse(_ scenarioOutlineNode:AST.ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
+        let tags = featureTags.appending(contentsOf: scenarioOutlineNode.tokens.compactMap {
+            if case Lexer.Token.tag(_, let tag) = $0 {
+                return tag
+            }
+            return nil
+        })
+        return getExamplesFrom(scenarioOutlineNode)
+            .flatMap { parseExample(titleLine: scenarioOutlineNode
+                                            .tokens
+                                            .groupedByLine()
+                                            .first,
+                                    tokens: $0,
+                                    outlineTags: tags,
+                                    stepNodes: scenarioOutlineNode
+                                        .children
+                                        .compactMap { $0 as? AST.StepNode },
+                                    backgroundStepNodes: backgroundStepNodes) }
+    }
+    
+    static func getExamplesFrom(_ scenarioOutlineNode:AST.ScenarioOutlineNode) -> [[Lexer.Token]] {
+        return scenarioOutlineNode.tokens.drop {
+            !$0.isExampleScope()
+        }.groupedByExample()
+    }
+    
+    private static func parseExample(titleLine: [Lexer.Token]?, tokens: [Lexer.Token], outlineTags:[String], stepNodes:[AST.StepNode], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
+        var scenarios = [Scenario]()
+        var lines = tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
+        var headerLookup:[String:Int] = [:]
+        let tags = outlineTags
         if let header = lines.first {
             for (i, token) in header.enumerated() {
                 if case Lexer.Token.tableCell(_, let headerText) = token {
@@ -27,7 +67,6 @@ class ScenarioOutlineParser {
             }
             lines.removeFirst()
         }
-        let stepNodes = scenarioOutlineNode.children.compactMap { $0 as? AST.StepNode }
         for line in lines {
             var title = ""
             if let titleTokens = titleLine {
@@ -48,7 +87,6 @@ class ScenarioOutlineParser {
             for stepNode in stepNodes {
                 steps.append(getStepFromLine(line, lookup: headerLookup, stepNode: stepNode))
             }
-            tags.append(contentsOf: featureTags)
             scenarios.append(Scenario(with: steps, title:title, tags: tags, position: line.first?.position ?? .start))
         }
         return scenarios

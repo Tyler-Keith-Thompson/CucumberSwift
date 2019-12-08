@@ -14,15 +14,15 @@ extension Collection where Element == Lexer.Token {
     public var text:String {
         return compactMap { (token) -> String? in
             switch token {
-            case .integer(_, let t):
-                return t
-            case .string(_, let t):
-                return "\"\(t)\""
-            case .match(_, let t):
-                return t
-            case .tableHeader(_, let t):
-                return "<\(t)>"
-            default: return nil
+                case .integer(_, let t):
+                    return t
+                case .string(_, let t):
+                    return "\"\(t)\""
+                case .match(_, let t):
+                    return t
+                case .tableHeader(_, let t):
+                    return "<\(t)>"
+                default: return nil
             }
         }.joined()
     }
@@ -69,7 +69,7 @@ class CucumberTests:XCTestCase {
                     XCTAssertEqual(text, stepObject?.tokens.text, "Text does not match in: \(fileName)")
                 }
                 if let location = step["location"] as? [String:Any],
-                   let line = location["line"] as? UInt,
+                    let line = location["line"] as? UInt,
                     let column = location["column"] as? UInt {
                     XCTAssertEqual(Lexer.Position(line: line, column: column), stepObject?.location)
                 }
@@ -131,11 +131,11 @@ class CucumberTests:XCTestCase {
     
     private func testScenarioOutline(_ scenarioOutline:[String:Any], node:AST.Node?, fileName:String) {
         guard let scenarioNode = node as? AST.ScenarioOutlineNode else { XCTFail("No scenario node found in file: \(fileName)");return }
-        let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }
-        if let examples = scenarioOutline["examples"] as? [[String:Any]],
-            let example = examples.first {
-//                                        for example in examples {
-            let lines = node?.tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
+        let parsedScenarios = ScenarioOutlineParser.parse(scenarioNode, featureTags: [], backgroundStepNodes: [])
+        let examplesTokens = ScenarioOutlineParser.getExamplesFrom(scenarioNode)
+        if let examples = scenarioOutline["examples"] as? [[String:Any]] {
+            for (i, example) in examples.enumerated() {
+                let lines = examplesTokens[safe: i]?.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
                 if let header = (example["tableHeader"] as? [String:Any])?["cells"] as? [[String:Any]] {
                     let headerTokens = lines?.first
                     XCTAssertEqual(header.count, headerTokens?.count, "Wrong number of cells in header in file: \(fileName)")
@@ -147,6 +147,8 @@ class CucumberTests:XCTestCase {
                     }
                 }
                 if let tableBody = (example["tableBody"] as? [[String:Any]]) {
+                    let scenario = parsedScenarios[safe: i]
+                    XCTAssertNotNil(scenario, "Expected example \(example) to be found, but there was none in file: \(fileName)")
                     for (rowIndex, row) in tableBody.enumerated() {
                         if let cells = row["cells"] as? [[String:Any]] {
                             let lineTokens = Array(lines?.dropFirst() ?? [])[safe: rowIndex]
@@ -154,22 +156,21 @@ class CucumberTests:XCTestCase {
                             for (cellIndex, cell) in cells.enumerated() {
                                 let cellToken = lineTokens?[safe: cellIndex]
                                 if let token = cellToken, case .tableCell(_, let value) = token {
-                                    XCTAssertEqual(cell["value"] as? String, value)
+                                    XCTAssertEqual(cell["value"] as? String, value, "Wrong cell value in file: \(fileName)")
                                 }
                             }
                         }
                     }
                 }
-//                                        }
+            }
         }
-        testSteps(scope: scenarioOutline, stepObjects: scenarioSteps, fileName: fileName)
+        testSteps(scope: scenarioOutline, stepObjects: scenarioNode.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }, fileName: fileName)
     }
     
     func testGoodExamples() {
         let tests:[String:TestType] = getTests(atPath: "testdata/good")
-
+        
         tests.forEach { (name, test) in
-            guard !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],

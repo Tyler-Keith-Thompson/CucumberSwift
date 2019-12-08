@@ -127,4 +127,35 @@ class TagTests: XCTestCase {
         XCTAssertFalse(withoutTagsCalled)
         Cucumber.shouldRunWith = { _, _ in true }
     }
+    
+    func testTagOnExamples() {
+        Cucumber.shouldRunWith = { _, tags in
+            tags.contains("exampleTag")
+        }
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        @scenario1tag
+        Feature: Some terse yet descriptive text of what is desired
+            @someOtherTag
+           Scenario Outline: Some determinable business situation
+             Given a <thing> with tags
+
+            @exampleTag
+            Examples:
+            |  thing   |
+            | scenario |
+        """)
+        Cucumber.shared.environment["CUCUMBER_TAGS"] = nil
+        
+        var stepCalled = false
+        Given("a scenario with tags") { _, _ in
+            stepCalled = true
+        }
+        
+        Cucumber.shared.executeFeatures()
+
+        XCTAssert(stepCalled)
+        
+        Cucumber.shouldRunWith = { _, _ in true }
+    }
 }

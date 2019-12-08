@@ -247,4 +247,34 @@ class TableTests: XCTestCase {
         }
         Cucumber.shared.executeFeatures()
     }
+    
+    func testScenarioOutlineWithMultipleExamples() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Tagged Examples
+
+        Scenario Outline: minimalistic
+          Given the <what>
+
+          Examples:
+            | what |
+            | foo  |
+
+          Examples:
+            | what |
+            | bar  |
+
+        Scenario: ha ok
+        """)
+        XCTAssertEqual(Cucumber.shared.features.count, 1)
+        let feature = Cucumber.shared.features.first
+        XCTAssertEqual(feature?.scenarios.count, 3)
+        XCTAssertEqual(feature?.scenarios[safe: 0]?.steps.count, 1)
+        XCTAssertEqual(feature?.scenarios[safe: 0]?.steps.first?.keyword, .given)
+        XCTAssertEqual(feature?.scenarios[safe: 0]?.steps.first?.match, "the foo")
+        XCTAssertEqual(feature?.scenarios[safe: 0]?.steps.first?.keyword, .given)
+        XCTAssertEqual(feature?.scenarios[safe: 1]?.steps.count, 1)
+        XCTAssertEqual(feature?.scenarios[safe: 1]?.steps.first?.keyword, .given)
+        XCTAssertEqual(feature?.scenarios[safe: 1]?.steps.first?.match, "the bar")
+    }
 }
