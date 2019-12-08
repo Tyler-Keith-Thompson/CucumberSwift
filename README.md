@@ -1,7 +1,7 @@
 ![Build Status](https://img.shields.io/travis/com/Tyler-Keith-Thompson/CucumberSwift/master?style=popout) 
-![Pod Platform](https://img.shields.io/cocoapods/p/CucumberSwift.svg?style=popout) ![Pod Version](https://img.shields.io/cocoapods/v/CucumberSwift.svg?style=popout)
+![Pod Platform](https://img.shields.io/cocoapods/p/CucumberSwift.svg?style=popout) [![Pod Version](https://img.shields.io/cocoapods/v/CucumberSwift.svg?style=popout)](http://cocoapods.org/pods/CucumberSwift)
 [![Quality Gate](https://img.shields.io/sonar/quality_gate/Tyler-Keith-Thompson_CucumberSwift?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=Tyler-Keith-Thompson_CucumberSwift)
-![Coverage](https://img.shields.io/sonar/coverage/Tyler-Keith-Thompson_CucumberSwift?server=http%3A%2F%2Fsonarcloud.io)
+[![Coverage](https://img.shields.io/sonar/coverage/Tyler-Keith-Thompson_CucumberSwift?server=http%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/component_measures?id=Tyler-Keith-Thompson_CucumberSwift&metric=Coverage&view=list)
 
 
 ### Welcome to CucumberSwift
