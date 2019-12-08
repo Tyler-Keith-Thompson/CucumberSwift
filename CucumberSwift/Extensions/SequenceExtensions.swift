@@ -7,8 +7,8 @@
 //
 
 import Foundation
-extension Sequence where Iterator.Element: Equatable {
-    var uniqueElements: [Iterator.Element] {
+extension Sequence where Element: Equatable {
+    var uniqueElements: [Element] {
         return self.reduce(into: []) {
             if (!$0.contains($1)) {
                 $0.append($1)
@@ -21,7 +21,7 @@ extension Sequence where Iterator.Element: Equatable {
 }
 
 extension Array {
-    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Array.SubSequence {
+    @inlinable public func dropFirst(_ k: Int = 1, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = self.dropFirst(0)
         var count = k
         while (count > 0) {
@@ -36,7 +36,7 @@ extension Array {
         return new
     }
     
-    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Iterator.Element) throws -> Bool)) rethrows -> Array.SubSequence {
+    @inlinable public func dropLast(_ k: Int = 1, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = self.dropLast(0)
         var count = k
         while (count > 0) {
@@ -49,5 +49,17 @@ extension Array {
             }
         }
         return new
+    }
+    
+    func appending(_ element:Element) -> [Element] {
+        var copy = self
+        copy.append(element)
+        return copy
+    }
+
+    func appending(contentsOf elementArr:[Element]) -> [Element] {
+        var copy = self
+        copy.append(contentsOf: elementArr)
+        return copy
     }
 }

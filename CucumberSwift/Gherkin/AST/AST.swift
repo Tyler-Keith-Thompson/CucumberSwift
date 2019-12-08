@@ -12,21 +12,21 @@ class AST {
     static var standard:AST {
         return AST()
         .ruleFor(.feature, Rule.cleanAST
-                                .then(.createNewNode)
-                                .then(.appendTags))
+                               .then(.createNewNode)
+                               .then(.appendTags))
         .ruleFor(.rule, Rule.createNewNode
                             .then(.addToNearestParent))
         .ruleFor(.background, Rule.createNewNode
-                                .then(.addToNearestParent))
+                                  .then(.addToNearestParent))
         .ruleFor(.scenario, Rule.createNewNode
                                 .then(.appendTags)
                                 .then(.addToNearestParent))
         .ruleFor(.scenarioOutline, Rule.createNewNode
-                                .then(.appendTags)
-                                .then(.addToNearestParent))
+                                       .then(.appendTags)
+                                       .then(.addToNearestParent))
         .ruleFor(.examples, Rule.traverseToAppropriateDepth)
         .ruleFor(.step, Rule.createNewNode
-                                .then(.addToNearestParent))
+                            .then(.addToNearestParent))
     }
     
     private init(_ ruleLookup:[AST.Token?:Rule] = [:]) {

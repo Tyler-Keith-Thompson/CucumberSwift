@@ -28,4 +28,16 @@ class SequenceExtensionsTests : XCTestCase {
         arr.removeDuplicates()
         XCTAssertEqual(arr, [1, 2, 3])
     }
+    
+    func testAppendingSingleElementDoesNotMutate() {
+        let arr = [1, 2, 3]
+        XCTAssertEqual(arr.appending(1).count, 4)
+        XCTAssertEqual(arr.appending(15).last, 15)
+    }
+
+    func testAppendingContentsOfArrayDoesNotMutate() {
+        let arr = [1, 2, 3]
+        XCTAssertEqual(arr.appending(contentsOf: [1]).count, 4)
+        XCTAssertEqual(arr.appending(contentsOf: [15]).last, 15)
+    }
 }
