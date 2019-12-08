@@ -23,7 +23,7 @@ class RuleTests: XCTestCase {
       Example: Example A
         Given a
 
-      Scenario: Scenario A
+      Scenario: Scenario B
         Given b
     """)
         let firstScenario = Cucumber.shared.features.first?.scenarios.first

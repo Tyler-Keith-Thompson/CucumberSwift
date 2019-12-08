@@ -34,7 +34,7 @@ extension AST {
                 case .background: $1.nodeLookup[$0.priority] = BackgroundNode()
                 case .scenario: $1.nodeLookup[$0.priority] = ScenarioNode()
                 case .scenarioOutline: $1.nodeLookup[$0.priority] = ScenarioOutlineNode()
-                case .step : $1.nodeLookup[$0.priority] = StepNode()
+                case .step: $1.nodeLookup[$0.priority] = StepNode()
                 default: return
             }
             $1.currentNode = $1.nodeLookup[$0.priority]
