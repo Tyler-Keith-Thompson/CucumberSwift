@@ -71,3 +71,7 @@ node_modules
 npm-debug.log
 *.xcuserstate
 .DS_Store
+
+#SonarQube
+.scannerwork
+sq-generic.xml
