@@ -30,6 +30,7 @@ extension AST {
                     let feature = FeatureNode()
                     $1.nodeLookup[$0.priority] = feature
                     $1.featureNodes.append(feature)
+                case .rule: $1.nodeLookup[$0.priority] = RuleNode()
                 case .background: $1.nodeLookup[$0.priority] = BackgroundNode()
                 case .scenario: $1.nodeLookup[$0.priority] = ScenarioNode()
                 case .scenarioOutline: $1.nodeLookup[$0.priority] = ScenarioOutlineNode()

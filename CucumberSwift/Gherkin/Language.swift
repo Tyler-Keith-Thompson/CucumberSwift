@@ -19,7 +19,7 @@ class Language {
         static let then = "then"
         static let and = "and"
         static let but = "but"
-        //        static let rule = "rule"
+        static let rule = "rule"
     }
     
     private var featureNames = [String]()
@@ -27,6 +27,7 @@ class Language {
     private var backgroundNames = [String]()
     private var examplesNames = [String]()
     private var scenarioOutlineNames = [String]()
+    private var ruleNames = [String()]
     private var givenNames = [String]()
     private var whenNames = [String]()
     private var thenNames = [String]()
@@ -61,6 +62,7 @@ class Language {
             backgroundNames      ?= (language[Keys.background]      as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             examplesNames        ?= (language[Keys.examples]        as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             scenarioOutlineNames ?= (language[Keys.scenarioOutline] as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+            ruleNames            ?= (language[Keys.rule]            as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             givenNames           ?= (language[Keys.given]           as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             whenNames            ?= (language[Keys.when]            as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             thenNames            ?= (language[Keys.then]            as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
@@ -95,7 +97,12 @@ class Language {
         return scenarioOutlineNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
+
+    func matchesRule(_ str:String) -> Bool {
+        return ruleNames
+            .contains(where: { $0 == str.lowercased() })
+    }
+
     func matchesGiven(_ str:String) -> Bool {
         return givenNames
             .contains(where: { $0 == str.lowercased() })

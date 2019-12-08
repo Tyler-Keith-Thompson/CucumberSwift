@@ -25,6 +25,7 @@ extension AST {
     }
 
     class FeatureNode: Node {}
+    class RuleNode: Node {}
     class BackgroundNode: Node {}
     class ScenarioNode: Node {}
     class ScenarioOutlineNode: Node {}

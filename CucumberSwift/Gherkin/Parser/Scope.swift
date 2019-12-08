@@ -16,6 +16,7 @@ enum Scope: Equatable {
     case scenarioOutline
     case step(Step.Keyword)
     case examples
+    case rule
     case unknown
     
     static func scopeFor(str:String) -> Scope {
@@ -29,6 +30,8 @@ enum Scope: Equatable {
             return .examples
         } else if (language.matchesScenarioOutline(str)) {
             return .scenarioOutline
+        } else if (language.matchesRule(str)) {
+            return .rule
         }
         let index = str.firstIndex(of: " ")
         let keywordString = String(str[str.startIndex..<(index ?? str.endIndex)])
@@ -52,6 +55,8 @@ enum Scope: Equatable {
             return s1 == s2
         case (.examples, .examples):
             return true
+        case (.rule, .rule):
+            return true
         case (.unknown, .unknown):
             return true
         default:
@@ -64,26 +69,5 @@ enum Scope: Equatable {
             return true
         }
         return false
-    }
-    
-    var priority:Int {
-        get {
-            switch self {
-            case .feature:
-                return 0
-            case .background:
-                return 1
-            case .scenario:
-                return 1
-            case .scenarioOutline:
-                return 1
-            case .examples:
-                return 1
-            case .step:
-                return 2
-            case .unknown:
-                return -1
-            }
-        }
     }
 }

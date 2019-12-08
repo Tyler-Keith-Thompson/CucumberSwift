@@ -37,6 +37,8 @@ public class Feature : Taggable, Positionable {
             } else if let son = node as? AST.ScenarioOutlineNode {
                 let generatedScenarios = ScenarioOutlineParser.parse(son, featureTags: tags, backgroundStepNodes: backgroundSteps)
                 scenarios.append(contentsOf: generatedScenarios)
+            } else if let rn = node as? AST.RuleNode {
+                scenarios.append(contentsOf: RuleParser.parse(rn, featureTags: tags, backgroundStepNodes: backgroundSteps))
             }
         }
         scenarios.forEach { $0.feature = self }
