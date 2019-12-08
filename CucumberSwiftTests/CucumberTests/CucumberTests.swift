@@ -169,8 +169,7 @@ class CucumberTests:XCTestCase {
         let tests:[String:TestType] = getTests(atPath: "testdata/good")
 
         tests.forEach { (name, test) in
-            guard !name.contains("rule"),
-                !name.contains("SeveralExamples/several_examples") else { return }
+            guard !name.contains("SeveralExamples/several_examples") else { return }
             let tokens = Lexer(test.feature, uri: "test.feature").lex()
             if  let data = test.ast.data(using: .utf8),
                 let expectedAST = try? JSONSerialization.jsonObject(with: data, options: []) as? [String:Any],
