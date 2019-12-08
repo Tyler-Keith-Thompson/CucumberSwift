@@ -10,8 +10,8 @@ platform :ios do
   lane :unit_test do
     scan(
       code_coverage: true,
-      scheme:  CucumberSwift,
-      project: CucumberSwift.xcodeproj
+      scheme:  ENV['xcode_scheme'],
+      project: ENV['xcode_project']
     )
   end
 end

@@ -15,10 +15,10 @@ Install _fastlane_ using
 or alternatively using `brew cask install fastlane`
 
 # Available Actions
-## Mac
-### mac unit_test
+## iOS
+### ios unit_test
 ```
-fastlane mac unit_test
+fastlane ios unit_test
 ```
 
 
