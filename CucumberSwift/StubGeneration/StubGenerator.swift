@@ -42,10 +42,9 @@ class StubGenerator {
                              (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
                              (type: "docString", count: $0.docString != nil ? 1 : 0)]
             let method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
-            if let m = lookup[regex] {
-                if (!m.keyword.contains($0.keyword)) {
+            if let m = lookup[regex],
+                !m.keyword.contains($0.keyword) {
                     m.insertKeyword($0.keyword)
-                }
             } else {
                 methods.append(method)
                 lookup[regex] = method
