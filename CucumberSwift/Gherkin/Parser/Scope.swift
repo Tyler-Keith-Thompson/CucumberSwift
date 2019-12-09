@@ -41,7 +41,7 @@ enum Scope: Equatable {
         return .unknown
     }
     
-    static func ==(lhs: Scope, rhs: Scope) -> Bool {
+    static func == (lhs: Scope, rhs: Scope) -> Bool {
         switch (lhs, rhs) {
         case (.feature, .feature):
             return true

@@ -55,8 +55,8 @@ class AST {
     var currentNode:Node?
 
     func ruleFor(_ token:AST.Token, _ rule:Rule) -> AST {
-        var ruleLookup = self.ruleLookup
-        ruleLookup[token] = rule
-        return AST(ruleLookup)
+        var ruleLookupCopy = self.ruleLookup
+        ruleLookupCopy[token] = rule
+        return AST(ruleLookupCopy)
     }
 }

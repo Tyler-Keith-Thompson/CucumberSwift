@@ -11,10 +11,9 @@ import XCTest
 @testable import CucumberSwift
 
 class StringReaderTests: XCTestCase {
-    func testStringReaderDoesNotOverFlowAtStartOrEndOfString() {
+    func testStringReaderDoesNotOverFlowAtStartOfString() {
         let sr = StringReader("test")
         sr.readUntil { _ in false }
-        sr.readBehindUntil { _ in false }
     }
     
     func testStringReaderLooksAheadWithoutMovingTheHeadOfTheReader() {
@@ -22,13 +21,5 @@ class StringReaderTests: XCTestCase {
         let str = sr.lookAheadUntil { $0 == "e" }
         XCTAssertEqual(str, "t")
         XCTAssertEqual(sr.index, sr.input.startIndex)
-    }
-    
-    func testStringReaderLooksBehindWithoutMovingTheHeadOfTheReader() {
-        let sr = StringReader("test")
-        sr.readUntil { _ in false }
-        let str = sr.lookBehindUntil { $0 == "e" }
-        XCTAssertEqual(str, "st")
-        XCTAssertEqual(sr.index, sr.input.endIndex)
     }
 }

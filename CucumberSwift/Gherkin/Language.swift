@@ -55,8 +55,8 @@ class Language {
         if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
             let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-            let JSON = jsonObject as? [String:Any],
-            let language = JSON[langName] as? [String:Any] {
+            let json = jsonObject as? [String:Any],
+            let language = json[langName] as? [String:Any] {
             featureNames         ?= (language[Keys.feature]         as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             scenarioNames        ?= (language[Keys.scenario]        as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             backgroundNames      ?= (language[Keys.background]      as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }

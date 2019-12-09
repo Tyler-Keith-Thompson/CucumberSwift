@@ -16,18 +16,29 @@ extension AST {
             child.parent = self
             children.append(child)
         }
-        init() { }
-        init(node:Node) {
-            parent   = node.parent
-            tokens   = node.tokens
-            children = node.children
+        init(node:Node? = nil) {
+            parent   ?= node?.parent
+            tokens   ?= node?.tokens
+            children ?= node?.children
         }
     }
 
-    class FeatureNode: Node {}
-    class RuleNode: Node {}
-    class BackgroundNode: Node {}
-    class ScenarioNode: Node {}
-    class ScenarioOutlineNode: Node {}
-    class StepNode: Node {}
+    class FeatureNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
+    class RuleNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
+    class BackgroundNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
+    class ScenarioNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
+    class ScenarioOutlineNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
+    class StepNode: Node {
+        //this class is merely a way to hold onto hierarchy, it's very useful in the parser
+    }
 }

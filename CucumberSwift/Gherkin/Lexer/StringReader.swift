@@ -57,52 +57,17 @@ public class StringReader {
         }
     }
     
-    func reduceIndex() {
-        column = (column > 0) ? column - 1 : 0
-        _ = input.formIndex(&index, offsetBy: -1, limitedBy: input.startIndex)
-        if (input[index].isNewline) {
-            line -= 1
-            let holdLineIndex:UInt = {
-                let substr = input.prefix(upTo: input.index(before: index))
-                guard let lineIndex = substr.lastIndex(of: Character.newLine) else {
-                    return 0
-                }
-                return UInt(input.distance(from: input.startIndex, to: lineIndex))
-            }()
-            let lineIndex = UInt(input.distance(from: input.startIndex, to: index))
-            column = lineIndex - holdLinePosition
-            lastLinePosition = lineIndex
-            holdLinePosition = holdLineIndex
-        }
-    }
-    
     @discardableResult public func lookAheadUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
-        var index = self.index
+        var indexCopy = self.index
         let currentCharacter = {
-            return (index < self.input.endIndex && index >= self.input.startIndex) ? self.input[index] : nil
+            return (indexCopy < self.input.endIndex && indexCopy >= self.input.startIndex) ? self.input[indexCopy] : nil
         }
         while let char = currentCharacter(), !evaluation(char) {
             str.append(char)
-            _ = input.formIndex(&index, offsetBy: 1, limitedBy: input.endIndex)
+            _ = input.formIndex(&indexCopy, offsetBy: 1, limitedBy: input.endIndex)
         }
         return str
-    }
-    
-    @discardableResult public func lookBehindUntil(_ evaluation:((Character) -> Bool)) -> String {
-        var str = ""
-        var index = self.index
-        let previousChar:() -> Character? = {
-            if let i = self.input.index(index, offsetBy: -1, limitedBy: self.input.startIndex) {
-                return self.input[i]
-            }
-            return nil
-        }
-        while let char = previousChar(), !evaluation(char) {
-            str.append(char)
-            _ = input.formIndex(&index, offsetBy: -1, limitedBy: input.startIndex)
-        }
-        return String(str.reversed())
     }
     
     @discardableResult public func readUntil(_ evaluation:((Character) -> Bool)) -> String {
@@ -112,14 +77,5 @@ public class StringReader {
             advanceIndex()
         }
         return str
-    }
-    
-    @discardableResult public func readBehindUntil(_ evaluation:((Character) -> Bool)) -> String {
-        var str = ""
-        while let char = previousChar, !evaluation(char) {
-            str.append(char)
-            reduceIndex()
-        }
-        return String(str.reversed())
     }
 }

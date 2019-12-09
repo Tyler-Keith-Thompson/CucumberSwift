@@ -59,7 +59,7 @@ extension Lexer {
             }
         }
         
-        static func ==(lhs: Token, rhs: Token) -> Bool {
+        static func == (lhs: Token, rhs: Token) -> Bool {
             switch (lhs, rhs) {
             case (.newLine, .newLine):
                 return true
