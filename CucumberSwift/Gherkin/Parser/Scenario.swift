@@ -33,12 +33,12 @@ public class Scenario : NSObject, Taggable, Positionable {
         endLocation ?= steps.last?.location
     }
     
-    init(with steps:[Step], title:String, tags:[String], position:Lexer.Position) {
+    init(with steps:[Step], title:String?, tags:[String], position:Lexer.Position) {
         location = position
         endLocation = position
         super.init()
         self.steps = steps
-        self.title = title
+        self.title = title ?? ""
         self.tags = tags
         self.steps.forEach { [weak self] in $0.scenario = self }
     }

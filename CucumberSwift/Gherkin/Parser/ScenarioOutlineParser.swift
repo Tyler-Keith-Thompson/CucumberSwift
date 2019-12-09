@@ -56,31 +56,24 @@ class ScenarioOutlineParser {
     
     private static func parseExample(titleLine: [Lexer.Token]?, tokens: [Lexer.Token], outlineTags:[String], stepNodes:[AST.StepNode], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
         var scenarios = [Scenario]()
-        var lines = tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
-        var headerLookup:[String:Int] = [:]
-        let tags = outlineTags
-        if let header = lines.first {
-            for (i, token) in header.enumerated() {
-                if case Lexer.Token.tableCell(_, let headerText) = token {
-                    headerLookup[headerText] = i
-                }
+        let lines = tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
+        let headerLookup:[String:Int]? = lines.first?.enumerated().reduce(into: [:]) {
+            if case Lexer.Token.tableCell(_, let headerText) = $1.element {
+                $0?[headerText] = $1.offset
             }
-            lines.removeFirst()
         }
-        for line in lines {
-            var title = ""
-            if let titleTokens = titleLine {
-                for token in titleTokens {
-                    if case Lexer.Token.tableHeader(_, let headerText) = token {
-                        if let index = headerLookup[headerText],
-                            index < line.count,
-                            index >= 0,
-                            case Lexer.Token.tableCell(_, let cellText) = line[index] {
-                            title += cellText
-                        }
-                    } else if case Lexer.Token.title(_, let titleText) = token {
-                        title += titleText
+        let tags = outlineTags
+        for line in lines.dropFirst() {
+            let title = titleLine?.reduce(into: "") {
+                if case Lexer.Token.tableHeader(_, let headerText) = $1 {
+                    if let index = headerLookup?[headerText],
+                        index < line.count,
+                        index >= 0,
+                        case Lexer.Token.tableCell(_, let cellText) = line[index] {
+                        $0? += cellText
                     }
+                } else if case Lexer.Token.title(_, let titleText) = $1 {
+                    $0? += titleText
                 }
             }
             var steps = backgroundStepNodes.map { Step(with: $0) }
@@ -92,11 +85,11 @@ class ScenarioOutlineParser {
         return scenarios
     }
     
-    private static func getStepFromLine(_ line:[Lexer.Token], lookup:[String:Int], stepNode:AST.StepNode) -> Step {
+    private static func getStepFromLine(_ line:[Lexer.Token], lookup:[String:Int]?, stepNode:AST.StepNode) -> Step {
         let node = AST.StepNode(node: stepNode)
         for (i, token) in node.tokens.enumerated() {
             if case Lexer.Token.tableHeader(_, let headerText) = token {
-                if let index = lookup[headerText],
+                if let index = lookup?[headerText],
                     index < line.count,
                     index >= 0,
                     case Lexer.Token.tableCell(let pos, let cellText) = line[index] {
