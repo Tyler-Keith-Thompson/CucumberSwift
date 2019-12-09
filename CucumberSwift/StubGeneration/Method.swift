@@ -27,8 +27,7 @@ class Method {
         self.keyword.insert(keyword)
     }
     
-    func generateSwift(matchAllAllowed:Bool = true) -> String {
-        Scope.language ?= Language()
+    private func getKeywordStrings(matchAllAllowed:Bool) -> [String] {
         var keywordStrings = [String]()
         if (keyword.hasMultipleValues() && matchAllAllowed) {
             keywordStrings.append("MatchAll")
@@ -37,23 +36,25 @@ class Method {
         } else {
             keywordStrings.append(keyword.toString())
         }
+        return keywordStrings
+    }
+    
+    func generateSwift(matchAllAllowed:Bool = true) -> String {
+        Scope.language ?= Language()
         var methodStrings = [String]()
-        for keywordString in keywordStrings {
+        for keywordString in getKeywordStrings(matchAllAllowed: matchAllAllowed) {
             let variablesOnStepObject = variables.filter { $0.type == "dataTable" || $0.type == "docString" }.filter { $0.count > 0 }
             let stepParameter = (variablesOnStepObject.count > 0) ? "step" : "_"
             var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), \(stepParameter) in\n"
             for variable in variables {
-                guard variable.count > 0 else { continue }
-                for i in 1...variable.count {
-                    let spelledNumber = (i > 1) ? NumberFormatter.localizedString(from: NSNumber(integerLiteral: i),
+                for i in 0..<variable.count {
+                    let spelledNumber = (i > 0) ? NumberFormatter.localizedString(from: NSNumber(integerLiteral: i+1),
                                                                                   number: .spellOut) : ""
                     let varName = "\(variable.type) \(spelledNumber)".camelCasingString()
                     if (variable.type != "dataTable" && variable.type != "docString") {
-                        methodString += "    let \(varName) = \(matchesParameter)[\(i)]\n"
-                    } else if variable.type == "docString" {
-                        methodString += "    let \(varName) = step.docString\n"
-                    } else if variable.type == "dataTable" {
-                        methodString += "    let \(varName) = step.dataTable\n"
+                        methodString += "    let \(varName) = \(matchesParameter)[\(i+1)]\n"
+                    } else {
+                        methodString += "    let \(varName) = step.\(variable.type)\n"
                     }
                 }
             }
