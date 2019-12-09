@@ -28,7 +28,7 @@ fileprivate extension Sequence where Element == Lexer.Token {
 }
 
 class ScenarioOutlineParser {
-    static func parse(_ scenarioOutlineNode:AST.ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
+    static func parse(_ scenarioOutlineNode:AST.ScenarioOutlineNode, featureTags:[String], backgroundStepNodes:[AST.StepNode], uri:String = "") -> [Scenario] {
         let tags = featureTags.appending(contentsOf: scenarioOutlineNode.tokens.compactMap {
             if case Lexer.Token.tag(_, let tag) = $0 {
                 return tag
@@ -45,7 +45,9 @@ class ScenarioOutlineParser {
                                     stepNodes: scenarioOutlineNode
                                         .children
                                         .compactMap { $0 as? AST.StepNode },
-                                    backgroundStepNodes: backgroundStepNodes) }
+                                    backgroundStepNodes: backgroundStepNodes,
+                                    uri: uri)
+        }
     }
     
     static func getExamplesFrom(_ scenarioOutlineNode:AST.ScenarioOutlineNode) -> [[Lexer.Token]] {
@@ -54,9 +56,17 @@ class ScenarioOutlineParser {
         }.groupedByExample()
     }
     
-    private static func parseExample(titleLine: [Lexer.Token]?, tokens: [Lexer.Token], outlineTags:[String], stepNodes:[AST.StepNode], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
+    private static func validateTable(_ lines: [[Lexer.Token]], uri:String) {
+        guard let header = lines.first else { return }
+        if let _ = lines.first(where: { $0.count != header.count }) {
+            Gherkin.errors.append("File: \(uri) inconsistent cell count within the table")
+        }
+    }
+    
+    private static func parseExample(titleLine: [Lexer.Token]?, tokens: [Lexer.Token], outlineTags:[String], stepNodes:[AST.StepNode], backgroundStepNodes:[AST.StepNode], uri:String) -> [Scenario] {
         var scenarios = [Scenario]()
         let lines = tokens.filter{ $0.isTableCell() || $0.isNewline() }.groupedByLine()
+        validateTable(lines, uri: uri)
         let headerLookup:[String:Int]? = lines.first?.enumerated().reduce(into: [:]) {
             if case Lexer.Token.tableCell(_, let headerText) = $1.element {
                 $0?[headerText] = $1.offset

@@ -45,6 +45,26 @@ class ErrorsTests : XCTestCase {
         XCTAssert(Gherkin.errors.contains("File: unexpected_eof.feature unexpected end of file, expected: #TagLine, #ScenarioLine, #Comment, #Empty"))
     }
 
+    func testInconsistenCellCount() {
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Inconsistent cell counts
+
+        Scenario: minimalistic
+          Given a data table with inconsistent cell count
+            | foo | bar |
+            | boz |
+
+
+        Scenario Outline: minimalistic
+          Given the <what>
+
+        Examples:
+          | what       |
+          | minimalism | extra |
+        """, uri: "inconsistent_cell_count.feature")
+        XCTAssert(Gherkin.errors.contains("File: inconsistent_cell_count.feature inconsistent cell count within the table"))
+    }
+
     override func tearDown() {
         Gherkin.errors.removeAll()
     }
