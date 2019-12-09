@@ -32,6 +32,19 @@ class ErrorsTests : XCTestCase {
         """, uri: "failedLanguage.feature")
         XCTAssert(Gherkin.errors.contains("File: failedLanguage.feature declares an unsupported language"))
     }
+
+    func testUnexpectedEndOfFile() {
+        Cucumber.shared.parseIntoFeatures("""
+            Feature: Unexpected end of file
+
+            Scenario Outline: minimalistic
+              Given the minimalism
+
+              @tag
+        """, uri: "unexpected_eof.feature")
+        XCTAssert(Gherkin.errors.contains("File: unexpected_eof.feature unexpected end of file, expected: #TagLine, #ScenarioLine, #Comment, #Empty"))
+    }
+
     override func tearDown() {
         Gherkin.errors.removeAll()
     }

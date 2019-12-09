@@ -34,7 +34,7 @@ class AST {
         self.ruleLookup = ruleLookup
     }
     
-    func parse(_ tokens:[Lexer.Token]) -> [FeatureNode] {
+    func parse(_ tokens:[Lexer.Token], inFile url:String = "") -> [FeatureNode] {
         for token in tokens {
             if case Lexer.Token.tag(_) = token {
                 tags.append(token)
@@ -44,6 +44,9 @@ class AST {
                 }
                 currentNode?.tokens.append(token)
             }
+        }
+        if (!tags.isEmpty) {
+            Gherkin.errors.append("File: \(url) unexpected end of file, expected: #TagLine, #ScenarioLine, #Comment, #Empty")
         }
         return featureNodes
     }

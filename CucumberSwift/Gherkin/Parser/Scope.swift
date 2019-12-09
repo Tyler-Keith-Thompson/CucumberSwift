@@ -43,24 +43,15 @@ enum Scope: Equatable {
     
     static func == (lhs: Scope, rhs: Scope) -> Bool {
         switch (lhs, rhs) {
-        case (.feature, .feature):
-            return true
-        case (.background, .background):
-            return true
-        case (.scenario, .scenario):
-            return true
-        case (.scenarioOutline, .scenarioOutline):
-            return true
-        case (.step(let s1), .step(let s2)):
-            return s1 == s2
-        case (.examples, .examples):
-            return true
-        case (.rule, .rule):
-            return true
-        case (.unknown, .unknown):
-            return true
-        default:
-            return false
+        case (.feature, .feature): return true
+        case (.background, .background): return true
+        case (.scenario, .scenario): return true
+        case (.scenarioOutline, .scenarioOutline): return true
+        case (.step(let s1), .step(let s2)): return s1 == s2
+        case (.examples, .examples): return true
+        case (.rule, .rule): return true
+        case (.unknown, .unknown): return true
+        default: return false
         }
     }
     
