@@ -32,24 +32,19 @@ class StubGenerator {
             .flatMap{ $0.scenarios }.taggedElements(askImplementor: true)
             .flatMap{ $0.steps }
             .sorted{ $0.keyword.rawValue < $1.keyword.rawValue }
-        executableSteps.filter{ $0.execute == nil && $0.executeClass == nil && $0.executeSelector == nil }.forEach {
+        executableSteps.filter{ !$0.canExecute }.forEach {
             let regex = regexForTokens($0.tokens)
             let stringCount = $0.tokens.filter { $0.isString() }.count
             let integerCount = $0.tokens.filter { $0.isInteger() }.count
             let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
-            let step = $0
-            if (step.docString != nil) {
-                print("")
-            }
             let variables = [(type: "string", count: stringCount),
                              (type: "integer", count: integerCount),
                              (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
                              (type: "docString", count: $0.docString != nil ? 1 : 0)]
-            var method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
+            let method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
             if let m = lookup[regex] {
-                method = m
-                if (!method.keyword.contains($0.keyword)) {
-                    method.insertKeyword($0.keyword)
+                if (!m.keyword.contains($0.keyword)) {
+                    m.insertKeyword($0.keyword)
                 }
             } else {
                 methods.append(method)
@@ -57,7 +52,7 @@ class StubGenerator {
             }
         }
         return methods.map { method in
-            let implementedSteps = executableSteps.filter { $0.execute != nil }
+            let implementedSteps = executableSteps.filter { $0.canExecute }
             let canMatchAll = !(implementedSteps.contains { !$0.match.matches(for: method.regex).isEmpty })
             let overwrittenSteps = implementedSteps.filter{ method.keyword.contains($0.keyword) && !$0.match.matches(for: method.regex).isEmpty }
             if (!overwrittenSteps.isEmpty) {

@@ -53,20 +53,7 @@ class CucumberTest: XCTestCase {
                 Cucumber.shared.setupBeforeHooksFor(step)
                 Cucumber.shared.beforeStepHooks.forEach { $0(step) }
                 _ = XCTContext.runActivity(named: "\(step.keyword.toString()) \(step.match)") { _ in
-                    if let `class` = step.executeClass, let selector = step.executeSelector {
-                        step.executeInstance = (`class` as? NSObject.Type)?.init()
-                        if let instance = step.executeInstance {
-                            if instance.responds(to: selector) {
-                                (step.executeInstance as? XCTestCase)?.setUp()
-                                instance.perform(selector)
-                            }
-                        }
-                    } else {
-                        step.execute?(step.match.matches(for: step.regex), step)
-                    }
-                    if (step.execute != nil && step.result != .failed) {
-                        step.result = .passed
-                    }
+                    executeStep(step)
                     Reporter.shared.writeStep(step)
                 }
             }))
@@ -80,6 +67,22 @@ class CucumberTest: XCTestCase {
             step.testCase = testCase
             testCase?.continueAfterFailure = step.continueAfterFailure
             tests.append(testCase)
+        }
+    }
+    
+    private static func executeStep(_ step:Step) {
+        if let `class` = step.executeClass, let selector = step.executeSelector {
+            step.executeInstance = (`class` as? NSObject.Type)?.init()
+            if let instance = step.executeInstance,
+                instance.responds(to: selector) {
+                    (step.executeInstance as? XCTestCase)?.setUp()
+                    instance.perform(selector)
+            }
+        } else {
+            step.execute?(step.match.matches(for: step.regex), step)
+        }
+        if (step.execute != nil && step.result != .failed) {
+            step.result = .passed
         }
     }
     

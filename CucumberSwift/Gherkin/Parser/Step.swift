@@ -19,6 +19,12 @@ public class Step: CustomStringConvertible {
             testCase?.continueAfterFailure = newValue
         }
     }
+    
+    public var canExecute:Bool {
+        return execute != nil
+        || executeSelector != nil
+        || executeClass != nil
+    }
 
     public private(set)  var match = ""
     public private(set)  var keyword:Keyword = []
@@ -27,7 +33,7 @@ public class Step: CustomStringConvertible {
     public internal(set) var dataTable:DataTable?
     public private(set)  var docString:DocString?
     public private(set)  var location:Lexer.Position
-
+    
     var result:Result = .pending
     var execute:(([String], Step) -> Void)? = nil
     var executeSelector:Selector?
