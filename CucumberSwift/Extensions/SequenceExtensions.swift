@@ -9,7 +9,7 @@
 import Foundation
 extension Sequence where Element: Equatable {
     var uniqueElements: [Element] {
-        return self.reduce(into: []) {
+        return reduce(into: []) {
             if (!$0.contains($1)) {
                 $0.append($1)
             }
@@ -22,7 +22,7 @@ extension Sequence where Element: Equatable {
 
 extension Array {
     @inlinable public func dropFirst(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
-        var new = self.dropFirst(0)
+        var new = dropFirst(0)
         var count = k ?? self.count
         while (count > 0) {
             count -= 1
@@ -37,7 +37,7 @@ extension Array {
     }
     
     @inlinable public func dropLast(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
-        var new = self.dropLast(0)
+        var new = dropLast(0)
         var count = k ?? self.count
         while (count > 0) {
             count -= 1

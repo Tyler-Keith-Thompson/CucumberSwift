@@ -59,7 +59,7 @@ public class StringReader {
     
     @discardableResult public func lookAheadUntil(_ evaluation:((Character) -> Bool)) -> String {
         var str = ""
-        var indexCopy = self.index
+        var indexCopy = index
         let currentCharacter = {
             return (indexCopy < self.input.endIndex && indexCopy >= self.input.startIndex) ? self.input[indexCopy] : nil
         }

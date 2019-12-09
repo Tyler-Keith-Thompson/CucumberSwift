@@ -47,7 +47,7 @@ class ScenarioOutlineParser {
                                         .compactMap { $0 as? AST.StepNode },
                                     backgroundStepNodes: backgroundStepNodes,
                                     uri: uri)
-        }
+            }
     }
     
     static func getExamplesFrom(_ scenarioOutlineNode:AST.ScenarioOutlineNode) -> [[Lexer.Token]] {

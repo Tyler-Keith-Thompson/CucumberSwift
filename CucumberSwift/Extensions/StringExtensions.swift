@@ -12,7 +12,7 @@ extension String {
         do {
             let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)
             let results = regex.matches(in: self,
-                                        range: NSRange(self.startIndex..., in: self))
+                                        range: NSRange(startIndex..., in: self))
             guard let firstResult = results.first else { return [] }
             var matches = [String]()
             for i in 0..<firstResult.numberOfRanges {

@@ -26,7 +26,7 @@ public class Feature : Taggable, Positionable {
             } else if case Lexer.Token.description(_, let description) = token {
                 desc += description + "\n"
             } else if case Lexer.Token.tag(_, let tag) = token {
-                self.tags.append(tag)
+                tags.append(tag)
             }
         }
         let backgroundSteps:[AST.StepNode] = node.children.compactMap { $0 as? AST.BackgroundNode }
