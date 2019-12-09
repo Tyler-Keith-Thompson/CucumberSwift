@@ -19,12 +19,12 @@ import XCTest
     var currentStep:Step? = nil
     var reportName:String = "CucumberTestResultsFor"
     var environment:[String:String] = ProcessInfo.processInfo.environment
-    var BeforeFeatureHooks  = [(Feature)  -> Void]()
-    var AfterFeatureHooks   = [(Feature)  -> Void]()
-    var BeforeScenarioHooks = [(Scenario)  -> Void]()
-    var AfterScenarioHooks  = [(Scenario)  -> Void]()
-    var BeforeStepHooks     = [(Step)  -> Void]()
-    var AfterStepHooks      = [(Step)  -> Void]()
+    var beforeFeatureHooks  = [(Feature)  -> Void]()
+    var afterFeatureHooks   = [(Feature)  -> Void]()
+    var beforeScenarioHooks = [(Scenario)  -> Void]()
+    var afterScenarioHooks  = [(Scenario)  -> Void]()
+    var beforeStepHooks     = [(Step)  -> Void]()
+    var afterStepHooks      = [(Step)  -> Void]()
     var hookedFeatures      = [Feature]()
     var hookedScenarios     = [Scenario]()
     var failedScenarios     = [Scenario]()
@@ -43,10 +43,9 @@ import XCTest
         let relativePath = (testBundle.infoDictionary?["FeaturesPath"] as? String) ?? "Features"
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: testBundle.bundleURL.appendingPathComponent(relativePath), includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
-            if (url.pathExtension == "feature") {
-                if let string = try? String(contentsOf: url, encoding: .utf8) {
+            if (url.pathExtension == "feature"),
+                let string = try? String(contentsOf: url, encoding: .utf8) {
                     Cucumber.shared.parseIntoFeatures(string, uri: url.absoluteString)
-                }
             }
         }
     }
@@ -68,12 +67,12 @@ import XCTest
         if let feature = step.scenario?.feature,
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
-            Cucumber.shared.BeforeFeatureHooks.forEach { $0(feature) }
+            Cucumber.shared.beforeFeatureHooks.forEach { $0(feature) }
         }
         if let scenario = step.scenario,
             !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
-            Cucumber.shared.BeforeScenarioHooks.forEach { $0(scenario) }
+            Cucumber.shared.beforeScenarioHooks.forEach { $0(scenario) }
         }
     }
     
@@ -81,12 +80,12 @@ import XCTest
         if let scenario = step.scenario,
             let lastScenarioStep = scenario.steps.last,
             lastScenarioStep === step {
-            Cucumber.shared.AfterScenarioHooks.forEach { $0(scenario) }
+            Cucumber.shared.afterScenarioHooks.forEach { $0(scenario) }
         }
         if let feature = step.scenario?.feature,
             let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
             lastStep === step {
-            Cucumber.shared.AfterFeatureHooks.forEach { $0(feature) }
+            Cucumber.shared.afterFeatureHooks.forEach { $0(feature) }
         }
     }
     

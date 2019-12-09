@@ -143,7 +143,7 @@ extension Step {
         
         public func hasMultipleValues() -> Bool {
             guard rawValue > 2 else { return false }
-            return !(ceil(log2(Double(rawValue))) == floor(log2(Double(rawValue))))
+            return ceil(log2(Double(rawValue))) != floor(log2(Double(rawValue)))
         }
         
         public static let given = Keyword(rawValue: 1 << 0)

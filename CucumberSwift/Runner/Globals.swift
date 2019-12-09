@@ -10,22 +10,22 @@ import Foundation
 
 //MARK: Hooks
 public func BeforeFeature(closure: @escaping ((Feature) -> Void)) {
-    Cucumber.shared.BeforeFeatureHooks.append(closure)
+    Cucumber.shared.beforeFeatureHooks.append(closure)
 }
 public func AfterFeature(closure: @escaping ((Feature) -> Void)) {
-    Cucumber.shared.AfterFeatureHooks.append(closure)
+    Cucumber.shared.afterFeatureHooks.append(closure)
 }
 public func BeforeScenario(closure: @escaping ((Scenario) -> Void)) {
-    Cucumber.shared.BeforeScenarioHooks.append(closure)
+    Cucumber.shared.beforeScenarioHooks.append(closure)
 }
 public func AfterScenario(closure: @escaping ((Scenario) -> Void)) {
-    Cucumber.shared.AfterScenarioHooks.append(closure)
+    Cucumber.shared.afterScenarioHooks.append(closure)
 }
 public func BeforeStep(closure: @escaping ((Step) -> Void)) {
-    Cucumber.shared.BeforeStepHooks.append(closure)
+    Cucumber.shared.beforeStepHooks.append(closure)
 }
 public func AfterStep(closure: @escaping ((Step) -> Void)) {
-    Cucumber.shared.AfterStepHooks.append(closure)
+    Cucumber.shared.afterStepHooks.append(closure)
 }
 
 //MARK Steps

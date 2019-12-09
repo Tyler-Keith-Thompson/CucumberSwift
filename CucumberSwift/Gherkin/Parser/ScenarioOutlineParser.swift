@@ -88,13 +88,11 @@ class ScenarioOutlineParser {
     private static func getStepFromLine(_ line:[Lexer.Token], lookup:[String:Int]?, stepNode:AST.StepNode) -> Step {
         let node = AST.StepNode(node: stepNode)
         for (i, token) in node.tokens.enumerated() {
-            if case Lexer.Token.tableHeader(_, let headerText) = token {
-                if let index = lookup?[headerText],
-                    index < line.count,
-                    index >= 0,
-                    case Lexer.Token.tableCell(let pos, let cellText) = line[index] {
+            if case Lexer.Token.tableHeader(_, let headerText) = token,
+                let index = lookup?[headerText],
+                let cell = line[safe: index],
+                case Lexer.Token.tableCell(let pos, let cellText) = cell {
                     node.tokens[i] = .match(pos, cellText)
-                }
             }
         }
         return Step(with: node)
