@@ -6,10 +6,9 @@ xcode_project: CucumberSwift.xcodeproj
 xcode_scheme: CucumberSwift
 xcode_destination: platform=iOS Simulator,name=iPhone 8
 
-jdk: oraclejdk8
-
 before_install:
-  - export PATH=$JAVA_HOME/bin:$PATH
+  - brew cask install adoptopenjdk/openjdk/adoptopenjdk8
+  - java -version
 
 install:
   - bundle install
