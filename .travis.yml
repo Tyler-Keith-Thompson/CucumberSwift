@@ -9,6 +9,9 @@ xcode_destination: platform=iOS Simulator,name=iPhone 8
 jdk:
   - oraclejdk11
 
+before_install:
+  - export PATH=$JAVA_HOME/bin:$PATH
+
 install:
   - bundle install
 script:
