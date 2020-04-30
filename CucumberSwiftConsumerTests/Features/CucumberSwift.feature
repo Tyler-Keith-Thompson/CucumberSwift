@@ -22,6 +22,8 @@ as expected
         When I run the tests
         Then BeforeScenario gets called once per scenario outline
 
+    #NOTE: The preceding scenario is purposely meant to have a name collision, so it does not appropriate read what it is testing.
+    
     Scenario: Before step hook works correctly
         Given I have a before step hook
         When I run the tests

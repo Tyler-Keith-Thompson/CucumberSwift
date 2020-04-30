@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D1648DB245A7549000CA612 /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1648DA245A7549000CA612 /* XCTestHooks.m */; };
 		1DA7619923933BCB001CBA5B /* RunWithLineNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */; };
 		1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619A23933F18001CBA5B /* Positionable.swift */; };
 		1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619C2393C5AB001CBA5B /* DocString.swift */; };
@@ -95,6 +96,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D1648DA245A7549000CA612 /* XCTestHooks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestHooks.m; sourceTree = "<group>"; };
 		1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunWithLineNumberTests.swift; sourceTree = "<group>"; };
 		1DA7619A23933F18001CBA5B /* Positionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Positionable.swift; sourceTree = "<group>"; };
 		1DA7619C2393C5AB001CBA5B /* DocString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocString.swift; sourceTree = "<group>"; };
@@ -351,6 +353,7 @@
 			children = (
 				AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */,
 				AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */,
+				1D1648DA245A7549000CA612 /* XCTestHooks.m */,
 			);
 			path = XCTestCaseGenerator;
 			sourceTree = "<group>";
@@ -525,7 +528,7 @@
 				TargetAttributes = {
 					AD9EB45F2079CF87002494C0 = {
 						CreatedOnToolsVersion = 9.2;
-						LastSwiftMigration = 1010;
+						LastSwiftMigration = 1140;
 						ProvisioningStyle = Automatic;
 					};
 					AD9EB4682079CF87002494C0 = {
@@ -633,6 +636,7 @@
 				AD99DB6321335B5D00E57823 /* TestObservation.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
+				1D1648DB245A7549000CA612 /* XCTestHooks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +830,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -850,6 +855,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

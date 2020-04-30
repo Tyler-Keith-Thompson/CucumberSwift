@@ -34,19 +34,24 @@ class CucumberTest: XCTestCase {
     private static func createTestCaseForStubs(_ tests:inout [XCTestCase?]) {
         let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
         if (!generatedSwift.isEmpty) {
-            tests.append(TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "GenerateStepsStubsIfNecessary", closure: {
+            if let (testCaseClass, methodSelector) = TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "GenerateStepsStubsIfNecessary", closure: {
                 XCTContext.runActivity(named: "Pending Steps") { activity in
                     let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
                     attachment.lifetime = .keepAlways
                     activity.add(attachment)
                 }
-            })))
+            })) {
+                if let c = testCaseClass {
+                    objc_registerClassPair(c)
+                }
+                tests.append(testCaseClass?.init(selector: methodSelector))
+            }
         }
     }
     
     private static func createTestCaseFor(className:String, scenario: Scenario, tests:inout [XCTestCase?]) {
-        for step in scenario.steps {
-            let testCase = TestCaseGenerator.initWith(className: className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), method: TestCaseMethod(withName: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
+        scenario.steps.compactMap { step -> (step:Step, XCTestCase.Type?, Selector)? in
+            if let t = TestCaseGenerator.initWith(className: className.appending(scenario.title.camelCasingString().capitalizingFirstLetter()), method: TestCaseMethod(withName: "\(step.keyword.toString()) \(step.match)".capitalizingFirstLetter().camelCasingString(), closure: {
                 guard !Cucumber.shared.failedScenarios.contains(where: { $0 === step.scenario }) else { return }
                 step.startTime = Date()
                 Cucumber.shared.currentStep = step
@@ -56,7 +61,16 @@ class CucumberTest: XCTestCase {
                     executeStep(step)
                     Reporter.shared.writeStep(step)
                 }
-            }))
+            })) {
+                return (step, t.0, t.1)
+            }
+            return nil
+        }.map { (step, testCaseClass, methodSelector) -> (Step, XCTestCase?) in
+            if let c = testCaseClass {
+                objc_registerClassPair(c)
+            }
+            return (step, testCaseClass?.init(selector: methodSelector))
+        }.forEach { (step, testCase) in
             testCase?.addTeardownBlock {
                 (step.executeInstance as? XCTestCase)?.tearDown()
                 Cucumber.shared.afterStepHooks.forEach { $0(step) }

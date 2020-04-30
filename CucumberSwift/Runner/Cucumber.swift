@@ -39,6 +39,27 @@ import XCTest
         parseIntoFeatures(string)
     }
     
+    @objc public static func Load() {
+        guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
+              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
+            return
+        }
+        method_exchangeImplementations(testSuiteInit, swizzledInit)
+    }
+    
+    @objc static func testCaseWith(name:String) -> XCTestSuite? {
+        if (name == "CucumberTest") {
+            return CucumberTest.defaultTestSuite
+        }
+        
+        guard let className = name.components(separatedBy: "/").first,
+            let testCaseClass = Bundle.allBundles.compactMap({
+                $0.classNamed(className)
+            }).first else { return nil }
+        
+        return XCTestSuite(forTestCaseClass: testCaseClass)
+    }
+    
     func readFromFeaturesFolder(in testBundle:Bundle) {
         let relativePath = (testBundle.infoDictionary?["FeaturesPath"] as? String) ?? "Features"
         let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: testBundle.bundleURL.appendingPathComponent(relativePath), includingPropertiesForKeys: nil)
@@ -47,19 +68,6 @@ import XCTest
                 let string = try? String(contentsOf: url, encoding: .utf8) {
                     Cucumber.shared.parseIntoFeatures(string, uri: url.absoluteString)
             }
-        }
-    }
-    
-    func generateStubsInTestSuite(_ suite:XCTestSuite) {
-        let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
-        if (!generatedSwift.isEmpty) {
-            suite.addTest(TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "Generated Steps", closure: {
-                XCTContext.runActivity(named: "Pending Steps") { activity in
-                    let attachment = XCTAttachment(uniformTypeIdentifier: "swift", name: "GENERATED_Unimplemented_Step_Definitions.swift", payload: generatedSwift.data(using: .utf8), userInfo: nil)
-                    attachment.lifetime = .keepAlways
-                    activity.add(attachment)
-                }
-            }))!)
         }
     }
     
