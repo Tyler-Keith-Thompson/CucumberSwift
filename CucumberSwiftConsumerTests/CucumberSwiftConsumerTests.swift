@@ -27,39 +27,68 @@ class Me:XCTestCase {
     }
 }
 
+extension Feature : Hashable {
+    public static func == (lhs: Feature, rhs: Feature) -> Bool {
+        return lhs === rhs
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(Unmanaged.passUnretained(self).toOpaque())
+    }
+}
+
+extension Step : Hashable {
+    public static func == (lhs: Step, rhs: Step) -> Bool {
+        return lhs === rhs
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(Unmanaged.passUnretained(self).toOpaque())
+    }
+}
+
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
         return Bundle(for: Me.self)
     }
     
     public func setupSteps() {
-        var beforeFeatureCalled = 0
-        BeforeFeature { _ in
-            beforeFeatureCalled += 1
+        var beforeFeatureHooks = [Feature:Int]()
+        BeforeFeature { feature in
+            beforeFeatureHooks[feature, default: 0] += 1
         }
-        var secondaryBeforeFeatureCalled = 0
-        BeforeFeature { _ in
-            secondaryBeforeFeatureCalled += 1
+        var secondaryBeforeFeatureHooks = [Feature:Int]()
+        BeforeFeature { feature in
+            secondaryBeforeFeatureHooks[feature, default: 0] += 1
         }
-        var beforeScenarioCalled = 0
+        var beforeScenarioHooks = [Scenario:Int]()
         BeforeScenario { scenario in
-            beforeScenarioCalled += 1
+            beforeScenarioHooks[scenario, default: 0] += 1
         }
-        var beforeStepCalled = 0
-        BeforeStep { _ in
-            beforeStepCalled += 1
+        var beforeStepHooks = [Step:Int]()
+        BeforeStep { step in
+            beforeStepHooks[step, default: 0] += 1
         }
-        var afterStepCalled = 0
-        AfterStep { _ in
-            afterStepCalled += 1
+        var afterStepHooks = [Step:Int]()
+        AfterStep { step in
+            if (afterStepHooks[step] != nil) {
+                XCTFail("Should not have the same after hook called")
+            }
+            afterStepHooks[step, default: 0] += 1
         }
-        var afterScenarioCalled = 0
-        AfterScenario { _ in
-            afterScenarioCalled += 1
+        var afterScenarioHooks = [Scenario:Int]()
+        AfterScenario { scenario in
+            if (afterScenarioHooks[scenario] != nil) {
+                XCTFail("Should not have the same after hook called")
+            }
+            afterScenarioHooks[scenario, default: 0] += 1
         }
-        var afterFeatureCalled = 0
-        AfterFeature { _ in
-            afterFeatureCalled += 1
+        var afterFeatureHooks = [Feature:Int]()
+        AfterFeature { feature in
+            if (afterFeatureHooks[feature] != nil) {
+                XCTFail("Should not have the same after hook called")
+            }
+            afterFeatureHooks[feature, default: 0] += 1
         }
         Given("^I have a before feature hook$") { _, _ in
             XCTAssert(true)
@@ -92,26 +121,26 @@ extension Cucumber: StepImplementation {
         }
         
         Then("^BeforeFeature gets called once per feature$") { _, step in
-            XCTAssertEqual(beforeFeatureCalled, 1)
-            XCTAssertEqual(secondaryBeforeFeatureCalled, 1)
+            XCTAssertEqual(beforeFeatureHooks[step.scenario!.feature!], 1)
+            XCTAssertEqual(secondaryBeforeFeatureHooks[step.scenario!.feature!], 1)
         }
-        Then("^BeforeScenario gets called once per scenario$") { _, _ in
-            XCTAssertEqual(beforeScenarioCalled, 2)
+        Then("^BeforeScenario gets called once per scenario$") { _, step in
+            XCTAssertEqual(beforeScenarioHooks[step.scenario!], 1)
         }
-        Then("^BeforeScenario gets called once per scenario outline$") { _, _ in
-            XCTAssertEqual(beforeScenarioCalled, 3)
+        Then("^BeforeScenario gets called once per scenario outline$") { _, step in
+            XCTAssertEqual(beforeScenarioHooks[step.scenario!], 1)
         }
-        Then("^BeforeStep gets called once per step$") { _, _ in
-            XCTAssertEqual(beforeStepCalled, 12)
+        Then("^BeforeStep gets called once per step$") { _, step in
+            XCTAssertEqual(beforeStepHooks[step], 1)
         }
         Then("^AfterStep gets called once per step$") { _, _ in
-            XCTAssertEqual(afterStepCalled, 14)
+            XCTAssert(afterStepHooks.keys.count > 0)
         }
         Then("^AfterScenario gets called once per scenario$") { _, _ in
-            XCTAssertEqual(afterScenarioCalled, 5)
+            //gotta test this after the scenario...
         }
         Then("^AfterFeature gets called once per feature$") { _, _ in
-            XCTAssertEqual(afterFeatureCalled, 1)
+            //gotta test this after the feature...
         }
         Then("^The scenario runs without crashing$") { _, _ in
             let expectation = self.expectation(description: "waiting")
