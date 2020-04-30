@@ -1,5 +1,5 @@
 language: swift
-osx_image: xcode11.1
+osx_image: xcode11.4
 git:
   depth: false
 xcode_project: CucumberSwift.xcodeproj
