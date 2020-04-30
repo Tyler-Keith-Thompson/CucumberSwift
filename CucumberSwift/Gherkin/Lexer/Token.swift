@@ -63,23 +63,23 @@ extension Lexer {
             switch (lhs, rhs) {
             case (.newLine, .newLine):
                 return true
-            case let (.match(match1), .match(match2)):
+            case let (.match(_, match1), .match(_, match2)):
                 return match1 == match2
-            case let (.title(title1), .title(title2)):
+            case let (.title(_, title1), .title(_, title2)):
                 return title1 == title2
-            case let (.description(description1), .description(description2)):
+            case let (.description(_, description1), .description(_, description2)):
                 return description1 == description2
-            case let (.tag(tag1), .tag(tag2)):
+            case let (.tag(_, tag1), .tag(_, tag2)):
                 return tag1 == tag2
-            case let (.integer(num1), .integer(num2)):
+            case let (.integer(_, num1), .integer(_, num2)):
                 return num1 == num2
-            case let (.string(string1), .string(string2)):
+            case let (.string(_, string1), .string(_, string2)):
                 return string1 == string2
             case let (.docString(_, string1), .docString(_, string2)):
                 return string1.literal == string2.literal
-            case let (.tableHeader(tableHeader1), .tableHeader(tableHeader2)):
+            case let (.tableHeader(_, tableHeader1), .tableHeader(_, tableHeader2)):
                 return tableHeader1 == tableHeader2
-            case let (.tableCell(tableCell1), .tableCell(tableCell2)):
+            case let (.tableCell(_, tableCell1), .tableCell(_, tableCell2)):
                 return tableCell1 == tableCell2
             default:
                 return false
@@ -94,37 +94,37 @@ extension Lexer {
         }
         
         func isTableCell() -> Bool {
-            if case .tableCell(_) = self {
+            if case .tableCell(_, _) = self {
                 return true
             }
             return false
         }
         func isKeyword() -> Bool {
-            if case .keyword(_) = self {
+            if case .keyword(_, _) = self {
                 return true
             }
             return false
         }
         func isTag() -> Bool {
-            if case .tag(_) = self {
+            if case .tag(_, _) = self {
                 return true
             }
             return false
         }
         func isString() -> Bool {
-            if case .string(_) = self {
+            if case .string(_, _) = self {
                 return true
             }
             return false
         }
         func isInteger() -> Bool {
-            if case .integer(_) = self {
+            if case .integer(_, _) = self {
                 return true
             }
             return false
         }
         func isDescription() -> Bool {
-            if case .description(_) = self {
+            if case .description(_, _) = self {
                 return true
             }
             return false
