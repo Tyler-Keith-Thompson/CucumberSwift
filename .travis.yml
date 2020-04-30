@@ -5,6 +5,10 @@ git:
 xcode_project: CucumberSwift.xcodeproj
 xcode_scheme: CucumberSwift
 xcode_destination: platform=iOS Simulator,name=iPhone 8
+
+jdk:
+  - oraclejdk11
+
 install:
   - bundle install
 script:
