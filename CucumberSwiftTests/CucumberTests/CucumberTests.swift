@@ -181,4 +181,47 @@ class CucumberTests:XCTestCase {
             }
         }
     }
+
+    func testFeatureScenarioDelimiter() {
+        let featureName = "SomeTerseYetDescriptiveTextOfWhatIsDesired"
+
+        // Tests default delimiter "|"
+        CucumberTest.defaultTestSuite
+            .tests
+            .map { $0.name }
+            .filter { $0.contains(featureName) }
+            .forEach { testName in
+                XCTAssertTrue(testName.contains("\(featureName)|"), "Test name does not contain default delimiter")
+            }
+
+        // Sets custom delimiter "_"
+        Bundle.swizzleInfoDictionary()
+
+        // Tests custom delimiter "_"
+        CucumberTest.defaultTestSuite
+            .tests
+            .map { $0.name }
+            .filter { $0.contains(featureName) }
+            .forEach { testName in
+                XCTAssertFalse(testName.contains("\(featureName)|"), "Test name contains default delimiter but there should be the custom")
+                XCTAssertTrue(testName.contains("\(featureName)_"), "Test name does not contain custom delimiter")
+            }
+    }
+}
+
+private extension Bundle {
+    @objc func swizzledInfoDictionary() -> [String : Any]? {
+        return ["FeatureScenarioDelimiter": "_"]
+    }
+    /// Sets `FeatureScenarioDelimiter: "_"`
+    static func swizzleInfoDictionary() {
+        let instance = Bundle()
+        let aClass: AnyClass! = object_getClass(instance)
+        let originalMethod = class_getInstanceMethod(aClass, #selector(getter: infoDictionary))
+        let swizzledMethod = class_getInstanceMethod(aClass, #selector(swizzledInfoDictionary))
+        if let originalMethod = originalMethod, let swizzledMethod = swizzledMethod {
+            // switch implementation..
+            method_exchangeImplementations(originalMethod, swizzledMethod)
+        }
+    }
 }
