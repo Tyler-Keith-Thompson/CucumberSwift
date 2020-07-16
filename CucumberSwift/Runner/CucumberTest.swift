@@ -23,7 +23,7 @@ fileprivate extension Step {
             }
         })
     }
-    
+
     func run() {
         if let `class` = executeClass, let selector = executeSelector {
             executeInstance = (`class` as? NSObject.Type)?.init()
@@ -50,7 +50,7 @@ fileprivate extension String {
 class CucumberTest: XCTestCase {
     override class var defaultTestSuite: XCTestSuite {
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
-        
+
         var tests = [XCTestCase]()
         Reporter.shared.reset()
         Cucumber.shared.features.removeAll()
@@ -60,7 +60,7 @@ class CucumberTest: XCTestCase {
         (Cucumber.shared as? StepImplementation)?.setupSteps()
         createTestCaseForStubs(&tests)
         for feature in Cucumber.shared.features.taggedElements(with: Cucumber.shared.environment, askImplementor: false) {
-            let className = feature.title.toClassString() + "|"
+            let className = feature.title.toClassString() + readFeatureScenarioDelimiter()
             for scenario in feature.scenarios.taggedElements(with: Cucumber.shared.environment, askImplementor: true) {
                 createTestCaseFor(className:className, scenario: scenario, tests: &tests)
             }
@@ -68,7 +68,7 @@ class CucumberTest: XCTestCase {
         tests.forEach { suite.addTest($0) }
         return suite
     }
-    
+
     private static func createTestCaseForStubs(_ tests:inout [XCTestCase]) {
         let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
         guard !generatedSwift.isEmpty else { return }
@@ -83,7 +83,7 @@ class CucumberTest: XCTestCase {
             tests.append(testCaseClass.init(selector: methodSelector))
         }
     }
-    
+
     private static func createTestCaseFor(className:String, scenario: Scenario, tests:inout [XCTestCase]) {
         scenario.steps.compactMap { step -> (step:Step, XCTestCase.Type, Selector)? in
             if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
@@ -107,12 +107,21 @@ class CucumberTest: XCTestCase {
             tests.append(testCase)
         }
     }
-    
+
     //A test case needs at least one test to trigger the observer
     final func testGherkin() {
         XCTAssert(Gherkin.errors.isEmpty, "Gherkin language errors found:\n\(Gherkin.errors.joined(separator: "\n"))")
         Gherkin.errors.forEach {
             XCTFail($0)
         }
+    }
+}
+
+private extension CucumberTest {
+    static let defaultDelimiter = "|"
+
+    static func readFeatureScenarioDelimiter() -> String {
+        guard let testBundle = (Cucumber.shared as? StepImplementation)?.bundle else { return defaultDelimiter }
+        return (testBundle.infoDictionary?["FeatureScenarioDelimiter"] as? String) ?? defaultDelimiter
     }
 }
