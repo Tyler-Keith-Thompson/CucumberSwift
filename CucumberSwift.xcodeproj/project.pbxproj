@@ -70,6 +70,7 @@
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
+		CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -164,6 +165,7 @@
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLStepTests.swift; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -313,6 +315,7 @@
 		AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA5A210724C92BCC0077AD50 /* DSLTests */,
 				1DA7619723933BBD001CBA5B /* Runner */,
 				AD4E77322235A04B005938B7 /* WaitUntil.swift */,
 				CAA337B32104C39B002C361D /* Extensions */,
@@ -388,6 +391,14 @@
 				1DA7619A23933F18001CBA5B /* Positionable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CA5A210724C92BCC0077AD50 /* DSLTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */,
+			);
+			path = DSLTests;
 			sourceTree = "<group>";
 		};
 		CA5A7C3620FC2AF600F4564A /* Gherkin */ = {
@@ -649,6 +660,7 @@
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
 				AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */,
+				CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */,
 				AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */,
 				1DA7619923933BCB001CBA5B /* RunWithLineNumberTests.swift in Sources */,
 				AD22A1BA222B21830025E41C /* CucumberExtensions.swift in Sources */,

@@ -28,41 +28,85 @@ public func AfterStep(closure: @escaping ((Step) -> Void)) {
     Cucumber.shared.afterStepHooks.append(closure)
 }
 
-//MARK Steps
-public func Given(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(keyword: .given, regex: regex, callback:callback)
-}
-public func When(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(keyword: .when, regex: regex, callback:callback)
-}
-public func Then(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(keyword: .then, regex: regex, callback:callback)
-}
-public func And(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(keyword: .and, regex: regex, callback:callback)
-}
-public func But(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(keyword: .but, regex: regex, callback:callback)
-}
-public func MatchAll(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
-    Cucumber.shared.attachClosureToSteps(regex: regex, callback:callback)
+public protocol Matcher {
+    init()
+    var keyword:Step.Keyword { get }
 }
 
-public func Given(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(keyword: .given, regex: regex, class:`class`, selector:selector)
+public extension Matcher {
+    @discardableResult init(_ regex:String, class:AnyClass, selector:Selector) {
+        self.init()
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class:`class`, selector:selector)
+    }
+    @discardableResult init(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
+        self.init()
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback:callback)
+    }
 }
-public func When(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(keyword: .when, regex: regex, class:`class`, selector:selector)
+
+public protocol GherkinDSL {
+    init()
 }
-public func Then(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(keyword: .then, regex: regex, class:`class`, selector:selector)
+
+public extension GherkinDSL {
+    @discardableResult fileprivate init(handler: () -> Void) {
+        self.init()
+        handler()
+    }
+
+    @available(*, unavailable, message: "Add () to forward to @autoclosure, To help drive semantically valid Gherkin please pass a single function, not a closure with multiple arguments.")
+    @discardableResult init(I handler: () -> Void) { self.init() }
+    @discardableResult init(I handler: @autoclosure () -> Void) {
+        self.init(handler: handler)
+    }
+
+    @available(*, unavailable, message: "Add () to forward to @autoclosure, To help drive semantically valid Gherkin please pass a single function, not a closure with multiple arguments.")
+    @discardableResult init(My handler: () -> Void) { self.init() }
+    @discardableResult init(My handler: @autoclosure () -> Void) {
+        self.init(handler: handler)
+    }
+
+    @available(*, unavailable, message: "Add () to forward to @autoclosure, To help drive semantically valid Gherkin please pass a single function, not a closure with multiple arguments.")
+    @discardableResult init(A handler: () -> Void) { self.init() }
+    @discardableResult init(A handler: @autoclosure () -> Void) {
+        self.init(handler: handler)
+    }
+
+    @available(*, unavailable, message: "Add () to forward to @autoclosure, To help drive semantically valid Gherkin please pass a single function, not a closure with multiple arguments.")
+    @discardableResult init(The handler: () -> Void) { self.init() }
+    @discardableResult init(The handler: @autoclosure () -> Void) {
+        self.init(handler: handler)
+    }
 }
-public func And(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(keyword: .and, regex: regex, class:`class`, selector:selector)
+
+public struct GivenDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = .given
 }
-public func But(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(keyword: .but, regex: regex, class:`class`, selector:selector)
+public struct WhenDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = .when
 }
-public func MatchAll(_ regex:String, class:AnyClass, selector:Selector) {
-    Cucumber.shared.attachClosureToSteps(regex: regex, class:`class`, selector:selector)
+public struct ThenDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = .then
 }
+public struct AndDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = .and
+}
+public struct ButDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = .but
+}
+public struct MatchAllDSL: Matcher, GherkinDSL {
+    public init() { }
+    public var keyword: Step.Keyword = []
+}
+
+public typealias Given = GivenDSL
+public typealias When = WhenDSL
+public typealias Then = ThenDSL
+public typealias And = AndDSL
+public typealias But = ButDSL
+public typealias MatchAll = MatchAllDSL
