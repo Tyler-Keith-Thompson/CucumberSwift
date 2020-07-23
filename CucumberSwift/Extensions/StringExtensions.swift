@@ -8,6 +8,12 @@
 
 import Foundation
 extension String {
+    init(_ staticString: StaticString) {
+        self = staticString.withUTF8Buffer {
+            String(decoding: $0, as: UTF8.self)
+        }
+    }
+
     func matches(for regex: String) -> [String] {
         do {
             let regex = try NSRegularExpression(pattern: regex, options: .caseInsensitive)

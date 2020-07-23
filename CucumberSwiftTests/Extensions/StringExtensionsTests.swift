@@ -43,4 +43,9 @@ class StringExtensionsTests : XCTestCase {
     func testCamelCaseFromNonAlphanumericCharacters() {
         XCTAssertEqual("test-two".camelCasingString(), "testTwo")
     }
+    
+    func testInitWithStaticString() {
+        let ss:StaticString = "someValue"
+        XCTAssertEqual(String(ss), "someValue")
+    }
 }

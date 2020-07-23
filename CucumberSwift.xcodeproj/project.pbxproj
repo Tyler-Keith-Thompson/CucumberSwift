@@ -71,6 +71,11 @@
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */; };
+		CA5A210C24C9D07A0077AD50 /* StepDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210B24C9D07A0077AD50 /* StepDSL.swift */; };
+		CA5A210E24C9D08A0077AD50 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210D24C9D08A0077AD50 /* Matcher.swift */; };
+		CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */; };
+		CA5A211224C9D2D90077AD50 /* ScenarioBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */; };
+		CA5A211424C9D3070077AD50 /* StepBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211324C9D3070077AD50 /* StepBuilder.swift */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -166,6 +171,11 @@
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLStepTests.swift; sourceTree = "<group>"; };
+		CA5A210B24C9D07A0077AD50 /* StepDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDSL.swift; sourceTree = "<group>"; };
+		CA5A210D24C9D08A0077AD50 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
+		CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GherkinDSL.swift; sourceTree = "<group>"; };
+		CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioBuilder.swift; sourceTree = "<group>"; };
+		CA5A211324C9D3070077AD50 /* StepBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBuilder.swift; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -297,6 +307,7 @@
 		AD9EB4622079CF87002494C0 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				CA5A210A24C9D0640077AD50 /* DSL */,
 				AD4E772D2235962F005938B7 /* Reporter */,
 				AD99DB6121335B2100E57823 /* Runner */,
 				ADCAC7E4212F9E3300542073 /* XCTestCaseGenerator */,
@@ -399,6 +410,18 @@
 				CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */,
 			);
 			path = DSLTests;
+			sourceTree = "<group>";
+		};
+		CA5A210A24C9D0640077AD50 /* DSL */ = {
+			isa = PBXGroup;
+			children = (
+				CA5A210B24C9D07A0077AD50 /* StepDSL.swift */,
+				CA5A210D24C9D08A0077AD50 /* Matcher.swift */,
+				CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */,
+				CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */,
+				CA5A211324C9D3070077AD50 /* StepBuilder.swift */,
+			);
+			path = DSL;
 			sourceTree = "<group>";
 		};
 		CA5A7C3620FC2AF600F4564A /* Gherkin */ = {
@@ -614,8 +637,10 @@
 				ADAA738C20A92BB000D2344C /* Taggable.swift in Sources */,
 				CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */,
 				AD22A1B6222B10B50025E41C /* TestCaseGenerator.swift in Sources */,
+				CA5A210C24C9D07A0077AD50 /* StepDSL.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
 				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
+				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
@@ -626,7 +651,9 @@
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
+				CA5A210E24C9D08A0077AD50 /* Matcher.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
+				CA5A211424C9D3070077AD50 /* StepBuilder.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD4E772F2235963D005938B7 /* Reporter.swift in Sources */,
@@ -640,6 +667,7 @@
 				1DA761A6239A7C41001CBA5B /* Nodes.swift in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,
+				CA5A211224C9D2D90077AD50 /* ScenarioBuilder.swift in Sources */,
 				AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */,
 				1DA761A4239A7C23001CBA5B /* ASTRule.swift in Sources */,
 				ADA5D9702132047700530826 /* CucumberTest.swift in Sources */,
