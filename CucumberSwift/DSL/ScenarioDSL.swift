@@ -17,12 +17,13 @@ public extension Scenario {
     }
 }
 
-public class Description: Scenario {
-    public init?(_ title:String) { nil }
+public class Description: ScenarioDSL {
+    public var scenarios: [Scenario] { [] }
+    public init(_ title:String) { }
 }
 
 extension Scenario: ScenarioDSL {
-    public var scenarios: [Scenario] { [self] }
+    @objc public var scenarios: [Scenario] { [self] }
 }
 
 public protocol ScenarioDSL {

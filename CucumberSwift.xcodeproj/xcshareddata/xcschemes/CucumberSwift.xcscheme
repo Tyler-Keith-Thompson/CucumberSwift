@@ -69,6 +69,16 @@
                ReferencedContainer = "container:CucumberSwift.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CA73474024CB4EDB00D1A018"
+               BuildableName = "CucumberSwiftDSLConsumerTests.xctest"
+               BlueprintName = "CucumberSwiftDSLConsumerTests"
+               ReferencedContainer = "container:CucumberSwift.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

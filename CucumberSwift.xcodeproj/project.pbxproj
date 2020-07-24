@@ -85,6 +85,8 @@
 		CA73473824CA6FAD00D1A018 /* DSLFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */; };
 		CA73473A24CA788B00D1A018 /* DSLScenarioOutlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */; };
 		CA73473C24CA796C00D1A018 /* DSLScenarioOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */; };
+		CA73474424CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73474324CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift */; };
+		CA73474624CB4EDB00D1A018 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337AA21044ACC002C361D /* CucumberTests.swift */; };
 		CAA337AF21045847002C361D /* testdata in Resources */ = {isa = PBXBuildFile; fileRef = CAA337AE21045847002C361D /* testdata */; };
 		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
@@ -99,6 +101,13 @@
 			remoteInfo = CucumberSwift;
 		};
 		ADA5D9682131EA3200530826 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AD9EB4572079CF87002494C0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AD9EB45F2079CF87002494C0;
+			remoteInfo = CucumberSwift;
+		};
+		CA73474724CB4EDB00D1A018 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = AD9EB4572079CF87002494C0 /* Project object */;
 			proxyType = 1;
@@ -191,6 +200,9 @@
 		CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLFeatureTests.swift; sourceTree = "<group>"; };
 		CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioOutlineTests.swift; sourceTree = "<group>"; };
 		CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioOutline.swift; sourceTree = "<group>"; };
+		CA73474124CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CucumberSwiftDSLConsumerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA73474324CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftDSLConsumerTests.swift; sourceTree = "<group>"; };
+		CA73474524CB4EDB00D1A018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAA337AA21044ACC002C361D /* CucumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTests.swift; sourceTree = "<group>"; };
 		CAA337AE21045847002C361D /* testdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testdata; sourceTree = "<group>"; };
 		CAA337B02104C310002C361D /* DocstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocstringTests.swift; sourceTree = "<group>"; };
@@ -218,6 +230,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADA5D9672131EA3200530826 /* CucumberSwift.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA73473E24CB4EDB00D1A018 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA73474624CB4EDB00D1A018 /* CucumberSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -301,6 +321,7 @@
 				AD9EB4622079CF87002494C0 /* CucumberSwift */,
 				AD9EB46D2079CF87002494C0 /* CucumberSwiftTests */,
 				ADA5D9632131EA3200530826 /* CucumberSwiftConsumerTests */,
+				CA73474224CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests */,
 				AD9EB4612079CF87002494C0 /* Products */,
 				AD9EB4862079FED8002494C0 /* Frameworks */,
 			);
@@ -312,6 +333,7 @@
 				AD9EB4602079CF87002494C0 /* CucumberSwift.framework */,
 				AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */,
 				ADA5D9622131EA3200530826 /* CucumberSwiftConsumerTests.xctest */,
+				CA73474124CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -467,6 +489,15 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		CA73474224CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA73474324CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift */,
+				CA73474524CB4EDB00D1A018 /* Info.plist */,
+			);
+			path = CucumberSwiftDSLConsumerTests;
+			sourceTree = "<group>";
+		};
 		CAA337A921044ABB002C361D /* CucumberTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -568,13 +599,31 @@
 			productReference = ADA5D9622131EA3200530826 /* CucumberSwiftConsumerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		CA73474024CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA73474924CB4EDB00D1A018 /* Build configuration list for PBXNativeTarget "CucumberSwiftDSLConsumerTests" */;
+			buildPhases = (
+				CA73473D24CB4EDB00D1A018 /* Sources */,
+				CA73473E24CB4EDB00D1A018 /* Frameworks */,
+				CA73473F24CB4EDB00D1A018 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CA73474824CB4EDB00D1A018 /* PBXTargetDependency */,
+			);
+			name = CucumberSwiftDSLConsumerTests;
+			productName = CucumberSwiftDSLConsumerTests;
+			productReference = CA73474124CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		AD9EB4572079CF87002494C0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0940;
+				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Tyler Thompson";
 				TargetAttributes = {
@@ -591,6 +640,10 @@
 					ADA5D9612131EA3200530826 = {
 						CreatedOnToolsVersion = 9.4.1;
 						LastSwiftMigration = 1010;
+						ProvisioningStyle = Automatic;
+					};
+					CA73474024CB4EDB00D1A018 = {
+						CreatedOnToolsVersion = 11.6;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -611,6 +664,7 @@
 				AD9EB45F2079CF87002494C0 /* CucumberSwift */,
 				AD9EB4682079CF87002494C0 /* CucumberSwiftTests */,
 				ADA5D9612131EA3200530826 /* CucumberSwiftConsumerTests */,
+				CA73474024CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests */,
 			);
 		};
 /* End PBXProject section */
@@ -642,6 +696,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADA5D96E2131EAC600530826 /* Features in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CA73473F24CB4EDB00D1A018 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -738,6 +799,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CA73473D24CB4EDB00D1A018 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA73474424CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -750,6 +819,11 @@
 			isa = PBXTargetDependency;
 			target = AD9EB45F2079CF87002494C0 /* CucumberSwift */;
 			targetProxy = ADA5D9682131EA3200530826 /* PBXContainerItemProxy */;
+		};
+		CA73474824CB4EDB00D1A018 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AD9EB45F2079CF87002494C0 /* CucumberSwift */;
+			targetProxy = CA73474724CB4EDB00D1A018 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -994,6 +1068,41 @@
 			};
 			name = Release;
 		};
+		CA73474A24CB4EDB00D1A018 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D76F7H5QKL;
+				INFOPLIST_FILE = CucumberSwiftDSLConsumerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = TT.CucumberSwiftDSLConsumerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CA73474B24CB4EDB00D1A018 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = D76F7H5QKL;
+				INFOPLIST_FILE = CucumberSwiftDSLConsumerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.6;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = TT.CucumberSwiftDSLConsumerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1029,6 +1138,15 @@
 			buildConfigurations = (
 				ADA5D96B2131EA3200530826 /* Debug */,
 				ADA5D96C2131EA3200530826 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CA73474924CB4EDB00D1A018 /* Build configuration list for PBXNativeTarget "CucumberSwiftDSLConsumerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA73474A24CB4EDB00D1A018 /* Debug */,
+				CA73474B24CB4EDB00D1A018 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
