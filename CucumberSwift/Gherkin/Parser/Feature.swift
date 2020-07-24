@@ -45,6 +45,15 @@ public class Feature : Taggable, Positionable {
         endLocation ?= scenarios.last?.endLocation
     }
     
+    init(with scenarios:[Scenario], title:String?, tags:[String], position:Lexer.Position) {
+        location = position
+        endLocation = scenarios.last?.endLocation ?? .start
+        self.scenarios = scenarios
+        self.title ?= title
+        self.tags = tags
+        self.scenarios.forEach { [weak self] in $0.feature = self }
+    }
+    
     internal func addScenario(_ scenario:Scenario) {
         scenarios.append(scenario)
     }

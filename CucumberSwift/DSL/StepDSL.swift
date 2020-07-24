@@ -8,42 +8,38 @@
 
 import Foundation
 
-public final class GivenStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        .given
+public class DSLStep: Step {
+    public init() {
+        super.init(with: AST.StepNode())
+    }
+    public init(line:UInt, column: UInt, match:String?, handler: @escaping () -> Void) {
+        super.init(with: {_, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
+        self.execute = {_, _ in handler() }
     }
 }
 
-public final class WhenStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        .when
-    }
+public final class GivenStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { .given }
 }
-public final class ThenStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        .then
-    }
+
+public final class WhenStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { .when }
 }
-public final class AndStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        .and
-    }
+
+public final class ThenStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { .then }
 }
-public final class ButStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        .but
-    }
+
+public final class AndStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { .and }
 }
-public final class MatchAllStep: Step, Matcher, GherkinDSL {
-    public init() { super.init(with: AST.StepNode()) }
-    public override var keyword: Step.Keyword {
-        []
-    }
+
+public final class ButStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { .but }
+}
+
+public final class MatchAllStep: DSLStep, Matcher, GherkinDSL {
+    public override var keyword: Step.Keyword { [] }
 }
 
 public typealias Given = GivenStep

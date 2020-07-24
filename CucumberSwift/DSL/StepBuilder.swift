@@ -8,8 +8,9 @@
 
 import Foundation
 @_functionBuilder
-struct StepBuilder {
-    static func buildBlock(_ items: Step?...) -> [Step] {
+public struct StepBuilder {
+    public static func buildBlock(_ items: DSLStep?...) -> [DSLStep] {
+        print("~~~FINDME: \(items)")
         return items.compactMap { $0 }
     }
 }

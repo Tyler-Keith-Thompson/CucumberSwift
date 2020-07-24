@@ -76,6 +76,8 @@
 		CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */; };
 		CA5A211224C9D2D90077AD50 /* ScenarioBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */; };
 		CA5A211424C9D3070077AD50 /* StepBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211324C9D3070077AD50 /* StepBuilder.swift */; };
+		CA5A211624C9E76F0077AD50 /* ScenarioDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211524C9E76F0077AD50 /* ScenarioDSL.swift */; };
+		CA5A211824CA42370077AD50 /* FeatureDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A211724CA42370077AD50 /* FeatureDSL.swift */; };
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
@@ -176,6 +178,8 @@
 		CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GherkinDSL.swift; sourceTree = "<group>"; };
 		CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioBuilder.swift; sourceTree = "<group>"; };
 		CA5A211324C9D3070077AD50 /* StepBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepBuilder.swift; sourceTree = "<group>"; };
+		CA5A211524C9E76F0077AD50 /* ScenarioDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioDSL.swift; sourceTree = "<group>"; };
+		CA5A211724CA42370077AD50 /* FeatureDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureDSL.swift; sourceTree = "<group>"; };
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
@@ -420,6 +424,8 @@
 				CA5A210F24C9D0B10077AD50 /* GherkinDSL.swift */,
 				CA5A211124C9D2D90077AD50 /* ScenarioBuilder.swift */,
 				CA5A211324C9D3070077AD50 /* StepBuilder.swift */,
+				CA5A211524C9E76F0077AD50 /* ScenarioDSL.swift */,
+				CA5A211724CA42370077AD50 /* FeatureDSL.swift */,
 			);
 			path = DSL;
 			sourceTree = "<group>";
@@ -643,6 +649,7 @@
 				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
+				CA5A211624C9E76F0077AD50 /* ScenarioDSL.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
 				1DBF9329239C97AC0035722A /* RuleParser.swift in Sources */,
 				1DE862E02391F7F70027326A /* Position.swift in Sources */,
@@ -663,6 +670,7 @@
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,
+				CA5A211824CA42370077AD50 /* FeatureDSL.swift in Sources */,
 				1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */,
 				1DA761A6239A7C41001CBA5B /* Nodes.swift in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
