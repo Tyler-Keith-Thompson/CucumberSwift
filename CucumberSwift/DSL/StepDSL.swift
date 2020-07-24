@@ -16,6 +16,11 @@ public class DSLStep: Step {
         super.init(with: {_, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
         self.execute = {_, _ in handler() }
     }
+    
+    public func continueAfterFailure(_ val:Bool) -> DSLStep {
+        continueAfterFailure = val
+        return self
+    }
 }
 
 public final class GivenStep: DSLStep, Matcher, GherkinDSL {

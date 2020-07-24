@@ -37,6 +37,7 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(scenario?.steps.count, 1)
         
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .given)
         XCTAssertEqual(step?.match, "I: printAStatement()")
         XCTAssertEqual(step?.location.line, 24)
         XCTAssertEqual(step?.location.column, 22)
@@ -49,16 +50,17 @@ class DSLStepTests: XCTestCase {
         Feature("") {
             Description(UUID().uuidString)
             Scenario("") {
-                Given(a:
+                When(a:
                     printAStatement())
             }
         }
         
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .when)
         XCTAssertEqual(step?.match, "a:printAStatement()")
-        XCTAssertEqual(step?.location.line, 52)
-        XCTAssertEqual(step?.location.column, 22)
+        XCTAssertEqual(step?.location.line, 53)
+        XCTAssertEqual(step?.location.column, 21)
     }
 
     func testStepMatchWithAsManyLineBreaksAsPossible() {
@@ -68,7 +70,7 @@ class DSLStepTests: XCTestCase {
         Feature("") {
             Description(UUID().uuidString)
             Scenario("") {
-                Given(the:
+                Then(the:
                     printAStatement()
                 )
             }
@@ -76,9 +78,10 @@ class DSLStepTests: XCTestCase {
         
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .then)
         XCTAssertEqual(step?.match, "the:printAStatement()")
-        XCTAssertEqual(step?.location.line, 71)
-        XCTAssertEqual(step?.location.column, 22)
+        XCTAssertEqual(step?.location.line, 73)
+        XCTAssertEqual(step?.location.column, 21)
     }
     
     func testStepMatchWithAsStringLiteralThatTriesToFoolTheParenCount() {
@@ -88,7 +91,7 @@ class DSLStepTests: XCTestCase {
         Feature("") {
             Description(UUID().uuidString)
             Scenario("") {
-                Given(my:
+                And(my:
                     printAStatement("))")
                 )
             }
@@ -96,9 +99,10 @@ class DSLStepTests: XCTestCase {
         
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .and)
         XCTAssertEqual(step?.match, "my:printAStatement(\"))\")")
-        XCTAssertEqual(step?.location.line, 91)
-        XCTAssertEqual(step?.location.column, 22)
+        XCTAssertEqual(step?.location.line, 94)
+        XCTAssertEqual(step?.location.column, 20)
     }
     
     func testStepMatchWithAsStringLiteralThatDoesNotTryToFoolTheParenCount() {
@@ -108,7 +112,7 @@ class DSLStepTests: XCTestCase {
         Feature("") {
             Description(UUID().uuidString)
             Scenario("") {
-                Given(some:
+                But(some:
                     printAStatement("some other thing")
                 )
             }
@@ -116,9 +120,10 @@ class DSLStepTests: XCTestCase {
         
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, .but)
         XCTAssertEqual(step?.match, "some:printAStatement(\"some other thing\")")
-        XCTAssertEqual(step?.location.line, 111)
-        XCTAssertEqual(step?.location.column, 22)
+        XCTAssertEqual(step?.location.line, 115)
+        XCTAssertEqual(step?.location.column, 20)
     }
     
     func testStepMatchWithAsDocStringLiteralThatDoesNotTryToFoolTheParenCount() {
@@ -128,7 +133,7 @@ class DSLStepTests: XCTestCase {
         Feature("") {
             Description(UUID().uuidString)
             Scenario("") {
-                Given(I:
+                MatchAll(I:
                     printAStatement("""
                         ""some o)her thing""
                     """)
@@ -138,8 +143,25 @@ class DSLStepTests: XCTestCase {
         
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
+        XCTAssertEqual(step?.keyword, [])
         XCTAssertEqual(step?.match, "I:printAStatement(\"\"\"\"\"some o)her thing\"\"\"\"\")")
-        XCTAssertEqual(step?.location.line, 131)
-        XCTAssertEqual(step?.location.column, 22)
+        XCTAssertEqual(step?.location.line, 136)
+        XCTAssertEqual(step?.location.column, 25)
+    }
+    
+    func testStepCanBeModifiedToNotContinueAfterFailure() {
+        func printAStatement(_ str:String) { print(str) }
+        
+        let feature =
+        Feature("") {
+            Description(UUID().uuidString)
+            Scenario("") {
+                Given(I: printAStatement("")).continueAfterFailure(false)
+            }
+        }
+        
+        let scenario = feature.scenarios.first
+        let step = scenario?.steps.first
+        XCTAssertEqual(step?.continueAfterFailure, false)
     }
 }
