@@ -10,7 +10,7 @@ import Foundation
 
 @_functionBuilder
 public struct ScenarioBuilder {
-    public static func buildBlock(_ items: Scenario?...) -> [Scenario] {
-        return items.compactMap { $0 }
+    public static func buildBlock(_ items: ScenarioDSL?...) -> [Scenario] {
+        return items.compactMap { $0?.scenarios }.flatMap { $0 }
     }
 }

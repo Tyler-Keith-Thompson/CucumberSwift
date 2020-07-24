@@ -8,12 +8,12 @@
 
 import Foundation
 public extension Feature {
-    @discardableResult convenience init(_ title:String, tags:[String] = [], line:UInt = #line, column:UInt = #column, @ScenarioBuilder _ content: () -> [Scenario]) {
-        self.init(with: content(), title: title, tags: tags, position: Lexer.Position(line: line, column: column))
+    @discardableResult convenience init(_ title:String, tags:[String] = [], line:UInt = #line, column:UInt = #column, @ScenarioBuilder _ content: () -> [ScenarioDSL]) {
+        self.init(with: content().flatMap { $0.scenarios }, title: title, tags: tags, position: Lexer.Position(line: line, column: column))
         Cucumber.shared.features.append(self)
     }
-    @discardableResult convenience init(_ title:String, tags:[String] = [], line:UInt = #line, column:UInt = #column, @ScenarioBuilder _ content: () -> Scenario) {
-        self.init(with: [content()], title: title, tags: tags, position: Lexer.Position(line: line, column: column))
+    @discardableResult convenience init(_ title:String, tags:[String] = [], line:UInt = #line, column:UInt = #column, @ScenarioBuilder _ content: () -> ScenarioDSL) {
+        self.init(with: content().scenarios, title: title, tags: tags, position: Lexer.Position(line: line, column: column))
         Cucumber.shared.features.append(self)
     }
 }

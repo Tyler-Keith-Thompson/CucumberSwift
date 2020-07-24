@@ -20,3 +20,11 @@ public extension Scenario {
 public class Description: Scenario {
     public init?(_ title:String) { nil }
 }
+
+extension Scenario: ScenarioDSL {
+    public var scenarios: [Scenario] { [self] }
+}
+
+public protocol ScenarioDSL {
+    var scenarios:[Scenario] { get }
+}

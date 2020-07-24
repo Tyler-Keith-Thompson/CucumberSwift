@@ -11,15 +11,87 @@ import XCTest
 @testable import CucumberSwift
 
 class DSLScenarioOutlineTests: XCTestCase {
+    
+    override func setUp() {
+        Cucumber.shared.features.removeAll()
+    }
+    
     func testScenarioOutlineCallsThroughForEveryRowInExamples() {
-        ScenarioOutline("SomeTitle", headers: (first:String, last:String, balance:Double).self,
-                        steps: { (first, last, balance) in
-            Given(I: print(first))
-        }, examples: {
-            [
-                (first: "John", last: "Doe", balance: 0),
-                (first: "Jane", last: "Doe", balance: 10.50),
-            ]
-        })
+        var called = 0
+        var args = [Any]()
+        
+        let callback:(Any) -> Void = { arg in
+            called += 1
+            args.append(arg)
+        }
+        Feature("") {
+            ScenarioOutline("SomeTitle", headers: (first:String, last:String, balance:Double).self,
+                            steps: { (first, last, balance) in
+                Given(I: callback((first: first, last: last, balance: balance)))
+            }, examples: {
+                [
+                    (first: "John", last: "Doe", balance: 0),
+                    (first: "Jane", last: "Doe", balance: 10.50),
+                ]
+            })
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        let firstScenario = Cucumber.shared.features.first?.scenarios.first
+        let lastScenario = Cucumber.shared.features.first?.scenarios.last
+        XCTAssertEqual(firstScenario?.title, "SomeTitle")
+        XCTAssertEqual(lastScenario?.title, "SomeTitle")
+        XCTAssertEqual(firstScenario?.location.line, 28)
+        XCTAssertEqual(lastScenario?.location.line, 28)
+        XCTAssertEqual(firstScenario?.location.column, 28)
+        XCTAssertEqual(lastScenario?.location.column, 28)
+
+        XCTAssertEqual(called, 2)
+        let firstStep = args.first as? (first:String, last:String, balance:Double)
+        XCTAssertEqual(firstStep?.first, "John")
+        XCTAssertEqual(firstStep?.last, "Doe")
+        XCTAssertEqual(firstStep?.balance, 0)
+        
+        let lastStep = args.last as? (first:String, last:String, balance:Double)
+        XCTAssertEqual(lastStep?.first, "Jane")
+        XCTAssertEqual(lastStep?.last, "Doe")
+        XCTAssertEqual(lastStep?.balance, 10.50)
+    }
+    
+    func testScenarioOutlineWithTags() {
+        var called = 0
+        var args = [Any]()
+        
+        let callback:(Any) -> Void = { arg in
+            called += 1
+            args.append(arg)
+        }
+        Feature("") {
+            ScenarioOutline("SomeTitle",
+                            tags: ["tag1", "tag2"],
+                            headers: (first:String, last:String, balance:Double).self,
+                            steps: { (first, last, balance) in
+                Given(I: callback((first: first, last: last, balance: balance)))
+            }, examples: {
+                [
+                    (first: "John", last: "Doe", balance: 0),
+                    (first: "Jane", last: "Doe", balance: 10.50),
+                ]
+            })
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        let firstScenario = Cucumber.shared.features.first?.scenarios.first
+        let lastScenario = Cucumber.shared.features.first?.scenarios.last
+        XCTAssertEqual(firstScenario?.title, "SomeTitle")
+        XCTAssertEqual(lastScenario?.title, "SomeTitle")
+        XCTAssertEqual(firstScenario?.location.line, 71)
+        XCTAssertEqual(lastScenario?.location.line, 71)
+        XCTAssertEqual(firstScenario?.location.column, 28)
+        XCTAssertEqual(lastScenario?.location.column, 28)
+        XCTAssertEqual(firstScenario?.tags, ["tag1", "tag2"])
+        XCTAssertEqual(lastScenario?.tags, ["tag1", "tag2"])
     }
 }
