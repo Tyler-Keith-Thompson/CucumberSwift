@@ -110,7 +110,7 @@ extension Cucumber: StepImplementation {
             
             Scenario("Scenario with the same name does not collide") {
                 Given(I: haveAScenarioDefined())
-//                    And The steps are slightly different
+                    And(the: theStepsAreSlightlyDifferent())
                 When(I: runTheTests())
                 Then(the: scenarioRunsWithoutCrashing())
             }
@@ -129,6 +129,7 @@ extension Cucumber: StepImplementation {
 }
 
 fileprivate func haveAScenarioDefined() { }
+fileprivate func theStepsAreSlightlyDifferent() { }
 
 fileprivate func runTheTests() {
     XCTAssert(true) // the tests are clearly running
