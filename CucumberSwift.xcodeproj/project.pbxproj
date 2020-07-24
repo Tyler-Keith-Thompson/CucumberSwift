@@ -83,6 +83,8 @@
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
 		CA73473624CA668D00D1A018 /* DSLScenarioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */; };
 		CA73473824CA6FAD00D1A018 /* DSLFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */; };
+		CA73473A24CA788B00D1A018 /* DSLScenarioOutlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */; };
+		CA73473C24CA796C00D1A018 /* DSLScenarioOutline.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */; };
 		CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337AA21044ACC002C361D /* CucumberTests.swift */; };
 		CAA337AF21045847002C361D /* testdata in Resources */ = {isa = PBXBuildFile; fileRef = CAA337AE21045847002C361D /* testdata */; };
 		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
@@ -187,6 +189,8 @@
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioTests.swift; sourceTree = "<group>"; };
 		CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLFeatureTests.swift; sourceTree = "<group>"; };
+		CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioOutlineTests.swift; sourceTree = "<group>"; };
+		CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioOutline.swift; sourceTree = "<group>"; };
 		CAA337AA21044ACC002C361D /* CucumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTests.swift; sourceTree = "<group>"; };
 		CAA337AE21045847002C361D /* testdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testdata; sourceTree = "<group>"; };
 		CAA337B02104C310002C361D /* DocstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocstringTests.swift; sourceTree = "<group>"; };
@@ -418,6 +422,7 @@
 				CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */,
 				CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */,
 				CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */,
+				CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */,
 			);
 			path = DSLTests;
 			sourceTree = "<group>";
@@ -432,6 +437,7 @@
 				CA5A211324C9D3070077AD50 /* StepBuilder.swift */,
 				CA5A211524C9E76F0077AD50 /* ScenarioDSL.swift */,
 				CA5A211724CA42370077AD50 /* FeatureDSL.swift */,
+				CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */,
 			);
 			path = DSL;
 			sourceTree = "<group>";
@@ -685,6 +691,7 @@
 				AD22A1B8222B10BD0025E41C /* TestCaseMethod.swift in Sources */,
 				1DA761A4239A7C23001CBA5B /* ASTRule.swift in Sources */,
 				ADA5D9702132047700530826 /* CucumberTest.swift in Sources */,
+				CA73473C24CA796C00D1A018 /* DSLScenarioOutline.swift in Sources */,
 				ADBB361E2132145500C375E2 /* Globals.swift in Sources */,
 				AD99DB6321335B5D00E57823 /* TestObservation.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
@@ -702,6 +709,7 @@
 				ADB4D5FC20FD02B8005997AD /* TagTests.swift in Sources */,
 				ADB4D5FA20FD0234005997AD /* CommentTests.swift in Sources */,
 				CA73473824CA6FAD00D1A018 /* DSLFeatureTests.swift in Sources */,
+				CA73473A24CA788B00D1A018 /* DSLScenarioOutlineTests.swift in Sources */,
 				AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */,
 				CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */,
 				AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */,
