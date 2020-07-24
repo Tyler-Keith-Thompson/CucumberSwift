@@ -57,4 +57,21 @@ class DSLFeatureTests: XCTestCase {
         XCTAssertEqual(Cucumber.shared.features.count, 1)
         XCTAssert(Cucumber.shared.features.first === feature)
     }
+    
+    func testStepExecutesWithTheCucumberRunner() {
+        var called = false
+        let stepExecutes = {
+            called = true
+        }
+        Feature("") {
+            Scenario("") {
+                Given(a: stepExecutes())
+            }
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        XCTAssert(called)
+    }
+
 }
