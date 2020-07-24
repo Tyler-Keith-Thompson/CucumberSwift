@@ -12,9 +12,9 @@ public class DSLStep: Step {
     public init() {
         super.init(with: AST.StepNode())
     }
+    
     public init(line:UInt, column: UInt, match:String?, handler: @escaping () -> Void) {
         super.init(with: {_, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
-        self.execute = {_, _ in handler() }
     }
     
     public func continueAfterFailure(_ val:Bool) -> DSLStep {

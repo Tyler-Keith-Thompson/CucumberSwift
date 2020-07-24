@@ -86,9 +86,10 @@ public class Step: CustomStringConvertible {
         match = match.trimmingCharacters(in: .whitespaces)
     }
     
-    init(with closure:(([String], Step) -> Void), match:String?, position:Lexer.Position) {
+    init(with closure:@escaping (([String], Step) -> Void), match:String?, position:Lexer.Position) {
         location = position
         self.match ?= match
+        self.execute = closure
     }
     
     func toJSON() -> [String:Any] {
