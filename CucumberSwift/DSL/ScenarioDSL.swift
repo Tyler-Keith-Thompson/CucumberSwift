@@ -21,7 +21,7 @@ public extension Scenario {
     }
 }
 
-public class Description: ScenarioDSL {
+public struct Description: ScenarioDSL {
     //intentionally blank because we do not want Descriptions to be counted as real scenarios
     public var scenarios: [Scenario] { [] }
     public init(_ title:String) {

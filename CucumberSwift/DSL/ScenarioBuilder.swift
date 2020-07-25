@@ -10,7 +10,19 @@ import Foundation
 
 @_functionBuilder
 public struct ScenarioBuilder {
-    public static func buildBlock(_ items: ScenarioDSL?...) -> [Scenario] {
-        return items.compactMap { $0?.scenarios }.flatMap { $0 }
+    public static func buildBlock(_ items: ScenarioDSL...) -> [Scenario] {
+        let (backgroundSteps, scenarioDSLs) =
+            items.reduce(into: ([DSLStep](), [ScenarioDSL]())) { (res, scenarioDSL) in
+                if let background = scenarioDSL as? Background {
+                    res.0.append(contentsOf: background.steps)
+                } else {
+                    res.1.append(scenarioDSL)
+                }
+        }
+        let scenarios = scenarioDSLs.flatMap { $0.scenarios }
+        scenarios.forEach {
+            $0.steps.insert(contentsOf: backgroundSteps, at: 0)
+        }
+        return scenarios
     }
 }

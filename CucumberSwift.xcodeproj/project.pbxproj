@@ -71,6 +71,8 @@
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		CA4E2D0124CCC8AE00A44983 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */; };
+		CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */; };
+		CA4E2D0524CCDF0500A44983 /* DSLBackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0424CCDF0500A44983 /* DSLBackgroundTests.swift */; };
 		CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */; };
 		CA5A210C24C9D07A0077AD50 /* StepDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210B24C9D07A0077AD50 /* StepDSL.swift */; };
 		CA5A210E24C9D08A0077AD50 /* Matcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A210D24C9D08A0077AD50 /* Matcher.swift */; };
@@ -187,6 +189,8 @@
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTests.swift; sourceTree = "<group>"; };
+		CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDSL.swift; sourceTree = "<group>"; };
+		CA4E2D0424CCDF0500A44983 /* DSLBackgroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLBackgroundTests.swift; sourceTree = "<group>"; };
 		CA5A210824C92BDC0077AD50 /* DSLStepTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLStepTests.swift; sourceTree = "<group>"; };
 		CA5A210B24C9D07A0077AD50 /* StepDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepDSL.swift; sourceTree = "<group>"; };
 		CA5A210D24C9D08A0077AD50 /* Matcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Matcher.swift; sourceTree = "<group>"; };
@@ -447,6 +451,7 @@
 				CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */,
 				CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */,
 				CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */,
+				CA4E2D0424CCDF0500A44983 /* DSLBackgroundTests.swift */,
 			);
 			path = DSLTests;
 			sourceTree = "<group>";
@@ -462,6 +467,7 @@
 				CA5A211524C9E76F0077AD50 /* ScenarioDSL.swift */,
 				CA5A211724CA42370077AD50 /* FeatureDSL.swift */,
 				CA73473B24CA796C00D1A018 /* DSLScenarioOutline.swift */,
+				CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */,
 			);
 			path = DSL;
 			sourceTree = "<group>";
@@ -731,6 +737,7 @@
 				1DE862E02391F7F70027326A /* Position.swift in Sources */,
 				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
 				AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */,
+				CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */,
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
@@ -784,6 +791,7 @@
 				AD7F1C10210507420004852A /* StepTests.swift in Sources */,
 				CA73473624CA668D00D1A018 /* DSLScenarioTests.swift in Sources */,
 				CAA337B12104C310002C361D /* DocstringTests.swift in Sources */,
+				CA4E2D0524CCDF0500A44983 /* DSLBackgroundTests.swift in Sources */,
 				CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */,
 				5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */,
 				AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */,
