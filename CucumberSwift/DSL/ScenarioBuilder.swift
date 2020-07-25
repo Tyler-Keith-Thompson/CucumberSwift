@@ -10,9 +10,9 @@ import Foundation
 
 @_functionBuilder
 public struct ScenarioBuilder {
-    public static func buildBlock(_ items: ScenarioDSL...) -> [Scenario] {
+    public static func buildBlock(_ items: ScenarioDSL...) -> [ScenarioDSL] {
         let (backgroundSteps, scenarioDSLs) =
-            items.reduce(into: ([DSLStep](), [ScenarioDSL]())) { (res, scenarioDSL) in
+            items.reduce(into: ([StepDSL](), [ScenarioDSL]())) { (res, scenarioDSL) in
                 if let background = scenarioDSL as? Background {
                     res.0.append(contentsOf: background.steps)
                 } else {

@@ -11,12 +11,12 @@ import Foundation
 public extension Scenario {
     convenience init(_ title:String, tags:[String] = [],
                      line:UInt = #line, column:UInt = #column,
-                     @StepBuilder _ content: () -> [DSLStep]) {
+                     @StepBuilder _ content: () -> [StepDSL]) {
         self.init(with: content(), title: title, tags: tags, position: Lexer.Position(line: line, column: column))
     }
     convenience init(_ title:String, tags:[String] = [],
                      line:UInt = #line, column:UInt = #column,
-                     @StepBuilder _ content: () -> DSLStep) {
+                     @StepBuilder _ content: () -> StepDSL) {
         self.init(with: [content()], title: title, tags: tags, position: Lexer.Position(line: line, column: column))
     }
 }
