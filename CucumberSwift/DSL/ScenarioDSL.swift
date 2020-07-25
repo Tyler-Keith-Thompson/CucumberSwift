@@ -22,8 +22,11 @@ public extension Scenario {
 }
 
 public class Description: ScenarioDSL {
+    //intentionally blank because we do not want Descriptions to be counted as real scenarios
     public var scenarios: [Scenario] { [] }
-    public init(_ title:String) { }
+    public init(_ title:String) {
+        //title is purely for readability in the DSL, not needed here.
+    }
 }
 
 extension Scenario: ScenarioDSL {

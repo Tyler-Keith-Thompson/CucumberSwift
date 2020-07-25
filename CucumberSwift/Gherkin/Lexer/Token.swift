@@ -105,12 +105,6 @@ extension Lexer {
             }
             return false
         }
-        func isTag() -> Bool {
-            if case .tag(_, _) = self {
-                return true
-            }
-            return false
-        }
         func isString() -> Bool {
             if case .string(_, _) = self {
                 return true

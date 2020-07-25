@@ -18,7 +18,7 @@ public struct ScenarioOutline: ScenarioDSL {
             Scenario(with: steps($0),
                      title: title,
                      tags: tags,
-                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+                     position: Lexer.Position(line: line, column: column))
         }
     }
     
@@ -29,7 +29,7 @@ public struct ScenarioOutline: ScenarioDSL {
             Scenario(with: [steps($0)],
                      title: title,
                      tags: tags,
-                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+                     position: Lexer.Position(line: line, column: column))
         }
     }
     
@@ -40,7 +40,7 @@ public struct ScenarioOutline: ScenarioDSL {
             Scenario(with: steps($0),
                      title: title($0),
                      tags: tags,
-                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+                     position: Lexer.Position(line: line, column: column))
         }
     }
     
@@ -51,7 +51,7 @@ public struct ScenarioOutline: ScenarioDSL {
             Scenario(with: [steps($0)],
                      title: title($0),
                      tags: tags,
-                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+                     position: Lexer.Position(line: line, column: column))
         }
     }
 

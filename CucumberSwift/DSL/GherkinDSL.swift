@@ -33,12 +33,16 @@ fileprivate func readStepName(lineNumber:UInt, column:UInt, filePath:StaticStrin
     
     line += lines[lineIndex+1...lines.count-1].map { $0.trimmingCharacters(in: .whitespacesAndNewlines )}.joined()
     
+    return readClosureNameFrom(line: line)
+}
+
+fileprivate func readClosureNameFrom(line: String) -> String {
     var matchedQuote = false
     
     //overly complex way of matching () to grab the step text
     //ignores strings and docstrings
     //any more complex and I need to pull in a way to look at the Swift AST
-    let name = line.reduce((match:"", openCount: 0, closeCount: 0)) { (res, c) in
+    return line.reduce((match:"", openCount: 0, closeCount: 0)) { (res, c) in
         let char = String(c)
         var (match, openCount, closeCount) = res
         if (openCount > 0 && openCount == closeCount) { return res }
@@ -59,13 +63,10 @@ fileprivate func readStepName(lineNumber:UInt, column:UInt, filePath:StaticStrin
                     openCount: openCount,
                     closeCount: closeCount)
         }
-        match += char
-        return (match: match,
+        return (match: match + char,
                 openCount: openCount,
                 closeCount: closeCount)
     }.match
-    
-    return name
 }
 
 
