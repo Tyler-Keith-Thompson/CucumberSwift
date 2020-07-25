@@ -11,17 +11,17 @@ import Foundation
 public extension Scenario {
     convenience init(_ title:String, tags:[String] = [],
                      line:UInt = #line, column:UInt = #column,
-                     @StepBuilder _ content: () -> [DSLStep]) {
+                     @StepBuilder _ content: () -> [StepDSL]) {
         self.init(with: content(), title: title, tags: tags, position: Lexer.Position(line: line, column: column))
     }
     convenience init(_ title:String, tags:[String] = [],
                      line:UInt = #line, column:UInt = #column,
-                     @StepBuilder _ content: () -> DSLStep) {
+                     @StepBuilder _ content: () -> StepDSL) {
         self.init(with: [content()], title: title, tags: tags, position: Lexer.Position(line: line, column: column))
     }
 }
 
-public class Description: ScenarioDSL {
+public struct Description: ScenarioDSL {
     //intentionally blank because we do not want Descriptions to be counted as real scenarios
     public var scenarios: [Scenario] { [] }
     public init(_ title:String) {
