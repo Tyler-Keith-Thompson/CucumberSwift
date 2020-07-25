@@ -54,10 +54,6 @@ public class Feature : Taggable, Positionable {
         self.scenarios.forEach { [weak self] in $0.feature = self }
     }
     
-    internal func addScenario(_ scenario:Scenario) {
-        scenarios.append(scenario)
-    }
-    
     public func containsTags(_ tags:[String]) -> Bool {
         if (tags.contains{ containsTag($0) }) {
             return true
