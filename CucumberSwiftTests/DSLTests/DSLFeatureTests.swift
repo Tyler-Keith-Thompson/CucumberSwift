@@ -155,8 +155,4 @@ class DSLFeatureTests: XCTestCase {
         
         XCTAssertEqual(called, 2)
     }
-    
-    #warning("Is it possible to run a specific scenario outline example by line?")
-    //NOTE: Used to be that you could run a specific example in a ScenarioOutline by line number
-    //That might be damn near impossible with the DSL without parsing the Swift AST directly
 }
