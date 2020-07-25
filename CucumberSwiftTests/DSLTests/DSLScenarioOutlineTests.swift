@@ -94,4 +94,67 @@ class DSLScenarioOutlineTests: XCTestCase {
         XCTAssertEqual(firstScenario?.tags, ["tag1", "tag2"])
         XCTAssertEqual(lastScenario?.tags, ["tag1", "tag2"])
     }
+    
+    func testScenarioOutlineWithChangingTitle() {
+        var called = 0
+        var titles = [String]()
+        
+        let title:(String) -> String = { arg in
+            called += 1
+            titles.append(arg)
+            return arg
+        }
+        Feature("") {
+            ScenarioOutline({ title($0.first) },
+                            tags: ["tag1", "tag2"],
+                            headers: (first:String, last:String, balance:Double).self,
+                            steps: { (first, last, balance) in
+                Given(I: print(""))
+            }, examples: {
+                [
+                    (first: "John", last: "Doe", balance: 0),
+                    (first: "Jane", last: "Doe", balance: 10.50),
+                ]
+            })
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        let firstScenario = Cucumber.shared.features.first?.scenarios.first
+        let lastScenario = Cucumber.shared.features.first?.scenarios.last
+        XCTAssertEqual(firstScenario?.title, "John")
+        XCTAssertEqual(lastScenario?.title, "Jane")
+    }
+    
+    func testScenarioOutlineWithMultipleStepsAndChangingTitle() {
+        var called = 0
+        var titles = [String]()
+        
+        let title:(String) -> String = { arg in
+            called += 1
+            titles.append(arg)
+            return arg
+        }
+        Feature("") {
+            ScenarioOutline({ title($0.first) },
+                            tags: ["tag1", "tag2"],
+                            headers: (first:String, last:String, balance:Double).self,
+                            steps: { (first, last, balance) in
+                Given(I: print(""))
+                Then(I: print(""))
+            }, examples: {
+                [
+                    (first: "John", last: "Doe", balance: 0),
+                    (first: "Jane", last: "Doe", balance: 10.50),
+                ]
+            })
+        }
+        
+        Cucumber.shared.executeFeatures()
+        
+        let firstScenario = Cucumber.shared.features.first?.scenarios.first
+        let lastScenario = Cucumber.shared.features.first?.scenarios.last
+        XCTAssertEqual(firstScenario?.title, "John")
+        XCTAssertEqual(lastScenario?.title, "Jane")
+    }
 }

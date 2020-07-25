@@ -13,10 +13,10 @@ import CucumberSwift
 //nothin' like global vars!
 var beforeFeatureHooks = [Feature:Int]()
 var secondaryBeforeFeatureHooks = [Feature:Int]()
-var beforeScenarioHooks = [Scenario:Int]()
+var beforeScenarioHooks = [String:Int]()
 var beforeStepHooks = [Step:Int]()
 var afterStepHooks = [Step:Int]()
-var afterScenarioHooks = [Scenario:Int]()
+var afterScenarioHooks = [String:Int]()
 var afterFeatureHooks = [Feature:Int]()
 
 extension Cucumber: StepImplementation {
@@ -33,7 +33,7 @@ extension Cucumber: StepImplementation {
             secondaryBeforeFeatureHooks[feature, default: 0] += 1
         }
         BeforeScenario { scenario in
-            beforeScenarioHooks[scenario, default: 0] += 1
+            beforeScenarioHooks[scenario.title, default: 0] += 1
         }
         BeforeStep { step in
             beforeStepHooks[step, default: 0] += 1
@@ -45,10 +45,7 @@ extension Cucumber: StepImplementation {
             afterStepHooks[step, default: 0] += 1
         }
         AfterScenario { scenario in
-            if (afterScenarioHooks[scenario] != nil) {
-                XCTFail("Should not have the same after hook called")
-            }
-            afterScenarioHooks[scenario, default: 0] += 1
+            afterScenarioHooks[scenario.title, default: 0] += 1
         }
         AfterFeature { feature in
             if (afterFeatureHooks[feature] != nil) {
@@ -68,15 +65,16 @@ extension Cucumber: StepImplementation {
             """)
             
             Scenario("Before feature hook works correctly") {
-//                Given I have a before feature hook
+                Given(I: haveABeforeFeatureHook())
                 When(I: runTheTests())
-//                Then BeforeFeature gets called once per feature
+                Then(beforeFeatureGetsCalledOncePerFeature())
             }
             
-            ScenarioOutline("Before <scn> hook works correctly", headers: String.self, steps: { scn in
-//                Given I have a before <scn> hook
+            //How do we make the title work correctly? Not sure, maybe a closure?
+            ScenarioOutline({ "Before \($0) hook works correctly" }, headers: String.self, steps: { scn in
+                Given(I: haveABeforeScenarioHook())
                 When(I: runTheTests())
-//                Then BeforeScenario gets called once per scenario
+                Then(beforeScenarioGetsCalledOncePerScenario(withTitle: "Before scenario outline hook works correctly"))
             }, examples: {
                 [
                     "scenario outline"
@@ -84,20 +82,20 @@ extension Cucumber: StepImplementation {
             })
             
             Scenario("Before scenario outline hook works correctly") {
-//                Given I have a before scenario hook
+                Given(I: haveABeforeScenarioHook())
                 When(I: runTheTests())
-//                Then BeforeScenario gets called once per scenario outline
+                Then(beforeScenarioGetsCalledOncePerScenario(withTitle: "Before scenario outline hook works correctly", expected: 2))
             }
             //NOTE: The preceding scenario is purposely meant to have a name collision, so it does not appropriate read what it is testing.
             
             Scenario("Before step hook works correctly") {
-//                Given I have a before step hook
+                Given(I: haveABeforeStepHook())
                 When(I: runTheTests())
 //                Then BeforeStep gets called once per step
             }
             
             Scenario("After step hook works correctly") {
-//                Given I have an after step hook
+                Given(I: haveAnAfterStepHook())
                 When(I: runTheTests())
 //                Then AfterStep gets called once per step
             }
@@ -130,6 +128,32 @@ extension Cucumber: StepImplementation {
 
 fileprivate func haveAScenarioDefined() { }
 fileprivate func theStepsAreSlightlyDifferent() { }
+fileprivate func haveABeforeFeatureHook() {
+    XCTAssert(true) //yup, it happens in setupHooks
+}
+fileprivate func haveABeforeScenarioHook() {
+    XCTAssert(true) //yup, it happens in setupHooks
+}
+fileprivate func haveABeforeStepHook() {
+    XCTAssert(true) //yup, it happens in setupHooks
+}
+fileprivate func haveAnAfterStepHook() {
+    XCTAssert(true) //yup, it happens in setupHooks
+}
+
+fileprivate func beforeFeatureGetsCalledOncePerFeature() {
+    XCTAssertEqual(beforeFeatureHooks.count, 1)
+    beforeFeatureHooks.forEach {
+        XCTAssertEqual($1, 1)
+    }
+    secondaryBeforeFeatureHooks.forEach {
+        XCTAssertEqual($1, 1)
+    }
+}
+
+fileprivate func beforeScenarioGetsCalledOncePerScenario(withTitle title:String, expected:Int = 1) {
+    XCTAssertEqual(beforeScenarioHooks[title], expected)
+}
 
 fileprivate func runTheTests() {
     XCTAssert(true) // the tests are clearly running

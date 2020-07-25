@@ -59,11 +59,13 @@ class DSLScenarioTests: XCTestCase {
     
     func testScenarioWithTags() {
         let sawTheSign = { }
+        let openedUpMyEyes = { }
         let scenarioTitle = UUID().uuidString
         
         let scn =
-            Scenario(scenarioTitle, tags: ["tag1", "tag2"]) {
+        Scenario(scenarioTitle, tags: ["tag1", "tag2"]) {
             Then(I: sawTheSign())
+                And(it: openedUpMyEyes())
         }
         
         XCTAssertEqual(scn.title, scenarioTitle)

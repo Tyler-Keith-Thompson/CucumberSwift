@@ -11,7 +11,9 @@ import Foundation
 public struct ScenarioOutline: ScenarioDSL {
     public var scenarios: [Scenario] = []
     
-    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type, line:UInt = #line, column:UInt = #column, @StepBuilder steps: (T) -> [DSLStep], examples: () -> [T]) {
+    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type,
+                                      line:UInt = #line, column:UInt = #column,
+                                      @StepBuilder steps: (T) -> [DSLStep], examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: steps($0),
                      title: title,
@@ -20,7 +22,9 @@ public struct ScenarioOutline: ScenarioDSL {
         }
     }
     
-    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type, line:UInt = #line, column:UInt = #column, @StepBuilder steps: (T) -> DSLStep, examples: () -> [T]) {
+    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type,
+                                      line:UInt = #line, column:UInt = #column,
+                                      @StepBuilder steps: (T) -> DSLStep, examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: [steps($0)],
                      title: title,
@@ -28,4 +32,27 @@ public struct ScenarioOutline: ScenarioDSL {
                      position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
         }
     }
+    
+    @discardableResult public init<T>(_ title:(T) -> String, tags:[String] = [], headers: T.Type,
+                                      line:UInt = #line, column:UInt = #column,
+                                      @StepBuilder steps: (T) -> [DSLStep], examples: () -> [T]) {
+        scenarios = examples().map {
+            Scenario(with: steps($0),
+                     title: title($0),
+                     tags: tags,
+                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+        }
+    }
+    
+    @discardableResult public init<T>(_ title:(T) -> String, tags:[String] = [], headers: T.Type,
+                                      line:UInt = #line, column:UInt = #column,
+                                      @StepBuilder steps: (T) -> DSLStep, examples: () -> [T]) {
+        scenarios = examples().map {
+            Scenario(with: [steps($0)],
+                     title: title($0),
+                     tags: tags,
+                     position: Lexer.Position(line: line, column: column)) //TODO, FIX THIS
+        }
+    }
+
 }

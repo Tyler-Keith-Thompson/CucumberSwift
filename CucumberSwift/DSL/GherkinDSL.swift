@@ -70,18 +70,23 @@ fileprivate func readStepName(lineNumber:UInt, column:UInt, filePath:StaticStrin
 
 
 public extension GherkinDSL {
+    @discardableResult init(_ handler: @escaping @autoclosure () -> Void,
+                            line:UInt = #line,
+                            column:UInt = #column,
+                            file:StaticString = #file,
+                            function: StaticString = #function) {
+        self.init(line: line,
+                  column: column,
+                  match: try? readStepName(lineNumber: line, column: column, filePath: file),
+                  handler: handler)
+        
+    }
+
     @discardableResult init(I handler: @escaping @autoclosure () -> Void,
                             line:UInt = #line,
                             column:UInt = #column,
                             file:StaticString = #file,
                             function: StaticString = #function) {
-        //insane idea, find the #line, #column, and the #filepath. Read that line from the file
-        //find the name of the closure, set that as the name of the step
-        //create a concrete step object in the parser from all this crazy
-        //if no scenario found use the #function name to create one
-        //if no feature found use the #file name to create one
-        print(file)
-        print(function)
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
@@ -89,6 +94,18 @@ public extension GherkinDSL {
         
     }
     
+    @discardableResult init(it handler: @escaping @autoclosure () -> Void,
+                            line:UInt = #line,
+                            column:UInt = #column,
+                            file:StaticString = #file,
+                            function: StaticString = #function) {
+        self.init(line: line,
+                  column: column,
+                  match: try? readStepName(lineNumber: line, column: column, filePath: file),
+                  handler: handler)
+        
+    }
+
     @discardableResult init(my handler: @escaping @autoclosure () -> Void,
                             line:UInt = #line,
                             column:UInt = #column,
