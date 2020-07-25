@@ -11,6 +11,10 @@ import XCTest
 @testable import CucumberSwift
 
 class RunWithLineNumberTests: XCTestCase {
+    override func tearDown() {
+        Cucumber.shouldRunWith = { _, _ in true }
+    }
+    
     func testRunOnSpecificExampleWithScenarioOutlines() {
         Cucumber.shouldRunWith = { scenario, _ in
             shouldRun(scenario?.withLine(9))
@@ -46,7 +50,6 @@ class RunWithLineNumberTests: XCTestCase {
         
         XCTAssertFalse(scenarioCalled)
         XCTAssert(scenari0Called)
-        Cucumber.shouldRunWith = { _, _ in true }
     }
     
     func testRunOnSpecificScenarioWithFuzzyLineNumber() {
@@ -83,7 +86,6 @@ class RunWithLineNumberTests: XCTestCase {
         
         XCTAssert(scenarioCalled)
         XCTAssertFalse(scenario1Called)
-        Cucumber.shouldRunWith = { _, _ in true }
     }
     
     func testRunOnEntireFeatureWithFuzzyLineNumber() {
@@ -120,6 +122,5 @@ class RunWithLineNumberTests: XCTestCase {
         
         XCTAssert(scenarioCalled)
         XCTAssert(scenario1Called)
-        Cucumber.shouldRunWith = { _, _ in true }
     }
 }

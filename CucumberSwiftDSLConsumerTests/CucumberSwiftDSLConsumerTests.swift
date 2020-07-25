@@ -113,15 +113,6 @@ extension Cucumber: StepImplementation {
                 Then(the: scenarioRunsWithoutCrashing())
             }
             
-            Scenario("Scenario with a step with a data table") {
-                Given(I: XCTAssert(true))
-//                Given I have some data table that is not implemented
-//                    | tbl |
-//                    | foo |
-//                When I look in my test report
-//                Then I see some PENDING steps with a swift attachment
-//                    And I can copy and paste the swift code into my test case
-            }
         }
     }
 }
@@ -173,6 +164,17 @@ fileprivate func scenarioRunsWithoutCrashing() {
 }
 
 /* STUFF THAT IS NOT COVERED SO FAR
+            Scenario("Scenario with a step with a data table") {
+                Given(I: XCTAssert(true))
+                  Given I have some data table that is not implemented
+                        | tbl |
+                        | foo |
+                    When I look in my test report
+                    Then I see some PENDING steps with a swift attachment
+                        And I can copy and paste the swift code into my test case
+            }
+
+ 
      Scenario: Unimplemented scenario with DocString
          Given a DocString of some kind that is not implemented
          """xml

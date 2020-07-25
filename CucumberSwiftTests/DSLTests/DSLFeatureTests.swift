@@ -73,5 +73,8 @@ class DSLFeatureTests: XCTestCase {
         
         XCTAssert(called)
     }
-
+    
+    #warning("Need to test shouldLoadWith both with a line and with tags")
+    //NOTE: Used to be that you could run a specific example in a ScenarioOutline by line number
+    //That might be damn near impossible with the DSL without parsing the Swift AST directly
 }
