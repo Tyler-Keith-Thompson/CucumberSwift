@@ -91,13 +91,13 @@ extension Cucumber: StepImplementation {
             Scenario("Before step hook works correctly") {
                 Given(I: haveABeforeStepHook())
                 When(I: runTheTests())
-//                Then BeforeStep gets called once per step
+                Then(beforeStepGetsCalledOncePerStep())
             }
             
             Scenario("After step hook works correctly") {
                 Given(I: haveAnAfterStepHook())
                 When(I: runTheTests())
-//                Then AfterStep gets called once per step
+                Then(afterStepGetsCalledOncePerStep())
             }
             
             Scenario("Scenario with the same name does not collide") {
@@ -150,6 +150,15 @@ fileprivate func beforeFeatureGetsCalledOncePerFeature() {
         XCTAssertEqual($1, 1)
     }
 }
+
+fileprivate func beforeStepGetsCalledOncePerStep() {
+    XCTAssertEqual(beforeStepHooks.filter { $1 > 0 }.count, 12)
+}
+
+fileprivate func afterStepGetsCalledOncePerStep() {
+    XCTAssertEqual(afterStepHooks.filter { $1 > 0 }.count, 14)
+}
+
 
 fileprivate func beforeScenarioGetsCalledOncePerScenario(withTitle title:String, expected:Int = 1) {
     XCTAssertEqual(beforeScenarioHooks[title], expected)
