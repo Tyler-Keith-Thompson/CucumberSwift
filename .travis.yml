@@ -3,6 +3,7 @@ jobs:
   include:
     - os: osx
       osx_image: xcode11.6
+      env: DEPLOY=true
     - os: osx
       osx_image: xcode12
 
@@ -40,6 +41,7 @@ deploy:
   script: carthage build --no-skip-current && gem install cocoapods -v 1.8.4 && ./deploy_pod.sh
   on:
     branch: master
+    condition: $DEPLOY = true
 env:
   global:
     secure: Tg+Nke1hzm/WJSFnVOmqAHK3yP89nIjtmdyDIHfvrahMKhaW8QOKFWN7dhTfBi6XKsCF5zIgZnGQQnGHKNf9hNQEiMRD7DX5UpIM54oGpozYhhf2gXa5SKsaHArQCQ1lpS+Q7qnGWSQt7fD0ME9ySaZiK45Xef5acNrD2Y5kk2o+4893/tkGi91X+ToZOJzUKcChciw27/KxGH2YDkQpQOwpAcR+F4NFILvEYKRj8/2VP26mZOdT3brGGMeSMptnduh2Ve8LXpYPSwrIBnGe+aC1XFP+f2xfJXZoKs7DnzE4FDqZC3oDVR+KgQFsRtBKIalScm0pnEWPdbXp0A0+fD25OkrbbQ+pOnK/bJIOrQ93xeXdADb1mbXkdxWjqErAg6kr9eB5DfTg9+lmN+vDwUvkH2MH38yb45moA30lau/YaPohSkuriuCI9OPo6BUa/o37PQGjabG9l1LNo2bEGNYJUq7rJfFsOF30tsow8jvcnh3k5WE45UWzuuSKdSigLuvxAL5RyysfbynHyD6TBZncETfx8q59XFE8H3cJC1DWqr58hvVMmsDKePyW1Hyo1e04i+SukUecF9fZMbunGd80oThgxv4+XubjRyZew++3z6RdRx8+droyeiFU9G5oeUynICnO18y0kaKd3Bi5MWkT2TglvH844/Wp/e0Qdaw=
