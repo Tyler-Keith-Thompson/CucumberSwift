@@ -308,16 +308,22 @@ class DSLRuleTests: XCTestCase {
                     Given(I: print("S1"))
                 }
             }
+            Scenario("SC2") {
+                Given(I: print("S2"))
+            }
         }
         
-        XCTAssertEqual(feature.scenarios.count, 1)
+        XCTAssertEqual(feature.scenarios.count, 2)
         
-        let scenario = feature.scenarios.first
-        XCTAssertEqual(scenario?.steps.count, 3)
+        XCTAssertEqual(feature.scenarios.first?.steps.count, 3)
+        XCTAssertEqual(feature.scenarios.last?.steps.count, 2)
         
-        guard scenario?.steps.count == 3 else { return }
-        XCTAssertEqual(scenario?.steps[0].match, "I: print(\"B1\")")
-        XCTAssertEqual(scenario?.steps[1].match, "I: print(\"B2\")")
-        XCTAssertEqual(scenario?.steps[2].match, "I: print(\"S1\")")
+        guard feature.scenarios.first?.steps.count == 3 else { return }
+        XCTAssertEqual(feature.scenarios.first?.steps[0].match, "I: print(\"B1\")")
+        XCTAssertEqual(feature.scenarios.first?.steps[1].match, "I: print(\"B2\")")
+        XCTAssertEqual(feature.scenarios.first?.steps[2].match, "I: print(\"S1\")")
+        
+        XCTAssertEqual(feature.scenarios.last?.steps.first?.match, "I: print(\"B1\")")
+        XCTAssertEqual(feature.scenarios.last?.steps.last?.match, "I: print(\"S2\")")
     }
 }
