@@ -16,7 +16,6 @@ extension Cucumber: XCTestObservation {
             let reportURL = Reporter.shared.reportURL {
             let fileURL = documentDirectory.appendingPathComponent(name)
             try? FileManager.default.copyItem(at: reportURL, to: fileURL)
-            print(fileURL)
         }
     }
     
