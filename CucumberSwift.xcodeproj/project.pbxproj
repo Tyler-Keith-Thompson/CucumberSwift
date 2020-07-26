@@ -84,6 +84,7 @@
 		CA5A7C3920FC2B1700F4564A /* CharacterExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */; };
 		CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3A20FC2B2300F4564A /* Lexer.swift */; };
 		CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5A7C3C20FC2B2900F4564A /* Token.swift */; };
+		CA612FAF24CD298D00A7BBCD /* I18n.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA612FAE24CD298D00A7BBCD /* I18n.swift */; };
 		CA73473624CA668D00D1A018 /* DSLScenarioTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */; };
 		CA73473824CA6FAD00D1A018 /* DSLFeatureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */; };
 		CA73473A24CA788B00D1A018 /* DSLScenarioOutlineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */; };
@@ -204,6 +205,7 @@
 		CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CharacterExtensions.swift; sourceTree = "<group>"; };
 		CA5A7C3A20FC2B2300F4564A /* Lexer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lexer.swift; sourceTree = "<group>"; };
 		CA5A7C3C20FC2B2900F4564A /* Token.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		CA612FAE24CD298D00A7BBCD /* I18n.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = I18n.swift; sourceTree = "<group>"; };
 		CA73473524CA668D00D1A018 /* DSLScenarioTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioTests.swift; sourceTree = "<group>"; };
 		CA73473724CA6FAD00D1A018 /* DSLFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLFeatureTests.swift; sourceTree = "<group>"; };
 		CA73473924CA788B00D1A018 /* DSLScenarioOutlineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLScenarioOutlineTests.swift; sourceTree = "<group>"; };
@@ -360,6 +362,7 @@
 				ADD9673120FCED15000BCAA2 /* Custom Operators */,
 				CA5A7C3720FC2B0A00F4564A /* Extensions */,
 				CA5A7C3620FC2AF600F4564A /* Gherkin */,
+				CA612FAD24CD298D00A7BBCD /* Generated */,
 				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */,
@@ -501,6 +504,14 @@
 				AD01722E2116341200FBC9AF /* SequenceExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		CA612FAD24CD298D00A7BBCD /* Generated */ = {
+			isa = PBXGroup;
+			children = (
+				CA612FAE24CD298D00A7BBCD /* I18n.swift */,
+			);
+			path = Generated;
 			sourceTree = "<group>";
 		};
 		CA73474224CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests */ = {
@@ -733,6 +744,7 @@
 				AD22A1B6222B10B50025E41C /* TestCaseGenerator.swift in Sources */,
 				CA5A210C24C9D07A0077AD50 /* StepDSL.swift in Sources */,
 				AD9EB4812079D540002494C0 /* StringExtensions.swift in Sources */,
+				CA612FAF24CD298D00A7BBCD /* I18n.swift in Sources */,
 				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
 				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,

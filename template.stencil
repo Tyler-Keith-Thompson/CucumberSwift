@@ -1,0 +1,45 @@
+//
+//  LanguageDSL.swift
+//  ModelGen
+//
+//  Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
+//  Copyright © {% now "yyyy" %} Tyler Thompson. All rights reserved.
+//
+
+  {% for language in files[0].document.data %}
+//{{files[0].document.data[language].name}}
+//Types
+{% for featureName in files[0].document.data[language].feature %}
+    {% if not givenName == 'Feature' %}
+public typealias {{ featureName | swiftIdentifier | snakeToCamelCase }} = Feature
+    {% endif %}
+{% endfor %}
+
+//Steps
+{% for givenName in files[0].document.data[language].given %}
+        {% if not givenName == '* ' %}
+public typealias {{ givenName | swiftIdentifier | snakeToCamelCase }} = GivenStep
+        {% endif %}
+    {% endfor %}
+    {% for whenName in files[0].document.data[language].when %}
+        {% if not whenName == '* ' %}
+public typealias {{ whenName | swiftIdentifier | snakeToCamelCase }} = WhenStep
+        {% endif %}
+    {% endfor %}
+    {% for thenName in files[0].document.data[language].then %}
+        {% if not thenName == '* ' %}
+public typealias {{ thenName | swiftIdentifier | snakeToCamelCase }} = ThenStep
+        {% endif %}
+    {% endfor %}
+    {% for andName in files[0].document.data[language].and %}
+        {% if not andName == '* ' %}
+public typealias {{ andName | swiftIdentifier | snakeToCamelCase }} = AndStep
+        {% endif %}
+    {% endfor %}
+    {% for butName in files[0].document.data[language].but %}
+        {% if not butName == '* ' %}
+public typealias {{ butName | swiftIdentifier | snakeToCamelCase }} = ButStep
+        {% endif %}
+    {% endfor %}
+    
+{% endfor %}
