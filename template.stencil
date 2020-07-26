@@ -5,41 +5,45 @@
 //  Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 //  Copyright © {% now "yyyy" %} Tyler Thompson. All rights reserved.
 //
-
-  {% for language in files[0].document.data %}
+{% for language in files[0].document.data %}
 //{{files[0].document.data[language].name}}
 //Types
 {% for featureName in files[0].document.data[language].feature %}
-    {% if not givenName == 'Feature' %}
-public typealias {{ featureName | swiftIdentifier | snakeToCamelCase }} = Feature
+    {% if not featureName == 'Feature' %}
+public typealias {{ featureName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = Feature
+    {% endif %}
+{% endfor %}
+{% for scenarioName in files[0].document.data[language].scenario %}
+    {% if not scenarioName == 'Scenario' %}
+public typealias {{ scenarioName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = Scenario
     {% endif %}
 {% endfor %}
 
 //Steps
 {% for givenName in files[0].document.data[language].given %}
-        {% if not givenName == '* ' %}
-public typealias {{ givenName | swiftIdentifier | snakeToCamelCase }} = GivenStep
+        {% if not givenName == '* ' and not givenName == 'Given ' and not givenName == 'Date ' and not givenName == 'Data ' %}
+public typealias {{ givenName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = GivenStep
         {% endif %}
     {% endfor %}
     {% for whenName in files[0].document.data[language].when %}
-        {% if not whenName == '* ' %}
-public typealias {{ whenName | swiftIdentifier | snakeToCamelCase }} = WhenStep
+        {% if not whenName == '* ' and not whenName == 'When ' %}
+public typealias {{ whenName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = WhenStep
         {% endif %}
     {% endfor %}
     {% for thenName in files[0].document.data[language].then %}
-        {% if not thenName == '* ' %}
-public typealias {{ thenName | swiftIdentifier | snakeToCamelCase }} = ThenStep
+        {% if not thenName == '* ' and not thenName == 'Then ' %}
+public typealias {{ thenName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = ThenStep
         {% endif %}
     {% endfor %}
     {% for andName in files[0].document.data[language].and %}
-        {% if not andName == '* ' %}
-public typealias {{ andName | swiftIdentifier | snakeToCamelCase }} = AndStep
+        {% if not andName == '* ' and not andName == 'And ' %}
+public typealias {{ andName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = AndStep
         {% endif %}
     {% endfor %}
     {% for butName in files[0].document.data[language].but %}
-        {% if not butName == '* ' %}
-public typealias {{ butName | swiftIdentifier | snakeToCamelCase }} = ButStep
+        {% if not butName == '* ' and not butName == 'But ' and not butName == 'BUT ' %}
+public typealias {{ butName | swiftIdentifier | snakeToCamelCase | escapeReservedKeywords }} = ButStep
         {% endif %}
     {% endfor %}
-    
+
 {% endfor %}

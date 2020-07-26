@@ -47,9 +47,9 @@ public final class MatchAllStep: StepDSL, Matcher, GherkinDSL {
     public override var keyword: Step.Keyword { [] }
 }
 
-//public typealias Given = GivenStep
-//public typealias When = WhenStep
-//public typealias Then = ThenStep
-//public typealias And = AndStep
-//public typealias But = ButStep
+public typealias Given = GivenStep
+public typealias When = WhenStep
+public typealias Then = ThenStep
+public typealias And = AndStep
+public typealias But = ButStep
 public typealias MatchAll = MatchAllStep

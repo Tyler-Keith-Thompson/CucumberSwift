@@ -75,3 +75,4 @@ npm-debug.log
 #SonarQube
 .scannerwork
 sq-generic.xml
+.gen.swift
