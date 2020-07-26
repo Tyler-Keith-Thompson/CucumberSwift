@@ -17,3 +17,8 @@ NOTE: We all want watchOS support, as of watchOS 5 Apple still doesn't allow uni
 
 ### What's Still Missing?
 - Some Gherkin language errors
+
+## Attributions:
+- The localization support for the DSL is powered by: [SwiftGen](https://github.com/SwiftGen/SwiftGen/)
+- The language localization JSON file is powered by: [The Official Cucumber Repo](https://github.com/Cucumber/Cucumber/)
+- The AST test JSON file is supplied by: [The Official Cucumber Repo](https://github.com/Cucumber/Cucumber/)
