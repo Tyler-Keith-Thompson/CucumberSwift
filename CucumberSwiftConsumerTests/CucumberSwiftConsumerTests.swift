@@ -116,8 +116,9 @@ extension Cucumber: StepImplementation {
         }
         Given("^I point my step to a unit test$", class:Me.self, selector: #selector(Me.unitTestIsExecuted))
 
-        When("^I run the tests$") { _, _ in
+        When("^I run the tests$") { _, step in
             XCTAssert(true)
+            XCTAssertNotNil(step.testCase)
         }
         
         Then("^BeforeFeature gets called once per feature$") { _, step in
