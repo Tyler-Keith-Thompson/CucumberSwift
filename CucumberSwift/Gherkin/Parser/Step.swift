@@ -33,13 +33,13 @@ public class Step: CustomStringConvertible {
     public internal(set) var dataTable:DataTable?
     public private(set)  var docString:DocString?
     public private(set)  var location:Lexer.Position
+    public internal(set) var testCase:XCTestCase?
     
     var result:Result = .pending
     var execute:(([String], Step) -> Void)? = nil
     var executeSelector:Selector?
     var executeClass:AnyClass?
     var executeInstance:NSObject?
-    var testCase:XCTestCase?
     var regex:String = ""
     var errorMessage:String = ""
     var startTime:Date?
