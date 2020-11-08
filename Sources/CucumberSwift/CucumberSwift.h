@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "XCTestHooks.h"
+#import "NSObjectLoadable.h"
 
 //! Project version number for CucumberSwift.
 FOUNDATION_EXPORT double CucumberSwiftVersionNumber;

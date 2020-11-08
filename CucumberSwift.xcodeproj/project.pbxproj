@@ -96,6 +96,9 @@
 		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
 		CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */; };
 		CAB20B3E24CCF6B20024C703 /* DSLRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */; };
+		CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51EC5255873E90095A5C4 /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */; };
+		CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -219,6 +222,9 @@
 		CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDSL.swift; sourceTree = "<group>"; };
 		CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLRuleTests.swift; sourceTree = "<group>"; };
 		CAF51EA42557B1C70095A5C4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
+		CAF51EC5255873E90095A5C4 /* XCTestHooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
+		CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
+		CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -352,6 +358,7 @@
 		AD9EB4622079CF87002494C0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				CAF51EEB25587AFC0095A5C4 /* Obj-C BS */,
 				CAF51EAE2557B35C0095A5C4 /* CucumberSwift */,
 				CAF51EA42557B1C70095A5C4 /* Package.swift */,
 			);
@@ -391,7 +398,6 @@
 			children = (
 				AD22A1B5222B10B50025E41C /* TestCaseGenerator.swift */,
 				AD22A1B7222B10BD0025E41C /* TestCaseMethod.swift */,
-				1D1648DA245A7549000CA612 /* XCTestHooks.m */,
 			);
 			path = XCTestCaseGenerator;
 			sourceTree = "<group>";
@@ -575,6 +581,25 @@
 			path = CucumberSwift;
 			sourceTree = "<group>";
 		};
+		CAF51EEB25587AFC0095A5C4 /* Obj-C BS */ = {
+			isa = PBXGroup;
+			children = (
+				1D1648DA245A7549000CA612 /* XCTestHooks.m */,
+				CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */,
+				CAF51EEC25587B4C0095A5C4 /* Include */,
+			);
+			path = "Obj-C BS";
+			sourceTree = "<group>";
+		};
+		CAF51EEC25587B4C0095A5C4 /* Include */ = {
+			isa = PBXGroup;
+			children = (
+				CAF51EC5255873E90095A5C4 /* XCTestHooks.h */,
+				CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */,
+			);
+			path = Include;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -583,6 +608,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */,
+				CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */,
+				CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +810,7 @@
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD4E772F2235963D005938B7 /* Reporter.swift in Sources */,
+				CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */,
 				1DA761A2239A7A74001CBA5B /* ASTToken.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,

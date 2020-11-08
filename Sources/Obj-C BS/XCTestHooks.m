@@ -7,15 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <CucumberSwift/CucumberSwift-Swift.h>
 
-@interface TestLoader : XCTestSuite
-@end
+#import "XCTestHooks.h"
+#import "NSObjectLoadable.h"
 
 @implementation TestLoader
 
 + (void)load {
-    [Cucumber Load];
+    [self beforeParallelization];
 }
 
 @end

@@ -9,6 +9,10 @@
 import Foundation
 import XCTest
 
+#if canImport(CucumberSwift_ObjC)
+import CucumberSwift_ObjC
+#endif
+
 @objc public class Cucumber: NSObject {
 
     static var shared:Cucumber = {
@@ -155,5 +159,11 @@ import XCTest
                 step.executeClass = `class`
                 step.regex = regex
         }
+    }
+}
+
+@nonobjc public extension TestLoader {
+    @objc override class func beforeParallelization() {
+        Cucumber.Load()
     }
 }
