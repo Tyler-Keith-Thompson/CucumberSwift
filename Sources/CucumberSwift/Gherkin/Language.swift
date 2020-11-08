@@ -49,6 +49,8 @@ class Language {
     public var but:String {
         return butNames.last?.capitalizingFirstLetter() ?? "But"
     }
+    
+    private init() { }
 
     init?(_ langName:String = "en") {
         let bundle = Bundle(for: Cucumber.self)
@@ -127,4 +129,22 @@ class Language {
         return butNames
             .contains(where: { $0 == str.lowercased() })
     }
+}
+
+extension Language {
+    static var `default`:Language = {
+        var l = Language()
+        l.featureNames = ["Feature", "Business Need", "Ability"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.scenarioNames = ["Scenario", "Example"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.backgroundNames = ["Background"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.examplesNames = ["Examples", "Scenarios"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.ruleNames = ["Rule"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.scenarioOutlineNames = ["Scenario Outline", "Scenario Template"].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.givenNames = ["* ", "Given "].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.whenNames = ["* ", "When "].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.thenNames = ["* ", "Then "].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.andNames = ["* ", "And  "].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        l.butNames = ["* ", "But "].map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
+        return l
+    }()
 }

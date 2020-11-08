@@ -202,7 +202,7 @@ public class Lexer : StringReader {
     }
     
     internal func lex() -> [Token] {
-        Scope.language = Language()!
+        Scope.language = Language.default
         var toks = [Token]()
         while let tok = advanceToNextToken() {
             toks.append(tok)
