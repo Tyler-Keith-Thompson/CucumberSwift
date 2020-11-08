@@ -1,6 +1,6 @@
 //
 //  Lexer.swift
-//  Kaleidoscope
+//  CucumberSwift
 //
 //  Created by Tyler Thompson on 7/15/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.

@@ -17,14 +17,14 @@ Pod::Spec.new do |s|
     s.tvos.deployment_target = '9.0'
     s.swift_version = '5.0'
   
-    s.source_files = 'CucumberSwift/**/*.{swift,h,m}'
-    s.resources = ["CucumberSwift/**/*.{json}"]
+    s.source_files = 'Sources/**/*.{swift,h,m}'
+    s.resources = ["Sources/**/*.{json}"]
 
     s.subspec 'snippets' do |ss| 
-      ss.resources = ["CucumberSwift/**/*.{codesnippet,sh}"]
+      ss.resources = ["Sources/**/*.{codesnippet,sh}"]
     end
     s.subspec 'syntax' do |ss| 
-      ss.resources = ["CucumberSwift/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
+      ss.resources = ["Sources/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
     end
     s.framework = "XCTest"
     s.pod_target_xcconfig = {
