@@ -38,7 +38,7 @@ script:
 
 deploy:
   provider: script
-  script: carthage build --no-skip-current && gem install cocoapods -v 1.8.4 && ./deploy_pod.sh
+  script: carthage build --no-skip-current && swift build && gem install cocoapods -v 1.8.4 && ./deploy_pod.sh
   on:
     branch: master
     condition: $DEPLOY = true
