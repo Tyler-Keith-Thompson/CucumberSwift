@@ -11,7 +11,7 @@ git:
   depth: false
 xcode_project: CucumberSwift.xcodeproj
 xcode_scheme: CucumberSwift
-xcode_destination: platform=iOS Simulator,name=iPhone 8
+xcode_destination: platform=macOS
 if: tag IS blank
 
 before_install:
