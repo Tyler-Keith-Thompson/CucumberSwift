@@ -2,7 +2,7 @@ language: swift
 jobs:
   include:
     - os: osx
-      osx_image: xcode12.1
+      osx_image: xcode12
       env: DEPLOY=true
     - os: osx
       osx_image: xcode12.2
