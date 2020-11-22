@@ -35,7 +35,7 @@ class CucumberTests:XCTestCase {
     private func getTests(atPath path: String) -> [String:TestType] {
         var tests:[String:TestType] = [:]
         let bundle = Bundle(for: CucumberTests.self)
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: bundle.bundleURL.appendingPathComponent(path), includingPropertiesForKeys: nil)
+        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: URL(string: bundle.path(forResource: path, ofType: nil)!)!, includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if (url.absoluteString.hasSuffix(".feature")) {
                 if let string = try? String(contentsOf: url, encoding: .utf8) {
@@ -101,13 +101,13 @@ class CucumberTests:XCTestCase {
     }
     
     private func testFeature(_ feature:[String:Any], featureNodes:[AST.FeatureNode], fileName:String) {
-        guard let featureNode = featureNodes.first else { XCTFail("Should have been a feature in \(name)");return }
+        guard let featureNode = featureNodes.first else { XCTFail("Should have been a feature in \(fileName)");return }
         let featureObj = Feature(with: featureNode)
         if let name = feature["name"] as? String {
             XCTAssertEqual(name, featureObj.title)
         }
         if let children = feature["children"] as? [[String:Any]] {
-            XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(name)")
+            XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(featureObj.title), fileName:\(fileName)")
             for (childIndex, child) in children.enumerated() {
                 let node = featureNode.children[safe: childIndex]
                 if let background = child["background"] as? [String:Any] {
@@ -118,7 +118,7 @@ class CucumberTests:XCTestCase {
                 if let scenario = child["scenario"] as? [String:Any] {
                     guard let scenarioType = scenario["keyword"] as? String else { return }
                     if (scenarioType == "Scenario") {
-                        guard let scenarioNode = node as? AST.ScenarioNode else { XCTFail("No scenario node found in file: \(name)");return }
+                        guard let scenarioNode = node as? AST.ScenarioNode else { XCTFail("No scenario node found in file: \(fileName)");return }
                         let scenarioSteps:[Step] = scenarioNode.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }
                         testSteps(scope: scenario, stepObjects: scenarioSteps, fileName: name)
                     } else if (scenarioType == "Scenario Outline") {

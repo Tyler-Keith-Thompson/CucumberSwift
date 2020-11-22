@@ -61,7 +61,6 @@ extension AST {
                 }
                 return
             }
-            nodeLookup[parentPosition]?.add(child: current)
         }
         
         static let appendTags = Rule {

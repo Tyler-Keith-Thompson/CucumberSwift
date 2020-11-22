@@ -221,6 +221,7 @@
 		CAA337B02104C310002C361D /* DocstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocstringTests.swift; sourceTree = "<group>"; };
 		CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDSL.swift; sourceTree = "<group>"; };
 		CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLRuleTests.swift; sourceTree = "<group>"; };
+		CABED02C256A17F2001E92C1 /* CucumberSwift.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CucumberSwift.xctestplan; sourceTree = "<group>"; };
 		CAF51EA42557B1C70095A5C4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
 		CAF51EC5255873E90095A5C4 /* XCTestHooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
 		CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
@@ -510,6 +511,7 @@
 			isa = PBXGroup;
 			children = (
 				CAA337AA21044ACC002C361D /* CucumberTests.swift */,
+				CABED02C256A17F2001E92C1 /* CucumberSwift.xctestplan */,
 			);
 			path = CucumberTests;
 			sourceTree = "<group>";
