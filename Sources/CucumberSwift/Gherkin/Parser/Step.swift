@@ -102,7 +102,7 @@ public class Step: CustomStringConvertible {
 }
 
 extension Step {
-    public struct Keyword: OptionSet {
+    public struct Keyword: OptionSet, Hashable {
         public let rawValue: Int
         private var stringValue:String? = nil
         public init(rawValue: Int) {

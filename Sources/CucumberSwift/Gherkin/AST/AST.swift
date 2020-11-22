@@ -11,23 +11,24 @@ import Foundation
 class AST {
     static var standard:AST {
         return AST()
-        .ruleFor(.feature, Rule.cleanAST
+        .ruleFor(.feature(), Rule.cleanAST
                                .then(.createNewNode)
                                .then(.appendTags))
-        .ruleFor(.rule, Rule.createNewNode
+        .ruleFor(.rule(), Rule.createNewNode
                             .then(.addToNearestParent))
-        .ruleFor(.background, Rule.createNewNode
+        .ruleFor(.background(), Rule.createNewNode
                                   .then(.addToNearestParent))
-        .ruleFor(.scenario, Rule.createNewNode
+        .ruleFor(.scenario(), Rule.createNewNode
                                 .then(.appendTags)
                                 .then(.addToNearestParent))
-        .ruleFor(.scenarioOutline, Rule.createNewNode
+        .ruleFor(.scenarioOutline(), Rule.createNewNode
                                        .then(.appendTags)
                                        .then(.addToNearestParent))
-        .ruleFor(.examples, Rule.traverseToAppropriateDepth
+        .ruleFor(.examples(), Rule.traverseToAppropriateDepth
                                 .then(.appendTags))
-        .ruleFor(.step, Rule.createNewNode
+        .ruleFor(.step(), Rule.createNewNode
                             .then(.addToNearestParent))
+        .ruleFor(.description(), Rule.validateParentExists)
     }
     
     private init(_ ruleLookup:[AST.Token?:Rule] = [:]) {

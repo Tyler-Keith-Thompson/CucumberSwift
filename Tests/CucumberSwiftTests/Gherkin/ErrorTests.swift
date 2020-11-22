@@ -64,6 +64,19 @@ class ErrorsTests : XCTestCase {
         """, uri: "inconsistent_cell_count.feature")
         XCTAssert(Gherkin.errors.contains("File: inconsistent_cell_count.feature inconsistent cell count within the table"))
     }
+    
+    func testSingleParserError() {
+        Cucumber.shared.parseIntoFeatures("""
+
+        invalid line here
+
+        Feature: Single parser error
+
+          Scenario: minimalistic
+            Given the minimalism
+        """, uri: "single_parser_error.feature")
+        XCTAssert(Gherkin.errors.contains("File: single_parser_error.feature, expected: #EOF, #Language, #TagLine, #FeatureLine, #Comment, #Empty, got 'invalid line here'"))
+    }
 
     override func tearDown() {
         Gherkin.errors.removeAll()

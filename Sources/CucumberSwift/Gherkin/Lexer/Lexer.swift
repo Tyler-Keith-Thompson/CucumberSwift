@@ -18,6 +18,11 @@ public class Lexer : StringReader {
         super.init(str)
     }
     
+    public override var position: Position {
+        let pos = super.position
+        return Position(line: pos.line, column: pos.column, uri: url)
+    }
+    
     @discardableResult internal func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
         return readUntil { $0.isNewline || evaluation($0) }
     }

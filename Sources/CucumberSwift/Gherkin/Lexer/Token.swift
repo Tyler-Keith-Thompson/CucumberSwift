@@ -28,7 +28,7 @@ extension Sequence where Element == Lexer.Token {
 }
 
 extension Lexer {
-    enum Token: Equatable {
+    enum Token: Equatable, Hashable {
         case newLine(Lexer.Position)
         case integer(Lexer.Position, String)
         case string(Lexer.Position, String)
@@ -83,6 +83,23 @@ extension Lexer {
                 return tableCell1 == tableCell2
             default:
                 return false
+            }
+        }
+        
+        var valueDescription: String {
+            switch self {
+            case .newLine(_): return "\n"
+            case .integer(_, let val): return "\(val)"
+            case .string(_, let val): return "\(val)"
+            case .docString(_, let val): return "\(val)"
+            case .match(_, let val): return "\(val)"
+            case .title(_, let val): return "\(val)"
+            case .description(_, let val): return "\(val)"
+            case .tag(_, let val): return "\(val)"
+            case .tableHeader(_, let val): return "\(val)"
+            case .tableCell(_, let val): return "\(val)"
+            case .scope(_, let val): return "\(val)"
+            case .keyword(_, let val): return "\(val)"
             }
         }
         

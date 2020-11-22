@@ -9,12 +9,13 @@
 import Foundation
 
 public extension Lexer {
-    struct Position {
+    struct Position: Hashable {
         static let start:Position = {
             return Position(line: 0, column: 0)
         }()
         public internal(set) var line:UInt
         public internal(set) var column:UInt
+        public internal(set) var uri:URL?
     }
 }
 

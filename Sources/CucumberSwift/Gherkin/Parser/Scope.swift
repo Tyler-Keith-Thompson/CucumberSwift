@@ -7,7 +7,7 @@
 //
 
 import Foundation
-enum Scope: Equatable {
+enum Scope: Equatable, Hashable {
     static var language = Language() ?? Language.default
     
     case feature
