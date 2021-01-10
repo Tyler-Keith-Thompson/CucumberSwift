@@ -46,7 +46,7 @@ public class Step: CustomStringConvertible {
     var endTime:Date?
     var duration:TimeInterval {
         guard let start = startTime, let end = endTime else { return 0 }
-        return end.timeIntervalSince1970 - start.timeIntervalSince1970
+        return end.timeIntervalSince(start) * 1_000_000_000
     }
     var tokens = [Lexer.Token]()
     

@@ -17,15 +17,20 @@ fileprivate extension Step {
             Cucumber.shared.currentStep = self
             Cucumber.shared.setupBeforeHooksFor(self)
             Cucumber.shared.beforeStepHooks.forEach { $0(self) }
+
+            func runAndReport() {
+                self.run()
+                self.endTime = Date()
+                Reporter.shared.writeStep(self)
+            }
+
             #if compiler(>=5)
             XCTContext.runActivity(named: "\(self.keyword.toString()) \(self.match)") { _ in
-                self.run()
-                Reporter.shared.writeStep(self)
+                runAndReport()
             }
             #else
             _ = XCTContext.runActivity(named: "\(self.keyword.toString()) \(self.match)") { _ in
-                self.run()
-                Reporter.shared.writeStep(self)
+                runAndReport()
             }
             #endif
         })
