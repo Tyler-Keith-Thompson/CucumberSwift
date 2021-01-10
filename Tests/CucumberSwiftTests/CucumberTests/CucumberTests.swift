@@ -34,8 +34,12 @@ class CucumberTests:XCTestCase {
     
     private func getTests(atPath path: String) -> [String:TestType] {
         var tests:[String:TestType] = [:]
-        let bundle = Bundle(for: CucumberTests.self)
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: URL(string: bundle.path(forResource: path, ofType: nil)!)!, includingPropertiesForKeys: nil)
+        let testDataDir = URL(fileURLWithPath: #file)
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+            .appendingPathComponent(path)
+
+        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: testDataDir, includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if (url.absoluteString.hasSuffix(".feature")) {
                 if let string = try? String(contentsOf: url, encoding: .utf8) {

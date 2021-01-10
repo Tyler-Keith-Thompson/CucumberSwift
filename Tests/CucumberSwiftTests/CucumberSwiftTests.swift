@@ -33,7 +33,15 @@ class CucumberSwiftTests: XCTestCase {
     """
 
     func testStepsGetCallbacksAttachedCorrectly() {
-        Cucumber.shared.readFromFeaturesFolder(in: Bundle(for: CucumberSwiftTests.self))
+        let bundle:Bundle = {
+            #if canImport(CucumberSwift_ObjC)
+            return Bundle(url: Bundle.module.bundleURL.deletingLastPathComponent().appendingPathComponent("CucumberSwift_CucumberSwiftTests.bundle"))!
+            #else
+            return Bundle(for: CucumberSwiftTests.self)
+            #endif
+        }()
+
+        Cucumber.shared.readFromFeaturesFolder(in: bundle)
         var givenCalled = false
         Given("S(.)mE (?:precondition)") { matches, _  in
             givenCalled = true

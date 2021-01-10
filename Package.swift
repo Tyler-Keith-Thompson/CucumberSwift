@@ -32,5 +32,13 @@ let package = Package(
                 .copy("Gherkin/XCode-Specific/"),
                 .copy("Gherkin/gherkin-languages.json")
             ]),
+        .testTarget(
+            name: "CucumberSwiftTests",
+            dependencies: ["CucumberSwift"],
+            exclude: ["Info.plist", "CucumberTests/CucumberSwift.xctestplan"],
+            resources: [
+                .copy("testdata"),
+                .copy("Features")
+            ]),
     ]
 )

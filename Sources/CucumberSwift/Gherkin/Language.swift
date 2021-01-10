@@ -53,7 +53,7 @@ class Language {
     private init() { }
 
     init?(_ langName:String = "en") {
-        let bundle = Bundle(for: Cucumber.self)
+        let bundle = Bundle(for: Cucumber.self).resolvedForSPM
         if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
             let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
