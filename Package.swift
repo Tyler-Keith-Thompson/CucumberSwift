@@ -40,5 +40,19 @@ let package = Package(
                 .copy("testdata"),
                 .copy("Features")
             ]),
+        .testTarget(
+            name: "CucumberSwiftConsumerTests",
+            dependencies: ["CucumberSwift"],
+            exclude: ["Info.plist"],
+            resources: [
+                .copy("Features")
+            ]),
+        .testTarget(
+            name: "CucumberSwiftDSLConsumerTests",
+            dependencies: ["CucumberSwift"],
+            exclude: ["Info.plist"],
+            resources: [
+                .copy("Features")
+            ]),
     ]
 )
