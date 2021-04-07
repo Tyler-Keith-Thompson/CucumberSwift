@@ -37,9 +37,13 @@ extension Character {
         return isalnum(value) != 0
     }
     var isTagCharacter: Bool {
-        return isAlphanumeric
-            || self == "_"
-            || self == "-"
+        return !self.isSpace
+            && !isComment
+            && !isNewline
+            && !isTagMarker
+            && !isQuote
+            && !isTableCellDelimiter
+            && !isHeaderToken
     }
     var isNumeric: Bool {
         return isnumber(value) != 0

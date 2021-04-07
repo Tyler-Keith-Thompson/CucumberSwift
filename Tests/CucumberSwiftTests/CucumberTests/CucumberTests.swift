@@ -110,10 +110,26 @@ class CucumberTests:XCTestCase {
         if let name = feature["name"] as? String {
             XCTAssertEqual(name, featureObj.title)
         }
+        if let tags = (feature["tags"] as? [[String: Any]])?.compactMap({ $0["name"] as? String}) {
+            tags.map { String($0.dropFirst()) }.forEach {
+                XCTAssert(featureObj.tags.contains($0), "expected \(featureObj.tags) to contain \($0)")
+            }
+        }
         if let children = feature["children"] as? [[String:Any]] {
             XCTAssertEqual(featureNode.children.count, children.count, "Wrong number of children in \(featureObj.title), fileName:\(fileName)")
             for (childIndex, child) in children.enumerated() {
                 let node = featureNode.children[safe: childIndex]
+                if let tags = (child["tags"] as? [[String: Any]])?.compactMap({ $0["name"] as? String}) {
+                    tags.map { String($0.dropFirst()) }.forEach {
+                        let tags:[String] = node?.tokens.compactMap {
+                            if case .tag(_, let tagName) = $0 {
+                                return tagName
+                            }
+                            return nil
+                        } ?? []
+                        XCTAssert(tags.contains($0), "expected \(tags) to contain \($0)")
+                    }
+                }
                 if let background = child["background"] as? [String:Any] {
                     guard let backgroundNode = node as? AST.BackgroundNode else { XCTFail("No background node found");return }
                     let backgroundSteps:[Step] = backgroundNode.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }
