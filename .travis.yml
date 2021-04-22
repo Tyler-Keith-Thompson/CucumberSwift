@@ -15,13 +15,7 @@ xcode_destination: platform=macOS
 if: tag IS blank
 
 before_install:
-  - brew cask install adoptopenjdk/openjdk/adoptopenjdk8
-  - brew install jenv
-  - export PATH="$HOME/.jenv/bin:$PATH"
-  - eval "$(jenv init -)"
-  - jenv add /Library/Java/JavaVirtualMachines/adoptopenjdk-8.jdk/Contents/Home/
-  - jenv global 1.8
-  - java -version
+  - brew cask install java
 
 install:
   - bundle install
