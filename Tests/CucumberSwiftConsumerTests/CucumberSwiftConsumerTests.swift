@@ -121,8 +121,7 @@ extension Cucumber: StepImplementation {
         Given("^I point my step to a unit test$", class:Me.self, selector: #selector(Me.unitTestIsExecuted))
         Given("^a step with a data table$") { _, step in
             guard let dataTable = step.dataTable else {
-                XCTFail("no data table found!")
-                return
+                XCTFail("no data table found!"); return
             }
             XCTAssertEqual(dataTable.rows.count, 2)
             XCTAssertEqual(dataTable.rows[0][0], "foo")
