@@ -61,6 +61,13 @@ as expected
         When I run the tests
         Then The unit test runs
 
+    Scenario: Something with a data table
+        Given a step with a data table
+            | foo | bar |
+            | boz | boo |
+        When I run the tests
+        Then I can access the data table
+
     Scenario: Unimplemented scenario with DocString
         Given a DocString of some kind that is not implemented
         """xml

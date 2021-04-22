@@ -9,7 +9,7 @@
 import Foundation
 public class DataTable {
     public typealias Row = [String]
-    var rows = [Row]()
+    public var rows = [Row]()
     init(_ lines:[Row]) {
         rows = lines
     }
