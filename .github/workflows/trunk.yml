@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  push: [ $default-branch ]
+  pull_request: [ $default-branch ]
+  workflow_dispatch:
+
+jobs:
+  print:
+    runs-on: macos-latest
+    needs: test
+    steps:
+      - name: TEST
+        run: echo "Did it work??"
