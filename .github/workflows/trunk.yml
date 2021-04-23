@@ -1,16 +1,27 @@
-name: CI
+name: Version Bump
 
 on:
-  push:
+  workflow_run:
+    workflows: [ "CI" ]
     branches: [ $default-branch ]
-  pull_request:
-    branches: [ $default-branch ]
-  workflow_dispatch:
+    types: 
+      - completed
 
 jobs:
-  print:
-    runs-on: macos-latest
-    needs: test
+  version_bump:
+    runs-on: ubuntu-latest
     steps:
-      - name: TEST
-        run: echo "Did it work??"
+      - name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v5.5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_prefix: ''
+      - name: Create a GitHub release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          release_name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ''
