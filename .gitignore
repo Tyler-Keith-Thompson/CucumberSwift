@@ -66,6 +66,7 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/reports
 fastlane/xcov_report
+Gemfile.lock
 
 node_modules
 npm-debug.log
