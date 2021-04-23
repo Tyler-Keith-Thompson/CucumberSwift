@@ -1,8 +1,10 @@
 name: CI
 
 on:
-  push: [ $default-branch ]
-  pull_request: [ $default-branch ]
+  push:
+    branches: [ $default-branch ]
+  pull_request:
+    branches: [ $default-branch ]
   workflow_dispatch:
 
 jobs:
