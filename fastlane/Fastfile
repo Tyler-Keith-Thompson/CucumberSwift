@@ -14,4 +14,16 @@ platform :ios do
       project: 'CucumberSwift.xcodeproj'
     )
   end
+
+  lane :build_swiftpm do
+    spm(
+      command: "build",
+      build_path: "./build",
+      configuration: "release"
+    )
+  end
+
+  lane :cocoapods_liblint do
+    pod_lib_lint(podspec: 'CucumberSwift.podspec', allow_warnings: true)
+  end
 end
