@@ -12,10 +12,14 @@ import XCTest
 
 class DSLScenarioOutlineTests: XCTestCase {
     
-    override func setUp() {
-        Cucumber.shared.features.removeAll()
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
     }
-    
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+
     func testScenarioOutlineCallsThroughForEveryRowInExamples() {
         var called = 0
         var args = [Any]()
@@ -42,8 +46,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 28)
-        XCTAssertEqual(lastScenario?.location.line, 28)
+        XCTAssertEqual(firstScenario?.location.line, 32)
+        XCTAssertEqual(lastScenario?.location.line, 32)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
 
@@ -86,8 +90,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 71)
-        XCTAssertEqual(lastScenario?.location.line, 71)
+        XCTAssertEqual(firstScenario?.location.line, 75)
+        XCTAssertEqual(lastScenario?.location.line, 75)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
 
@@ -131,8 +135,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 115)
-        XCTAssertEqual(lastScenario?.location.line, 115)
+        XCTAssertEqual(firstScenario?.location.line, 119)
+        XCTAssertEqual(lastScenario?.location.line, 119)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
         XCTAssertEqual(firstScenario?.tags, ["tag1", "tag2"])

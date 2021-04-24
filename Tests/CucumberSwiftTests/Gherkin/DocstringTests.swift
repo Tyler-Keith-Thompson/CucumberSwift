@@ -11,6 +11,14 @@ import XCTest
 @testable import CucumberSwift
 
 class DocstringTests: XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+    
     func testSimpleDocString() {
         let cucumber = Cucumber(withString:
             """

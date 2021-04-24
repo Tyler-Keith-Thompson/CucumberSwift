@@ -11,10 +11,14 @@ import XCTest
 @testable import CucumberSwift
 
 class RunWithLineNumberTests: XCTestCase {
-    override func tearDown() {
-        Cucumber.shouldRunWith = { _, _ in true }
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
     }
-    
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+
     func testRunOnSpecificExampleWithScenarioOutlines() {
         Cucumber.shouldRunWith = { scenario, _ in
             shouldRun(scenario?.withLine(9))

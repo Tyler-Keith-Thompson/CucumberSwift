@@ -63,13 +63,18 @@ class CucumberTest: XCTestCase {
     override class var defaultTestSuite: XCTestSuite {
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
 
-        var tests = [XCTestCase]()
         Reporter.shared.reset()
         Cucumber.shared.features.removeAll()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
             Cucumber.shared.readFromFeaturesFolder(in: bundle)
         }
         (Cucumber.shared as? StepImplementation)?.setupSteps()
+        allGeneratedTests.forEach { suite.addTest($0) }
+        return suite
+    }
+
+    static var allGeneratedTests: [XCTestCase] {
+        var tests = [XCTestCase]()
         createTestCaseForStubs(&tests)
         for feature in Cucumber.shared.features.taggedElements(with: Cucumber.shared.environment, askImplementor: false) {
             let className = feature.title.toClassString() + readFeatureScenarioDelimiter()
@@ -77,8 +82,7 @@ class CucumberTest: XCTestCase {
                 createTestCaseFor(className:className, scenario: scenario, tests: &tests)
             }
         }
-        tests.forEach { suite.addTest($0) }
-        return suite
+        return tests
     }
 
     private static func createTestCaseForStubs(_ tests:inout [XCTestCase]) {

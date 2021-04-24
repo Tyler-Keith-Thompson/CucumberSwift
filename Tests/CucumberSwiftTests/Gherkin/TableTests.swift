@@ -11,6 +11,14 @@ import XCTest
 @testable import CucumberSwift
 
 class TableTests: XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+    
     let tableFile: String =
     """
     Feature: Some terse yet descriptive text of what is desired

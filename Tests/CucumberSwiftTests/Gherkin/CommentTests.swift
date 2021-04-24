@@ -10,6 +10,14 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 class CommentTests: XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+    
     func testInlineCommentsAreIgnored() {
         let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired

@@ -29,7 +29,14 @@ extension Collection where Element == Lexer.Token {
 }
 
 class CucumberTests:XCTestCase {
-    
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+
     typealias TestType = (feature:String, ast:String)
     
     private func getTests(atPath path: String) -> [String:TestType] {

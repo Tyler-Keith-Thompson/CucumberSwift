@@ -12,14 +12,14 @@ import XCTest
 
 class DSLFeatureTests: XCTestCase {
     
-    override func setUp() {
-        Cucumber.shared.features.removeAll()
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
     }
-    
-    override func tearDown() {
-        Cucumber.shouldRunWith = { _, _ in true }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
     }
-    
+
     func testFeatureTags() {
         let featureTitle = UUID().uuidString
         let feature =

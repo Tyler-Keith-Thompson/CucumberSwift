@@ -12,6 +12,14 @@ import XCTest
 @testable import CucumberSwift
 
 class RuleTests: XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+    
     func testSimpleRule() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""

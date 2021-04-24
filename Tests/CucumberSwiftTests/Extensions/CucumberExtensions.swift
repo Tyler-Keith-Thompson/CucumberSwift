@@ -10,12 +10,24 @@ import Foundation
 @testable import CucumberSwift
 
 extension Cucumber {
+    func reset() {
+        Cucumber.shouldRunWith = { _, _ in true }
+        Reporter.shared.reset()
+        Gherkin.errors.removeAll()
+        features.removeAll()
+        beforeFeatureHooks.removeAll()
+        beforeScenarioHooks.removeAll()
+        beforeStepHooks.removeAll()
+        afterFeatureHooks.removeAll()
+        afterScenarioHooks.removeAll()
+        afterStepHooks.removeAll()
+        environment["CUCUMBER_TAGS"] = nil
+        hookedFeatures.removeAll()
+        hookedScenarios.removeAll()
+    }
+
     func executeFeatures() {
-        generateUnimplementedStepDefinitions()
-        features.taggedElements(with: environment, askImplementor: false)
-            .flatMap{ $0.scenarios.taggedElements(with: environment, askImplementor: true) }
-            .flatMap{ $0.steps }
-            .forEach{ $0.execute?($0.match.matches(for: $0.regex), $0)}
+        CucumberTest.allGeneratedTests.forEach { $0.invokeTest() }
     }
 }
 

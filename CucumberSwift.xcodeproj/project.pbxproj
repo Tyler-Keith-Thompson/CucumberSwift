@@ -70,6 +70,7 @@
 		ADB4D5FE20FD03BF005997AD /* ParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADB4D5FD20FD03BF005997AD /* ParserTests.swift */; };
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
+		CA048B692634AECE007DFDE7 /* HookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA048B682634AECE007DFDE7 /* HookTests.swift */; };
 		CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */; };
 		CA4E2D0124CCC8AE00A44983 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */; };
 		CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */; };
@@ -195,6 +196,7 @@
 		ADB4D5FD20FD03BF005997AD /* ParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserTests.swift; sourceTree = "<group>"; };
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		CA048B682634AECE007DFDE7 /* HookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookTests.swift; sourceTree = "<group>"; };
 		CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTests.swift; sourceTree = "<group>"; };
 		CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDSL.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 			isa = PBXGroup;
 			children = (
 				1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */,
+				CA048B682634AECE007DFDE7 /* HookTests.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -857,6 +860,7 @@
 				AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */,
 				CA5A210924C92BDC0077AD50 /* DSLStepTests.swift in Sources */,
 				AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */,
+				CA048B692634AECE007DFDE7 /* HookTests.swift in Sources */,
 				1DA7619923933BCB001CBA5B /* RunWithLineNumberTests.swift in Sources */,
 				AD22A1BA222B21830025E41C /* CucumberExtensions.swift in Sources */,
 				AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */,

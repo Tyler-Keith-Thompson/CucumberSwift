@@ -11,10 +11,14 @@ import XCTest
 @testable import CucumberSwift
 
 class ErrorsTests : XCTestCase {
-    override func setUp() {
-        Cucumber.shared.features.removeAll()
-        Gherkin.errors.removeAll()
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
     }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+    
     func testNotGherkin() {
         Cucumber.shared.parseIntoFeatures("""
             Not Gherkin

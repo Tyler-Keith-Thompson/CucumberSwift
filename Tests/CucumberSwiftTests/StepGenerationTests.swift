@@ -15,7 +15,16 @@ extension String {
         return self.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
     }
 }
+
 class StepGenerationTests:XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+
     func testGeneratedRegexWithGivenKeyword() {
         let cucumber = Cucumber(withString: """
         Feature: Some terse yet descriptive text of what is desired

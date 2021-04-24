@@ -11,6 +11,14 @@ import XCTest
 @testable import CucumberSwift
 
 class StepTest: XCTestCase {
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
+    }
+
+    override func tearDownWithError() throws {
+        Cucumber.shared.reset()
+    }
+
     func testAsteriskMatchesToGiven() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
