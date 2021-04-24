@@ -18,9 +18,7 @@ jobs:
         run: |
           fastlane patch
           VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Sources/CucumberSwift/Info.plist`
-          echo '##[set-output name=version;]$VERSION'
-      - name: Print version
-        run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
+          echo "##[set-output name=version;]$VERSION"
       - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
       - name: Bump version and push tag

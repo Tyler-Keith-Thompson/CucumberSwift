@@ -5,9 +5,10 @@ on:
     types: [ created ]
 
 jobs:
-  print:
+  release:
     runs-on: macos-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Cocoapods Release
         run: |
           pod repo add-cdn trunk 'https://cdn.cocoapods.org/'
