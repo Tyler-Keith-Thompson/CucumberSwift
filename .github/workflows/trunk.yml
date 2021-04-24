@@ -17,7 +17,8 @@ jobs:
         id: bump_version
         run: |
           fastlane patch
-          echo '##[set-output name=version;]$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Workflow/Info.plist)'
+          VERSION = `/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Sources/CucumberSwift/Info.plist`
+          echo '##[set-output name=version;]$VERSION'
       - name: Print version
         run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
       - name: Commit version changes
