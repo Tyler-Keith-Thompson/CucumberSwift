@@ -23,15 +23,59 @@ import CucumberSwift_ObjC
     var currentStep:Step? = nil
     var reportName:String = "CucumberTestResultsFor"
     var environment:[String:String] = ProcessInfo.processInfo.environment
-    var beforeFeatureHooks  = [(Feature)  -> Void]()
-    var afterFeatureHooks   = [(Feature)  -> Void]()
-    var beforeScenarioHooks = [(Scenario)  -> Void]()
-    var afterScenarioHooks  = [(Scenario)  -> Void]()
-    var beforeStepHooks     = [(Step)  -> Void]()
-    var afterStepHooks      = [(Step)  -> Void]()
-    var hookedFeatures      = [Feature]()
-    var hookedScenarios     = [Scenario]()
-    var failedScenarios     = [Scenario]()
+
+    private var _beforeFeatureHooks  = [FeatureHook]()
+    var beforeFeatureHooks: [FeatureHook] {
+        get {
+            _beforeFeatureHooks.sorted()
+        } set {
+            _beforeFeatureHooks = newValue
+        }
+    }
+    private var _afterFeatureHooks   = [FeatureHook]()
+    var afterFeatureHooks: [FeatureHook] {
+        get {
+            _afterFeatureHooks.sorted()
+        } set {
+            _afterFeatureHooks = newValue
+        }
+    }
+    private var _beforeScenarioHooks = [ScenarioHook]()
+    var beforeScenarioHooks: [ScenarioHook] {
+        get {
+            _beforeScenarioHooks.sorted()
+        } set {
+            _beforeScenarioHooks = newValue
+        }
+    }
+    private var _afterScenarioHooks  = [ScenarioHook]()
+    var afterScenarioHooks: [ScenarioHook] {
+        get {
+            _afterScenarioHooks.sorted()
+        } set {
+            _afterScenarioHooks = newValue
+        }
+    }
+    private var _beforeStepHooks     = [StepHook]()
+    var beforeStepHooks: [StepHook] {
+        get {
+            _beforeStepHooks.sorted()
+        } set {
+            _beforeStepHooks = newValue
+        }
+    }
+    private var _afterStepHooks      = [StepHook]()
+    var afterStepHooks: [StepHook] {
+        get {
+            _afterStepHooks.sorted()
+        } set {
+            _afterStepHooks = newValue
+        }
+    }
+    
+    var hookedFeatures       = [Feature]()
+    var hookedScenarios      = [Scenario]()
+    var failedScenarios      = [Scenario]()
 
     override public init() {
         super.init()
@@ -87,12 +131,12 @@ import CucumberSwift_ObjC
         if let feature = step.scenario?.feature,
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
-            Cucumber.shared.beforeFeatureHooks.forEach { $0(feature) }
+            Cucumber.shared.beforeFeatureHooks.forEach { $0.hook(feature) }
         }
         if let scenario = step.scenario,
             !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
-            Cucumber.shared.beforeScenarioHooks.forEach { $0(scenario) }
+            Cucumber.shared.beforeScenarioHooks.forEach { $0.hook(scenario) }
         }
     }
     
@@ -100,12 +144,12 @@ import CucumberSwift_ObjC
         if let scenario = step.scenario,
             let lastScenarioStep = scenario.steps.last,
             lastScenarioStep === step {
-            Cucumber.shared.afterScenarioHooks.forEach { $0(scenario) }
+            Cucumber.shared.afterScenarioHooks.forEach { $0.hook(scenario) }
         }
         if let feature = step.scenario?.feature,
             let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
             lastStep === step {
-            Cucumber.shared.afterFeatureHooks.forEach { $0(feature) }
+            Cucumber.shared.afterFeatureHooks.forEach { $0.hook(feature) }
         }
     }
     

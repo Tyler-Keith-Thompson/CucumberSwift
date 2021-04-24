@@ -71,6 +71,10 @@
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		CA048B692634AECE007DFDE7 /* HookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA048B682634AECE007DFDE7 /* HookTests.swift */; };
+		CA1C47E72634C671008D8E12 /* Hook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47E62634C671008D8E12 /* Hook.swift */; };
+		CA1C47ED2634C6C7008D8E12 /* ScenarioHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */; };
+		CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */; };
+		CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F82634C6E9008D8E12 /* StepHook.swift */; };
 		CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */; };
 		CA4E2D0124CCC8AE00A44983 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */; };
 		CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */; };
@@ -197,6 +201,10 @@
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CA048B682634AECE007DFDE7 /* HookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookTests.swift; sourceTree = "<group>"; };
+		CA1C47E62634C671008D8E12 /* Hook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hook.swift; sourceTree = "<group>"; };
+		CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioHook.swift; sourceTree = "<group>"; };
+		CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureHook.swift; sourceTree = "<group>"; };
+		CA1C47F82634C6E9008D8E12 /* StepHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepHook.swift; sourceTree = "<group>"; };
 		CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTests.swift; sourceTree = "<group>"; };
 		CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDSL.swift; sourceTree = "<group>"; };
@@ -331,6 +339,7 @@
 		AD99DB6121335B2100E57823 /* Runner */ = {
 			isa = PBXGroup;
 			children = (
+				CA1C47E52634C667008D8E12 /* Hooks */,
 				AD9EB47A2079CFA1002494C0 /* Cucumber.swift */,
 				AD99DB58213269D500E57823 /* StepImplementation.swift */,
 				ADBB361D2132145500C375E2 /* Globals.swift */,
@@ -438,6 +447,17 @@
 				1DA7619A23933F18001CBA5B /* Positionable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CA1C47E52634C667008D8E12 /* Hooks */ = {
+			isa = PBXGroup;
+			children = (
+				CA1C47E62634C671008D8E12 /* Hook.swift */,
+				CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */,
+				CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */,
+				CA1C47F82634C6E9008D8E12 /* StepHook.swift */,
+			);
+			path = Hooks;
 			sourceTree = "<group>";
 		};
 		CA5A210724C92BCC0077AD50 /* DSLTests */ = {
@@ -802,6 +822,7 @@
 				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
+				CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
 				CA5A211624C9E76F0077AD50 /* ScenarioDSL.swift in Sources */,
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
@@ -810,12 +831,14 @@
 				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
 				AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */,
 				CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */,
+				CA1C47ED2634C6C7008D8E12 /* ScenarioHook.swift in Sources */,
 				AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */,
 				1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */,
 				CA5A7C3B20FC2B2300F4564A /* Lexer.swift in Sources */,
 				CA5A210E24C9D08A0077AD50 /* Matcher.swift in Sources */,
 				5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */,
 				CA5A211424C9D3070077AD50 /* StepBuilder.swift in Sources */,
+				CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
 				AD4E772F2235963D005938B7 /* Reporter.swift in Sources */,
@@ -823,6 +846,7 @@
 				1DA761A2239A7A74001CBA5B /* ASTToken.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
+				CA1C47E72634C671008D8E12 /* Hook.swift in Sources */,
 				AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */,
 				AD406F7F2105514600D9B011 /* DataTable.swift in Sources */,
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,

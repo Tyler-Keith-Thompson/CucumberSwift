@@ -16,7 +16,7 @@ fileprivate extension Step {
             self.startTime = Date()
             Cucumber.shared.currentStep = self
             Cucumber.shared.setupBeforeHooksFor(self)
-            Cucumber.shared.beforeStepHooks.forEach { $0(self) }
+            Cucumber.shared.beforeStepHooks.forEach { $0.hook(self) }
 
             func runAndReport() {
                 self.run()
@@ -113,7 +113,7 @@ class CucumberTest: XCTestCase {
         }.forEach { (step, testCase) in
             testCase.addTeardownBlock {
                 (step.executeInstance as? XCTestCase)?.tearDown()
-                Cucumber.shared.afterStepHooks.forEach { $0(step) }
+                Cucumber.shared.afterStepHooks.forEach { $0.hook(step) }
                 Cucumber.shared.setupAfterHooksFor(step)
                 step.endTime = Date()
             }

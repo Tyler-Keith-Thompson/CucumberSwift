@@ -9,21 +9,21 @@
 import Foundation
 
 //MARK: Hooks
-public func BeforeFeature(closure: @escaping ((Feature) -> Void)) {
-    Cucumber.shared.beforeFeatureHooks.append(closure)
+public func BeforeFeature(priority: UInt? = nil, closure: @escaping ((Feature) -> Void)) {
+    Cucumber.shared.beforeFeatureHooks.append(.init(priority: priority, hook: closure))
 }
-public func AfterFeature(closure: @escaping ((Feature) -> Void)) {
-    Cucumber.shared.afterFeatureHooks.append(closure)
+public func AfterFeature(priority: UInt? = nil, closure: @escaping ((Feature) -> Void)) {
+    Cucumber.shared.afterFeatureHooks.append(.init(priority: priority, hook: closure))
 }
-public func BeforeScenario(closure: @escaping ((Scenario) -> Void)) {
-    Cucumber.shared.beforeScenarioHooks.append(closure)
+public func BeforeScenario(priority: UInt? = nil, closure: @escaping ((Scenario) -> Void)) {
+    Cucumber.shared.beforeScenarioHooks.append(.init(priority: priority, hook: closure))
 }
-public func AfterScenario(closure: @escaping ((Scenario) -> Void)) {
-    Cucumber.shared.afterScenarioHooks.append(closure)
+public func AfterScenario(priority: UInt? = nil, closure: @escaping ((Scenario) -> Void)) {
+    Cucumber.shared.afterScenarioHooks.append(.init(priority: priority, hook: closure))
 }
-public func BeforeStep(closure: @escaping ((Step) -> Void)) {
-    Cucumber.shared.beforeStepHooks.append(closure)
+public func BeforeStep(priority: UInt? = nil, closure: @escaping ((Step) -> Void)) {
+    Cucumber.shared.beforeStepHooks.append(.init(priority: priority, hook: closure))
 }
-public func AfterStep(closure: @escaping ((Step) -> Void)) {
-    Cucumber.shared.afterStepHooks.append(closure)
+public func AfterStep(priority: UInt? = nil, closure: @escaping ((Step) -> Void)) {
+    Cucumber.shared.afterStepHooks.append(.init(priority: priority, hook: closure))
 }

@@ -429,4 +429,119 @@ class HookTests: XCTestCase {
             "AfterFeature2"
         ])
     }
+
+    func testMultipleBeforeAndAfterHooks_ThatDefineTheirOwnOrder_TriggerAppropriately() {
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given some precondition
+             When some action is performed
+             Then some testable result is achieved
+
+            Scenario: Some other determinable business situation
+              Given some other precondition
+              When some action is performed
+              Then some testable result is achieved
+        """)
+
+        var executionOrder = [String]()
+
+        BeforeFeature(priority: .max) { feature in
+            executionOrder.append("BeforeFeature2")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        BeforeFeature(priority: 1) { feature in
+            executionOrder.append("BeforeFeature")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        AfterFeature(priority: .max) { feature in
+            executionOrder.append("AfterFeature2")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        AfterFeature(priority: 1) { feature in
+            executionOrder.append("AfterFeature")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        BeforeScenario(priority: .max) { scenario in
+            executionOrder.append("BeforeScenario2_\(scenario.title)")
+        }
+
+        BeforeScenario(priority: 1) { scenario in
+            executionOrder.append("BeforeScenario_\(scenario.title)")
+        }
+
+        AfterScenario(priority: .max) { scenario in
+            executionOrder.append("AfterScenario2_\(scenario.title)")
+        }
+
+        AfterScenario(priority: 1) { scenario in
+            executionOrder.append("AfterScenario_\(scenario.title)")
+        }
+
+        BeforeStep(priority: .max) { step in
+            executionOrder.append("BeforeStep2_\(step.match)")
+        }
+        
+        BeforeStep(priority: 1) { step in
+            executionOrder.append("BeforeStep_\(step.match)")
+        }
+
+        AfterStep(priority: .max) { step in
+            executionOrder.append("AfterStep2_\(step.match)")
+        }
+
+        AfterStep(priority: 1) { step in
+            executionOrder.append("AfterStep_\(step.match)")
+        }
+
+        Given("some precondition") { _, _ in executionOrder.append("Given some precondition") }
+        Given("some other precondition") { _, _ in executionOrder.append("Given some other precondition") }
+
+        Cucumber.shared.executeFeatures()
+
+        XCTAssertEqual(executionOrder, [
+            "BeforeFeature",
+            "BeforeFeature2",
+            "BeforeScenario_Some determinable business situation",
+            "BeforeScenario2_Some determinable business situation",
+            "BeforeStep_some precondition",
+            "BeforeStep2_some precondition",
+            "Given some precondition",
+            "AfterStep_some precondition",
+            "AfterStep2_some precondition",
+            "BeforeStep_some action is performed",
+            "BeforeStep2_some action is performed",
+            "AfterStep_some action is performed",
+            "AfterStep2_some action is performed",
+            "BeforeStep_some testable result is achieved",
+            "BeforeStep2_some testable result is achieved",
+            "AfterStep_some testable result is achieved",
+            "AfterStep2_some testable result is achieved",
+            "AfterScenario_Some determinable business situation",
+            "AfterScenario2_Some determinable business situation",
+            "BeforeScenario_Some other determinable business situation",
+            "BeforeScenario2_Some other determinable business situation",
+            "BeforeStep_some other precondition",
+            "BeforeStep2_some other precondition",
+            "Given some other precondition",
+            "AfterStep_some other precondition",
+            "AfterStep2_some other precondition",
+            "BeforeStep_some action is performed",
+            "BeforeStep2_some action is performed",
+            "AfterStep_some action is performed",
+            "AfterStep2_some action is performed",
+            "BeforeStep_some testable result is achieved",
+            "BeforeStep2_some testable result is achieved",
+            "AfterStep_some testable result is achieved",
+            "AfterStep2_some testable result is achieved",
+            "AfterScenario_Some other determinable business situation",
+            "AfterScenario2_Some other determinable business situation",
+            "AfterFeature",
+            "AfterFeature2"
+        ])
+    }
 }
