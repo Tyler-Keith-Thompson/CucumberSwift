@@ -544,4 +544,36 @@ class HookTests: XCTestCase {
             "AfterFeature2"
         ])
     }
+
+    func testHooksWithNoPriorityTriggerAfterHooksWithAPriority() {
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+           Scenario: Some determinable business situation
+             Given some precondition
+             When some action is performed
+             Then some testable result is achieved
+
+            Scenario: Some other determinable business situation
+              Given some other precondition
+              When some action is performed
+              Then some testable result is achieved
+        """)
+
+        var executionOrder = [String]()
+        BeforeFeature(priority: 1) { feature in
+            executionOrder.append("BeforeFeature2")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        BeforeFeature { feature in
+            executionOrder.append("BeforeFeature")
+            XCTAssertEqual(feature.title, "Some terse yet descriptive text of what is desired")
+        }
+
+        Given("some precondition") { _, _ in executionOrder.append("Given") }
+
+        Cucumber.shared.executeFeatures()
+
+        XCTAssertEqual(executionOrder, ["BeforeFeature2", "BeforeFeature", "Given"])
+    }
 }
