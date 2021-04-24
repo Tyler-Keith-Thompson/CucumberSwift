@@ -17,7 +17,7 @@ jobs:
         id: bump_version
         run: |
           fastlane patch
-          VERSION = `/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Sources/CucumberSwift/Info.plist`
+          VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Sources/CucumberSwift/Info.plist`
           echo '##[set-output name=version;]$VERSION'
       - name: Print version
         run: echo "The version is ${{ steps.bump_version.outputs.VERSION }}"
