@@ -27,11 +27,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sq-generic.xml
-      - name: printout
+          path: unmodified_sq-generic.xml
+      - name: Rename Paths in Coverage
         run: |
-          ls -al
-          pwd
-          ls -al Sources
+          sed 's/Users/home/g' unmodified_sq-generic.xml > sq-generic.xml
+          cat sq-generic.xml
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
