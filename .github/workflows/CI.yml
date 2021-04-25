@@ -30,7 +30,7 @@ jobs:
           path: artifacts
       - name: Rename Paths in Coverage
         run: |
-          sed 's/Users/home/g' artifacts/sq-generic.xml > sq-generic.xml
+          sed 's+/Users/runner/work/CucumberSwift/CucumberSwift/++g' artifacts/sq-generic.xml > sq-generic.xml
           pwd
           cat /home/runner/work/CucumberSwift/CucumberSwift/Sources/CucumberSwift/Gherkin/Parser/Scenario.swift
           cd Sources/CucumberSwift
