@@ -27,6 +27,11 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: sq-generic.xml
+      - name: printout
+        run: |
+          ls -al
+          pwd
+          ls -al Sources
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
