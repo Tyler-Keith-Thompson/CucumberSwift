@@ -13,14 +13,14 @@ extension Sequence where Element == Lexer.Token {
         var lines = [[Lexer.Token]]()
         var line = [Lexer.Token]()
         for token in self {
-            if (token.isNewline() && !line.isEmpty) {
+            if token.isNewline() && !line.isEmpty {
                 lines.append(line)
                 line.removeAll()
-            } else if (!token.isNewline()) {
+            } else if !token.isNewline() {
                 line.append(token)
             }
         }
-        if (!line.isEmpty) {
+        if !line.isEmpty {
             lines.append(line)
         }
         return lines
@@ -41,8 +41,8 @@ extension Lexer {
         case tableCell(Lexer.Position, String)
         case scope(Lexer.Position, Scope)
         case keyword(Lexer.Position, Step.Keyword)
-        
-        var position:Lexer.Position {
+
+        var position: Lexer.Position {
             switch self {
                 case .newLine(let pos): return pos
                 case .integer(let pos, _): return pos
@@ -58,7 +58,7 @@ extension Lexer {
                 case .keyword(let pos, _): return pos
             }
         }
-        
+
         static func == (lhs: Token, rhs: Token) -> Bool {
             switch (lhs, rhs) {
             case (.newLine, .newLine):
@@ -85,7 +85,7 @@ extension Lexer {
                 return false
             }
         }
-        
+
         var valueDescription: String {
             switch self {
             case .newLine(_): return "\n"
@@ -102,14 +102,14 @@ extension Lexer {
             case .keyword(_, let val): return "\(val)"
             }
         }
-        
+
         func isNewline() -> Bool {
             if case .newLine(_) = self {
                 return true
             }
             return false
         }
-        
+
         func isTableCell() -> Bool {
             if case .tableCell(_, _) = self {
                 return true
@@ -140,7 +140,7 @@ extension Lexer {
             }
             return false
         }
-        
+
         func isExampleScope() -> Bool {
             if case .scope(_, let scope) = self,
                 scope == .examples {

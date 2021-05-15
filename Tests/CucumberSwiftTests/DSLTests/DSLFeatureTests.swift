@@ -11,7 +11,7 @@ import XCTest
 @testable import CucumberSwift
 
 class DSLFeatureTests: XCTestCase {
-    
+
     override func setUpWithError() throws {
         Cucumber.shared.reset()
     }
@@ -28,13 +28,13 @@ class DSLFeatureTests: XCTestCase {
                 Given(I: print(""))
             }
         }
-        
+
         XCTAssertEqual(feature.tags, ["tag1", "tag2"])
         XCTAssertEqual(feature.title, featureTitle)
         XCTAssertEqual(feature.location.line, 26)
         XCTAssertEqual(feature.location.column, 16)
     }
-    
+
     func testFeatureIsAddedToSharedCucumberInstance() {
         let feature =
         Feature("") {
@@ -42,7 +42,7 @@ class DSLFeatureTests: XCTestCase {
                 Given(I: print(""))
             }
         }
-        
+
         XCTAssertEqual(Cucumber.shared.features.count, 1)
         XCTAssert(Cucumber.shared.features.first === feature)
     }
@@ -57,11 +57,11 @@ class DSLFeatureTests: XCTestCase {
                 Given(I: print(""))
             }
         }
-        
+
         XCTAssertEqual(Cucumber.shared.features.count, 1)
         XCTAssert(Cucumber.shared.features.first === feature)
     }
-    
+
     func testStepExecutesWithTheCucumberRunner() {
         var called = false
         let stepExecutes = {
@@ -72,22 +72,22 @@ class DSLFeatureTests: XCTestCase {
                 Given(a: stepExecutes())
             }
         }
-        
+
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssert(called)
     }
-    
+
     func testDSLShouldLoadWithLine() {
         var called = 0
         let stepExecutes = {
             called += 1
         }
-        
+
         Cucumber.shouldRunWith = { scenario, _ in
             return shouldRun(scenario?.withLine(92))
         }
-        
+
         Feature("") {
             Scenario("First", tags: ["t1"]) {
                 Given(a: stepExecutes())
@@ -99,22 +99,22 @@ class DSLFeatureTests: XCTestCase {
                 Given(a: stepExecutes())
             }
         }
-        
+
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssertEqual(called, 1)
     }
-    
+
     func testDSLShouldLoadWithScenarioTitle() {
         var called = 0
         let stepExecutes = {
             called += 1
         }
-        
+
         Cucumber.shouldRunWith = { scenario, _ in
             return scenario?.title == "First"
         }
-        
+
         Feature("") {
             Scenario("First") {
                 Given(a: stepExecutes())
@@ -123,22 +123,22 @@ class DSLFeatureTests: XCTestCase {
                 Given(a: stepExecutes())
             }
         }
-        
+
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssertEqual(called, 1)
     }
-    
+
     func testDSLShouldLoadWithTags() {
         var called = 0
         let stepExecutes = {
             called += 1
         }
-        
+
         Cucumber.shouldRunWith = { _, tags in
             return tags.contains("t1")
         }
-        
+
         Feature("") {
             Scenario("First", tags: ["t1"]) {
                 Given(a: stepExecutes())
@@ -150,9 +150,9 @@ class DSLFeatureTests: XCTestCase {
                 Given(a: stepExecutes())
             }
         }
-        
+
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssertEqual(called, 2)
     }
 }

@@ -11,14 +11,13 @@ import XCTest
 @testable import CucumberSwift
 
 extension Feature {
-    convenience init(uri:String) {
+    convenience init(uri: String) {
         self.init(with: AST.FeatureNode(node: AST.Node()), uri: uri)
     }
 }
 
-
 class ReporterTests: XCTestCase {
-    
+
 //    func testReporterWritesToDocuments() {
 //        let reporter = Reporter()
 //        reporter.write([
@@ -49,19 +48,19 @@ class ReporterTests: XCTestCase {
                 Given(I: print(""))
             }
         }
-        
+
         let scenario = feature.scenarios.first!
-        
+
         reporter.writeScenarioIfNecessary(scenario)
 
         let featureJSON = reporter.currentJSON?.first
         XCTAssertNotNil(featureJSON)
 
-        let scenarios = featureJSON?["elements"] as? [[String:Any]]
+        let scenarios = featureJSON?["elements"] as? [[String: Any]]
         XCTAssertNotNil(scenarios?.first)
 
         reporter.writeScenarioIfNecessary(scenario)
-        XCTAssertEqual((reporter.currentJSON?.first?["elements"] as? [[String:Any]])?.count, 1)
+        XCTAssertEqual((reporter.currentJSON?.first?["elements"] as? [[String: Any]])?.count, 1)
     }
 
     func testStepIsWrittenToFile() {
@@ -80,10 +79,10 @@ class ReporterTests: XCTestCase {
         let featureJSON = reporter.currentJSON?.first
         XCTAssertNotNil(featureJSON)
 
-        let scenarios = featureJSON?["elements"] as? [[String:Any]]
+        let scenarios = featureJSON?["elements"] as? [[String: Any]]
         XCTAssertNotNil(scenarios?.first)
 
-        let steps = scenarios?.first?["steps"] as? [[String:Any]]
+        let steps = scenarios?.first?["steps"] as? [[String: Any]]
         XCTAssertNotNil(steps?.first)
         XCTAssertEqual(steps?.count, 2)
     }
@@ -106,19 +105,19 @@ class ReporterTests: XCTestCase {
         reporter.writeStep(step)
 
         let featureJSON = reporter.currentJSON?.first
-        let scenarios = featureJSON?["elements"] as? [[String:Any]]
-        let steps = scenarios?.first?["steps"] as? [[String:Any]]
-        XCTAssertEqual((steps?.first?["result"] as? [String:Any])?["duration"] as? Double, duration)
+        let scenarios = featureJSON?["elements"] as? [[String: Any]]
+        let steps = scenarios?.first?["steps"] as? [[String: Any]]
+        XCTAssertEqual((steps?.first?["result"] as? [String: Any])?["duration"] as? Double, duration)
     }
 }
 
-class MockReporter : Reporter {
+class MockReporter: Reporter {
     var writeCalled = 0
-    var lastDict:[[String : Any]] = []
-    
-    override var currentJSON: [[String : Any]]? { lastDict }
-    
-    override func write(_ dict: [[String : Any]]) {
+    var lastDict: [[String: Any]] = []
+
+    override var currentJSON: [[String: Any]]? { lastDict }
+
+    override func write(_ dict: [[String: Any]]) {
         writeCalled += 1
         lastDict = dict
     }

@@ -51,11 +51,11 @@ class RunWithLineNumberTests: XCTestCase {
         }
 
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssertFalse(scenarioCalled)
         XCTAssert(scenari0Called)
     }
-    
+
     func testRunOnSpecificScenarioWithFuzzyLineNumber() {
         Cucumber.shouldRunWith = { scenario, _ in
             shouldRun(scenario?.withLine(4))
@@ -87,11 +87,11 @@ class RunWithLineNumberTests: XCTestCase {
         }
 
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssert(scenarioCalled)
         XCTAssertFalse(scenario1Called)
     }
-    
+
     func testRunOnEntireFeatureWithFuzzyLineNumber() {
         Cucumber.shouldRunWith = { scenario, _ in
             shouldRun(scenario?.feature?.withLine(4))
@@ -123,7 +123,7 @@ class RunWithLineNumberTests: XCTestCase {
         }
 
         Cucumber.shared.executeFeatures()
-        
+
         XCTAssert(scenarioCalled)
         XCTAssert(scenario1Called)
     }

@@ -3,8 +3,8 @@
 //  ModelGen
 //  Generated using SwiftGen — https://github.com/SwiftGen/SwiftGen
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
-//Afrikaans
-//Types
+// Afrikaans
+// Types
 public typealias AF_Funksie = Feature
 public typealias AF_BesigheidBehoefte = Feature
 public typealias AF_Vermoë = Feature
@@ -14,13 +14,13 @@ public typealias AF_SituasieUiteensetting = ScenarioOutline
 public typealias AF_Agtergrond = Background
 public typealias AF_Rule = Rule
 
-//Steps
+// Steps
 public typealias AF_Gegewe = GivenStep
 public typealias AF_Wanneer = WhenStep
 public typealias AF_Dan = ThenStep
 public typealias AF_En = AndStep
 public typealias AF_Maar = ButStep
-//Armenian
+// Armenian
 public typealias AM_Ֆունկցիոնալություն = Feature
 public typealias AM_Հատկություն = Feature
 public typealias AM_Օրինակ = Scenario
@@ -34,7 +34,7 @@ public typealias AM_Երբ = WhenStep
 public typealias AM_Ապա = ThenStep
 public typealias AM_Եվ = AndStep
 public typealias AM_Բայց = ButStep
-//Aragonese
+// Aragonese
 public typealias AN_Caracteristica = Feature
 public typealias AN_Eixemplo = Scenario
 public typealias AN_Caso = Scenario
@@ -52,7 +52,7 @@ public typealias AN_Antonces = ThenStep
 public typealias AN_Y = AndStep
 public typealias AN_E = AndStep
 public typealias AN_Pero = ButStep
-//Arabic
+// Arabic
 public typealias AR_خاصية = Feature
 public typealias AR_مثال = Scenario
 public typealias AR_سيناريو = Scenario
@@ -66,7 +66,7 @@ public typealias AR_اذاً = ThenStep
 public typealias AR_ثم = ThenStep
 public typealias AR_و = AndStep
 public typealias AR_لكن = ButStep
-//Asturian
+// Asturian
 public typealias AST_Carauterística = Feature
 public typealias AST_Exemplo = Scenario
 public typealias AST_Casu = Scenario
@@ -82,7 +82,7 @@ public typealias AST_Entós = ThenStep
 public typealias AST_Y = AndStep
 public typealias AST_Ya = AndStep
 public typealias AST_Peru = ButStep
-//Azerbaijani
+// Azerbaijani
 public typealias AZ_Özəllik = Feature
 public typealias AZ_Nümunələr = Scenario
 public typealias AZ_Ssenari = Scenario
@@ -99,7 +99,7 @@ public typealias AZ_Və = AndStep
 public typealias AZ_Həm = AndStep
 public typealias AZ_Amma = ButStep
 public typealias AZ_Ancaq = ButStep
-//Bulgarian
+// Bulgarian
 public typealias BG_Функционалност = Feature
 public typealias BG_Пример = Scenario
 public typealias BG_Сценарий = Scenario
@@ -111,7 +111,7 @@ public typealias BG_Когато = WhenStep
 public typealias BG_То = ThenStep
 public typealias BG_И = AndStep
 public typealias BG_Но = ButStep
-//Malay
+// Malay
 public typealias BM_Fungsi = Feature
 public typealias BM_Senario = Scenario
 public typealias BM_Situasi = Scenario
@@ -130,7 +130,7 @@ public typealias BM_Kemudian = ThenStep
 public typealias BM_Dan = AndStep
 public typealias BM_Tetapi = ButStep
 public typealias BM_Tapi = ButStep
-//Bosnian
+// Bosnian
 public typealias BS_Karakteristika = Feature
 public typealias BS_Primjer = Scenario
 public typealias BS_Scenariju = Scenario
@@ -145,7 +145,7 @@ public typealias BS_Zatim = ThenStep
 public typealias BS_I = AndStep
 public typealias BS_A = AndStep
 public typealias BS_Ali = ButStep
-//Catalan
+// Catalan
 public typealias CA_Característica = Feature
 public typealias CA_Funcionalitat = Feature
 public typealias CA_Exemple = Scenario
@@ -163,7 +163,7 @@ public typealias CA_Aleshores = ThenStep
 public typealias CA_Cal = ThenStep
 public typealias CA_I = AndStep
 public typealias CA_Però = ButStep
-//Czech
+// Czech
 public typealias CS_Požadavek = Feature
 public typealias CS_Příklad = Scenario
 public typealias CS_Scénář = Scenario
@@ -179,7 +179,7 @@ public typealias CS_Pak = ThenStep
 public typealias CS_ATaké = AndStep
 public typealias CS_A = AndStep
 public typealias CS_Ale = ButStep
-//Welsh
+// Welsh
 public typealias CY_GB_Arwedd = Feature
 public typealias CY_GB_Enghraifft = Scenario
 public typealias CY_GB_Scenario = Scenario
@@ -191,7 +191,7 @@ public typealias CY_GB_Pryd = WhenStep
 public typealias CY_GB_Yna = ThenStep
 public typealias CY_GB_A = AndStep
 public typealias CY_GB_Ond = ButStep
-//Danish
+// Danish
 public typealias DA_Egenskab = Feature
 public typealias DA_Eksempel = Scenario
 public typealias DA_Scenarie = Scenario
@@ -203,7 +203,7 @@ public typealias DA_Når = WhenStep
 public typealias DA_Så = ThenStep
 public typealias DA_Og = AndStep
 public typealias DA_Men = ButStep
-//German
+// German
 public typealias DE_Funktionalität = Feature
 public typealias DE_Beispiel = Scenario
 public typealias DE_Szenario = Scenario
@@ -217,7 +217,7 @@ public typealias DE_Wenn = WhenStep
 public typealias DE_Dann = ThenStep
 public typealias DE_Und = AndStep
 public typealias DE_Aber = ButStep
-//Greek
+// Greek
 public typealias EL_Δυνατότητα = Feature
 public typealias EL_Λειτουργία = Feature
 public typealias EL_Παράδειγμα = Scenario
@@ -231,7 +231,7 @@ public typealias EL_Όταν = WhenStep
 public typealias EL_Τότε = ThenStep
 public typealias EL_Και = AndStep
 public typealias EL_Αλλά = ButStep
-//Emoji
+// Emoji
 public typealias EM_📚 = Feature
 public typealias EM_🥒 = Scenario
 public typealias EM_📕 = Scenario
@@ -243,7 +243,7 @@ public typealias EM_🎬 = WhenStep
 public typealias EM_🙏 = ThenStep
 public typealias EM_😂 = AndStep
 public typealias EM_😔 = ButStep
-//Scouse
+// Scouse
 public typealias EN_SCOUSE_Feature = Feature
 public typealias EN_SCOUSE_TheThingOfItIs = Scenario
 public typealias EN_SCOUSE_WharrimeanIs = ScenarioOutline
@@ -257,7 +257,7 @@ public typealias EN_SCOUSE_Dun = ThenStep
 public typealias EN_SCOUSE_DenYouseGotta = ThenStep
 public typealias EN_SCOUSE_An = AndStep
 public typealias EN_SCOUSE_Buh = ButStep
-//Australian
+// Australian
 public typealias EN_AU_PrettyMuch = Feature
 public typealias EN_AU_AwwwLookMate = Scenario
 public typealias EN_AU_ReckonItSLike = ScenarioOutline
@@ -268,7 +268,7 @@ public typealias EN_AU_ItSJustUnbelievable = WhenStep
 public typealias EN_AU_ButAtTheEndOfTheDayIReckon = ThenStep
 public typealias EN_AU_TooRight = AndStep
 public typealias EN_AU_YeahNah = ButStep
-//LOLCAT
+// LOLCAT
 public typealias EN_LOL_OhHai = Feature
 public typealias EN_LOL_Mishun = Scenario
 public typealias EN_LOL_MishunSrsly = ScenarioOutline
@@ -279,7 +279,7 @@ public typealias EN_LOL_Wen = WhenStep
 public typealias EN_LOL_Den = ThenStep
 public typealias EN_LOL_An = AndStep
 public typealias EN_LOL_But = ButStep
-//Old English
+// Old English
 public typealias EN_OLD_Hwaet = Feature
 public typealias EN_OLD_Hwæt = Feature
 public typealias EN_OLD_Swa = Scenario
@@ -300,7 +300,7 @@ public typealias EN_OLD_ÐaÐe = ThenStep
 public typealias EN_OLD_Ond = AndStep
 public typealias EN_OLD__7 = AndStep
 public typealias EN_OLD_Ac = ButStep
-//Pirate
+// Pirate
 public typealias EN_PIRATE_AhoyMatey = Feature
 public typealias EN_PIRATE_HeaveTo = Scenario
 public typealias EN_PIRATE_ShiverMeTimbers = ScenarioOutline
@@ -311,7 +311,7 @@ public typealias EN_PIRATE_Blimey = WhenStep
 public typealias EN_PIRATE_LetGoAndHaul = ThenStep
 public typealias EN_PIRATE_Aye = AndStep
 public typealias EN_PIRATE_Avast = ButStep
-//Esperanto
+// Esperanto
 public typealias EO_Trajto = Feature
 public typealias EO_Ekzemplo = Scenario
 public typealias EO_Scenaro = Scenario
@@ -327,7 +327,7 @@ public typealias EO_Se = WhenStep
 public typealias EO_Do = ThenStep
 public typealias EO_Kaj = AndStep
 public typealias EO_Sed = ButStep
-//Spanish
+// Spanish
 public typealias ES_Característica = Feature
 public typealias ES_Ejemplo = Scenario
 public typealias ES_Escenario = Scenario
@@ -343,7 +343,7 @@ public typealias ES_Entonces = ThenStep
 public typealias ES_Y = AndStep
 public typealias ES_E = AndStep
 public typealias ES_Pero = ButStep
-//Estonian
+// Estonian
 public typealias ET_Omadus = Feature
 public typealias ET_Juhtum = Scenario
 public typealias ET_Stsenaarium = Scenario
@@ -356,7 +356,7 @@ public typealias ET_Kui = WhenStep
 public typealias ET_Siis = ThenStep
 public typealias ET_Ja = AndStep
 public typealias ET_Kuid = ButStep
-//Persian
+// Persian
 public typealias FA_وِیژگی = Feature
 public typealias FA_مثال = Scenario
 public typealias FA_سناریو = Scenario
@@ -368,7 +368,7 @@ public typealias FA_هنگامی = WhenStep
 public typealias FA_آنگاه = ThenStep
 public typealias FA_و = AndStep
 public typealias FA_اما = ButStep
-//Finnish
+// Finnish
 public typealias FI_Ominaisuus = Feature
 public typealias FI_Tapaus = Scenario
 public typealias FI_Tapausaihio = ScenarioOutline
@@ -379,7 +379,7 @@ public typealias FI_Kun = WhenStep
 public typealias FI_Niin = ThenStep
 public typealias FI_Ja = AndStep
 public typealias FI_Mutta = ButStep
-//French
+// French
 public typealias FR_Fonctionnalité = Feature
 public typealias FR_Exemple = Scenario
 public typealias FR_Scénario = Scenario
@@ -409,7 +409,7 @@ public typealias FR_Et = AndStep
 public typealias FR_MaisQue = ButStep
 public typealias FR_MaisQu = ButStep
 public typealias FR_Mais = ButStep
-//Irish
+// Irish
 public typealias GA_Gné = Feature
 public typealias GA_Sampla = Scenario
 public typealias GA_Cás = Scenario
@@ -427,7 +427,7 @@ public typealias GA_NuairNár = WhenStep
 public typealias GA_Ansin = ThenStep
 public typealias GA_Agus = AndStep
 public typealias GA_Ach = ButStep
-//Gujarati
+// Gujarati
 public typealias GJ_લક્ષણ = Feature
 public typealias GJ_વ્યાપારજરૂર = Feature
 public typealias GJ_ક્ષમતા = Feature
@@ -442,7 +442,7 @@ public typealias GJ_ક્યારે = WhenStep
 public typealias GJ_પછી = ThenStep
 public typealias GJ_અને = AndStep
 public typealias GJ_પણ = ButStep
-//Galician
+// Galician
 public typealias GL_Característica = Feature
 public typealias GL_Exemplo = Scenario
 public typealias GL_Escenario = Scenario
@@ -459,7 +459,7 @@ public typealias GL_Logo = ThenStep
 public typealias GL_E = AndStep
 public typealias GL_Mais = ButStep
 public typealias GL_Pero = ButStep
-//Hebrew
+// Hebrew
 public typealias HE_תכונה = Feature
 public typealias HE_דוגמא = Scenario
 public typealias HE_תרחיש = Scenario
@@ -472,7 +472,7 @@ public typealias HE_אז = ThenStep
 public typealias HE_אזי = ThenStep
 public typealias HE_וגם = AndStep
 public typealias HE_אבל = ButStep
-//Hindi
+// Hindi
 public typealias HI_रूपलेख = Feature
 public typealias HI_परिदृश्य = Scenario
 public typealias HI_परिदृश्यरूपरेखा = ScenarioOutline
@@ -490,7 +490,7 @@ public typealias HI_तथा = AndStep
 public typealias HI_पर = ButStep
 public typealias HI_परन्तु = ButStep
 public typealias HI_किन्तु = ButStep
-//Croatian
+// Croatian
 public typealias HR_Osobina = Feature
 public typealias HR_Mogućnost = Feature
 public typealias HR_Mogucnost = Feature
@@ -508,7 +508,7 @@ public typealias HR_Kad = WhenStep
 public typealias HR_Onda = ThenStep
 public typealias HR_I = AndStep
 public typealias HR_Ali = ButStep
-//Creole
+// Creole
 public typealias HT_Karakteristik = Feature
 public typealias HT_Mak = Feature
 public typealias HT_Fonksyonalite = Feature
@@ -529,7 +529,7 @@ public typealias HT_Ak = AndStep
 public typealias HT_Epi = AndStep
 public typealias HT_E = AndStep
 public typealias HT_Men = ButStep
-//Hungarian
+// Hungarian
 public typealias HU_Jellemző = Feature
 public typealias HU_Példa = Scenario
 public typealias HU_Forgatókönyv = Scenario
@@ -544,7 +544,7 @@ public typealias HU_Amikor = WhenStep
 public typealias HU_Akkor = ThenStep
 public typealias HU_És = AndStep
 public typealias HU_De = ButStep
-//Indonesian
+// Indonesian
 public typealias ID_Fitur = Feature
 public typealias ID_Skenario = Scenario
 public typealias ID_SkenarioKonsep = ScenarioOutline
@@ -555,7 +555,7 @@ public typealias ID_Ketika = WhenStep
 public typealias ID_Maka = ThenStep
 public typealias ID_Dan = AndStep
 public typealias ID_Tapi = ButStep
-//Icelandic
+// Icelandic
 public typealias IS_Eiginleiki = Feature
 public typealias IS_Atburðarás = Scenario
 public typealias IS_LýsingAtburðarásar = ScenarioOutline
@@ -567,7 +567,7 @@ public typealias IS_Þegar = WhenStep
 public typealias IS_Þá = ThenStep
 public typealias IS_Og = AndStep
 public typealias IS_En = ButStep
-//Italian
+// Italian
 public typealias IT_Funzionalità = Feature
 public typealias IT_Esempio = Scenario
 public typealias IT_Scenario = Scenario
@@ -582,7 +582,7 @@ public typealias IT_Quando = WhenStep
 public typealias IT_Allora = ThenStep
 public typealias IT_E = AndStep
 public typealias IT_Ma = ButStep
-//Japanese
+// Japanese
 public typealias JA_フィーチャ = Feature
 public typealias JA_機能 = Feature
 public typealias JA_シナリオ = Scenario
@@ -599,7 +599,7 @@ public typealias JA_かつ = AndStep
 public typealias JA_しかし = ButStep
 public typealias JA_但し = ButStep
 public typealias JA_ただし = ButStep
-//Javanese
+// Javanese
 public typealias JV_Fitur = Feature
 public typealias JV_Skenario = Scenario
 public typealias JV_KonsepSkenario = ScenarioOutline
@@ -615,7 +615,7 @@ public typealias JV_Lan = AndStep
 public typealias JV_Tapi = ButStep
 public typealias JV_Nanging = ButStep
 public typealias JV_Ananging = ButStep
-//Georgian
+// Georgian
 public typealias KA_Თვისება = Feature
 public typealias KA_Მაგალითად = Scenario
 public typealias KA_Სცენარის = Scenario
@@ -627,7 +627,7 @@ public typealias KA_Როდესაც = WhenStep
 public typealias KA_Მაშინ = ThenStep
 public typealias KA_Და = AndStep
 public typealias KA_Მაგ­რამ = ButStep
-//Kannada
+// Kannada
 public typealias KN_ಹೆಚ್ಚಳ = Feature
 public typealias KN_ಉದಾಹರಣೆ = Scenario
 public typealias KN_ಕಥಾಸಾರಾಂಶ = Scenario
@@ -639,7 +639,7 @@ public typealias KN_ಸ್ಥಿತಿಯನ್ನು = WhenStep
 public typealias KN_ನಂತರ = ThenStep
 public typealias KN_ಮತ್ತು = AndStep
 public typealias KN_ಆದರೆ = ButStep
-//Korean
+// Korean
 public typealias KO_기능 = Feature
 public typealias KO_시나리오 = Scenario
 public typealias KO_시나리오개요 = ScenarioOutline
@@ -653,7 +653,7 @@ public typealias KO_그러면 = ThenStep
 public typealias KO_그리고 = AndStep
 public typealias KO_하지만 = ButStep
 public typealias KO_단 = ButStep
-//Lithuanian
+// Lithuanian
 public typealias LT_Savybė = Feature
 public typealias LT_Pavyzdys = Scenario
 public typealias LT_Scenarijus = Scenario
@@ -665,7 +665,7 @@ public typealias LT_Kai = WhenStep
 public typealias LT_Tada = ThenStep
 public typealias LT_Ir = AndStep
 public typealias LT_Bet = ButStep
-//Luxemburgish
+// Luxemburgish
 public typealias LU_Funktionalitéit = Feature
 public typealias LU_Beispill = Scenario
 public typealias LU_Szenario = Scenario
@@ -679,7 +679,7 @@ public typealias LU_An = AndStep
 public typealias LU_A = AndStep
 public typealias LU_Awer = ButStep
 public typealias LU_Mä = ButStep
-//Latvian
+// Latvian
 public typealias LV_Funkcionalitāte = Feature
 public typealias LV_Fīča = Feature
 public typealias LV_Piemērs = Scenario
@@ -693,7 +693,7 @@ public typealias LV_Ja = WhenStep
 public typealias LV_Tad = ThenStep
 public typealias LV_Un = AndStep
 public typealias LV_Bet = ButStep
-//Macedonian
+// Macedonian
 public typealias MK_CYRL_Функционалност = Feature
 public typealias MK_CYRL_БизнисПотреба = Feature
 public typealias MK_CYRL_Можност = Feature
@@ -712,7 +712,7 @@ public typealias MK_CYRL_Кога = WhenStep
 public typealias MK_CYRL_Тогаш = ThenStep
 public typealias MK_CYRL_И = AndStep
 public typealias MK_CYRL_Но = ButStep
-//Macedonian (Latin)
+// Macedonian (Latin)
 public typealias MK_LATN_Funkcionalnost = Feature
 public typealias MK_LATN_BiznisPotreba = Feature
 public typealias MK_LATN_Mozhnost = Feature
@@ -730,7 +730,7 @@ public typealias MK_LATN_Koga = WhenStep
 public typealias MK_LATN_Togash = ThenStep
 public typealias MK_LATN_I = AndStep
 public typealias MK_LATN_No = ButStep
-//Mongolian
+// Mongolian
 public typealias MN_Функц = Feature
 public typealias MN_Функционал = Feature
 public typealias MN_Сценар = Scenario
@@ -746,7 +746,7 @@ public typealias MN_Мөн = AndStep
 public typealias MN_Тэгээд = AndStep
 public typealias MN_Гэхдээ = ButStep
 public typealias MN_Харин = ButStep
-//Dutch
+// Dutch
 public typealias NL_Functionaliteit = Feature
 public typealias NL_Voorbeeld = Scenario
 public typealias NL_Scenario = Scenario
@@ -760,7 +760,7 @@ public typealias NL_Wanneer = WhenStep
 public typealias NL_Dan = ThenStep
 public typealias NL_En = AndStep
 public typealias NL_Maar = ButStep
-//Norwegian
+// Norwegian
 public typealias NO_Egenskap = Feature
 public typealias NO_Eksempel = Scenario
 public typealias NO_Scenario = Scenario
@@ -773,7 +773,7 @@ public typealias NO_Når = WhenStep
 public typealias NO_Så = ThenStep
 public typealias NO_Og = AndStep
 public typealias NO_Men = ButStep
-//Panjabi
+// Panjabi
 public typealias PA_ਖਾਸੀਅਤ = Feature
 public typealias PA_ਮੁਹਾਂਦਰਾ = Feature
 public typealias PA_ਨਕਸ਼ਨੁਹਾਰ = Feature
@@ -789,7 +789,7 @@ public typealias PA_ਜਦੋਂ = WhenStep
 public typealias PA_ਤਦ = ThenStep
 public typealias PA_ਅਤੇ = AndStep
 public typealias PA_ਪਰ = ButStep
-//Polish
+// Polish
 public typealias PL_Właściwość = Feature
 public typealias PL_Funkcja = Feature
 public typealias PL_Aspekt = Feature
@@ -810,7 +810,7 @@ public typealias PL_Wtedy = ThenStep
 public typealias PL_Oraz = AndStep
 public typealias PL_I = AndStep
 public typealias PL_Ale = ButStep
-//Portuguese
+// Portuguese
 public typealias PT_Funcionalidade = Feature
 public typealias PT_Característica = Feature
 public typealias PT_Caracteristica = Feature
@@ -835,7 +835,7 @@ public typealias PT_Então = ThenStep
 public typealias PT_Entao = ThenStep
 public typealias PT_E = AndStep
 public typealias PT_Mas = ButStep
-//Romanian
+// Romanian
 public typealias RO_Functionalitate = Feature
 public typealias RO_Funcționalitate = Feature
 public typealias RO_Funcţionalitate = Feature
@@ -858,7 +858,7 @@ public typealias RO_Si = AndStep
 public typealias RO_Și = AndStep
 public typealias RO_Şi = AndStep
 public typealias RO_Dar = ButStep
-//Russian
+// Russian
 public typealias RU_Функция = Feature
 public typealias RU_Функциональность = Feature
 public typealias RU_Функционал = Feature
@@ -883,7 +883,7 @@ public typealias RU_Также = AndStep
 public typealias RU_Но = ButStep
 public typealias RU_А = ButStep
 public typealias RU_Иначе = ButStep
-//Slovak
+// Slovak
 public typealias SK_Požiadavka = Feature
 public typealias SK_Funkcia = Feature
 public typealias SK_Vlastnosť = Feature
@@ -905,7 +905,7 @@ public typealias SK_ATiež = AndStep
 public typealias SK_ATaktiež = AndStep
 public typealias SK_AZároveň = AndStep
 public typealias SK_Ale = ButStep
-//Slovenian
+// Slovenian
 public typealias SL_Funkcionalnost = Feature
 public typealias SL_Funkcija = Feature
 public typealias SL_Možnosti = Feature
@@ -939,7 +939,7 @@ public typealias SL_Ter = AndStep
 public typealias SL_Toda = ButStep
 public typealias SL_Ampak = ButStep
 public typealias SL_Vendar = ButStep
-//Serbian
+// Serbian
 public typealias SR_CYRL_Функционалност = Feature
 public typealias SR_CYRL_Могућност = Feature
 public typealias SR_CYRL_Особина = Feature
@@ -960,7 +960,7 @@ public typealias SR_CYRL_Кад = WhenStep
 public typealias SR_CYRL_Онда = ThenStep
 public typealias SR_CYRL_И = AndStep
 public typealias SR_CYRL_Али = ButStep
-//Serbian (Latin)
+// Serbian (Latin)
 public typealias SR_LATN_Funkcionalnost = Feature
 public typealias SR_LATN_Mogućnost = Feature
 public typealias SR_LATN_Mogucnost = Feature
@@ -982,7 +982,7 @@ public typealias SR_LATN_Kad = WhenStep
 public typealias SR_LATN_Onda = ThenStep
 public typealias SR_LATN_I = AndStep
 public typealias SR_LATN_Ali = ButStep
-//Swedish
+// Swedish
 public typealias SV_Egenskap = Feature
 public typealias SV_Scenario = Scenario
 public typealias SV_AbstraktScenario = ScenarioOutline
@@ -994,7 +994,7 @@ public typealias SV_När = WhenStep
 public typealias SV_Så = ThenStep
 public typealias SV_Och = AndStep
 public typealias SV_Men = ButStep
-//Tamil
+// Tamil
 public typealias TA_அம்சம் = Feature
 public typealias TA_வணிகதேவை = Feature
 public typealias TA_திறன் = Feature
@@ -1010,7 +1010,7 @@ public typealias TA_அப்பொழுது = ThenStep
 public typealias TA_மேலும் = AndStep
 public typealias TA_மற்றும் = AndStep
 public typealias TA_ஆனால் = ButStep
-//Thai
+// Thai
 public typealias TH_โครงหลัก = Feature
 public typealias TH_ความต้องการทางธุรกิจ = Feature
 public typealias TH_ความสามารถ = Feature
@@ -1024,7 +1024,7 @@ public typealias TH_เมื่อ = WhenStep
 public typealias TH_ดังนั้น = ThenStep
 public typealias TH_และ = AndStep
 public typealias TH_แต่ = ButStep
-//Telugu
+// Telugu
 public typealias TL_గుణము = Feature
 public typealias TL_ఉదాహరణ = Scenario
 public typealias TL_సన్నివేశం = Scenario
@@ -1036,7 +1036,7 @@ public typealias TL_ఈపరిస్థితిలో = WhenStep
 public typealias TL_అప్పుడు = ThenStep
 public typealias TL_మరియు = AndStep
 public typealias TL_కాని = ButStep
-//Klingon
+// Klingon
 public typealias TLH_Qap = Feature
 public typealias TLH_QuMeHUt = Feature
 public typealias TLH_Perbogh = Feature
@@ -1054,7 +1054,7 @@ public typealias TLH__Ej = AndStep
 public typealias TLH_Latlh = AndStep
 public typealias TLH__Ach = ButStep
 public typealias TLH__A = ButStep
-//Turkish
+// Turkish
 public typealias TR_Özellik = Feature
 public typealias TR_Örnek = Scenario
 public typealias TR_Senaryo = Scenario
@@ -1067,7 +1067,7 @@ public typealias TR_OZaman = ThenStep
 public typealias TR_Ve = AndStep
 public typealias TR_Fakat = ButStep
 public typealias TR_Ama = ButStep
-//Tatar
+// Tatar
 public typealias TT_Мөмкинлек = Feature
 public typealias TT_Үзенчәлеклелек = Feature
 public typealias TT_Сценарий = Scenario
@@ -1081,7 +1081,7 @@ public typealias TT_Һәм = AndStep
 public typealias TT_Вә = AndStep
 public typealias TT_Ләкин = ButStep
 public typealias TT_Әмма = ButStep
-//Ukrainian
+// Ukrainian
 public typealias UK_Функціонал = Feature
 public typealias UK_Приклад = Scenario
 public typealias UK_Сценарій = Scenario
@@ -1100,7 +1100,7 @@ public typealias UK_І = AndStep
 public typealias UK_АТакож = AndStep
 public typealias UK_Та = AndStep
 public typealias UK_Але = ButStep
-//Urdu
+// Urdu
 public typealias UR_صلاحیت = Feature
 public typealias UR_کاروبارکیضرورت = Feature
 public typealias UR_خصوصیت = Feature
@@ -1116,7 +1116,7 @@ public typealias UR_پھر = ThenStep
 public typealias UR_تب = ThenStep
 public typealias UR_اور = AndStep
 public typealias UR_لیکن = ButStep
-//Uzbek
+// Uzbek
 public typealias UZ_Функционал = Feature
 public typealias UZ_Сценарий = Scenario
 public typealias UZ_СценарийСтруктураси = ScenarioOutline
@@ -1128,7 +1128,7 @@ public typealias UZ_Ва = AndStep
 public typealias UZ_Лекин = ButStep
 public typealias UZ_Бирок = ButStep
 public typealias UZ_Аммо = ButStep
-//Vietnamese
+// Vietnamese
 public typealias VI_TínhNăng = Feature
 public typealias VI_TìnhHuống = Scenario
 public typealias VI_KịchBản = Scenario
@@ -1142,7 +1142,7 @@ public typealias VI_Khi = WhenStep
 public typealias VI_Thì = ThenStep
 public typealias VI_Và = AndStep
 public typealias VI_Nhưng = ButStep
-//Chinese simplified
+// Chinese simplified
 public typealias ZH_CN_功能 = Feature
 public typealias ZH_CN_场景 = Scenario
 public typealias ZH_CN_剧本 = Scenario
@@ -1159,7 +1159,7 @@ public typealias ZH_CN_而且 = AndStep
 public typealias ZH_CN_并且 = AndStep
 public typealias ZH_CN_同时 = AndStep
 public typealias ZH_CN_但是 = ButStep
-//Chinese traditional
+// Chinese traditional
 public typealias ZH_TW_功能 = Feature
 public typealias ZH_TW_場景 = Scenario
 public typealias ZH_TW_劇本 = Scenario

@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 
-class ErrorsTests : XCTestCase {
+class ErrorsTests: XCTestCase {
     override func setUpWithError() throws {
         Cucumber.shared.reset()
     }
@@ -18,7 +18,7 @@ class ErrorsTests : XCTestCase {
     override func tearDownWithError() throws {
         Cucumber.shared.reset()
     }
-    
+
     func testNotGherkin() {
         Cucumber.shared.parseIntoFeatures("""
             Not Gherkin
@@ -68,7 +68,7 @@ class ErrorsTests : XCTestCase {
         """, uri: "inconsistent_cell_count.feature")
         XCTAssert(Gherkin.errors.contains("File: inconsistent_cell_count.feature inconsistent cell count within the table"))
     }
-    
+
     func testSingleParserError() {
         Cucumber.shared.parseIntoFeatures("""
 

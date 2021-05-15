@@ -18,7 +18,7 @@ public extension Cucumber {
     func expectation(description: String) -> XCTestExpectation {
         return XCTestExpectation(description: description)
     }
-    
+
     /// Wait for a list of expectations to be fulfilled.
     ///
     /// - Parameters:

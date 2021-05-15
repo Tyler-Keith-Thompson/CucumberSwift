@@ -9,21 +9,21 @@
 import Foundation
 extension AST {
     class Rule {
-        private(set) var execute:(AST.Token, AST) -> Void
+        private(set) var execute: (AST.Token, AST) -> Void
         private init(_ closure: @escaping (AST.Token, AST) -> Void) {
             execute = closure
         }
-        
-        func then(_ rule:Rule) -> Rule {
+
+        func then(_ rule: Rule) -> Rule {
             return Rule {
                 self.execute($0, $1)
                 rule.execute($0, $1)
             }
         }
-        
+
         static let cleanAST = Rule { $1.nodeLookup = [:] }
         static let traverseToAppropriateDepth = Rule { $1.currentNode = $1.nodeLookup[$0.priority] }
-        
+
         static let createNewNode = Rule {
             switch $0 {
             case .feature:
@@ -39,7 +39,7 @@ extension AST {
             }
             $1.currentNode = $1.nodeLookup[$0.priority]
         }
-        
+
         static let addToNearestParent = Rule {
             let nodeLookup = $1.nodeLookup
             guard let current = $1.currentNode,
@@ -48,7 +48,7 @@ extension AST {
                   }) else { return }
             nodeLookup[parentPosition]?.add(child: current)
         }
-        
+
         static let validateParentExists = Rule {
             let nodeLookup = $1.nodeLookup
             guard let current = $1.currentNode,
@@ -62,7 +62,7 @@ extension AST {
                 return
             }
         }
-        
+
         static let appendTags = Rule {
             $1.currentNode?.tokens.append(contentsOf: $1.tags)
             $1.tags.removeAll()

@@ -10,9 +10,9 @@ import Foundation
 
 public struct ScenarioOutline: ScenarioDSL {
     public var scenarios: [Scenario] = []
-    
-    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type,
-                                      line:UInt = #line, column:UInt = #column,
+
+    @discardableResult public init<T>(_ title: String, tags: [String] = [], headers: T.Type,
+                                      line: UInt = #line, column: UInt = #column,
                                       @StepBuilder steps: (T) -> [StepDSL], examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: steps($0),
@@ -21,9 +21,9 @@ public struct ScenarioOutline: ScenarioDSL {
                      position: Lexer.Position(line: line, column: column))
         }
     }
-    
-    @discardableResult public init<T>(_ title:String, tags:[String] = [], headers: T.Type,
-                                      line:UInt = #line, column:UInt = #column,
+
+    @discardableResult public init<T>(_ title: String, tags: [String] = [], headers: T.Type,
+                                      line: UInt = #line, column: UInt = #column,
                                       @StepBuilder steps: (T) -> StepDSL, examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: [steps($0)],
@@ -32,9 +32,9 @@ public struct ScenarioOutline: ScenarioDSL {
                      position: Lexer.Position(line: line, column: column))
         }
     }
-    
-    @discardableResult public init<T>(_ title:(T) -> String, tags:[String] = [], headers: T.Type,
-                                      line:UInt = #line, column:UInt = #column,
+
+    @discardableResult public init<T>(_ title: (T) -> String, tags: [String] = [], headers: T.Type,
+                                      line: UInt = #line, column: UInt = #column,
                                       @StepBuilder steps: (T) -> [StepDSL], examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: steps($0),
@@ -43,9 +43,9 @@ public struct ScenarioOutline: ScenarioDSL {
                      position: Lexer.Position(line: line, column: column))
         }
     }
-    
-    @discardableResult public init<T>(_ title:(T) -> String, tags:[String] = [], headers: T.Type,
-                                      line:UInt = #line, column:UInt = #column,
+
+    @discardableResult public init<T>(_ title: (T) -> String, tags: [String] = [], headers: T.Type,
+                                      line: UInt = #line, column: UInt = #column,
                                       @StepBuilder steps: (T) -> StepDSL, examples: () -> [T]) {
         scenarios = examples().map {
             Scenario(with: [steps($0)],

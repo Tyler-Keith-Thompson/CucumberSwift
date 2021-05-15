@@ -24,7 +24,7 @@ class DSLStepTests: XCTestCase {
                 Given(I: printAStatement())
             }
         }
-        
+
         XCTAssertEqual(feature.title, featureTitle)
         XCTAssertEqual(feature.location.line, 21)
         XCTAssertEqual(feature.location.column, 16)
@@ -35,14 +35,14 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(scenario?.location.line, 23)
         XCTAssertEqual(scenario?.location.column, 21)
         XCTAssertEqual(scenario?.steps.count, 1)
-        
+
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, .given)
         XCTAssertEqual(step?.match, "I: printAStatement()")
         XCTAssertEqual(step?.location.line, 24)
         XCTAssertEqual(step?.location.column, 22)
     }
-    
+
     func testStepMatchWithWeirdFormatting() {
         func printAStatement() { print("Printed") }
 
@@ -54,7 +54,7 @@ class DSLStepTests: XCTestCase {
                     printAStatement())
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, .when)
@@ -75,7 +75,7 @@ class DSLStepTests: XCTestCase {
                 )
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, .then)
@@ -83,10 +83,10 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(step?.location.line, 73)
         XCTAssertEqual(step?.location.column, 21)
     }
-    
+
     func testStepMatchWithAsStringLiteralThatTriesToFoolTheParenCount() {
-        func printAStatement(_ str:String) { print(str) }
-        
+        func printAStatement(_ str: String) { print(str) }
+
         let feature =
         Feature("") {
             Description(UUID().uuidString)
@@ -96,7 +96,7 @@ class DSLStepTests: XCTestCase {
                 )
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, .and)
@@ -104,10 +104,10 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(step?.location.line, 94)
         XCTAssertEqual(step?.location.column, 20)
     }
-    
+
     func testStepMatchWithAsStringLiteralThatDoesNotTryToFoolTheParenCount() {
-        func printAStatement(_ str:String) { print(str) }
-        
+        func printAStatement(_ str: String) { print(str) }
+
         let feature =
         Feature("") {
             Description(UUID().uuidString)
@@ -117,7 +117,7 @@ class DSLStepTests: XCTestCase {
                 )
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, .but)
@@ -125,10 +125,10 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(step?.location.line, 115)
         XCTAssertEqual(step?.location.column, 20)
     }
-    
+
     func testStepMatchWithAsDocStringLiteralThatDoesNotTryToFoolTheParenCount() {
-        func printAStatement(_ str:String) { print(str) }
-        
+        func printAStatement(_ str: String) { print(str) }
+
         let feature =
         Feature("") {
             Description(UUID().uuidString)
@@ -140,7 +140,7 @@ class DSLStepTests: XCTestCase {
                 )
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.keyword, [])
@@ -148,10 +148,10 @@ class DSLStepTests: XCTestCase {
         XCTAssertEqual(step?.location.line, 136)
         XCTAssertEqual(step?.location.column, 25)
     }
-    
+
     func testStepCanBeModifiedToNotContinueAfterFailure() {
-        func printAStatement(_ str:String) { print(str) }
-        
+        func printAStatement(_ str: String) { print(str) }
+
         let feature =
         Feature("") {
             Description(UUID().uuidString)
@@ -159,7 +159,7 @@ class DSLStepTests: XCTestCase {
                 Given(I: printAStatement("")).continueAfterFailure(false)
             }
         }
-        
+
         let scenario = feature.scenarios.first
         let step = scenario?.steps.first
         XCTAssertEqual(step?.continueAfterFailure, false)

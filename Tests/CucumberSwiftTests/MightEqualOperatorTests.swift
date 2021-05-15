@@ -7,7 +7,7 @@ class MightEqualOperatorTests: XCTestCase {
         oldString ?= newString
         XCTAssertEqual(oldString, newString, "String \"\" should be updated with the new value of \"\(newString)\"")
     }
-    
+
     func testMightEqualDoesNotSetOldStringToNewStringIfNewStringIsNotDefined() {
         var oldString = "I used to be a string"
         oldString ?= nil

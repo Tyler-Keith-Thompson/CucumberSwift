@@ -10,7 +10,7 @@ import Foundation
 extension Sequence where Element: Equatable {
     var uniqueElements: [Element] {
         return reduce(into: []) {
-            if (!$0.contains($1)) {
+            if !$0.contains($1) {
                 $0.append($1)
             }
         }
@@ -24,10 +24,10 @@ extension Array {
     @inlinable public func dropFirst(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = dropFirst(0)
         var count = k ?? self.count
-        while (count > 0) {
+        while count > 0 {
             count -= 1
             guard let first = new.first else { break }
-            if (try predicate(first)) {
+            if try predicate(first) {
                 new = new.dropFirst()
             } else {
                 break
@@ -35,14 +35,14 @@ extension Array {
         }
         return new
     }
-    
+
     @inlinable public func dropLast(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = dropLast(0)
         var count = k ?? self.count
-        while (count > 0) {
+        while count > 0 {
             count -= 1
             guard let last = new.last else { break }
-            if (try predicate(last)) {
+            if try predicate(last) {
                 new = new.dropLast()
             } else {
                 break
@@ -50,14 +50,14 @@ extension Array {
         }
         return new
     }
-    
-    func appending(_ element:Element) -> [Element] {
+
+    func appending(_ element: Element) -> [Element] {
         var copy = self
         copy.append(element)
         return copy
     }
 
-    func appending(contentsOf elementArr:[Element]) -> [Element] {
+    func appending(contentsOf elementArr: [Element]) -> [Element] {
         var copy = self
         copy.append(contentsOf: elementArr)
         return copy

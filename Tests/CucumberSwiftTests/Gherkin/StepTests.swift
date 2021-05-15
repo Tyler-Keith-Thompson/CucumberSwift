@@ -60,7 +60,7 @@ class StepTest: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(whenCalled)
     }
-    
+
     func testAsteriskMatchesToThen() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -81,7 +81,7 @@ class StepTest: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(thenCalled)
     }
-    
+
     func testAsteriskMatchesToAnd() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -102,7 +102,7 @@ class StepTest: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(andCalled)
     }
-    
+
     func testAsteriskMatchesToBut() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -123,7 +123,7 @@ class StepTest: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(butCalled)
     }
-    
+
     func testAsteriskMatchesToMatchAll() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -143,14 +143,14 @@ class StepTest: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(matchAllCalled)
     }
-    
+
     func testKeywordHasMultipleValues() {
         XCTAssertFalse(Step.Keyword.given.hasMultipleValues())
         XCTAssertFalse(Step.Keyword.when.hasMultipleValues())
         XCTAssertFalse(Step.Keyword.then.hasMultipleValues())
         XCTAssertFalse(Step.Keyword.and.hasMultipleValues())
         XCTAssertFalse(Step.Keyword.but.hasMultipleValues())
-        var kw:Step.Keyword = []
+        var kw: Step.Keyword = []
         XCTAssertFalse(kw.hasMultipleValues())
 
         kw = [.given, .when]

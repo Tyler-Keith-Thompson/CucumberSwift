@@ -18,7 +18,7 @@ class TableTests: XCTestCase {
     override func tearDownWithError() throws {
         Cucumber.shared.reset()
     }
-    
+
     let tableFile: String =
     """
     Feature: Some terse yet descriptive text of what is desired
@@ -48,7 +48,7 @@ class TableTests: XCTestCase {
         XCTAssertEqual(secondScenario?.steps.count, 4)
         XCTAssertEqual(firstScenario?.title, "Some determinable business situation")
         XCTAssertEqual(secondScenario?.title, "Some determinable business situation")
-        if ((firstScenario?.steps.count ?? 0) == 4) {
+        if (firstScenario?.steps.count ?? 0) == 4 {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some first")
@@ -59,7 +59,7 @@ class TableTests: XCTestCase {
             XCTAssertEqual(steps?[3].keyword, .then)
             XCTAssertEqual(steps?[3].match, "some result 1 is achieved")
         }
-        if ((secondScenario?.steps.count ?? 0) == 4) {
+        if (secondScenario?.steps.count ?? 0) == 4 {
             let steps = secondScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some third")
@@ -71,17 +71,17 @@ class TableTests: XCTestCase {
             XCTAssertEqual(steps?[3].match, "some result 2 is achieved")
         }
     }
-    
+
     func testScenarioOutlinesHandleBackgroundSteps() {
-        let cucumber = Cucumber(withString:"""
+        let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
         Textual description of the business value of this feature
         Business rules that govern the scope of the feature
         Any additional information that will make the feature easier to understand
-        
+
         Background:
             Given I am logged in
-    
+
         Scenario Outline: Some determinable business situation
             Given some <precondition>
                 And some <other precondition>
@@ -100,17 +100,17 @@ class TableTests: XCTestCase {
             XCTAssertEqual(scenario.steps.count, 5)
         })
     }
-    
+
     func testScenarioOutlinesHandleTags() {
-        let cucumber = Cucumber(withString:"""
+        let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
         Textual description of the business value of this feature
         Business rules that govern the scope of the feature
         Any additional information that will make the feature easier to understand
-        
+
         Background:
             Given I am logged in
-    
+
         @outline
         Scenario Outline: Some determinable business situation
             Given some <precondition>
@@ -131,13 +131,13 @@ class TableTests: XCTestCase {
             XCTAssert(scenario.containsTag("outline"))
         })
     }
-    
+
     func testTableHeadersInsideTitle() {
-        let cucumber = Cucumber(withString:"""
+        let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
       Scenario Outline: the <one>
         Given the <four>
-            
+
             Examples:
               | one | two  | three | four   | five  |
               | un  | deux | trois | quatre | cinq  |
@@ -148,13 +148,13 @@ class TableTests: XCTestCase {
         XCTAssertEqual(firstScenario?.title, "the un")
         XCTAssertEqual(secondScenario?.title, "the uno")
     }
-    
+
     func testTableCellWithEscapeCharacter() {
-        let cucumber = Cucumber(withString:"""
+        let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
       Scenario Outline: the <one>
         Given the <two>
-            
+
             Examples:
               | one   | two  |
               | u\\|o | dos  |
@@ -162,14 +162,14 @@ class TableTests: XCTestCase {
         let firstScenario = cucumber.features.first?.scenarios.first
         XCTAssertEqual(firstScenario?.title, "the u|o")
     }
-    
+
     func testTableGetAttachedToSteps() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
     Feature: Some terse yet descriptive text of what is desired
       Scenario Outline: Some Table
         Given the <one>
-            
+
             Examples:
               | one | two  |
               | un  | deux |
@@ -189,7 +189,7 @@ class TableTests: XCTestCase {
         XCTAssert(firstGivenCalled)
         XCTAssert(secondGivenCalled)
     }
-    
+
     func testTestDataAttachedToAStep() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -208,16 +208,16 @@ class TableTests: XCTestCase {
         XCTAssertEqual(table?.rows.count, 2)
         XCTAssertEqual(firstRow?.count, 2)
         XCTAssertEqual(secondRow?.count, 2)
-        if ((firstRow?.count ?? 0) == 2) {
+        if (firstRow?.count ?? 0) == 2 {
             XCTAssertEqual(firstRow?[0], "foo")
             XCTAssertEqual(firstRow?[1], "bar")
         }
-        if ((secondRow?.count ?? 0) == 2) {
+        if (secondRow?.count ?? 0) == 2 {
             XCTAssertEqual(secondRow?[0], "boz")
             XCTAssertEqual(secondRow?[1], "boo")
         }
         var givenCalled = false
-        if (step?.dataTable != nil) {
+        if step?.dataTable != nil {
             Given("^a simple data table$") { (_, step) in
                 givenCalled = true
                 let dt = step.dataTable!
@@ -232,7 +232,7 @@ class TableTests: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssert(givenCalled)
     }
-    
+
     func testTestDataAttachedToAStepWithEmptyCell() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -248,14 +248,14 @@ class TableTests: XCTestCase {
         XCTAssertNotNil(step?.dataTable)
         XCTAssertEqual(table?.rows.count, 1)
         XCTAssertEqual(firstRow?.count, 3)
-        if ((firstRow?.count ?? 0) == 3) {
+        if (firstRow?.count ?? 0) == 3 {
             XCTAssertEqual(firstRow?[0], "foo")
             XCTAssertEqual(firstRow?[1], "")
             XCTAssertEqual(firstRow?[2], "bar")
         }
         Cucumber.shared.executeFeatures()
     }
-    
+
     func testScenarioOutlineWithMultipleExamples() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""

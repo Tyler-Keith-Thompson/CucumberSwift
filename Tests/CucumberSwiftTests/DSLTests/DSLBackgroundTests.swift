@@ -21,15 +21,15 @@ class DSLBackgroundTests: XCTestCase {
                 When(I: print("S1"))
             }
         }
-        
+
         XCTAssertEqual(feature.scenarios.count, 1)
-        
+
         let sc1 = feature.scenarios.first
         XCTAssertEqual(sc1?.steps.count, 2)
         XCTAssertEqual(sc1?.steps.first?.match, "I: print(\"B1\")")
         XCTAssertEqual(sc1?.steps.last?.match, "I: print(\"S1\")")
     }
-    
+
     func testBackgroundStepsAreAddedToMultipleScenarios() {
         let feature =
         Feature("F1") {
@@ -44,9 +44,9 @@ class DSLBackgroundTests: XCTestCase {
                 When(I: print("S2"))
             }
         }
-        
+
         XCTAssertEqual(feature.scenarios.count, 2)
-        
+
         let sc1 = feature.scenarios.first
         XCTAssertEqual(sc1?.steps.count, 3)
         XCTAssertEqual(sc1?.steps.first?.match, "I: print(\"B1\")")
@@ -54,7 +54,7 @@ class DSLBackgroundTests: XCTestCase {
             XCTAssertEqual(steps[1].match, "I: print(\"B2\")")
         }
         XCTAssertEqual(sc1?.steps.last?.match, "I: print(\"S1\")")
-        
+
         let sc2 = feature.scenarios.last
         XCTAssertEqual(sc2?.steps.count, 3)
         XCTAssertEqual(sc2?.steps.first?.match, "I: print(\"B1\")")

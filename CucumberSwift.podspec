@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
     
     s.ios.deployment_target = '13.0'
     s.osx.deployment_target = '10.15'
-    s.tvos.deployment_target = '9.0'
+    s.tvos.deployment_target = '13.0'
     s.swift_version = '5.4'
   
     s.source_files = 'Sources/**/*.{swift,h,m}'

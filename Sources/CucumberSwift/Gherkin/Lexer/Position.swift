@@ -10,17 +10,17 @@ import Foundation
 
 public extension Lexer {
     struct Position: Hashable {
-        static let start:Position = {
+        static let start: Position = {
             return Position(line: 0, column: 0)
         }()
-        public internal(set) var line:UInt
-        public internal(set) var column:UInt
-        public internal(set) var uri:URL?
+        public internal(set) var line: UInt
+        public internal(set) var column: UInt
+        public internal(set) var uri: URL?
     }
 }
 
 extension Lexer.Position: Equatable {
-    public static func == (lhs:Lexer.Position, rhs:Lexer.Position) -> Bool {
+    public static func == (lhs: Lexer.Position, rhs: Lexer.Position) -> Bool {
         return lhs.line == rhs.line
             && lhs.column == rhs.column
     }

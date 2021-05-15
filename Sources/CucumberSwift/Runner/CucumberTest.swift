@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 fileprivate extension Step {
-    var method:TestCaseMethod? {
+    var method: TestCaseMethod? {
         TestCaseMethod(withName: "\(keyword.toString()) \(match)".toClassString(), closure: {
             guard !Cucumber.shared.failedScenarios.contains(where: { $0 === self.scenario }) else { return }
             let startTime = Date()
@@ -50,7 +50,7 @@ fileprivate extension Step {
         } else {
             execute?(match.matches(for: regex), self)
         }
-        if (execute != nil && result != .failed) {
+        if execute != nil && result != .failed {
             result = .passed
         }
     }
@@ -84,7 +84,7 @@ class CucumberTest: XCTestCase {
         for feature in Cucumber.shared.features.taggedElements(with: Cucumber.shared.environment, askImplementor: false) {
             let className = feature.title.toClassString() + readFeatureScenarioDelimiter()
             for scenario in feature.scenarios.taggedElements(with: Cucumber.shared.environment, askImplementor: true) {
-                createTestCaseFor(className:className, scenario: scenario, tests: &tests)
+                createTestCaseFor(className: className, scenario: scenario, tests: &tests)
             }
         }
         return tests
@@ -105,8 +105,8 @@ class CucumberTest: XCTestCase {
         }
     }
 
-    private static func createTestCaseFor(className:String, scenario: Scenario, tests:inout [XCTestCase]) {
-        scenario.steps.compactMap { step -> (step:Step, XCTestCase.Type, Selector)? in
+    private static func createTestCaseFor(className: String, scenario: Scenario, tests:inout [XCTestCase]) {
+        scenario.steps.compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in
             if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
                                                                            method: step.method) {
                 return (step, testCase, methodSelector)
@@ -129,7 +129,7 @@ class CucumberTest: XCTestCase {
         }
     }
 
-    //A test case needs at least one test to trigger the observer
+    // A test case needs at least one test to trigger the observer
     final func testGherkin() {
         XCTAssert(Gherkin.errors.isEmpty, "Gherkin language errors found:\n\(Gherkin.errors.joined(separator: "\n"))")
         Gherkin.errors.forEach {

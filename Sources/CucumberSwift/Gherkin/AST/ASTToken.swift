@@ -17,8 +17,8 @@ extension AST {
         case examples(Lexer.Token? = nil)
         case step(Lexer.Token? = nil)
         case description(Lexer.Token? = nil)
-        
-        var priority:UInt {
+
+        var priority: UInt {
             switch self {
                 case .feature(_): return 0
                 case .rule(_): return 1
@@ -30,7 +30,7 @@ extension AST {
                 case .description(_): return 3
             }
         }
-        
+
         public static func == (lhs: Self, rhs: Self) -> Bool {
             var lHasher = Hasher()
             lhs.hash(into: &lHasher)
@@ -38,7 +38,7 @@ extension AST {
             rhs.hash(into: &rHasher)
             return lHasher.finalize() == rHasher.finalize()
         }
-        
+
         func hash(into hasher: inout Hasher) {
             switch self {
                 case .feature(_): hasher.combine(1)
@@ -51,8 +51,8 @@ extension AST {
                 case .description(_): hasher.combine(8)
             }
         }
-        
-        var token:Lexer.Token? {
+
+        var token: Lexer.Token? {
             switch self {
             case .feature(let token): return token
             case .rule(let token): return token
@@ -64,12 +64,12 @@ extension AST {
             case .description(let token): return token
             }
         }
-        
-        init?(_ token:Lexer.Token) {
+
+        init?(_ token: Lexer.Token) {
             if case Lexer.Token.keyword(_, _) = token {
                 self = .step(token)
             } else if case Lexer.Token.scope(_, let scope) = token {
-                switch (scope) {
+                switch scope {
                     case .feature: self = .feature(token)
                     case .rule: self = .rule(token)
                     case .background: self = .background(token)

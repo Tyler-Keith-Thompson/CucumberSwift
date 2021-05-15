@@ -13,25 +13,25 @@ public class StringReader {
     public var position: Lexer.Position {
         return Lexer.Position(line: line, column: column)
     }
-    
-    private var line:UInt = 1
-    private var lastLinePosition:UInt = 0 {
+
+    private var line: UInt = 1
+    private var lastLinePosition: UInt = 0 {
         willSet {
             holdLinePosition = lastLinePosition
         }
     }
-    private var holdLinePosition:UInt = 0
-    private var column:UInt = 0
-    
+    private var holdLinePosition: UInt = 0
+    private var column: UInt = 0
+
     init(_ str: String) {
         input = str
         index = input.startIndex
     }
-    
+
     public var currentChar: Character? {
         return (index < input.endIndex && index >= input.startIndex) ? input[index] : nil
     }
-    
+
     public var nextChar: Character? {
         if let i = input.index(index, offsetBy: 1, limitedBy: input.endIndex) {
             guard i != input.endIndex else { return input.last }
@@ -39,25 +39,25 @@ public class StringReader {
         }
         return nil
     }
-    
+
     public var previousChar: Character? {
         if let i = input.index(index, offsetBy: -1, limitedBy: input.startIndex) {
             return input[i]
         }
         return nil
     }
-    
+
     func advanceIndex() {
         column += 1
         _ = input.formIndex(&index, offsetBy: 1, limitedBy: input.endIndex)
-        if (index < input.endIndex && input[index].isNewline) {
+        if index < input.endIndex && input[index].isNewline {
             line += 1
             column = 0
             lastLinePosition = holdLinePosition
         }
     }
-    
-    @discardableResult public func lookAheadUntil(_ evaluation:((Character) -> Bool)) -> String {
+
+    @discardableResult public func lookAheadUntil(_ evaluation: ((Character) -> Bool)) -> String {
         var str = ""
         var indexCopy = index
         let currentCharacter = {
@@ -69,8 +69,8 @@ public class StringReader {
         }
         return str
     }
-    
-    @discardableResult public func readUntil(_ evaluation:((Character) -> Bool)) -> String {
+
+    @discardableResult public func readUntil(_ evaluation: ((Character) -> Bool)) -> String {
         var str = ""
         while let char = currentChar, !evaluation(char) {
             str.append(char)

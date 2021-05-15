@@ -10,24 +10,24 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 
-class StringExtensionsTests : XCTestCase {
+class StringExtensionsTests: XCTestCase {
     func testMatchesReturnsCorrectMatchesForRegex() {
         let matches = "This is a test".matches(for: "^(.*?) is a test$")
         XCTAssertEqual(matches.count, 2)
         XCTAssertEqual(matches.first, "This is a test")
         XCTAssertEqual(matches.last, "This")
     }
-    
+
     func testMatchesReturnsAnEmptyArrayForInvalidRegex() {
         let matches = "This is a test".matches(for: "^(.*? is a test$")
         XCTAssertEqual(matches.count, 0)
     }
-    
+
     func testMatchesReturnsAnEmptyArrayForNonMatchingRegex() {
         let matches = "This is a test".matches(for: "^xc7qqv....$")
         XCTAssertEqual(matches.count, 0)
     }
-    
+
     func testCapitalizingFirstLetter() {
         XCTAssertEqual("test".capitalizingFirstLetter(), "Test")
     }
@@ -39,13 +39,13 @@ class StringExtensionsTests : XCTestCase {
     func testCamelCaseFromSpaces() {
         XCTAssertEqual("test one".camelCasingString(), "testOne")
     }
-    
+
     func testCamelCaseFromNonAlphanumericCharacters() {
         XCTAssertEqual("test-two".camelCasingString(), "testTwo")
     }
-    
+
     func testInitWithStaticString() {
-        let ss:StaticString = "someValue"
+        let ss: StaticString = "someValue"
         XCTAssertEqual(String(ss), "someValue")
     }
 }

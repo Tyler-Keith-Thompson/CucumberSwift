@@ -17,7 +17,7 @@ class CommentTests: XCTestCase {
     override func tearDownWithError() throws {
         Cucumber.shared.reset()
     }
-    
+
     func testInlineCommentsAreIgnored() {
         let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
@@ -29,7 +29,7 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(steps?.first?.keyword, .given)
         XCTAssertEqual(steps?.first?.match, "some precondition")
     }
-    
+
     func testCommentedLinesAreIgnored() {
         let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired
@@ -43,7 +43,7 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(steps?.first?.match, "some precondition")
         XCTAssertEqual(steps?.count, 1)
     }
-    
+
     func testLanguageIsParsed() {
         let cucumber = Cucumber(withString: """
     #language:en
@@ -60,7 +60,7 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(cucumber.features.first?.scenarios.first?.steps.first?.match, "the minimalism")
         XCTAssertEqual(Scope.language.given, "Given")
     }
-    
+
     func testEmojiLanguageIsParsed() {
         let cucumber = Cucumber(withString: """
     # language: em

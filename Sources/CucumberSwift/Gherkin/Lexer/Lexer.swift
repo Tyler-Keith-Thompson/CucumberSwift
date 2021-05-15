@@ -7,38 +7,38 @@
 //
 
 import Foundation
-public class Lexer : StringReader {
+public class Lexer: StringReader {
     internal var atLineStart = true
-    internal var lastScope:Scope?
-    internal var lastKeyword:Step.Keyword?
-    internal var url:URL?
-    
-    internal init(_ str: String, uri:String) {
+    internal var lastScope: Scope?
+    internal var lastKeyword: Step.Keyword?
+    internal var url: URL?
+
+    internal init(_ str: String, uri: String) {
         url = URL(string: uri)
         super.init(str)
     }
-    
+
     public override var position: Position {
         let pos = super.position
         return Position(line: pos.line, column: pos.column, uri: url)
     }
-    
-    @discardableResult internal func readLineUntil(_ evaluation:((Character) -> Bool)) -> String {
+
+    @discardableResult internal func readLineUntil(_ evaluation: ((Character) -> Bool)) -> String {
         return readUntil { $0.isNewline || evaluation($0) }
     }
 
-    @discardableResult internal func lookAheadAtLineUntil(_ evaluation:((Character) -> Bool)) -> String {
+    @discardableResult internal func lookAheadAtLineUntil(_ evaluation: ((Character) -> Bool)) -> String {
         return lookAheadUntil { $0.isNewline || evaluation($0) }
     }
 
-    //table cells have weird rules I don't necessarily agree with...
-    @discardableResult internal func readCellUntil(_ evaluation:((Character) -> Bool)) -> String {
+    // table cells have weird rules I don't necessarily agree with...
+    @discardableResult internal func readCellUntil(_ evaluation: ((Character) -> Bool)) -> String {
         var str = ""
         while let char = currentChar, !char.isNewline {
             if char.isEscapeCharacter,
                 let next = nextChar,
                 next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter {
-                if (next == "n") {
+                if next == "n" {
                     str.append("\n")
                 } else {
                     str.append(next)
@@ -47,7 +47,7 @@ public class Lexer : StringReader {
                 advanceIndex()
                 continue
             }
-            if (evaluation(char)) {
+            if evaluation(char) {
                 break
             }
             str.append(char)
@@ -55,8 +55,8 @@ public class Lexer : StringReader {
         }
         return str
     }
-    
-    @discardableResult internal func readDocString(_ evaluation:((Character) -> Bool)) -> String {
+
+    @discardableResult internal func readDocString(_ evaluation: ((Character) -> Bool)) -> String {
         var str = ""
         while let char = currentChar {
             if char.isEscapeCharacter,
@@ -67,7 +67,7 @@ public class Lexer : StringReader {
                 advanceIndex()
                 continue
             }
-            if (evaluation(char)) {
+            if evaluation(char) {
                 break
             }
             str.append(char)
@@ -75,7 +75,7 @@ public class Lexer : StringReader {
         }
         return str
     }
-    
+
     @discardableResult internal func stripSpaceIfNecessary() -> Bool {
         if let c = currentChar, c.isSpace {
             readLineUntil { !$0.isSpace }
@@ -83,42 +83,42 @@ public class Lexer : StringReader {
         }
         return false
     }
-    
+
     @discardableResult private func advance<T>(_ t:@autoclosure () -> T) -> T {
         advanceIndex()
         return t()
     }
-    
+
     internal func advanceToNextToken() -> Token? {
         guard let char = currentChar else { return nil }
         defer {
-            if (char.isNewline) {
+            if char.isNewline {
                 atLineStart = true
                 lastScope = nil
                 lastKeyword = nil
-            } else if (char.isSymbol && previousChar?.isNewline != true) {
+            } else if char.isSymbol && previousChar?.isNewline != true {
                 atLineStart = false
             }
         }
-        
-        switch (char) {
+
+        switch char {
         case .newLine: return advance(.newLine(position))
         case .comment: return readComment()
         case .tagMarker: return advance(.tag(position, readLineUntil({ !$0.isTagCharacter })))
         case .tableCellDelimiter:
             let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter })
                                             .trimmingCharacters(in: .whitespaces))
-            if (currentChar != Character.tableCellDelimiter) {
+            if currentChar != Character.tableCellDelimiter {
                 return advanceToNextToken()
             }
             return .tableCell(position, tableCellContents)
         case _ where atLineStart: return readScope()
         case .tableHeaderOpen:
-            let str = advance(readLineUntil{ $0.isHeaderClosed })
+            let str = advance(readLineUntil { $0.isHeaderClosed })
             return advance(.tableHeader(position, str))
         case _ where lastScope != nil:
-            let title = readLineUntil{ $0.isHeaderOpen }
-            if (title.isEmpty) { //hack to get around potential infinite loop
+            let title = readLineUntil { $0.isHeaderOpen }
+            if title.isEmpty { // hack to get around potential infinite loop
                 return advance(advanceToNextToken())
             }
             return .title(position, title)
@@ -128,17 +128,17 @@ public class Lexer : StringReader {
         default: return advance(advanceToNextToken())
         }
     }
-    
+
     private func readString() -> Token? {
         guard let char = currentChar,
                 char.isDocStringLiteral else { return nil }
         let position = self.position
-        let open = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
+        let open = lookAheadAtLineUntil { !$0.isDocStringLiteral }
         if open.isDocStringLiteral() {
             readLineUntil { !$0.isDocStringLiteral }
             let docStringValues = readDocString {
-                if ($0.isDocStringLiteral) {
-                    let close = lookAheadAtLineUntil{ !$0.isDocStringLiteral }
+                if $0.isDocStringLiteral {
+                    let close = lookAheadAtLineUntil { !$0.isDocStringLiteral }
                     if close == open { return true }
                 }
                 return false
@@ -146,7 +146,7 @@ public class Lexer : StringReader {
                 .enumerated()
                 .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { (res, e) in
                     let (offset, line) = e
-                    if (offset == 1) {
+                    if offset == 1 {
                         res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
                     }
                     let str = line.map { $0 }.dropFirst(upTo: res.whitespaceCount) {
@@ -161,16 +161,16 @@ public class Lexer : StringReader {
             return advance(.docString(position, DocString(literal: docStringValues.dropFirst().joined(separator: "\n"),
                                                           contentType: docStringValues.first?.trimmingCharacters(in: .whitespacesAndNewlines))))
         } else if char == .quote {
-            let str = advance(readLineUntil{ $0.isQuote })
+            let str = advance(readLineUntil { $0.isQuote })
             return advance(.string(position, str))
         }
         return nil
     }
-    
+
     private func readComment() -> Token? {
         let str = advance(readLineUntil { _ in false })
         let matches = str.matches(for: "^(?:\\s*)language(?:\\s*):(?:\\s*)(.*?)(?:\\s*)$")
-        if (!matches.isEmpty) {
+        if !matches.isEmpty {
             if let language = Language(matches[1]) {
                 Scope.language = language
             } else {
@@ -179,10 +179,10 @@ public class Lexer : StringReader {
         }
         return advance(advanceToNextToken())
     }
-    
-    //Feature, Scenario, Step etc...
+
+    // Feature, Scenario, Step etc...
     private func readScope() -> Token? {
-        if (stripSpaceIfNecessary()) {
+        if stripSpaceIfNecessary() {
             return advanceToNextToken()
         }
         if let stringToken = readString() {
@@ -190,8 +190,8 @@ public class Lexer : StringReader {
         }
         atLineStart = false
         let position = self.position
-        let scope = Scope.scopeFor(str: lookAheadAtLineUntil { $0.isScopeTerminator } )
-        if (scope != .unknown && !scope.isStep()) {
+        let scope = Scope.scopeFor(str: lookAheadAtLineUntil { $0.isScopeTerminator })
+        if scope != .unknown && !scope.isStep() {
             lastScope = scope
             readUntil { $0.isScopeTerminator }
             advance(stripSpaceIfNecessary())
@@ -205,7 +205,7 @@ public class Lexer : StringReader {
             return .description(position, readLineUntil { $0.isNewline }.trimmingCharacters(in: .whitespaces))
         }
     }
-    
+
     internal func lex() -> [Token] {
         Scope.language = Language.default
         var toks = [Token]()

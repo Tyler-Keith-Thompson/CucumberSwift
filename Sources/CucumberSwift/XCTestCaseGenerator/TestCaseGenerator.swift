@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 class TestCaseGenerator {
-    static func initWith(className:String, method:TestCaseMethod?) -> (XCTestCase.Type, Selector)? {
+    static func initWith(className: String, method: TestCaseMethod?) -> (XCTestCase.Type, Selector)? {
         let uniqueName = { () -> String in
             var count = 0
             var name = className
@@ -20,17 +20,17 @@ class TestCaseGenerator {
             }
             return name
         }()
-        
+
         guard let className = (uniqueName as NSString).utf8String,
               let method = method else { return nil }
-        
+
         if let testCase = objc_allocateClassPair(XCTestCase.self, className, 0) as? XCTestCase.Type {
             let methodSelector = sel_registerName(method.name)
             let implementation = imp_implementationWithBlock(method.closure)
             class_addMethod(testCase, methodSelector, implementation, "v@:")
             return (testCase, methodSelector)
         }
-        
+
         return nil
     }
 }

@@ -16,7 +16,7 @@ extension String {
     }
 }
 
-class StepGenerationTests:XCTestCase {
+class StepGenerationTests: XCTestCase {
     override func setUpWithError() throws {
         Cucumber.shared.reset()
     }
@@ -34,12 +34,12 @@ class StepGenerationTests:XCTestCase {
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^Some precondition$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithDifferentKeyword() {
         let cucumber = Cucumber(withString: """
         Feature: Some terse yet descriptive text of what is desired
@@ -49,12 +49,12 @@ class StepGenerationTests:XCTestCase {
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
         When("^Some precondition$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithDifferentMatch() {
         let cucumber = Cucumber(withString: """
         Feature: Some terse yet descriptive text of what is desired
@@ -64,12 +64,12 @@ class StepGenerationTests:XCTestCase {
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
         When("^A totally different string match$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithLiteralsThatNeedToBeEscaped() {
         let cucumber = Cucumber(withString: """
         Feature: Some terse yet descriptive text of what is desired
@@ -79,12 +79,12 @@ class StepGenerationTests:XCTestCase {
         let actual = cucumber.generateUnimplementedStepDefinitions()
         let expected = """
         Given("^A user with an idea\\(ish\\)$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithSomeStepsThatAreImplmentatedAndSomeThatAreNot() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -94,24 +94,24 @@ class StepGenerationTests:XCTestCase {
               And A PO with two
         """)
         Given("^A user with an idea$") { _, _ in
-            
+
         }
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         And("^A PO with two$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
         let notExpected = """
         Given("^A user with an idea$") { _, _ in
-        
+
         }
         """.stringByEscapingCharacters()
-        
+
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
         XCTAssert(!actual.contains(notExpected), "\"\(actual)\" should not contain \"\(notExpected)\"")
     }
-    
+
     func testGeneratedRegexWithStringLiteral() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -127,7 +127,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithMultipleStringLiterals() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -144,7 +144,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithIntegerLiteral() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -160,7 +160,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithMultipleIntegerLiterals() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -177,7 +177,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
-    
+
     func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywords() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -196,7 +196,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testGeneratedRegexWithMultipleIdenticalMatchesButDifferentKeywordsAndSomeAreAlreadyImplemented() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -222,7 +222,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testGeneratedRegexHasCommentsIfItWillOverwriteAnotherStepImplementation() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -242,7 +242,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testGeneratedImplementationWhenStepContainsADataTable() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -260,7 +260,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testGeneratedImplementationWhenStepContainsADocString() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""
@@ -281,7 +281,7 @@ class StepGenerationTests:XCTestCase {
         """
         XCTAssertEqual(actual, expected)
     }
-    
+
     func testComplexGenerationWithManyValues() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""

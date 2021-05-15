@@ -13,47 +13,47 @@ public class Step: CustomStringConvertible {
     public var description: String {
         return "TAGS:\(tags)\n\(keyword.toString()): \(match)"
     }
-    
-    public var continueAfterFailure:Bool = true {
+
+    public var continueAfterFailure: Bool = true {
         willSet {
             testCase?.continueAfterFailure = newValue
         }
     }
-    
-    public var canExecute:Bool {
+
+    public var canExecute: Bool {
         return execute != nil
         || executeSelector != nil
         || executeClass != nil
     }
 
     public private(set)  var match = ""
-    public private(set)  var keyword:Keyword = []
+    public private(set)  var keyword: Keyword = []
     public internal(set) var tags = [String]()
-    public internal(set) var scenario:Scenario?
-    public internal(set) var dataTable:DataTable?
-    public private(set)  var docString:DocString?
-    public private(set)  var location:Lexer.Position
-    public internal(set) var testCase:XCTestCase?
-    
-    var result:Reporter.Result = .pending
-    var execute:(([String], Step) -> Void)? = nil
-    var executeSelector:Selector?
-    var executeClass:AnyClass?
-    var executeInstance:NSObject?
-    var regex:String = ""
-    var errorMessage:String = ""
-    var startTime:Date?
-    var endTime:Date?
-    var executionDuration:Measurement<UnitDuration> {
+    public internal(set) var scenario: Scenario?
+    public internal(set) var dataTable: DataTable?
+    public private(set)  var docString: DocString?
+    public private(set)  var location: Lexer.Position
+    public internal(set) var testCase: XCTestCase?
+
+    var result: Reporter.Result = .pending
+    var execute: (([String], Step) -> Void)?
+    var executeSelector: Selector?
+    var executeClass: AnyClass?
+    var executeInstance: NSObject?
+    var regex: String = ""
+    var errorMessage: String = ""
+    var startTime: Date?
+    var endTime: Date?
+    var executionDuration: Measurement<UnitDuration> {
         // Converting to nanoseconds from seconds has a rounding error, so storing as nanoseconds is actually better.
         guard let start = startTime, let end = endTime else { return Measurement(value: 0, unit: .nanoseconds) }
         return Measurement(value: end.timeIntervalSince(start) * 1_000_000_000, unit: .nanoseconds)
     }
     var tokens = [Lexer.Token]()
-    
-    init(with node:AST.StepNode) {
+
+    init(with node: AST.StepNode) {
         location = node.tokens.first { $0.isKeyword() }?.position ?? .start
-        tokens = node.tokens.filter{ !$0.isKeyword() }
+        tokens = node.tokens.filter { !$0.isKeyword() }
         for token in node.tokens {
             if case Lexer.Token.keyword(_, let kw) = token {
                 keyword = kw
@@ -70,7 +70,7 @@ public class Step: CustomStringConvertible {
             }
         }
         let tableLines = node.tokens
-            .filter{ $0.isTableCell() || $0.isNewline() }
+            .filter { $0.isTableCell() || $0.isNewline() }
             .groupedByLine()
             .map { (line) -> [String] in
                 return line.filter { $0.isTableCell() }
@@ -81,23 +81,23 @@ public class Step: CustomStringConvertible {
                     return ""
                 }
         }
-        if (!tableLines.isEmpty) {
+        if !tableLines.isEmpty {
             dataTable = DataTable(tableLines)
         }
         match = match.trimmingCharacters(in: .whitespaces)
     }
-    
-    init(with execute:@escaping (([String], Step) -> Void), match:String?, position:Lexer.Position) {
+
+    init(with execute:@escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
         location = position
         self.match ?= match
         self.execute = execute
     }
-    
-    func toJSON() -> [String:Any] {
+
+    func toJSON() -> [String: Any] {
         return [
-            "result":["status":"\(result)", "error_message" : errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
-            "name":"\(match)",
-            "keyword":"\(keyword.toString())"
+            "result": ["status": "\(result)", "error_message": errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
+            "name": "\(match)",
+            "keyword": "\(keyword.toString())"
         ]
     }
 }
@@ -105,60 +105,60 @@ public class Step: CustomStringConvertible {
 extension Step {
     public struct Keyword: OptionSet, Hashable {
         public let rawValue: Int
-        private var stringValue:String? = nil
+        private var stringValue: String?
         public init(rawValue: Int) {
             self.rawValue = rawValue
         }
-        
-        public init?(_ str:String) {
+
+        public init?(_ str: String) {
             stringValue = str
-            var set:Keyword = []
-            if (Scope.language.matchesGiven(str)) {
+            var set: Keyword = []
+            if Scope.language.matchesGiven(str) {
                 set.insert(.given)
             }
-            if (Scope.language.matchesWhen(str)) {
+            if Scope.language.matchesWhen(str) {
                 set.insert(.when)
             }
-            if (Scope.language.matchesThen(str)) {
+            if Scope.language.matchesThen(str) {
                 set.insert(.then)
             }
-            if (Scope.language.matchesAnd(str)) {
+            if Scope.language.matchesAnd(str) {
                 set.insert(.and)
             }
-            if (Scope.language.matchesBut(str)) {
+            if Scope.language.matchesBut(str) {
                 set.insert(.but)
             }
             guard !set.isEmpty else { return nil }
             self = set
         }
-        
+
         public func toString() -> String {
             if let str = stringValue {
                 return str
             }
-            if (contains(Keyword.given)) {
+            if contains(Keyword.given) {
                 return Scope.language.given
             }
-            if (contains(Keyword.when)) {
+            if contains(Keyword.when) {
                 return Scope.language.when
             }
-            if (contains(Keyword.then)) {
+            if contains(Keyword.then) {
                 return Scope.language.then
             }
-            if (contains(Keyword.and)) {
+            if contains(Keyword.and) {
                 return Scope.language.and
             }
-            if (contains(Keyword.but)) {
+            if contains(Keyword.but) {
                 return Scope.language.but
             }
             return "UNKNOWN"
         }
-        
+
         public func hasMultipleValues() -> Bool {
             guard rawValue > 2 else { return false }
             return ceil(log2(Double(rawValue))) != floor(log2(Double(rawValue)))
         }
-        
+
         public static let given = Keyword(rawValue: 1 << 0)
         public static let when  = Keyword(rawValue: 1 << 1)
         public static let then  = Keyword(rawValue: 1 << 2)

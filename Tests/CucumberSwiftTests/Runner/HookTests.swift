@@ -485,7 +485,7 @@ class HookTests: XCTestCase {
         BeforeStep(priority: .max) { step in
             executionOrder.append("BeforeStep2_\(step.match)")
         }
-        
+
         BeforeStep(priority: 1) { step in
             executionOrder.append("BeforeStep_\(step.match)")
         }

@@ -18,7 +18,7 @@ class DocstringTests: XCTestCase {
     override func tearDownWithError() throws {
         Cucumber.shared.reset()
     }
-    
+
     func testSimpleDocString() {
         let cucumber = Cucumber(withString:
             """
@@ -41,7 +41,7 @@ class DocstringTests: XCTestCase {
         third line was empty
         """)
     }
-    
+
     func testDocStringWithContentType() {
         let cucumber = Cucumber(withString:
             """
@@ -63,7 +63,7 @@ class DocstringTests: XCTestCase {
         """)
         XCTAssertEqual(firstStep?.docString?.contentType, "xml")
     }
-    
+
     func testDocStringWithWrongIndentation() {
         let cucumber = Cucumber(withString:
             """
@@ -80,7 +80,7 @@ class DocstringTests: XCTestCase {
         wrongly indented line
         """)
     }
-    
+
     func testDocStringWithAlternativeIndicator() {
         let cucumber = Cucumber(withString:
             """
@@ -120,7 +120,7 @@ class DocstringTests: XCTestCase {
         third line
         """)
     }
-    
+
     func testDocStringWithAlternativeSeparatorInside() {
         let cucumber = Cucumber(withString:
             """
@@ -141,7 +141,7 @@ class DocstringTests: XCTestCase {
         third line
         """)
     }
-    
+
     func testDocStringWithEscapedSequenceInside() {
         let cucumber = Cucumber(withString:
             """

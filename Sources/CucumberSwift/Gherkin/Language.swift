@@ -21,7 +21,7 @@ class Language {
         static let but = "but"
         static let rule = "rule"
     }
-    
+
     private var featureNames = [String]()
     private var scenarioNames = [String]()
     private var backgroundNames = [String]()
@@ -33,32 +33,32 @@ class Language {
     private var thenNames = [String]()
     private var andNames = [String]()
     private var butNames = [String]()
-    
-    public var given:String {
+
+    public var given: String {
         return givenNames.last?.capitalizingFirstLetter() ?? "Given"
     }
-    public var when:String {
+    public var when: String {
         return whenNames.last?.capitalizingFirstLetter() ?? "When"
     }
-    public var then:String {
+    public var then: String {
         return thenNames.last?.capitalizingFirstLetter() ?? "Then"
     }
-    public var and:String {
+    public var and: String {
         return andNames.last?.capitalizingFirstLetter() ?? "And"
     }
-    public var but:String {
+    public var but: String {
         return butNames.last?.capitalizingFirstLetter() ?? "But"
     }
-    
+
     private init() { }
 
-    init?(_ langName:String = "en") {
+    init?(_ langName: String = "en") {
         let bundle = Bundle(for: Cucumber.self).resolvedForSPM
         if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
             let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
             let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
-            let json = jsonObject as? [String:Any],
-            let language = json[langName] as? [String:Any] {
+            let json = jsonObject as? [String: Any],
+            let language = json[langName] as? [String: Any] {
             featureNames         ?= (language[Keys.feature]         as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             scenarioNames        ?= (language[Keys.scenario]        as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
             backgroundNames      ?= (language[Keys.background]      as? [String])?.map { $0.trimmingCharacters(in: .whitespaces).lowercased() }
@@ -74,58 +74,58 @@ class Language {
             return nil
         }
     }
-    
-    func matchesFeature(_ str:String) -> Bool {
+
+    func matchesFeature(_ str: String) -> Bool {
         return featureNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesScenario(_ str:String) -> Bool {
+
+    func matchesScenario(_ str: String) -> Bool {
         return scenarioNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesBackground(_ str:String) -> Bool {
+
+    func matchesBackground(_ str: String) -> Bool {
         return backgroundNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesExamples(_ str:String) -> Bool {
+
+    func matchesExamples(_ str: String) -> Bool {
         return examplesNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesScenarioOutline(_ str:String) -> Bool {
+
+    func matchesScenarioOutline(_ str: String) -> Bool {
         return scenarioOutlineNames
             .contains(where: { $0 == str.lowercased() })
     }
 
-    func matchesRule(_ str:String) -> Bool {
+    func matchesRule(_ str: String) -> Bool {
         return ruleNames
             .contains(where: { $0 == str.lowercased() })
     }
 
-    func matchesGiven(_ str:String) -> Bool {
+    func matchesGiven(_ str: String) -> Bool {
         return givenNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesWhen(_ str:String) -> Bool {
+
+    func matchesWhen(_ str: String) -> Bool {
         return whenNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesThen(_ str:String) -> Bool {
+
+    func matchesThen(_ str: String) -> Bool {
         return thenNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesAnd(_ str:String) -> Bool {
+
+    func matchesAnd(_ str: String) -> Bool {
         return andNames
             .contains(where: { $0 == str.lowercased() })
     }
-    
-    func matchesBut(_ str:String) -> Bool {
+
+    func matchesBut(_ str: String) -> Bool {
         return butNames
             .contains(where: { $0 == str.lowercased() })
     }

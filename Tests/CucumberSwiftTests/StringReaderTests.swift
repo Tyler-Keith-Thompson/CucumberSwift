@@ -15,7 +15,7 @@ class StringReaderTests: XCTestCase {
         let sr = StringReader("test")
         sr.readUntil { _ in false }
     }
-    
+
     func testStringReaderLooksAheadWithoutMovingTheHeadOfTheReader() {
         let sr = StringReader("test")
         let str = sr.lookAheadUntil { $0 == "e" }

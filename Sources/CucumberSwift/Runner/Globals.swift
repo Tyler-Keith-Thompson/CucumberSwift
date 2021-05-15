@@ -8,7 +8,7 @@
 
 import Foundation
 
-//MARK: Hooks
+// MARK: Hooks
 public func BeforeFeature(priority: UInt? = nil, closure: @escaping ((Feature) -> Void)) {
     Cucumber.shared.beforeFeatureHooks.append(.init(priority: priority, hook: closure))
 }

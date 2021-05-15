@@ -17,7 +17,7 @@ class CucumberSwiftTests: XCTestCase {
     override func tearDownWithError() throws {
         Cucumber.shared.reset()
     }
-    
+
     let featureFile: String =
     """
     Feature: Some terse yet descriptive text of what is desired
@@ -41,7 +41,7 @@ class CucumberSwiftTests: XCTestCase {
     """
 
     func testStepsGetCallbacksAttachedCorrectly() {
-        let bundle:Bundle = {
+        let bundle: Bundle = {
             #if canImport(CucumberSwift_ObjC)
             return Bundle(url: Bundle.module.bundleURL.deletingLastPathComponent().appendingPathComponent("CucumberSwift_CucumberSwiftTests.bundle"))!
             #else
@@ -111,7 +111,7 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertEqual(Cucumber.shared.currentStep?.result, .failed)
         XCTAssertEqual(Cucumber.shared.currentStep?.errorMessage, errorMessage)
     }
-    
+
     func testRemainingStepsInScenarioAreSkippedIfStepFails() {
         Cucumber.shared.features.removeAll()
         let step1 = Step(with: AST.StepNode())
@@ -127,9 +127,9 @@ class CucumberSwiftTests: XCTestCase {
         step2.scenario = scenario
         step3.scenario = scenario
         Cucumber.shared.currentStep = step2
-        
+
         XCTAssertEqual(step2.result, .pending)
-        
+
         let errorMessage = "You did something stupid"
         Cucumber.shared.testCase(XCTestCase(), didFailWithDescription: errorMessage, inFile: nil, atLine: 0)
         XCTAssertEqual(step1.result, .passed)
@@ -143,9 +143,9 @@ extension Cucumber: StepImplementation {
     public var bundle: Bundle {
         return Bundle(for: CucumberSwiftTests.self)
     }
-    static var shouldRunWith:(Scenario?, [String]) -> Bool = { _, _ in true }
+    static var shouldRunWith: (Scenario?, [String]) -> Bool = { _, _ in true }
     public func setupSteps() { }
-    public func shouldRunWith(scenario:Scenario?, tags: [String]) -> Bool {
+    public func shouldRunWith(scenario: Scenario?, tags: [String]) -> Bool {
         return Cucumber.shouldRunWith(scenario, tags)
     }
 }

@@ -7,17 +7,17 @@
 //
 
 import Foundation
-public class Feature : Taggable, Positionable {
+public class Feature: Taggable, Positionable {
     public private(set)  var title = ""
     public private(set)  var desc = ""
     public private(set)  var scenarios = [Scenario]()
-    public private(set)  var uri:String = ""
+    public private(set)  var uri: String = ""
     public internal(set) var tags = [String]()
-    public private(set)  var location:Lexer.Position
+    public private(set)  var location: Lexer.Position
     public private(set)  var endLocation: Lexer.Position
     internal var startDate: Date = Date()
 
-    init(with node:AST.FeatureNode, uri:String = "") {
+    init(with node: AST.FeatureNode, uri: String = "") {
         location = node.tokens.first?.position ?? .start
         endLocation = .start
         self.uri = uri
@@ -30,11 +30,11 @@ public class Feature : Taggable, Positionable {
                 tags.append(tag)
             }
         }
-        let backgroundSteps:[AST.StepNode] = node.children.compactMap { $0 as? AST.BackgroundNode }
+        let backgroundSteps: [AST.StepNode] = node.children.compactMap { $0 as? AST.BackgroundNode }
                                         .flatMap { $0.children.compactMap { $0 as? AST.StepNode } }
         node.children.forEach { (node) in
             if let sn = node as? AST.ScenarioNode {
-                scenarios.append(Scenario(with: sn, tags:tags, stepNodes: backgroundSteps))
+                scenarios.append(Scenario(with: sn, tags: tags, stepNodes: backgroundSteps))
             } else if let son = node as? AST.ScenarioOutlineNode {
                 let generatedScenarios = ScenarioOutlineParser.parse(son, featureTags: tags, backgroundStepNodes: backgroundSteps, uri: uri)
                 scenarios.append(contentsOf: generatedScenarios)
@@ -45,8 +45,8 @@ public class Feature : Taggable, Positionable {
         scenarios.forEach { $0.feature = self }
         endLocation ?= scenarios.last?.endLocation
     }
-    
-    init(with scenarios:[Scenario], title:String?, tags:[String], position:Lexer.Position) {
+
+    init(with scenarios: [Scenario], title: String?, tags: [String], position: Lexer.Position) {
         location = position
         endLocation = scenarios.last?.endLocation ?? .start
         self.scenarios = scenarios
@@ -54,25 +54,25 @@ public class Feature : Taggable, Positionable {
         self.tags = tags
         self.scenarios.forEach { [weak self] in $0.feature = self }
     }
-    
-    public func containsTags(_ tags:[String]) -> Bool {
-        if (tags.contains{ containsTag($0) }) {
+
+    public func containsTags(_ tags: [String]) -> Bool {
+        if (tags.contains { containsTag($0) }) {
             return true
         }
-        if (scenarios.contains{ $0.containsTags(tags) }) {
+        if (scenarios.contains { $0.containsTags(tags) }) {
             return true
         }
         return false
     }
-    
-    func toJSON() -> [String:Any] {
+
+    func toJSON() -> [String: Any] {
         return [
             "uri": uri,
-            "id" : title.lowercased().replacingOccurrences(of: " ", with: "-"),
-            "name" : title,
-            "description" : desc,
-            "keyword" : "Feature",
-            "elements" : []
+            "id": title.lowercased().replacingOccurrences(of: " ", with: "-"),
+            "name": title,
+            "description": desc,
+            "keyword": "Feature",
+            "elements": []
         ]
     }
 }

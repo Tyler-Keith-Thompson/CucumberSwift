@@ -9,7 +9,7 @@
 import Foundation
 enum Scope: Equatable, Hashable {
     static var language = Language() ?? Language.default
-    
+
     case feature
     case background
     case scenario
@@ -18,19 +18,19 @@ enum Scope: Equatable, Hashable {
     case examples
     case rule
     case unknown
-    
-    static func scopeFor(str:String) -> Scope {
-        if (language.matchesFeature(str)) {
+
+    static func scopeFor(str: String) -> Scope {
+        if language.matchesFeature(str) {
             return .feature
-        } else if (language.matchesScenario(str)) {
+        } else if language.matchesScenario(str) {
             return .scenario
-        } else if (language.matchesBackground(str)) {
+        } else if language.matchesBackground(str) {
             return .background
-        } else if (language.matchesExamples(str)) {
+        } else if language.matchesExamples(str) {
             return .examples
-        } else if (language.matchesScenarioOutline(str)) {
+        } else if language.matchesScenarioOutline(str) {
             return .scenarioOutline
-        } else if (language.matchesRule(str)) {
+        } else if language.matchesRule(str) {
             return .rule
         }
         let index = str.firstIndex(of: " ")
@@ -40,7 +40,7 @@ enum Scope: Equatable, Hashable {
         }
         return .unknown
     }
-    
+
     static func == (lhs: Scope, rhs: Scope) -> Bool {
         switch (lhs, rhs) {
         case (.feature, .feature): return true
@@ -54,7 +54,7 @@ enum Scope: Equatable, Hashable {
         default: return false
         }
     }
-    
+
     func isStep() -> Bool {
         if case .step(_) = self {
             return true

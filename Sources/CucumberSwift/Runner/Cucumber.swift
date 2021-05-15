@@ -15,14 +15,14 @@ import CucumberSwift_ObjC
 
 @objc public class Cucumber: NSObject {
 
-    static var shared:Cucumber = {
+    static var shared: Cucumber = {
        return Cucumber()
     }()
-    
+
     var features = [Feature]()
-    var currentStep:Step? = nil
-    var reportName:String = "CucumberTestResultsFor"
-    var environment:[String:String] = ProcessInfo.processInfo.environment
+    var currentStep: Step?
+    var reportName: String = "CucumberTestResultsFor"
+    var environment: [String: String] = ProcessInfo.processInfo.environment
 
     private var _beforeFeatureHooks  = [FeatureHook]()
     var beforeFeatureHooks: [FeatureHook] {
@@ -72,7 +72,7 @@ import CucumberSwift_ObjC
             _afterStepHooks = newValue
         }
     }
-    
+
     var hookedFeatures       = [Feature]()
     var hookedScenarios      = [Scenario]()
     var failedScenarios      = [Scenario]()
@@ -81,12 +81,12 @@ import CucumberSwift_ObjC
         super.init()
         XCTestObservationCenter.shared.addTestObserver(self)
     }
-    
-    init(withString string:String) {
+
+    init(withString string: String) {
         super.init()
         parseIntoFeatures(string)
     }
-    
+
     @objc public static func Load() {
         guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
               let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
@@ -94,21 +94,21 @@ import CucumberSwift_ObjC
         }
         method_exchangeImplementations(testSuiteInit, swizzledInit)
     }
-    
-    @objc static func testCaseWith(name:String) -> XCTestSuite? {
-        if (name == "CucumberTest") {
+
+    @objc static func testCaseWith(name: String) -> XCTestSuite? {
+        if name == "CucumberTest" {
             return CucumberTest.defaultTestSuite
         }
-        
+
         guard let className = name.components(separatedBy: "/").first,
             let testCaseClass = Bundle.allBundles.compactMap({
                 $0.classNamed(className)
             }).first else { return nil }
-        
+
         return XCTestSuite(forTestCaseClass: testCaseClass)
     }
-    
-    func readFromFeaturesFolder(in testBundle:Bundle) {
+
+    func readFromFeaturesFolder(in testBundle: Bundle) {
         let featuresURL = { () -> URL in
             if let relativePath = (testBundle.infoDictionary?["FeaturesPath"] as? String) {
                 return testBundle.bundleURL.appendingPathComponent(relativePath)
@@ -118,7 +118,7 @@ import CucumberSwift_ObjC
                 return testBundle.bundleURL.appendingPathComponent("Features")
             }
         }()
-        let enumerator:FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: featuresURL, includingPropertiesForKeys: nil)
+        let enumerator: FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: featuresURL, includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if (url.pathExtension == "feature"),
                 let string = try? String(contentsOf: url, encoding: .utf8) {
@@ -126,8 +126,8 @@ import CucumberSwift_ObjC
             }
         }
     }
-    
-    func setupBeforeHooksFor(_ step:Step) {
+
+    func setupBeforeHooksFor(_ step: Step) {
         if let feature = step.scenario?.feature,
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
@@ -142,8 +142,8 @@ import CucumberSwift_ObjC
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(scenario: scenario, at: scenario.startDate) }
         }
     }
-    
-    func setupAfterHooksFor(_ step:Step) {
+
+    func setupAfterHooksFor(_ step: Step) {
         if let scenario = step.scenario,
             let lastScenarioStep = scenario.steps.last,
             lastScenarioStep === step {
@@ -165,30 +165,30 @@ import CucumberSwift_ObjC
                                                                                                                  unit: .nanoseconds)) }
         }
     }
-    
-    func parseIntoFeatures(_ string:String, uri:String = "") {
-        let tokens = Lexer(string, uri:uri).lex()
+
+    func parseIntoFeatures(_ string: String, uri: String = "") {
+        let tokens = Lexer(string, uri: uri).lex()
         features.append(contentsOf: AST.standard.parse(tokens, inFile: uri)
-            .map { Feature(with: $0, uri:uri) })
+            .map { Feature(with: $0, uri: uri) })
     }
-    
+
     @discardableResult func generateUnimplementedStepDefinitions() -> String {
         var generatedSwift = ""
         let stubs = StubGenerator.getStubs(for: features)
-        if (!stubs.isEmpty) {
+        if !stubs.isEmpty {
             generatedSwift = stubs.joined(separator: "\n")
         }
         return generatedSwift
     }
-    
-    func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, callback:@escaping (([String], Step) -> Void)) {
+
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback:@escaping (([String], Step) -> Void)) {
         features
         .flatMap { $0.scenarios.flatMap { $0.steps } }
         .filter { (step) -> Bool in
             if  let k = keyword,
                 step.keyword.contains(k) {
                 return !step.match.matches(for: regex).isEmpty
-            } else if (keyword == nil) {
+            } else if keyword == nil {
                 return !step.match.matches(for: regex).isEmpty
             }
             return false
@@ -198,15 +198,15 @@ import CucumberSwift_ObjC
             step.regex = regex
         }
     }
-    
-    func attachClosureToSteps(keyword:Step.Keyword? = nil, regex:String, class:AnyClass, selector:Selector) {
+
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector) {
         features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
             .filter { (step) -> Bool in
                 if  let k = keyword,
                     step.keyword.contains(k) {
                     return !step.match.matches(for: regex).isEmpty
-                } else if (keyword == nil) {
+                } else if keyword == nil {
                     return !step.match.matches(for: regex).isEmpty
                 }
                 return false

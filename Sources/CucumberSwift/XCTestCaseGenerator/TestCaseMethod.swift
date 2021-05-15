@@ -9,10 +9,10 @@
 import Foundation
 
 class TestCaseMethod {
-    var name:UnsafePointer<Int8>
+    var name: UnsafePointer<Int8>
     var closure: @convention(block) () -> Void
-    
-    init?(withName name:String, closure:@escaping (() -> Void)) {
+
+    init?(withName name: String, closure:@escaping (() -> Void)) {
         guard let utf8 = (name as NSString).utf8String else { return nil }
         self.name = utf8
         self.closure = closure

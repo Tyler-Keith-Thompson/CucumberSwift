@@ -8,12 +8,12 @@
 
 import Foundation
 public protocol Positionable {
-    var location:Lexer.Position { get }
-    var endLocation:Lexer.Position { get }
+    var location: Lexer.Position { get }
+    var endLocation: Lexer.Position { get }
 }
 
 public extension Positionable {
-    func withLine(_ line:UInt) -> Bool {
+    func withLine(_ line: UInt) -> Bool {
         guard endLocation.line > location.line else {
             return location.line == endLocation.line && location.line == line
         }

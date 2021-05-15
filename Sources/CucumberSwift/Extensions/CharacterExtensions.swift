@@ -13,17 +13,17 @@ extension CharacterSet {
 }
 
 extension Character {
-    static let tableHeaderOpen:Character = "<"
-    static let tableHeaderClose:Character = ">"
-    static let newLine:Character = "\n"
-    static let scopeTerminator:Character = ":"
-    static let quote:Character = "\""
-    static let tagMarker:Character = "@"
-    static let comment:Character = "#"
-    static let tableCellDelimiter:Character = "|"
-    static let decimal:Character = "."
-    static let escapeCharacter:Character = "\\"
-    
+    static let tableHeaderOpen: Character = "<"
+    static let tableHeaderClose: Character = ">"
+    static let newLine: Character = "\n"
+    static let scopeTerminator: Character = ":"
+    static let quote: Character = "\""
+    static let tagMarker: Character = "@"
+    static let comment: Character = "#"
+    static let tableCellDelimiter: Character = "|"
+    static let decimal: Character = "."
+    static let escapeCharacter: Character = "\\"
+
     var value: Int32 {
         return Int32(scalar.value)
     }

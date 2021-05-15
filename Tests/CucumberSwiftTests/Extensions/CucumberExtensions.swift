@@ -31,4 +31,3 @@ extension Cucumber {
         CucumberTest.allGeneratedTests.forEach { $0.invokeTest() }
     }
 }
-

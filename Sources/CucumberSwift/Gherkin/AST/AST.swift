@@ -9,7 +9,7 @@
 import Foundation
 
 class AST {
-    static var standard:AST {
+    static var standard: AST {
         return AST()
         .ruleFor(.feature(), Rule.cleanAST
                                .then(.createNewNode)
@@ -30,12 +30,12 @@ class AST {
                             .then(.addToNearestParent))
         .ruleFor(.description(), Rule.validateParentExists)
     }
-    
-    private init(_ ruleLookup:[AST.Token?:Rule] = [:]) {
+
+    private init(_ ruleLookup: [AST.Token?:Rule] = [:]) {
         self.ruleLookup = ruleLookup
     }
-    
-    func parse(_ tokens:[Lexer.Token], inFile url:String = "") -> [FeatureNode] {
+
+    func parse(_ tokens: [Lexer.Token], inFile url: String = "") -> [FeatureNode] {
         for token in tokens {
             if case Lexer.Token.tag(_, _) = token {
                 tags.append(token)
@@ -46,19 +46,19 @@ class AST {
                 currentNode?.tokens.append(token)
             }
         }
-        if (!tags.isEmpty) {
+        if !tags.isEmpty {
             Gherkin.errors.append("File: \(url) unexpected end of file, expected: #TagLine, #ScenarioLine, #Comment, #Empty")
         }
         return featureNodes
     }
-    var featureNodes:[FeatureNode] = []
-    var ruleLookup:[AST.Token?:Rule] = [:]
-    var nodeLookup:[UInt:Node] = [:]
+    var featureNodes: [FeatureNode] = []
+    var ruleLookup: [AST.Token?:Rule] = [:]
+    var nodeLookup: [UInt: Node] = [:]
     var tags = [Lexer.Token]()
 
-    var currentNode:Node?
+    var currentNode: Node?
 
-    func ruleFor(_ token:AST.Token, _ rule:Rule) -> AST {
+    func ruleFor(_ token: AST.Token, _ rule: Rule) -> AST {
         var ruleLookupCopy = ruleLookup
         ruleLookupCopy[token] = rule
         return AST(ruleLookupCopy)

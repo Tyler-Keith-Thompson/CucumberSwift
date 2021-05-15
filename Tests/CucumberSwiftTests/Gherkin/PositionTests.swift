@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 
-class PositionTests:XCTestCase {
+class PositionTests: XCTestCase {
     func testPositionEquatability() {
         XCTAssertEqual(Lexer.Position(line: 10, column: 5), Lexer.Position(line: 10, column: 5))
         XCTAssertNotEqual(Lexer.Position(line: 9, column: 5), Lexer.Position(line: 10, column: 5))

@@ -8,14 +8,14 @@
 
 import Foundation
 class RuleParser {
-    static func parse(_ ruleNode:AST.RuleNode, featureTags:[String], backgroundStepNodes:[AST.StepNode]) -> [Scenario] {
-        let backgroundSteps:[AST.StepNode] = backgroundStepNodes.appending(contentsOf:
+    static func parse(_ ruleNode: AST.RuleNode, featureTags: [String], backgroundStepNodes: [AST.StepNode]) -> [Scenario] {
+        let backgroundSteps: [AST.StepNode] = backgroundStepNodes.appending(contentsOf:
             ruleNode.children
             .compactMap { $0 as? AST.BackgroundNode }
             .flatMap { $0.children.compactMap { $0 as? AST.StepNode } })
         return ruleNode
             .children
             .compactMap { $0 as? AST.ScenarioNode }
-            .map { Scenario(with: $0, tags:featureTags, stepNodes: backgroundSteps) }
+            .map { Scenario(with: $0, tags: featureTags, stepNodes: backgroundSteps) }
     }
 }

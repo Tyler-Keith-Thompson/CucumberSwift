@@ -7,16 +7,16 @@
 //
 
 import Foundation
-public class Scenario : NSObject, Taggable, Positionable {
+public class Scenario: NSObject, Taggable, Positionable {
     public private(set)  var title = ""
     public private(set)  var tags = [String]()
     public internal(set) var steps = [Step]()
-    public internal(set) var feature:Feature?
-    public private(set)  var location:Lexer.Position
+    public internal(set) var feature: Feature?
+    public private(set)  var location: Lexer.Position
     public private(set)  var endLocation: Lexer.Position
     internal var startDate: Date = Date()
 
-    init(with node:AST.ScenarioNode, tags:[String], stepNodes:[AST.StepNode]) {
+    init(with node: AST.ScenarioNode, tags: [String], stepNodes: [AST.StepNode]) {
         location = node.tokens.first?.position ?? .start
         endLocation = .start
         super.init()
@@ -33,8 +33,8 @@ public class Scenario : NSObject, Taggable, Positionable {
         steps.forEach { $0.scenario = self }
         endLocation ?= steps.last?.location
     }
-    
-    init(with steps:[Step], title:String?, tags:[String], position:Lexer.Position) {
+
+    init(with steps: [Step], title: String?, tags: [String], position: Lexer.Position) {
         location = position
         endLocation = position
         super.init()
@@ -43,20 +43,19 @@ public class Scenario : NSObject, Taggable, Positionable {
         self.tags = tags
         self.steps.forEach { [weak self] in $0.scenario = self }
     }
-    
-    public func containsTags(_ tags:[String]) -> Bool {
+
+    public func containsTags(_ tags: [String]) -> Bool {
         return tags.contains { containsTag($0) }
     }
 
-    
-    func toJSON() -> [String:Any] {
+    func toJSON() -> [String: Any] {
         return [
-            "id" : title.lowercased().replacingOccurrences(of: " ", with: "-"),
-            "keyword" : "Scenario",
-            "type" : "scenario",
-            "name" : title,
-            "description" : "",
-            "steps" : []
+            "id": title.lowercased().replacingOccurrences(of: " ", with: "-"),
+            "keyword": "Scenario",
+            "type": "scenario",
+            "name": title,
+            "description": "",
+            "steps": []
         ]
     }
 }

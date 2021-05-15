@@ -5,12 +5,12 @@ import PackageDescription
 
 let package = Package(
     name: "CucumberSwift",
-    platforms: [.iOS(.v13), .macOS(.v10_15), .tvOS(.v9)],
+    platforms: [.iOS(.v13), .macOS(.v10_15), .tvOS(.v13)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "CucumberSwift",
-            targets: ["CucumberSwift_ObjC", "CucumberSwift"]),
+            targets: ["CucumberSwift_ObjC", "CucumberSwift"])
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -54,6 +54,6 @@ let package = Package(
             exclude: ["Info.plist"],
             resources: [
                 .copy("Features")
-            ]),
+            ])
     ]
 )

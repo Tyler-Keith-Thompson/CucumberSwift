@@ -11,23 +11,23 @@ import Foundation
 public class Reporter {
     internal init() { }
     static let shared = Reporter()
-    var reportURL:URL? {
+    var reportURL: URL? {
         let name = "_cucumberReport".appending(".json")
-        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor:nil, create:false) {
+        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
             return documentDirectory.appendingPathComponent(name)
         }
         return nil
     }
-    
-    var currentJSON:[[String:Any]]? {
+
+    var currentJSON: [[String: Any]]? {
         guard let fileURL = reportURL,
               let data = try? Data(contentsOf: fileURL) else {
             return nil
         }
-        return (try? JSONSerialization.jsonObject(with: data, options: [])) as? [[String:Any]]
+        return (try? JSONSerialization.jsonObject(with: data, options: [])) as? [[String: Any]]
     }
-    
-    func writeStep(_ step:Step) {
+
+    func writeStep(_ step: Step) {
         guard let scenario = step.scenario,
             let (fIndex, scIndex) = writeScenarioIfNecessary(scenario),
             var features = currentJSON,
@@ -37,10 +37,10 @@ public class Reporter {
         }?.offset
         var featureJSON = features[fIndex]
         guard let sIndex = stepIndex,
-              var elements = featureJSON["elements"] as? [[String:Any]],
+              var elements = featureJSON["elements"] as? [[String: Any]],
               elements.count > scIndex else { return }
         var scenarioJSON = elements[scIndex]
-        var steps = scenarioJSON["steps"] as? [[String:Any]] ?? []
+        var steps = scenarioJSON["steps"] as? [[String: Any]] ?? []
         if steps.count-1 >= sIndex {
             steps[sIndex] = step.toJSON()
         } else {
@@ -52,14 +52,14 @@ public class Reporter {
         features[fIndex] = featureJSON
         write(features)
     }
-    
-    @discardableResult func writeScenarioIfNecessary(_ scenario:Scenario) -> (featureIndex:Int, scenarioIndex:Int)? {
+
+    @discardableResult func writeScenarioIfNecessary(_ scenario: Scenario) -> (featureIndex: Int, scenarioIndex: Int)? {
         guard let feature = scenario.feature else { return nil }
         let fIndex = writeFeatureIfNecessary(feature)
         guard var features = currentJSON,
               features.count > fIndex else { return nil }
         var featureJSON = features[fIndex]
-        var elements = featureJSON["elements"] as? [[String:Any]] ?? []
+        var elements = featureJSON["elements"] as? [[String: Any]] ?? []
         let scenarioIndex = feature.scenarios.taggedElements(askImplementor: true).enumerated().first { (_, s) -> Bool in
             return s === scenario
         }?.offset
@@ -72,8 +72,8 @@ public class Reporter {
         write(features)
         return (featureIndex: fIndex, scenarioIndex: sIndex)
     }
-    
-    @discardableResult func writeFeatureIfNecessary(_ feature:Feature) -> Int {
+
+    @discardableResult func writeFeatureIfNecessary(_ feature: Feature) -> Int {
         guard var features = currentJSON else {
             write([feature.toJSON()])
             return 0
@@ -86,15 +86,15 @@ public class Reporter {
         write(features)
         return 0
     }
-    
-    func write(_ dict:[[String:Any]]) {
+
+    func write(_ dict: [[String: Any]]) {
         guard let data = try? JSONSerialization.data(withJSONObject: dict, options: .prettyPrinted),
               let fileURL = reportURL else {
             return
         }
         try? data.write(to: fileURL)
     }
-    
+
     func reset() {
         guard let fileURL = reportURL else { return }
         try? FileManager.default.removeItem(at: fileURL)

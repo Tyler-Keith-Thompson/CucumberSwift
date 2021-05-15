@@ -10,16 +10,16 @@ import Foundation
 
 public protocol Matcher {
     init()
-    var keyword:Step.Keyword { get }
+    var keyword: Step.Keyword { get }
 }
 
 public extension Matcher {
-    @discardableResult init(_ regex:String, class:AnyClass, selector:Selector) {
+    @discardableResult init(_ regex: String, class: AnyClass, selector: Selector) {
         self.init()
-        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class:`class`, selector:selector)
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class: `class`, selector: selector)
     }
-    @discardableResult init(_ regex:String, callback:@escaping (([String], Step) -> Void)) {
+    @discardableResult init(_ regex: String, callback:@escaping (([String], Step) -> Void)) {
         self.init()
-        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback:callback)
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback)
     }
 }

@@ -12,12 +12,12 @@ public class StepDSL: Step {
     public init() {
         super.init(with: AST.StepNode())
     }
-    
-    public init(line:UInt, column: UInt, match:String?, handler: @escaping () -> Void) {
+
+    public init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void) {
         super.init(with: {_, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
     }
-    
-    public func continueAfterFailure(_ val:Bool) -> StepDSL {
+
+    public func continueAfterFailure(_ val: Bool) -> StepDSL {
         continueAfterFailure = val
         return self
     }

@@ -9,10 +9,10 @@
 import Foundation
 
 public struct Background: ScenarioDSL {
-    //intentionally blank because we do not want Backgrounds counted like other Scenarios
+    // intentionally blank because we do not want Backgrounds counted like other Scenarios
     public var scenarios: [Scenario] { [] }
-    var steps:[StepDSL]
-    
+    var steps: [StepDSL]
+
     public init(@StepBuilder _ content: () -> [StepDSL]) {
         steps = content()
     }

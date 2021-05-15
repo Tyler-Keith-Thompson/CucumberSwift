@@ -115,7 +115,7 @@ class CustomReporterTests: XCTestCase {
     func testReporterIsToldWhenTestSuiteStarts() {
         Cucumber.shared.parseIntoFeatures(featureFile)
         var called = 0
-        Self.mockObserver.testSuiteStarted = { date in called += 1 }
+        Self.mockObserver.testSuiteStarted = { _ in called += 1 }
 
         Cucumber.shared.executeFeatures(callDefaultTestSuite: true)
 
@@ -125,7 +125,7 @@ class CustomReporterTests: XCTestCase {
     func testReporterIsToldWhenTestSuiteFinishes() {
         Cucumber.shared.parseIntoFeatures(featureFile)
         var called = 0
-        Self.mockObserver.testSuiteFinished = { date in called += 1 }
+        Self.mockObserver.testSuiteFinished = { _ in called += 1 }
 
         Cucumber.shared.testBundleDidFinish(Bundle(for: Self.self))
 
@@ -374,7 +374,7 @@ class CustomReporterTests: XCTestCase {
          Given some precondition
     """)
         var called = 0
-        Self.mockObserver.didFinishFeature = { _, result, duration in
+        Self.mockObserver.didFinishFeature = { _, result, _ in
             defer { called += 1 }
             XCTAssertEqual(result, .failed("failed - should have failed"))
         }
