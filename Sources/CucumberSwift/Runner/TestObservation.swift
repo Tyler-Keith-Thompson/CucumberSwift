@@ -17,10 +17,11 @@ extension Cucumber: XCTestObservation {
             let fileURL = documentDirectory.appendingPathComponent(name)
             try? FileManager.default.copyItem(at: reportURL, to: fileURL)
         }
+        (self as? CucumberTestObservable)?.observers.forEach { $0.testSuiteFinished(at: Date()) }
     }
     
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
-        Cucumber.shared.currentStep?.result = .failed
+        Cucumber.shared.currentStep?.result = .failed(description)
         Cucumber.shared.currentStep?.errorMessage = description
         Cucumber.shared.currentStep?.endTime = Date()
         guard let step = Cucumber.shared.currentStep,

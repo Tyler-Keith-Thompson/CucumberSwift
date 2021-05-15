@@ -71,6 +71,10 @@
 		ADB93858222C9F0900CDA4B4 /* Gherkin.ideplugin in Resources */ = {isa = PBXBuildFile; fileRef = ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */; };
 		ADBB361E2132145500C375E2 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADBB361D2132145500C375E2 /* Globals.swift */; };
 		CA048B692634AECE007DFDE7 /* HookTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA048B682634AECE007DFDE7 /* HookTests.swift */; };
+		CA097281264F4D5100573DA5 /* CucumberTestObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA097280264F4D5100573DA5 /* CucumberTestObserver.swift */; };
+		CA097287264F4E3500573DA5 /* ReporterResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA097286264F4E3500573DA5 /* ReporterResult.swift */; };
+		CA097297264F513B00573DA5 /* CustomReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA09728D264F507300573DA5 /* CustomReporterTests.swift */; };
+		CA09729D264F517200573DA5 /* CucumberTestObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA09729C264F517200573DA5 /* CucumberTestObservable.swift */; };
 		CA1C47E72634C671008D8E12 /* Hook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47E62634C671008D8E12 /* Hook.swift */; };
 		CA1C47ED2634C6C7008D8E12 /* ScenarioHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */; };
 		CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */; };
@@ -201,6 +205,10 @@
 		ADB93857222C9F0900CDA4B4 /* Gherkin.ideplugin */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Gherkin.ideplugin; sourceTree = "<group>"; };
 		ADBB361D2132145500C375E2 /* Globals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		CA048B682634AECE007DFDE7 /* HookTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HookTests.swift; sourceTree = "<group>"; };
+		CA097280264F4D5100573DA5 /* CucumberTestObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTestObserver.swift; sourceTree = "<group>"; };
+		CA097286264F4E3500573DA5 /* ReporterResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporterResult.swift; sourceTree = "<group>"; };
+		CA09728D264F507300573DA5 /* CustomReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomReporterTests.swift; sourceTree = "<group>"; };
+		CA09729C264F517200573DA5 /* CucumberTestObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTestObservable.swift; sourceTree = "<group>"; };
 		CA1C47E62634C671008D8E12 /* Hook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hook.swift; sourceTree = "<group>"; };
 		CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioHook.swift; sourceTree = "<group>"; };
 		CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureHook.swift; sourceTree = "<group>"; };
@@ -320,6 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				AD4E772E2235963D005938B7 /* Reporter.swift */,
+				CA097286264F4E3500573DA5 /* ReporterResult.swift */,
 			);
 			path = Reporter;
 			sourceTree = "<group>";
@@ -445,8 +454,19 @@
 			children = (
 				ADAA738B20A92BB000D2344C /* Taggable.swift */,
 				1DA7619A23933F18001CBA5B /* Positionable.swift */,
+				CA097280264F4D5100573DA5 /* CucumberTestObserver.swift */,
+				CA09729C264F517200573DA5 /* CucumberTestObservable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		CA09728C264F505600573DA5 /* Reporter */ = {
+			isa = PBXGroup;
+			children = (
+				AD4E773022359C6B005938B7 /* ReporterTests.swift */,
+				CA09728D264F507300573DA5 /* CustomReporterTests.swift */,
+			);
+			path = Reporter;
 			sourceTree = "<group>";
 		};
 		CA1C47E52634C667008D8E12 /* Hooks */ = {
@@ -571,6 +591,7 @@
 		CAF51E972557B16E0095A5C4 /* CucumberSwiftTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA09728C264F505600573DA5 /* Reporter */,
 				CA5A210724C92BCC0077AD50 /* DSLTests */,
 				1DA7619723933BBD001CBA5B /* Runner */,
 				AD4E77322235A04B005938B7 /* WaitUntil.swift */,
@@ -584,7 +605,6 @@
 				AD9EB4702079CF87002494C0 /* Info.plist */,
 				AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */,
 				AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */,
-				AD4E773022359C6B005938B7 /* ReporterTests.swift */,
 			);
 			path = CucumberSwiftTests;
 			sourceTree = "<group>";
@@ -821,6 +841,7 @@
 				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
 				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */,
+				CA097287264F4E3500573DA5 /* ReporterResult.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */,
 				AD7D2525207A7B72001B8211 /* Scope.swift in Sources */,
@@ -828,6 +849,7 @@
 				AD9EB47D2079D280002494C0 /* Feature.swift in Sources */,
 				1DBF9329239C97AC0035722A /* RuleParser.swift in Sources */,
 				1DE862E02391F7F70027326A /* Position.swift in Sources */,
+				CA09729D264F517200573DA5 /* CucumberTestObservable.swift in Sources */,
 				AD7F1C0E2104DB240004852A /* Language.swift in Sources */,
 				AD99DB59213269D500E57823 /* StepImplementation.swift in Sources */,
 				CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */,
@@ -865,6 +887,7 @@
 				AD99DB6321335B5D00E57823 /* TestObservation.swift in Sources */,
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
+				CA097281264F4D5100573DA5 /* CucumberTestObserver.swift in Sources */,
 				1D1648DB245A7549000CA612 /* XCTestHooks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -894,6 +917,7 @@
 				CA4E2D0524CCDF0500A44983 /* DSLBackgroundTests.swift in Sources */,
 				CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */,
 				5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */,
+				CA097297264F513B00573DA5 /* CustomReporterTests.swift in Sources */,
 				AD7D2527207A8AEB001B8211 /* MightEqualOperatorTests.swift in Sources */,
 				AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */,
 				1DBF9327239A929E0035722A /* RuleTests.swift in Sources */,
@@ -991,7 +1015,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1048,7 +1072,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
@@ -1159,7 +1183,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dignityhealth.CucumberSwiftConsumerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1176,7 +1199,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = dignityhealth.CucumberSwiftConsumerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1191,7 +1213,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1209,7 +1230,6 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = TT.CucumberSwiftDSLConsumerTests;

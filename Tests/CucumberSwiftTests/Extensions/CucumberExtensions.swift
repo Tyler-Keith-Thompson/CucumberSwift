@@ -26,7 +26,8 @@ extension Cucumber {
         hookedScenarios.removeAll()
     }
 
-    func executeFeatures() {
+    func executeFeatures(callDefaultTestSuite: Bool = false) {
+        if callDefaultTestSuite { _ = CucumberTest.defaultTestSuite }
         CucumberTest.allGeneratedTests.forEach { $0.invokeTest() }
     }
 }

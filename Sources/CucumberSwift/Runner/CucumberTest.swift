@@ -13,15 +13,18 @@ fileprivate extension Step {
     var method:TestCaseMethod? {
         TestCaseMethod(withName: "\(keyword.toString()) \(match)".toClassString(), closure: {
             guard !Cucumber.shared.failedScenarios.contains(where: { $0 === self.scenario }) else { return }
-            self.startTime = Date()
+            let startTime = Date()
+            self.startTime = startTime
             Cucumber.shared.currentStep = self
             Cucumber.shared.setupBeforeHooksFor(self)
             Cucumber.shared.beforeStepHooks.forEach { $0.hook(self) }
 
             func runAndReport() {
+                (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(step: self, at: startTime) }
                 self.run()
                 self.endTime = Date()
                 Reporter.shared.writeStep(self)
+                (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(step: self, result: self.result, duration: self.executionDuration) }
             }
 
             #if compiler(>=5)
@@ -61,6 +64,8 @@ fileprivate extension String {
 
 class CucumberTest: XCTestCase {
     override class var defaultTestSuite: XCTestSuite {
+        (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.testSuiteStarted(at: Date()) }
+
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
 
         Reporter.shared.reset()

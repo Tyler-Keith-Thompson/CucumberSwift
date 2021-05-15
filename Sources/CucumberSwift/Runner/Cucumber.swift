@@ -132,11 +132,14 @@ import CucumberSwift_ObjC
            !hookedFeatures.contains(where: { $0 === feature }) {
             hookedFeatures.append(feature)
             Cucumber.shared.beforeFeatureHooks.forEach { $0.hook(feature) }
+            (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(feature: feature, at: Date()) }
         }
         if let scenario = step.scenario,
             !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
             Cucumber.shared.beforeScenarioHooks.forEach { $0.hook(scenario) }
+            scenario.startDate = Date()
+            (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(scenario: scenario, at: scenario.startDate) }
         }
     }
     
@@ -145,11 +148,21 @@ import CucumberSwift_ObjC
             let lastScenarioStep = scenario.steps.last,
             lastScenarioStep === step {
             Cucumber.shared.afterScenarioHooks.forEach { $0.hook(scenario) }
+            let result: Reporter.Result = (scenario.steps.contains(where: { $0.result == .failed })) ? .failed : .passed
+            (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(scenario: scenario,
+                                                                                           result: result,
+                                                                                           duration: Measurement(value: Date().timeIntervalSince(scenario.startDate) * 1_000_000_000,
+                                                                                                                 unit: .nanoseconds)) }
         }
         if let feature = step.scenario?.feature,
             let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
             lastStep === step {
             Cucumber.shared.afterFeatureHooks.forEach { $0.hook(feature) }
+            let result: Reporter.Result = (feature.scenarios.contains(where: { $0.steps.contains(where: { $0.result == .failed })})) ? .failed : .passed
+            (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(feature: feature,
+                                                                                           result: result,
+                                                                                           duration: Measurement(value: Date().timeIntervalSince(feature.startDate) * 1_000_000_000,
+                                                                                                                 unit: .nanoseconds)) }
         }
     }
     

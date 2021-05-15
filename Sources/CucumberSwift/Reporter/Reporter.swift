@@ -8,7 +8,8 @@
 
 import Foundation
 
-class Reporter {
+public class Reporter {
+    internal init() { }
     static let shared = Reporter()
     var reportURL:URL? {
         let name = "_cucumberReport".appending(".json")

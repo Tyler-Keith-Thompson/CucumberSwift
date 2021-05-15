@@ -35,7 +35,7 @@ public class Step: CustomStringConvertible {
     public private(set)  var location:Lexer.Position
     public internal(set) var testCase:XCTestCase?
     
-    var result:Result = .pending
+    var result:Reporter.Result = .pending
     var execute:(([String], Step) -> Void)? = nil
     var executeSelector:Selector?
     var executeClass:AnyClass?
@@ -44,9 +44,10 @@ public class Step: CustomStringConvertible {
     var errorMessage:String = ""
     var startTime:Date?
     var endTime:Date?
-    var duration:TimeInterval {
-        guard let start = startTime, let end = endTime else { return 0 }
-        return end.timeIntervalSince(start) * 1_000_000_000
+    var executionDuration:Measurement<UnitDuration> {
+        // Converting to nanoseconds from seconds has a rounding error, so storing as nanoseconds is actually better.
+        guard let start = startTime, let end = endTime else { return Measurement(value: 0, unit: .nanoseconds) }
+        return Measurement(value: end.timeIntervalSince(start) * 1_000_000_000, unit: .nanoseconds)
     }
     var tokens = [Lexer.Token]()
     
@@ -94,7 +95,7 @@ public class Step: CustomStringConvertible {
     
     func toJSON() -> [String:Any] {
         return [
-            "result":["status":"\(result)", "error_message" : errorMessage, "duration": duration],
+            "result":["status":"\(result)", "error_message" : errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
             "name":"\(match)",
             "keyword":"\(keyword.toString())"
         ]
@@ -163,14 +164,5 @@ extension Step {
         public static let then  = Keyword(rawValue: 1 << 2)
         public static let and   = Keyword(rawValue: 1 << 3)
         public static let but   = Keyword(rawValue: 1 << 4)
-    }
-    
-    public enum Result {
-        case passed
-        case failed
-        case skipped
-        case pending
-        case undefined
-        case ambiguous
     }
 }

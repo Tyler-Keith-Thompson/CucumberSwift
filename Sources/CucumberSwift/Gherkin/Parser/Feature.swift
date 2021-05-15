@@ -15,7 +15,8 @@ public class Feature : Taggable, Positionable {
     public internal(set) var tags = [String]()
     public private(set)  var location:Lexer.Position
     public private(set)  var endLocation: Lexer.Position
-    
+    internal var startDate: Date = Date()
+
     init(with node:AST.FeatureNode, uri:String = "") {
         location = node.tokens.first?.position ?? .start
         endLocation = .start

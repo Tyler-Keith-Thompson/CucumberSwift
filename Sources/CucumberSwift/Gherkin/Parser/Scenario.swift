@@ -14,6 +14,7 @@ public class Scenario : NSObject, Taggable, Positionable {
     public internal(set) var feature:Feature?
     public private(set)  var location:Lexer.Position
     public private(set)  var endLocation: Lexer.Position
+    internal var startDate: Date = Date()
 
     init(with node:AST.ScenarioNode, tags:[String], stepNodes:[AST.StepNode]) {
         location = node.tokens.first?.position ?? .start

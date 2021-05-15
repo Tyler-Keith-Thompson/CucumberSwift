@@ -18,7 +18,7 @@ extension Feature {
 
 
 class ReporterTests: XCTestCase {
-
+    
 //    func testReporterWritesToDocuments() {
 //        let reporter = Reporter()
 //        reporter.write([
@@ -100,14 +100,15 @@ class ReporterTests: XCTestCase {
             }
         }
 
-        XCTAssertEqual(step.duration, 1_000_000_000)
+        let duration = step.executionDuration.converted(to: .nanoseconds).value
+        XCTAssertEqual(duration, 1_000_000_000)
 
         reporter.writeStep(step)
 
         let featureJSON = reporter.currentJSON?.first
         let scenarios = featureJSON?["elements"] as? [[String:Any]]
         let steps = scenarios?.first?["steps"] as? [[String:Any]]
-        XCTAssertEqual((steps?.first?["result"] as? [String:Any])?["duration"] as? Double, step.duration)
+        XCTAssertEqual((steps?.first?["result"] as? [String:Any])?["duration"] as? Double, duration)
     }
 }
 
