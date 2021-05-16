@@ -5,7 +5,7 @@
 //  Created by Tyler Thompson on 4/24/21.
 //  Copyright © 2021 Tyler Thompson. All rights reserved.
 //
-// swiftlint:disable type_body_length
+// swiftlint:disable type_body_length file_length function_body_length
 
 import Foundation
 import XCTest

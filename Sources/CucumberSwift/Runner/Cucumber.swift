@@ -14,9 +14,8 @@ import CucumberSwift_ObjC
 #endif
 
 @objc public class Cucumber: NSObject {
-
     static var shared: Cucumber = {
-       return Cucumber()
+        return Cucumber()
     }()
 
     var features = [Feature]()
@@ -24,7 +23,7 @@ import CucumberSwift_ObjC
     var reportName: String = "CucumberTestResultsFor"
     var environment: [String: String] = ProcessInfo.processInfo.environment
 
-    private var _beforeFeatureHooks  = [FeatureHook]()
+    private var _beforeFeatureHooks = [FeatureHook]()
     var beforeFeatureHooks: [FeatureHook] {
         get {
             _beforeFeatureHooks.sorted()
@@ -32,7 +31,7 @@ import CucumberSwift_ObjC
             _beforeFeatureHooks = newValue
         }
     }
-    private var _afterFeatureHooks   = [FeatureHook]()
+    private var _afterFeatureHooks = [FeatureHook]()
     var afterFeatureHooks: [FeatureHook] {
         get {
             _afterFeatureHooks.sorted()
@@ -48,7 +47,7 @@ import CucumberSwift_ObjC
             _beforeScenarioHooks = newValue
         }
     }
-    private var _afterScenarioHooks  = [ScenarioHook]()
+    private var _afterScenarioHooks = [ScenarioHook]()
     var afterScenarioHooks: [ScenarioHook] {
         get {
             _afterScenarioHooks.sorted()
@@ -56,7 +55,7 @@ import CucumberSwift_ObjC
             _afterScenarioHooks = newValue
         }
     }
-    private var _beforeStepHooks     = [StepHook]()
+    private var _beforeStepHooks = [StepHook]()
     var beforeStepHooks: [StepHook] {
         get {
             _beforeStepHooks.sorted()
@@ -64,7 +63,7 @@ import CucumberSwift_ObjC
             _beforeStepHooks = newValue
         }
     }
-    private var _afterStepHooks      = [StepHook]()
+    private var _afterStepHooks = [StepHook]()
     var afterStepHooks: [StepHook] {
         get {
             _afterStepHooks.sorted()
@@ -101,9 +100,9 @@ import CucumberSwift_ObjC
         }
 
         guard let className = name.components(separatedBy: "/").first,
-            let testCaseClass = Bundle.allBundles.compactMap({
+              let testCaseClass = Bundle.allBundles.compactMap({
                 $0.classNamed(className)
-            }).first else { return nil }
+              }).first else { return nil }
 
         return XCTestSuite(forTestCaseClass: testCaseClass)
     }
@@ -121,8 +120,8 @@ import CucumberSwift_ObjC
         let enumerator: FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: featuresURL, includingPropertiesForKeys: nil)
         while let url = enumerator?.nextObject() as? URL {
             if (url.pathExtension == "feature"),
-                let string = try? String(contentsOf: url, encoding: .utf8) {
-                    Cucumber.shared.parseIntoFeatures(string, uri: url.absoluteString)
+               let string = try? String(contentsOf: url, encoding: .utf8) {
+                Cucumber.shared.parseIntoFeatures(string, uri: url.absoluteString)
             }
         }
     }
@@ -135,7 +134,7 @@ import CucumberSwift_ObjC
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(feature: feature, at: Date()) }
         }
         if let scenario = step.scenario,
-            !hookedScenarios.contains(where: { $0 === scenario }) {
+           !hookedScenarios.contains(where: { $0 === scenario }) {
             hookedScenarios.append(scenario)
             Cucumber.shared.beforeScenarioHooks.forEach { $0.hook(scenario) }
             scenario.startDate = Date()
@@ -145,31 +144,33 @@ import CucumberSwift_ObjC
 
     func setupAfterHooksFor(_ step: Step) {
         if let scenario = step.scenario,
-            let lastScenarioStep = scenario.steps.last,
-            lastScenarioStep === step {
+           let lastScenarioStep = scenario.steps.last,
+           lastScenarioStep === step {
             Cucumber.shared.afterScenarioHooks.forEach { $0.hook(scenario) }
-            let result: Reporter.Result = (scenario.steps.contains(where: { $0.result == .failed })) ? .failed : .passed
+            let result: Reporter.Result = (scenario.steps.contains { $0.result == .failed }) ? .failed : .passed
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(scenario: scenario,
                                                                                            result: result,
                                                                                            duration: Measurement(value: Date().timeIntervalSince(scenario.startDate) * 1_000_000_000,
-                                                                                                                 unit: .nanoseconds)) }
+                                                                                                                 unit: .nanoseconds))
+            }
         }
         if let feature = step.scenario?.feature,
-            let lastStep = feature.scenarios.filter({ !$0.steps.isEmpty }).last?.steps.last,
-            lastStep === step {
+           let lastStep = feature.scenarios.last(where: { !$0.steps.isEmpty })?.steps.last,
+           lastStep === step {
             Cucumber.shared.afterFeatureHooks.forEach { $0.hook(feature) }
-            let result: Reporter.Result = (feature.scenarios.contains(where: { $0.steps.contains(where: { $0.result == .failed })})) ? .failed : .passed
+            let result: Reporter.Result = (feature.scenarios.contains { $0.steps.contains { $0.result == .failed } }) ? .failed : .passed
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(feature: feature,
                                                                                            result: result,
                                                                                            duration: Measurement(value: Date().timeIntervalSince(feature.startDate) * 1_000_000_000,
-                                                                                                                 unit: .nanoseconds)) }
+                                                                                                                 unit: .nanoseconds))
+            }
         }
     }
 
     func parseIntoFeatures(_ string: String, uri: String = "") {
         let tokens = Lexer(string, uri: uri).lex()
         features.append(contentsOf: AST.standard.parse(tokens, inFile: uri)
-            .map { Feature(with: $0, uri: uri) })
+                            .map { Feature(with: $0, uri: uri) })
     }
 
     @discardableResult func generateUnimplementedStepDefinitions() -> String {
@@ -183,26 +184,8 @@ import CucumberSwift_ObjC
 
     func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback:@escaping (([String], Step) -> Void)) {
         features
-        .flatMap { $0.scenarios.flatMap { $0.steps } }
-        .filter { (step) -> Bool in
-            if  let k = keyword,
-                step.keyword.contains(k) {
-                return !step.match.matches(for: regex).isEmpty
-            } else if keyword == nil {
-                return !step.match.matches(for: regex).isEmpty
-            }
-            return false
-        }.forEach { (step) in
-            step.result = .undefined
-            step.execute = callback
-            step.regex = regex
-        }
-    }
-
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector) {
-        features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
-            .filter { (step) -> Bool in
+            .filter { step -> Bool in
                 if  let k = keyword,
                     step.keyword.contains(k) {
                     return !step.match.matches(for: regex).isEmpty
@@ -210,17 +193,37 @@ import CucumberSwift_ObjC
                     return !step.match.matches(for: regex).isEmpty
                 }
                 return false
-            }.forEach { (step) in
+            }
+            .forEach { step in
+                step.result = .undefined
+                step.execute = callback
+                step.regex = regex
+            }
+    }
+
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector) {
+        features
+            .flatMap { $0.scenarios.flatMap { $0.steps } }
+            .filter { step -> Bool in
+                if  let k = keyword,
+                    step.keyword.contains(k) {
+                    return !step.match.matches(for: regex).isEmpty
+                } else if keyword == nil {
+                    return !step.match.matches(for: regex).isEmpty
+                }
+                return false
+            }
+            .forEach { step in
                 step.result = .undefined
                 step.executeSelector = selector
                 step.executeClass = `class`
                 step.regex = regex
-        }
+            }
     }
 }
 
 @nonobjc extension XCTestCase {
-    @objc public override class func beforeParallelization() {
+    @objc override public class func beforeParallelization() {
         Cucumber.Load()
     }
 }

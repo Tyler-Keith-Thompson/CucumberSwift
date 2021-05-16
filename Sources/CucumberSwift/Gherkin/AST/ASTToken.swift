@@ -54,14 +54,14 @@ extension AST {
 
         var token: Lexer.Token? {
             switch self {
-            case .feature(let token): return token
-            case .rule(let token): return token
-            case .background(let token): return token
-            case .scenario(let token): return token
-            case .scenarioOutline(let token): return token
-            case .examples(let token): return token
-            case .step(let token): return token
-            case .description(let token): return token
+                case .feature(let token): return token
+                case .rule(let token): return token
+                case .background(let token): return token
+                case .scenario(let token): return token
+                case .scenarioOutline(let token): return token
+                case .examples(let token): return token
+                case .step(let token): return token
+                case .description(let token): return token
             }
         }
 

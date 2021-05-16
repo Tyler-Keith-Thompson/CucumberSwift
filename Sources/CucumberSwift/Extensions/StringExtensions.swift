@@ -34,11 +34,11 @@ extension String {
     }
 
     func capitalizingFirstLetter() -> String {
-        return prefix(1).uppercased() + dropFirst()
+        prefix(1).uppercased() + dropFirst()
     }
 
     func lowercasingFirstLetter() -> String {
-        return prefix(1).lowercased() + dropFirst()
+        prefix(1).lowercased() + dropFirst()
     }
 
     func camelCasingString() -> String {

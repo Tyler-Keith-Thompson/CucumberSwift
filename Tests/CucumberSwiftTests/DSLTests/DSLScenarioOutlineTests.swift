@@ -5,6 +5,7 @@
 //  Created by thompsty on 7/23/20.
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable all
 
 import Foundation
 import XCTest
@@ -46,8 +47,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 32)
-        XCTAssertEqual(lastScenario?.location.line, 32)
+        XCTAssertEqual(firstScenario?.location.line, 33)
+        XCTAssertEqual(lastScenario?.location.line, 33)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
 
@@ -90,8 +91,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 75)
-        XCTAssertEqual(lastScenario?.location.line, 75)
+        XCTAssertEqual(firstScenario?.location.line, 76)
+        XCTAssertEqual(lastScenario?.location.line, 76)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
 
@@ -135,8 +136,8 @@ class DSLScenarioOutlineTests: XCTestCase {
         let lastScenario = Cucumber.shared.features.first?.scenarios.last
         XCTAssertEqual(firstScenario?.title, "SomeTitle")
         XCTAssertEqual(lastScenario?.title, "SomeTitle")
-        XCTAssertEqual(firstScenario?.location.line, 119)
-        XCTAssertEqual(lastScenario?.location.line, 119)
+        XCTAssertEqual(firstScenario?.location.line, 120)
+        XCTAssertEqual(lastScenario?.location.line, 120)
         XCTAssertEqual(firstScenario?.location.column, 28)
         XCTAssertEqual(lastScenario?.location.column, 28)
         XCTAssertEqual(firstScenario?.tags, ["tag1", "tag2"])

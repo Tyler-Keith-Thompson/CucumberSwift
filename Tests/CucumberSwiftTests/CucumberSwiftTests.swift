@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 4/7/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable function_body_length
 
 import XCTest
 @testable import CucumberSwift
@@ -43,6 +44,7 @@ class CucumberSwiftTests: XCTestCase {
     func testStepsGetCallbacksAttachedCorrectly() {
         let bundle: Bundle = {
             #if canImport(CucumberSwift_ObjC)
+            // swiftlint:disable:next force_unwrapping
             return Bundle(url: Bundle.module.bundleURL.deletingLastPathComponent().appendingPathComponent("CucumberSwift_CucumberSwiftTests.bundle"))!
             #else
             return Bundle(for: CucumberSwiftTests.self)
@@ -118,11 +120,10 @@ class CucumberSwiftTests: XCTestCase {
         step1.result = .passed
         let step2 = Step(with: AST.StepNode())
         let step3 = Step(with: AST.StepNode())
-        let scenario = Scenario(with: [
-          step1,
-          step2,
-          step3
-        ], title: "test", tags: [], position: .start)
+        let scenario = Scenario(with: [ step1, step2, step3 ],
+                                title: "test",
+                                tags: [],
+                                position: .start)
         step1.scenario = scenario
         step2.scenario = scenario
         step3.scenario = scenario
@@ -141,11 +142,11 @@ class CucumberSwiftTests: XCTestCase {
 
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
-        return Bundle(for: CucumberSwiftTests.self)
+        Bundle(for: CucumberSwiftTests.self)
     }
     static var shouldRunWith: (Scenario?, [String]) -> Bool = { _, _ in true }
     public func setupSteps() { }
     public func shouldRunWith(scenario: Scenario?, tags: [String]) -> Bool {
-        return Cucumber.shouldRunWith(scenario, tags)
+        Cucumber.shouldRunWith(scenario, tags)
     }
 }

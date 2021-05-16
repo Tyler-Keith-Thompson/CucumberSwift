@@ -13,6 +13,7 @@ class TestCaseMethod {
     var closure: @convention(block) () -> Void
 
     init?(withName name: String, closure:@escaping (() -> Void)) {
+        // swiftlint:disable:next legacy_objc_type
         guard let utf8 = (name as NSString).utf8String else { return nil }
         self.name = utf8
         self.closure = closure

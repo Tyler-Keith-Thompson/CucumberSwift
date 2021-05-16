@@ -7,6 +7,6 @@
 //
 
 import Foundation
-class Gherkin {
+enum Gherkin {
     static var errors = [String]()
 }

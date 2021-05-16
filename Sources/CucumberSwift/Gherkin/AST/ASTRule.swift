@@ -15,7 +15,7 @@ extension AST {
         }
 
         func then(_ rule: Rule) -> Rule {
-            return Rule {
+            Rule {
                 self.execute($0, $1)
                 rule.execute($0, $1)
             }
@@ -26,16 +26,16 @@ extension AST {
 
         static let createNewNode = Rule {
             switch $0 {
-            case .feature:
-                let feature = FeatureNode()
-                $1.nodeLookup[$0.priority] = feature
-                $1.featureNodes.append(feature)
-            case .rule: $1.nodeLookup[$0.priority] = RuleNode()
-            case .background: $1.nodeLookup[$0.priority] = BackgroundNode()
-            case .scenario: $1.nodeLookup[$0.priority] = ScenarioNode()
-            case .scenarioOutline: $1.nodeLookup[$0.priority] = ScenarioOutlineNode()
-            case .step: $1.nodeLookup[$0.priority] = StepNode()
-            default: return
+                case .feature:
+                    let feature = FeatureNode()
+                    $1.nodeLookup[$0.priority] = feature
+                    $1.featureNodes.append(feature)
+                case .rule: $1.nodeLookup[$0.priority] = RuleNode()
+                case .background: $1.nodeLookup[$0.priority] = BackgroundNode()
+                case .scenario: $1.nodeLookup[$0.priority] = ScenarioNode()
+                case .scenarioOutline: $1.nodeLookup[$0.priority] = ScenarioOutlineNode()
+                case .step: $1.nodeLookup[$0.priority] = StepNode()
+                default: return
             }
             $1.currentNode = $1.nodeLookup[$0.priority]
         }

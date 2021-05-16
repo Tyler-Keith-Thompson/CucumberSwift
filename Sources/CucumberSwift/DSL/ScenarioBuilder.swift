@@ -9,15 +9,14 @@
 import Foundation
 
 @_functionBuilder
-public struct ScenarioBuilder {
+public enum ScenarioBuilder {
     public static func buildBlock(_ items: ScenarioDSL...) -> [ScenarioDSL] {
-        let (backgroundSteps, scenarioDSLs) =
-            items.reduce(into: ([StepDSL](), [ScenarioDSL]())) { (res, scenarioDSL) in
-                if let background = scenarioDSL as? Background {
-                    res.0.append(contentsOf: background.steps)
-                } else {
-                    res.1.append(scenarioDSL)
-                }
+        let (backgroundSteps, scenarioDSLs) = items.reduce(into: ([StepDSL](), [ScenarioDSL]())) { res, scenarioDSL in
+            if let background = scenarioDSL as? Background {
+                res.0.append(contentsOf: background.steps)
+            } else {
+                res.1.append(scenarioDSL)
+            }
         }
         let scenarios = scenarioDSLs.flatMap { $0.scenarios }
         scenarios.forEach {

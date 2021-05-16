@@ -5,16 +5,11 @@
 //  Created by Tyler Thompson on 8/4/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable type_body_length
 
 import Foundation
 import XCTest
 @testable import CucumberSwift
-
-extension String {
-    func stringByEscapingCharacters() -> String {
-        return self.replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
-    }
-}
 
 class StepGenerationTests: XCTestCase {
     override func setUpWithError() throws {
@@ -93,9 +88,7 @@ class StepGenerationTests: XCTestCase {
              Given A user with an idea
               And A PO with two
         """)
-        Given("^A user with an idea$") { _, _ in
-
-        }
+        Given("^A user with an idea$") { _, _ in }
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
         And("^A PO with two$") { _, _ in
@@ -311,5 +304,11 @@ class StepGenerationTests: XCTestCase {
         }
         """
         XCTAssertEqual(actual, expected)
+    }
+}
+
+extension String {
+    func stringByEscapingCharacters() -> String {
+        replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
     }
 }

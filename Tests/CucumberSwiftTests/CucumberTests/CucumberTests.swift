@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 7/21/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable all
 
 import Foundation
 import XCTest

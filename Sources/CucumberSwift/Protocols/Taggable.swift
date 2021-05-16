@@ -13,7 +13,7 @@ public protocol Taggable {
 }
 extension Taggable {
     func containsTag(_ tag: String) -> Bool {
-        return tags.contains { !$0.matches(for: tag).isEmpty }
+        tags.contains { !$0.matches(for: tag).isEmpty }
     }
 }
 

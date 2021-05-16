@@ -18,17 +18,17 @@ public class Lexer: StringReader {
         super.init(str)
     }
 
-    public override var position: Position {
+    override public var position: Position {
         let pos = super.position
         return Position(line: pos.line, column: pos.column, uri: url)
     }
 
     @discardableResult internal func readLineUntil(_ evaluation: ((Character) -> Bool)) -> String {
-        return readUntil { $0.isNewline || evaluation($0) }
+        readUntil { $0.isNewline || evaluation($0) }
     }
 
     @discardableResult internal func lookAheadAtLineUntil(_ evaluation: ((Character) -> Bool)) -> String {
-        return lookAheadUntil { $0.isNewline || evaluation($0) }
+        lookAheadUntil { $0.isNewline || evaluation($0) }
     }
 
     // table cells have weird rules I don't necessarily agree with...
@@ -36,8 +36,8 @@ public class Lexer: StringReader {
         var str = ""
         while let char = currentChar, !char.isNewline {
             if char.isEscapeCharacter,
-                let next = nextChar,
-                next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter {
+               let next = nextChar,
+               next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter {
                 if next == "n" {
                     str.append("\n")
                 } else {
@@ -60,8 +60,8 @@ public class Lexer: StringReader {
         var str = ""
         while let char = currentChar {
             if char.isEscapeCharacter,
-                let next = nextChar,
-                next.isDocStringLiteral {
+               let next = nextChar,
+               next.isDocStringLiteral {
                 str.append(next)
                 advanceIndex()
                 advanceIndex()
@@ -102,36 +102,36 @@ public class Lexer: StringReader {
         }
 
         switch char {
-        case .newLine: return advance(.newLine(position))
-        case .comment: return readComment()
-        case .tagMarker: return advance(.tag(position, readLineUntil({ !$0.isTagCharacter })))
-        case .tableCellDelimiter:
-            let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter })
-                                            .trimmingCharacters(in: .whitespaces))
-            if currentChar != Character.tableCellDelimiter {
-                return advanceToNextToken()
-            }
-            return .tableCell(position, tableCellContents)
-        case _ where atLineStart: return readScope()
-        case .tableHeaderOpen:
-            let str = advance(readLineUntil { $0.isHeaderClosed })
-            return advance(.tableHeader(position, str))
-        case _ where lastScope != nil:
-            let title = readLineUntil { $0.isHeaderOpen }
-            if title.isEmpty { // hack to get around potential infinite loop
-                return advance(advanceToNextToken())
-            }
-            return .title(position, title)
-        case .quote: return readString()
-        case _ where char.isNumeric: return .integer(position, readLineUntil { !$0.isNumeric })
-        case _ where lastKeyword != nil: return .match(position, readLineUntil { $0.isSymbol })
-        default: return advance(advanceToNextToken())
+            case .newLine: return advance(.newLine(position))
+            case .comment: return readComment()
+            case .tagMarker: return advance(.tag(position, readLineUntil({ !$0.isTagCharacter })))
+            case .tableCellDelimiter:
+                let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter })
+                                                    .trimmingCharacters(in: .whitespaces))
+                if currentChar != Character.tableCellDelimiter {
+                    return advanceToNextToken()
+                }
+                return .tableCell(position, tableCellContents)
+            case _ where atLineStart: return readScope()
+            case .tableHeaderOpen:
+                let str = advance(readLineUntil { $0.isHeaderClosed })
+                return advance(.tableHeader(position, str))
+            case _ where lastScope != nil:
+                let title = readLineUntil { $0.isHeaderOpen }
+                if title.isEmpty { // hack to get around potential infinite loop
+                    return advance(advanceToNextToken())
+                }
+                return .title(position, title)
+            case .quote: return readString()
+            case _ where char.isNumeric: return .integer(position, readLineUntil { !$0.isNumeric })
+            case _ where lastKeyword != nil: return .match(position, readLineUntil { $0.isSymbol })
+            default: return advance(advanceToNextToken())
         }
     }
 
     private func readString() -> Token? {
         guard let char = currentChar,
-                char.isDocStringLiteral else { return nil }
+              char.isDocStringLiteral else { return nil }
         let position = self.position
         let open = lookAheadAtLineUntil { !$0.isDocStringLiteral }
         if open.isDocStringLiteral() {
@@ -143,19 +143,19 @@ public class Lexer: StringReader {
                 }
                 return false
             }.components(separatedBy: "\n")
-                .enumerated()
-                .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { (res, e) in
-                    let (offset, line) = e
-                    if offset == 1 {
-                        res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
-                    }
-                    let str = line.map { $0 }.dropFirst(upTo: res.whitespaceCount) {
-                        $0.isWhitespace
-                    }
-                    res.trimmedLines.append(String(str))
+            .enumerated()
+            .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { res, e in
+                let (offset, line) = e
+                if offset == 1 {
+                    res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }
                 }
-                .trimmedLines
-                .dropLast { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                let str = line.map { $0 }.dropFirst(upTo: res.whitespaceCount) {
+                    $0.isWhitespace
+                }
+                res.trimmedLines.append(String(str))
+            }
+            .trimmedLines
+            .dropLast { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
             readLineUntil { !$0.isDocStringLiteral }
             return advance(.docString(position, DocString(literal: docStringValues.dropFirst().joined(separator: "\n"),

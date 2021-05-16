@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-class TestCaseGenerator {
+enum TestCaseGenerator {
     static func initWith(className: String, method: TestCaseMethod?) -> (XCTestCase.Type, Selector)? {
         let uniqueName = { () -> String in
             var count = 0
@@ -21,6 +21,7 @@ class TestCaseGenerator {
             return name
         }()
 
+        // swiftlint:disable:next legacy_objc_type
         guard let className = (uniqueName as NSString).utf8String,
               let method = method else { return nil }
 

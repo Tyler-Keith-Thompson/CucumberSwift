@@ -8,25 +8,6 @@
 
 import Foundation
 
-extension Sequence where Element == Lexer.Token {
-    fileprivate func groupedByExample() -> [[Lexer.Token]] {
-        var examples = [[Lexer.Token]]()
-        var example = [Lexer.Token]()
-        for token in self {
-            if token.isExampleScope() && !example.isEmpty {
-                examples.append(example)
-                example.removeAll()
-            } else {
-                example.append(token)
-            }
-        }
-        if !example.isEmpty {
-            examples.append(example)
-        }
-        return examples
-    }
-}
-
 enum ScenarioOutlineParser {
     static func parse(_ scenarioOutlineNode: AST.ScenarioOutlineNode, featureTags: [String], backgroundStepNodes: [AST.StepNode], uri: String = "") -> [Scenario] {
         let tags = featureTags.appending(contentsOf: scenarioOutlineNode.tokens.compactMap {
@@ -51,19 +32,22 @@ enum ScenarioOutlineParser {
     }
 
     static func getExamplesFrom(_ scenarioOutlineNode: AST.ScenarioOutlineNode) -> [[Lexer.Token]] {
-        return scenarioOutlineNode.tokens.drop {
-            !$0.isExampleScope()
-        }.groupedByExample()
+        scenarioOutlineNode.tokens.drop { !$0.isExampleScope() }.groupedByExample()
     }
 
     private static func validateTable(_ lines: [[Lexer.Token]], uri: String) {
         guard let header = lines.first else { return }
-        if let _ = lines.first(where: { $0.count != header.count }) {
+        if lines.contains(where: { $0.count != header.count }) {
             Gherkin.errors.append("File: \(uri) inconsistent cell count within the table")
         }
     }
 
-    private static func parseExample(titleLine: [Lexer.Token]?, tokens: [Lexer.Token], outlineTags: [String], stepNodes: [AST.StepNode], backgroundStepNodes: [AST.StepNode], uri: String) -> [Scenario] {
+    private static func parseExample(titleLine: [Lexer.Token]?,
+                                     tokens: [Lexer.Token],
+                                     outlineTags: [String],
+                                     stepNodes: [AST.StepNode],
+                                     backgroundStepNodes: [AST.StepNode],
+                                     uri: String) -> [Scenario] {
         var scenarios = [Scenario]()
         let lines = tokens.filter { $0.isTableCell() || $0.isNewline() }.groupedByLine()
         validateTable(lines, uri: uri)
@@ -106,5 +90,24 @@ enum ScenarioOutlineParser {
             }
         }
         return Step(with: node)
+    }
+}
+
+extension Sequence where Element == Lexer.Token {
+    fileprivate func groupedByExample() -> [[Lexer.Token]] {
+        var examples = [[Lexer.Token]]()
+        var example = [Lexer.Token]()
+        for token in self {
+            if token.isExampleScope() && !example.isEmpty {
+                examples.append(example)
+                example.removeAll()
+            } else {
+                example.append(token)
+            }
+        }
+        if !example.isEmpty {
+            examples.append(example)
+        }
+        return examples
     }
 }

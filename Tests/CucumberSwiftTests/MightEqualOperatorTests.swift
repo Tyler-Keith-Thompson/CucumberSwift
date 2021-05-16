@@ -13,5 +13,4 @@ class MightEqualOperatorTests: XCTestCase {
         oldString ?= nil
         XCTAssertEqual(oldString, "I used to be a string", "String \"I used to be a string\" should not be updated with nil")
     }
-
 }

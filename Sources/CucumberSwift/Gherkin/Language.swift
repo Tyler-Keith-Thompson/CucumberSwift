@@ -7,8 +7,8 @@
 //
 
 import Foundation
-class Language {
-    struct Keys {
+public class Language {
+    enum Keys {
         static let feature = "feature"
         static let scenario = "scenario"
         static let background = "background"
@@ -35,19 +35,19 @@ class Language {
     private var butNames = [String]()
 
     public var given: String {
-        return givenNames.last?.capitalizingFirstLetter() ?? "Given"
+        givenNames.last?.capitalizingFirstLetter() ?? "Given"
     }
     public var when: String {
-        return whenNames.last?.capitalizingFirstLetter() ?? "When"
+        whenNames.last?.capitalizingFirstLetter() ?? "When"
     }
     public var then: String {
-        return thenNames.last?.capitalizingFirstLetter() ?? "Then"
+        thenNames.last?.capitalizingFirstLetter() ?? "Then"
     }
     public var and: String {
-        return andNames.last?.capitalizingFirstLetter() ?? "And"
+        andNames.last?.capitalizingFirstLetter() ?? "And"
     }
     public var but: String {
-        return butNames.last?.capitalizingFirstLetter() ?? "But"
+        butNames.last?.capitalizingFirstLetter() ?? "But"
     }
 
     private init() { }
@@ -76,58 +76,47 @@ class Language {
     }
 
     func matchesFeature(_ str: String) -> Bool {
-        return featureNames
-            .contains(where: { $0 == str.lowercased() })
+        featureNames.contains { $0 == str.lowercased() }
     }
 
     func matchesScenario(_ str: String) -> Bool {
-        return scenarioNames
-            .contains(where: { $0 == str.lowercased() })
+        scenarioNames.contains { $0 == str.lowercased() }
     }
 
     func matchesBackground(_ str: String) -> Bool {
-        return backgroundNames
-            .contains(where: { $0 == str.lowercased() })
+        backgroundNames.contains { $0 == str.lowercased() }
     }
 
     func matchesExamples(_ str: String) -> Bool {
-        return examplesNames
-            .contains(where: { $0 == str.lowercased() })
+        examplesNames.contains { $0 == str.lowercased() }
     }
 
     func matchesScenarioOutline(_ str: String) -> Bool {
-        return scenarioOutlineNames
-            .contains(where: { $0 == str.lowercased() })
+        scenarioOutlineNames.contains { $0 == str.lowercased() }
     }
 
     func matchesRule(_ str: String) -> Bool {
-        return ruleNames
-            .contains(where: { $0 == str.lowercased() })
+        ruleNames.contains { $0 == str.lowercased() }
     }
 
     func matchesGiven(_ str: String) -> Bool {
-        return givenNames
-            .contains(where: { $0 == str.lowercased() })
+        givenNames.contains { $0 == str.lowercased() }
     }
 
     func matchesWhen(_ str: String) -> Bool {
-        return whenNames
-            .contains(where: { $0 == str.lowercased() })
+        whenNames.contains { $0 == str.lowercased() }
     }
 
     func matchesThen(_ str: String) -> Bool {
-        return thenNames
-            .contains(where: { $0 == str.lowercased() })
+        thenNames.contains { $0 == str.lowercased() }
     }
 
     func matchesAnd(_ str: String) -> Bool {
-        return andNames
-            .contains(where: { $0 == str.lowercased() })
+        andNames.contains { $0 == str.lowercased() }
     }
 
     func matchesBut(_ str: String) -> Bool {
-        return butNames
-            .contains(where: { $0 == str.lowercased() })
+        butNames.contains { $0 == str.lowercased() }
     }
 }
 

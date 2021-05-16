@@ -5,6 +5,7 @@
 //  Created by thompsty on 7/23/20.
 //  Copyright © 2020 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable file_types_order
 
 import Foundation
 
@@ -14,7 +15,7 @@ public class StepDSL: Step {
     }
 
     public init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void) {
-        super.init(with: {_, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
+        super.init(with: { _, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
     }
 
     public func continueAfterFailure(_ val: Bool) -> StepDSL {
@@ -24,27 +25,27 @@ public class StepDSL: Step {
 }
 
 public final class GivenStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { .given }
+    override public var keyword: Step.Keyword { .given }
 }
 
 public final class WhenStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { .when }
+    override public var keyword: Step.Keyword { .when }
 }
 
 public final class ThenStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { .then }
+    override public var keyword: Step.Keyword { .then }
 }
 
 public final class AndStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { .and }
+    override public var keyword: Step.Keyword { .and }
 }
 
 public final class ButStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { .but }
+    override public var keyword: Step.Keyword { .but }
 }
 
 public final class MatchAllStep: StepDSL, Matcher, GherkinDSL {
-    public override var keyword: Step.Keyword { [] }
+    override public var keyword: Step.Keyword { [] }
 }
 
 public typealias Given = GivenStep

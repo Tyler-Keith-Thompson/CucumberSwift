@@ -32,7 +32,7 @@ public class Reporter {
             let (fIndex, scIndex) = writeScenarioIfNecessary(scenario),
             var features = currentJSON,
             features.count > fIndex else { return }
-        let stepIndex = scenario.steps.enumerated().first { (_, s) -> Bool in
+        let stepIndex = scenario.steps.enumerated().first { _, s -> Bool in
             return s === step
         }?.offset
         var featureJSON = features[fIndex]
@@ -41,7 +41,7 @@ public class Reporter {
               elements.count > scIndex else { return }
         var scenarioJSON = elements[scIndex]
         var steps = scenarioJSON["steps"] as? [[String: Any]] ?? []
-        if steps.count-1 >= sIndex {
+        if steps.count - 1 >= sIndex {
             steps[sIndex] = step.toJSON()
         } else {
             steps.append(step.toJSON())
@@ -60,7 +60,7 @@ public class Reporter {
               features.count > fIndex else { return nil }
         var featureJSON = features[fIndex]
         var elements = featureJSON["elements"] as? [[String: Any]] ?? []
-        let scenarioIndex = feature.scenarios.taggedElements(askImplementor: true).enumerated().first { (_, s) -> Bool in
+        let scenarioIndex = feature.scenarios.taggedElements(askImplementor: true).enumerated().first { _, s -> Bool in
             return s === scenario
         }?.offset
         guard let sIndex = scenarioIndex else { return nil }
@@ -78,9 +78,10 @@ public class Reporter {
             write([feature.toJSON()])
             return 0
         }
-        let f = features.enumerated().first { (_, json) -> Bool in
+        let f = features.enumerated().first { _, json -> Bool in
             json["uri"] as? String == feature.uri
         }
+        // swiftlint:disable:next force_unwrapping
         guard f?.element == nil else { return f!.offset }
         features.append(feature.toJSON())
         write(features)

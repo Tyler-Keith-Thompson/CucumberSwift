@@ -10,7 +10,7 @@ import Foundation
 
 class AST {
     static var standard: AST {
-        return AST()
+        AST()
         .ruleFor(.feature(), Rule.cleanAST
                                .then(.createNewNode)
                                .then(.appendTags))

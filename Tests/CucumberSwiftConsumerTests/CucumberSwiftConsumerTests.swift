@@ -5,6 +5,7 @@
 //  Created by Tyler Thompson on 8/25/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable all
 
 import XCTest
 import CucumberSwift
@@ -29,7 +30,7 @@ class Me: XCTestCase {
 
 extension Feature: Hashable {
     public static func == (lhs: Feature, rhs: Feature) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -39,7 +40,7 @@ extension Feature: Hashable {
 
 extension Step: Hashable {
     public static func == (lhs: Step, rhs: Step) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 
     public func hash(into hasher: inout Hasher) {

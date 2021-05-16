@@ -11,7 +11,7 @@ import XCTest
 
 extension Cucumber: XCTestObservation {
     public func testBundleDidFinish(_ testBundle: Bundle) {
-        let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix(while: { $0 != "."}))).appending(".json")
+        let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix { $0 != "." })).appending(".json")
         if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false),
             let reportURL = Reporter.shared.reportURL {
             let fileURL = documentDirectory.appendingPathComponent(name)
@@ -30,7 +30,7 @@ extension Cucumber: XCTestObservation {
         }
         Cucumber.shared.failedScenarios.append(scenario)
         var foundStep = false
-        scenario.steps.forEach { (step) in
+        scenario.steps.forEach { step in
             if step === Cucumber.shared.currentStep {
                 foundStep = true
             } else if foundStep && step.result == .pending {

@@ -5,19 +5,13 @@
 //  Created by Tyler Thompson on 3/10/19.
 //  Copyright © 2019 Tyler Thompson. All rights reserved.
 //
+// swiftlint:disable file_types_order force_unwrapping
 
 import Foundation
 import XCTest
 @testable import CucumberSwift
 
-extension Feature {
-    convenience init(uri: String) {
-        self.init(with: AST.FeatureNode(node: AST.Node()), uri: uri)
-    }
-}
-
 class ReporterTests: XCTestCase {
-
 //    func testReporterWritesToDocuments() {
 //        let reporter = Reporter()
 //        reporter.write([
@@ -120,5 +114,11 @@ class MockReporter: Reporter {
     override func write(_ dict: [[String: Any]]) {
         writeCalled += 1
         lastDict = dict
+    }
+}
+
+extension Feature {
+    convenience init(uri: String) {
+        self.init(with: AST.FeatureNode(node: AST.Node()), uri: uri)
     }
 }

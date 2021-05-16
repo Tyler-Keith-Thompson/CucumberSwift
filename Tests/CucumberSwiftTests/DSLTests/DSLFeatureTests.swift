@@ -11,7 +11,6 @@ import XCTest
 @testable import CucumberSwift
 
 class DSLFeatureTests: XCTestCase {
-
     override func setUpWithError() throws {
         Cucumber.shared.reset()
     }
@@ -31,7 +30,7 @@ class DSLFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.tags, ["tag1", "tag2"])
         XCTAssertEqual(feature.title, featureTitle)
-        XCTAssertEqual(feature.location.line, 26)
+        XCTAssertEqual(feature.location.line, 25)
         XCTAssertEqual(feature.location.column, 16)
     }
 
@@ -85,7 +84,7 @@ class DSLFeatureTests: XCTestCase {
         }
 
         Cucumber.shouldRunWith = { scenario, _ in
-            return shouldRun(scenario?.withLine(92))
+            return shouldRun(scenario?.withLine(91))
         }
 
         Feature("") {

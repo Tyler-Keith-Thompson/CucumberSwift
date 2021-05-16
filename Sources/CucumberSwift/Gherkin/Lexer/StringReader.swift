@@ -11,7 +11,7 @@ public class StringReader {
     let input: String
     public private(set) var index: String.Index
     public var position: Lexer.Position {
-        return Lexer.Position(line: line, column: column)
+        Lexer.Position(line: line, column: column)
     }
 
     private var line: UInt = 1
@@ -29,7 +29,7 @@ public class StringReader {
     }
 
     public var currentChar: Character? {
-        return (index < input.endIndex && index >= input.startIndex) ? input[index] : nil
+        (index < input.endIndex && index >= input.startIndex) ? input[index] : nil
     }
 
     public var nextChar: Character? {

@@ -9,7 +9,7 @@
 import Foundation
 extension Sequence where Element: Equatable {
     var uniqueElements: [Element] {
-        return reduce(into: []) {
+        reduce(into: []) {
             if !$0.contains($1) {
                 $0.append($1)
             }

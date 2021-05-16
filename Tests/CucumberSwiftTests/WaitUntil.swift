@@ -3,11 +3,11 @@
 import Foundation
 
 func waitUntil(_ checkSuccess: @autoclosure () -> Bool) {
-    return waitUntil(3.0, checkSuccess())
+    waitUntil(3.0, checkSuccess())
 }
 
 func waitUntil(_ timeout: Double, _ checkSuccess: @autoclosure () -> Bool) {
-    let startDate = NSDate()
+    let startDate = Date()
     var success = false
     while !success && abs(startDate.timeIntervalSinceNow) < timeout {
         RunLoop.current.run(until: Date(timeIntervalSinceNow: 0.01))

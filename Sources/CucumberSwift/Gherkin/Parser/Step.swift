@@ -11,19 +11,19 @@ import XCTest
 
 public class Step: CustomStringConvertible {
     public var description: String {
-        return "TAGS:\(tags)\n\(keyword.toString()): \(match)"
+        "TAGS:\(tags)\n\(keyword.toString()): \(match)"
     }
 
-    public var continueAfterFailure: Bool = true {
+    public var continueAfterFailure = true {
         willSet {
             testCase?.continueAfterFailure = newValue
         }
     }
 
     public var canExecute: Bool {
-        return execute != nil
-        || executeSelector != nil
-        || executeClass != nil
+        execute != nil
+            || executeSelector != nil
+            || executeClass != nil
     }
 
     public private(set)  var match = ""
@@ -72,15 +72,15 @@ public class Step: CustomStringConvertible {
         let tableLines = node.tokens
             .filter { $0.isTableCell() || $0.isNewline() }
             .groupedByLine()
-            .map { (line) -> [String] in
+            .map { line -> [String] in
                 return line.filter { $0.isTableCell() }
-                    .map { (token) -> String in
-                    if case Lexer.Token.tableCell(_, let cellText) = token {
-                        return cellText
+                    .map { token -> String in
+                        if case Lexer.Token.tableCell(_, let cellText) = token {
+                            return cellText
+                        }
+                        return ""
                     }
-                    return ""
-                }
-        }
+            }
         if !tableLines.isEmpty {
             dataTable = DataTable(tableLines)
         }
@@ -94,7 +94,7 @@ public class Step: CustomStringConvertible {
     }
 
     func toJSON() -> [String: Any] {
-        return [
+        [
             "result": ["status": "\(result)", "error_message": errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
             "name": "\(match)",
             "keyword": "\(keyword.toString())"

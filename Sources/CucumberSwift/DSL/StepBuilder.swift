@@ -8,8 +8,8 @@
 
 import Foundation
 @_functionBuilder
-public struct StepBuilder {
+public enum StepBuilder {
     public static func buildBlock(_ items: StepDSL?...) -> [StepDSL] {
-        return items.compactMap { $0 }
+        items.compactMap { $0 }
     }
 }

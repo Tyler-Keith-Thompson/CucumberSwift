@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class StubGenerator {
+enum StubGenerator {
     private static func regexForTokens(_ tokens: [Lexer.Token]) -> String {
         var regex = ""
         for token in tokens {
@@ -29,7 +29,8 @@ class StubGenerator {
         var methods = [Method]()
         var lookup = [String: Method]()
         let executableSteps = features.taggedElements(askImplementor: false)
-            .flatMap { $0.scenarios }.taggedElements(askImplementor: true)
+            .flatMap { $0.scenarios }
+            .taggedElements(askImplementor: true)
             .flatMap { $0.steps }
             .sorted { $0.keyword.rawValue < $1.keyword.rawValue }
         executableSteps.filter { !$0.canExecute }.forEach {
@@ -37,10 +38,12 @@ class StubGenerator {
             let stringCount = $0.tokens.filter { $0.isString() }.count
             let integerCount = $0.tokens.filter { $0.isInteger() }.count
             let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
-            let variables = [(type: "string", count: stringCount),
-                             (type: "integer", count: integerCount),
-                             (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
-                             (type: "docString", count: $0.docString != nil ? 1 : 0)]
+            let variables = [
+                (type: "string", count: stringCount),
+                (type: "integer", count: integerCount),
+                (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
+                (type: "docString", count: $0.docString != nil ? 1 : 0)
+            ]
             let method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
             if let m = lookup[regex],
                 !m.keyword.contains($0.keyword) {

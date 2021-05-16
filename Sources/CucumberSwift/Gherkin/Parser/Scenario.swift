@@ -14,7 +14,7 @@ public class Scenario: NSObject, Taggable, Positionable {
     public internal(set) var feature: Feature?
     public private(set)  var location: Lexer.Position
     public private(set)  var endLocation: Lexer.Position
-    internal var startDate: Date = Date()
+    internal var startDate = Date()
 
     init(with node: AST.ScenarioNode, tags: [String], stepNodes: [AST.StepNode]) {
         location = node.tokens.first?.position ?? .start
@@ -45,11 +45,11 @@ public class Scenario: NSObject, Taggable, Positionable {
     }
 
     public func containsTags(_ tags: [String]) -> Bool {
-        return tags.contains { containsTag($0) }
+        tags.contains { containsTag($0) }
     }
 
     func toJSON() -> [String: Any] {
-        return [
+        [
             "id": title.lowercased().replacingOccurrences(of: " ", with: "-"),
             "keyword": "Scenario",
             "type": "scenario",

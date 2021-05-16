@@ -56,6 +56,7 @@ extension Cucumber: StepImplementation {
 
     public func setupSteps() {
         setupHooks()
+        // swiftlint:disable:next closure_body_length
         Feature("CucumberSwift Library") {
             Description("""
                 The CucumberSwift library needs to work like Developers, QAs and Product Owners expect it to
@@ -70,6 +71,7 @@ extension Cucumber: StepImplementation {
             }
 
             // How do we make the title work correctly? Not sure, maybe a closure?
+            // swiftlint:disable:next multiline_arguments
             ScenarioOutline({ "Before \($0) hook works correctly" }, headers: String.self, steps: { _ in
                 Given(I: haveABeforeScenarioHook())
                 When(I: runTheTests())
@@ -111,7 +113,6 @@ extension Cucumber: StepImplementation {
                 When(I: runTheTests())
                 Then(the: scenarioRunsWithoutCrashing())
             }
-
         }
     }
 }
@@ -187,7 +188,7 @@ private func scenarioRunsWithoutCrashing() {
 
 extension Feature: Hashable {
     public static func == (lhs: Feature, rhs: Feature) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 
     public func hash(into hasher: inout Hasher) {
@@ -197,7 +198,7 @@ extension Feature: Hashable {
 
 extension Step: Hashable {
     public static func == (lhs: Step, rhs: Step) -> Bool {
-        return lhs === rhs
+        lhs === rhs
     }
 
     public func hash(into hasher: inout Hasher) {
