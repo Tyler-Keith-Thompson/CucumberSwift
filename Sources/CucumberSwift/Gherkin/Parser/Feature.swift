@@ -15,7 +15,7 @@ public class Feature: Taggable, Positionable {
     public internal(set) var tags = [String]()
     public private(set)  var location: Lexer.Position
     public private(set)  var endLocation: Lexer.Position
-    internal var startDate: Date = Date()
+    internal var startDate = Date()
 
     init(with node: AST.FeatureNode, uri: String = "") {
         location = node.tokens.first?.position ?? .start
@@ -32,7 +32,7 @@ public class Feature: Taggable, Positionable {
         }
         let backgroundSteps: [AST.StepNode] = node.children.compactMap { $0 as? AST.BackgroundNode }
                                         .flatMap { $0.children.compactMap { $0 as? AST.StepNode } }
-        node.children.forEach { (node) in
+        node.children.forEach { node in
             if let sn = node as? AST.ScenarioNode {
                 scenarios.append(Scenario(with: sn, tags: tags, stepNodes: backgroundSteps))
             } else if let son = node as? AST.ScenarioOutlineNode {
@@ -66,7 +66,7 @@ public class Feature: Taggable, Positionable {
     }
 
     func toJSON() -> [String: Any] {
-        return [
+        [
             "uri": uri,
             "id": title.lowercased().replacingOccurrences(of: " ", with: "-"),
             "name": title,

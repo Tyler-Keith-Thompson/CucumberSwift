@@ -98,6 +98,7 @@ class ParserTests: XCTestCase {
 
         XCTAssertEqual(cucumber.features.count, 1)
         XCTAssertEqual(feature?.title, "Some terse yet descriptive text of what is desired")
+        // swiftlint:disable:next line_length
         XCTAssertEqual(feature?.desc, "Textual description of the business value of this feature\nBusiness rules that govern the scope of the feature\nAny additional information that will make the feature easier to understand\n")
         XCTAssertEqual(feature?.scenarios.count, 2)
         XCTAssert(firstScenario?.feature === feature)

@@ -8,8 +8,8 @@
 
 import Foundation
 
-fileprivate extension Sequence where Element == Lexer.Token {
-    func groupedByExample() -> [[Lexer.Token]] {
+extension Sequence where Element == Lexer.Token {
+    fileprivate func groupedByExample() -> [[Lexer.Token]] {
         var examples = [[Lexer.Token]]()
         var example = [Lexer.Token]()
         for token in self {
@@ -27,7 +27,7 @@ fileprivate extension Sequence where Element == Lexer.Token {
     }
 }
 
-class ScenarioOutlineParser {
+enum ScenarioOutlineParser {
     static func parse(_ scenarioOutlineNode: AST.ScenarioOutlineNode, featureTags: [String], backgroundStepNodes: [AST.StepNode], uri: String = "") -> [Scenario] {
         let tags = featureTags.appending(contentsOf: scenarioOutlineNode.tokens.compactMap {
             if case Lexer.Token.tag(_, let tag) = $0 {

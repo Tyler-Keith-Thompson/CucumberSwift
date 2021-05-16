@@ -219,8 +219,8 @@ import CucumberSwift_ObjC
     }
 }
 
-@nonobjc public extension XCTestCase {
-    @objc override class func beforeParallelization() {
+@nonobjc extension XCTestCase {
+    @objc public override class func beforeParallelization() {
         Cucumber.Load()
     }
 }

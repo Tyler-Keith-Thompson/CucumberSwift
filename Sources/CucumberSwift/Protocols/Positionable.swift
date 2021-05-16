@@ -12,8 +12,8 @@ public protocol Positionable {
     var endLocation: Lexer.Position { get }
 }
 
-public extension Positionable {
-    func withLine(_ line: UInt) -> Bool {
+extension Positionable {
+    public func withLine(_ line: UInt) -> Bool {
         guard endLocation.line > location.line else {
             return location.line == endLocation.line && location.line == line
         }
@@ -22,5 +22,5 @@ public extension Positionable {
 }
 
 public func shouldRun(_ closure: @escaping @autoclosure () -> Bool?) -> Bool {
-    return closure() == true
+    closure() == true
 }

@@ -13,12 +13,15 @@ public protocol Matcher {
     var keyword: Step.Keyword { get }
 }
 
-public extension Matcher {
-    @discardableResult init(_ regex: String, class: AnyClass, selector: Selector) {
+extension Matcher {
+    @discardableResult public init(_ regex: String,
+                                   class: AnyClass,
+                                   selector: Selector) {
         self.init()
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class: `class`, selector: selector)
     }
-    @discardableResult init(_ regex: String, callback:@escaping (([String], Step) -> Void)) {
+    @discardableResult public init(_ regex: String,
+                                   callback:@escaping (([String], Step) -> Void)) {
         self.init()
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback)
     }

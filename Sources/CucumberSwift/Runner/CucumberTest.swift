@@ -9,8 +9,8 @@
 import Foundation
 import XCTest
 
-fileprivate extension Step {
-    var method: TestCaseMethod? {
+extension Step {
+    fileprivate var method: TestCaseMethod? {
         TestCaseMethod(withName: "\(keyword.toString()) \(match)".toClassString(), closure: {
             guard !Cucumber.shared.failedScenarios.contains(where: { $0 === self.scenario }) else { return }
             let startTime = Date()
@@ -39,7 +39,7 @@ fileprivate extension Step {
         })
     }
 
-    func run() {
+    fileprivate func run() {
         if let `class` = executeClass, let selector = executeSelector {
             executeInstance = (`class` as? NSObject.Type)?.init()
             if let instance = executeInstance,
@@ -56,8 +56,8 @@ fileprivate extension Step {
     }
 }
 
-fileprivate extension String {
-    func toClassString() -> String {
+extension String {
+    fileprivate func toClassString() -> String {
         camelCasingString().capitalizingFirstLetter()
     }
 }
@@ -138,10 +138,10 @@ class CucumberTest: XCTestCase {
     }
 }
 
-private extension CucumberTest {
-    static let defaultDelimiter = "|"
+extension CucumberTest {
+    private static let defaultDelimiter = "|"
 
-    static func readFeatureScenarioDelimiter() -> String {
+    private static func readFeatureScenarioDelimiter() -> String {
         guard let testBundle = (Cucumber.shared as? StepImplementation)?.bundle else { return defaultDelimiter }
         return (testBundle.infoDictionary?["FeatureScenarioDelimiter"] as? String) ?? defaultDelimiter
     }

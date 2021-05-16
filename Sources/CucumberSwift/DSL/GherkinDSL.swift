@@ -69,12 +69,12 @@ private func readClosureNameFrom(line: String) -> String {
     }.match
 }
 
-public extension GherkinDSL {
-    @discardableResult init(_ handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+extension GherkinDSL {
+    @discardableResult public init(_ handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
@@ -82,11 +82,11 @@ public extension GherkinDSL {
 
     }
 
-    @discardableResult init(I handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    @discardableResult public init(I handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
@@ -94,11 +94,11 @@ public extension GherkinDSL {
 
     }
 
-    @discardableResult init(it handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    @discardableResult public init(it handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
@@ -106,44 +106,44 @@ public extension GherkinDSL {
 
     }
 
-    @discardableResult init(my handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    @discardableResult public init(my handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
                   handler: handler)
     }
 
-    @discardableResult init(some handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    @discardableResult public init(some handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
                   handler: handler)
     }
 
-    @discardableResult init(a handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    @discardableResult public init(a handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
                   handler: handler)
     }
-
-    @discardableResult init(the handler: @escaping @autoclosure () -> Void,
-                            line: UInt = #line,
-                            column: UInt = #column,
-                            file: StaticString = #file,
-                            function: StaticString = #function) {
+    
+    @discardableResult public init(the handler: @escaping @autoclosure () -> Void,
+                                   line: UInt = #line,
+                                   column: UInt = #column,
+                                   file: StaticString = #file,
+                                   function: StaticString = #function) {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),

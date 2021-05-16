@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class RuleParser {
+enum RuleParser {
     static func parse(_ ruleNode: AST.RuleNode, featureTags: [String], backgroundStepNodes: [AST.StepNode]) -> [Scenario] {
         let backgroundSteps: [AST.StepNode] = backgroundStepNodes.appending(contentsOf:
             ruleNode.children

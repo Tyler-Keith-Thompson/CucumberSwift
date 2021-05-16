@@ -236,12 +236,12 @@ class CucumberTests: XCTestCase {
     }
 }
 
-private extension Bundle {
-    @objc func swizzledInfoDictionary() -> [String: Any]? {
-        return ["FeatureScenarioDelimiter": "_"]
+extension Bundle {
+    @objc fileprivate func swizzledInfoDictionary() -> [String: Any]? {
+        ["FeatureScenarioDelimiter": "_"]
     }
     /// Sets `FeatureScenarioDelimiter: "_"`
-    static func swizzleInfoDictionary() {
+    fileprivate static func swizzleInfoDictionary() {
         let instance = Bundle()
         let aClass: AnyClass! = object_getClass(instance)
         let originalMethod = class_getInstanceMethod(aClass, #selector(getter: infoDictionary))

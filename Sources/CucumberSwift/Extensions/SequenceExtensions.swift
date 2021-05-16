@@ -24,7 +24,7 @@ extension Array {
     @inlinable public func dropFirst(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = dropFirst(0)
         var count = k ?? self.count
-        while count > 0 {
+        while count > 0 { // swiftlint:disable:this empty_count
             count -= 1
             guard let first = new.first else { break }
             if try predicate(first) {
@@ -39,7 +39,7 @@ extension Array {
     @inlinable public func dropLast(upTo k: Int? = nil, predicate: ((Element) throws -> Bool)) rethrows -> Array.SubSequence {
         var new = dropLast(0)
         var count = k ?? self.count
-        while count > 0 {
+        while count > 0 { // swiftlint:disable:this empty_count
             count -= 1
             guard let last = new.last else { break }
             if try predicate(last) {

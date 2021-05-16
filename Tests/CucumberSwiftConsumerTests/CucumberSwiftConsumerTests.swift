@@ -149,7 +149,7 @@ extension Cucumber: StepImplementation {
             XCTAssertEqual(beforeStepHooks[step], 1)
         }
         Then("^AfterStep gets called once per step$") { _, _ in
-            XCTAssert(afterStepHooks.keys.count > 0)
+            XCTAssertFalse(afterStepHooks.keys.isEmpty)
         }
         Then("^AfterScenario gets called once per scenario$") { _, _ in
             // gotta test this after the scenario...
