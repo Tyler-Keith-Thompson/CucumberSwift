@@ -150,8 +150,8 @@ import CucumberSwift_ObjC
             let result: Reporter.Result = (scenario.steps.contains { $0.result == .failed }) ? .failed : .passed
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(scenario: scenario,
                                                                                            result: result,
-                                                                                           duration: Measurement(value: Date().timeIntervalSince(scenario.startDate) * 1_000_000_000,
-                                                                                                                 unit: .nanoseconds))
+                                                                                           duration: Measurement(value: Date().timeIntervalSince(scenario.startDate),
+                                                                                                                 unit: .seconds))
             }
         }
         if let feature = step.scenario?.feature,
@@ -161,8 +161,8 @@ import CucumberSwift_ObjC
             let result: Reporter.Result = (feature.scenarios.contains { $0.steps.contains { $0.result == .failed } }) ? .failed : .passed
             (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(feature: feature,
                                                                                            result: result,
-                                                                                           duration: Measurement(value: Date().timeIntervalSince(feature.startDate) * 1_000_000_000,
-                                                                                                                 unit: .nanoseconds))
+                                                                                           duration: Measurement(value: Date().timeIntervalSince(feature.startDate),
+                                                                                                                 unit: .seconds))
             }
         }
     }

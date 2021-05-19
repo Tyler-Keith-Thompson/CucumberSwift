@@ -46,8 +46,12 @@ public class Step: CustomStringConvertible {
     var endTime: Date?
     var executionDuration: Measurement<UnitDuration> {
         // Converting to nanoseconds from seconds has a rounding error, so storing as nanoseconds is actually better.
-        guard let start = startTime, let end = endTime else { return Measurement(value: 0, unit: .nanoseconds) }
-        return Measurement(value: end.timeIntervalSince(start) * 1_000_000_000, unit: .nanoseconds)
+        guard let start = startTime, let end = endTime else { return Measurement(value: 0, unit: .seconds) }
+        if #available(iOS 13.0, *) {
+            return Measurement(value: end.timeIntervalSince(start) * 1_000_000_000, unit: .nanoseconds)
+        } else {
+            return Measurement(value: end.timeIntervalSince(start), unit: .seconds)
+        }
     }
     var tokens = [Lexer.Token]()
 
@@ -94,11 +98,19 @@ public class Step: CustomStringConvertible {
     }
 
     func toJSON() -> [String: Any] {
-        [
-            "result": ["status": "\(result)", "error_message": errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
-            "name": "\(match)",
-            "keyword": "\(keyword.toString())"
-        ]
+        if #available(iOS 13.0, *) {
+            return [
+                "result": ["status": "\(result)", "error_message": errorMessage, "duration": executionDuration.converted(to: .nanoseconds).value],
+                "name": "\(match)",
+                "keyword": "\(keyword.toString())"
+            ]
+        } else {
+            return [
+                "result": ["status": "\(result)", "error_message": errorMessage, "duration": executionDuration.converted(to: .seconds).value * 1_000_000_000],
+                "name": "\(match)",
+                "keyword": "\(keyword.toString())"
+            ]
+        }
     }
 }
 

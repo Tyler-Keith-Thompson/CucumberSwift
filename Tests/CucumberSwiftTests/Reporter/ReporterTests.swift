@@ -81,6 +81,7 @@ class ReporterTests: XCTestCase {
         XCTAssertEqual(steps?.count, 2)
     }
 
+    @available(iOS 13.0, *)
     func testStepDurationIsAccuratelyWrittenToFile() {
         let reporter = MockReporter()
         let step = Given(I: print(""))
@@ -94,6 +95,29 @@ class ReporterTests: XCTestCase {
         }
 
         let duration = step.executionDuration.converted(to: .nanoseconds).value
+        XCTAssertEqual(duration, 1_000_000_000)
+
+        reporter.writeStep(step)
+
+        let featureJSON = reporter.currentJSON?.first
+        let scenarios = featureJSON?["elements"] as? [[String: Any]]
+        let steps = scenarios?.first?["steps"] as? [[String: Any]]
+        XCTAssertEqual((steps?.first?["result"] as? [String: Any])?["duration"] as? Double, duration)
+    }
+
+    func testStepDurationIsAccuratelyWrittenToFileOlderIOS() {
+        let reporter = MockReporter()
+        let step = Given(I: print(""))
+        let d = Date()
+        step.startTime = d
+        step.endTime = d.addingTimeInterval(1)
+        Feature("findme") {
+            Scenario("findscn") {
+                step
+            }
+        }
+
+        let duration = step.executionDuration.converted(to: .seconds).value * 1_000_000_000
         XCTAssertEqual(duration, 1_000_000_000)
 
         reporter.writeStep(step)
