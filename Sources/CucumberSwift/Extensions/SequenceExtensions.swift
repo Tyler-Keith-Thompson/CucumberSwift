@@ -52,14 +52,10 @@ extension Array {
     }
 
     func appending(_ element: Element) -> [Element] {
-        var copy = self
-        copy.append(element)
-        return copy
+        return self + [element]
     }
 
     func appending(contentsOf elementArr: [Element]) -> [Element] {
-        var copy = self
-        copy.append(contentsOf: elementArr)
-        return copy
+        return self + elementArr
     }
 }

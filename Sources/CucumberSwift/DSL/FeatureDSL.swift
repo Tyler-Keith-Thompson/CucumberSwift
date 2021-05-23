@@ -12,16 +12,18 @@ extension Feature {
                                                tags: [String] = [],
                                                line: UInt = #line,
                                                column: UInt = #column,
+                                               file: StaticString = #file,
                                                @ScenarioBuilder _ content: () -> [ScenarioDSL]) {
-        self.init(with: content().flatMap { $0.scenarios }, title: title, tags: tags, position: Lexer.Position(line: line, column: column))
+        self.init(with: content().flatMap { $0.scenarios }, title: title, tags: tags, position: Lexer.Position(line: line, column: column), file: file)
         Cucumber.shared.features.append(self)
     }
     @discardableResult public convenience init(_ title: String,
                                                tags: [String] = [],
                                                line: UInt = #line,
                                                column: UInt = #column,
+                                               file: StaticString = #file,
                                                @ScenarioBuilder _ content: () -> ScenarioDSL) {
-        self.init(with: content().scenarios, title: title, tags: tags, position: Lexer.Position(line: line, column: column))
+        self.init(with: content().scenarios, title: title, tags: tags, position: Lexer.Position(line: line, column: column), file: file)
         Cucumber.shared.features.append(self)
     }
 }

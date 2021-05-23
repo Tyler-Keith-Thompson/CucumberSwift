@@ -11,11 +11,10 @@ import XCTest
 
 class CucumberTest: XCTestCase {
     override class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
-        (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.testSuiteStarted(at: Date()) }
+        Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
 
-        Reporter.shared.reset()
         Cucumber.shared.features.removeAll()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
             Cucumber.shared.readFromFeaturesFolder(in: bundle)
@@ -110,11 +109,10 @@ extension Step {
             Cucumber.shared.beforeStepHooks.forEach { $0.hook(self) }
 
             func runAndReport() {
-                (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didStart(step: self, at: startTime) }
+                Cucumber.shared.reporters.forEach { $0.didStart(step: self, at: startTime) }
                 self.run()
                 self.endTime = Date()
-                Reporter.shared.writeStep(self)
-                (Cucumber.shared as? CucumberTestObservable)?.observers.forEach { $0.didFinish(step: self, result: self.result, duration: self.executionDuration) }
+                Cucumber.shared.reporters.forEach { $0.didFinish(step: self, result: self.result, duration: self.executionDuration) }
             }
 
             #if compiler(>=5)

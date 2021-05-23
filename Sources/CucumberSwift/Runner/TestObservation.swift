@@ -11,13 +11,13 @@ import XCTest
 
 extension Cucumber: XCTestObservation {
     public func testBundleDidFinish(_ testBundle: Bundle) {
+        reporters.forEach { $0.testSuiteFinished(at: Date()) }
         let name = Cucumber.shared.reportName.appending(String(testBundle.bundleURL.lastPathComponent.prefix { $0 != "." })).appending(".json")
         if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false),
-            let reportURL = Reporter.shared.reportURL {
+            let reportURL = Reporter.reportURL {
             let fileURL = documentDirectory.appendingPathComponent(name)
             try? FileManager.default.copyItem(at: reportURL, to: fileURL)
         }
-        (self as? CucumberTestObservable)?.observers.forEach { $0.testSuiteFinished(at: Date()) }
     }
 
     public func testCase(_ testCase: XCTestCase, didFailWithDescription description: String, inFile filePath: String?, atLine lineNumber: Int) {
@@ -37,6 +37,5 @@ extension Cucumber: XCTestObservation {
                 step.result = .skipped
             }
         }
-        Reporter.shared.writeStep(step)
     }
 }

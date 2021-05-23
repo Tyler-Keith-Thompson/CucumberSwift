@@ -46,13 +46,14 @@ public class Feature: Taggable, Positionable {
         endLocation ?= scenarios.last?.endLocation
     }
 
-    init(with scenarios: [Scenario], title: String?, tags: [String], position: Lexer.Position) {
+    init(with scenarios: [Scenario], title: String?, tags: [String], position: Lexer.Position, file: StaticString = #file) {
         location = position
         endLocation = scenarios.last?.endLocation ?? .start
         self.scenarios = scenarios
         self.title ?= title
         self.tags = tags
         self.scenarios.forEach { [weak self] in $0.feature = self }
+        self.uri = String(file)
     }
 
     public func containsTags(_ tags: [String]) -> Bool {

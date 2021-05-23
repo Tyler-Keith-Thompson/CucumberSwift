@@ -12,7 +12,6 @@ import Foundation
 extension Cucumber {
     func reset() {
         Cucumber.shouldRunWith = { _, _ in true }
-        Reporter.shared.reset()
         Gherkin.errors.removeAll()
         features.removeAll()
         beforeFeatureHooks.removeAll()

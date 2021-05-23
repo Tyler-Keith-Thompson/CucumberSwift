@@ -19,6 +19,10 @@ class DSLFeatureTests: XCTestCase {
         Cucumber.shared.reset()
     }
 
+    func getCurrentFilePath(file: StaticString = #file) -> String {
+        String(file)
+    }
+
     func testFeatureTags() {
         let featureTitle = UUID().uuidString
         let feature =
@@ -30,8 +34,9 @@ class DSLFeatureTests: XCTestCase {
 
         XCTAssertEqual(feature.tags, ["tag1", "tag2"])
         XCTAssertEqual(feature.title, featureTitle)
-        XCTAssertEqual(feature.location.line, 25)
+        XCTAssertEqual(feature.location.line, 29)
         XCTAssertEqual(feature.location.column, 16)
+        XCTAssertEqual(feature.uri, getCurrentFilePath())
     }
 
     func testFeatureIsAddedToSharedCucumberInstance() {
@@ -84,7 +89,7 @@ class DSLFeatureTests: XCTestCase {
         }
 
         Cucumber.shouldRunWith = { scenario, _ in
-            return shouldRun(scenario?.withLine(91))
+            return shouldRun(scenario?.withLine(96))
         }
 
         Feature("") {

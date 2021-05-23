@@ -8,7 +8,15 @@
 
 import Foundation
 
-extension Reporter {
+public enum Reporter {
+    static var reportURL: URL? {
+        let name = "_cucumberReport".appending(".json")
+        if  let documentDirectory = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: false) {
+            return documentDirectory.appendingPathComponent(name)
+        }
+        return nil
+    }
+
     public enum Result {
         case passed
         case failed(String? = nil)

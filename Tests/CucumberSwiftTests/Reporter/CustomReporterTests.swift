@@ -332,6 +332,7 @@ class CustomReporterTests: XCTestCase {
             XCTFail("should have failed")
         }
 
+        Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
         Cucumber.shared.executeFeatures()
 
         XCTAssertEqual(called, 1)

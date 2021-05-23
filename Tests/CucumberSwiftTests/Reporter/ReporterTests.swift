@@ -12,132 +12,126 @@ import XCTest
 @testable import CucumberSwift
 
 class ReporterTests: XCTestCase {
-//    func testReporterWritesToDocuments() {
-//        let reporter = Reporter()
-//        reporter.write([
-//            ["find": "me"]
-//        ])
-//        XCTAssertEqual(reporter.currentJSON?.first?["find"] as? String, "me")
-//        try? FileManager.default.removeItem(at: reporter.reportURL!)
-//        XCTAssertNil(reporter.currentJSON)
-//    }
-
-    func testFeatureIsOnlyWrittenIfItIsNotInFile() {
-        let reporter = MockReporter()
-        let feature = Feature(uri: "findme")
-
-        reporter.writeFeatureIfNecessary(feature)
-
-        XCTAssertEqual(reporter.currentJSON?.first?.keys, feature.toJSON().keys)
-
-        reporter.writeFeatureIfNecessary(feature)
-        XCTAssertEqual(reporter.currentJSON?.count, 1)
+    override func setUpWithError() throws {
+        Cucumber.shared.reset()
     }
 
-    func testScenarioIsOnlyWrittenIfItIsNotInFile() {
-        let reporter = MockReporter()
-        let feature =
-        Feature("findme") {
-            Scenario("findscn") {
+    func getCurrentFilePath(file: StaticString = #file) -> String { String(file) }
+
+    func testFeaturesAreWrittenToFile() throws {
+        let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
+        Feature("F1") {
+            Description("A test feature")
+            Scenario("S1") {
                 Given(I: print(""))
             }
         }
+        reporter.testSuiteStarted(at: Date())
+        Cucumber.shared.executeFeatures()
 
-        let scenario = feature.scenarios.first!
-
-        reporter.writeScenarioIfNecessary(scenario)
-
-        let featureJSON = reporter.currentJSON?.first
-        XCTAssertNotNil(featureJSON)
-
-        let scenarios = featureJSON?["elements"] as? [[String: Any]]
-        XCTAssertNotNil(scenarios?.first)
-
-        reporter.writeScenarioIfNecessary(scenario)
-        XCTAssertEqual((reporter.currentJSON?.first?["elements"] as? [[String: Any]])?.count, 1)
+        let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+        XCTAssertEqual(actual.count, 1)
+        XCTAssertEqual(actual.first?["uri"] as? String, getCurrentFilePath())
+        XCTAssertEqual(actual.first?["id"] as? String, "f1")
+        XCTAssertEqual(actual.first?["name"] as? String, "F1")
+//        XCTAssertEqual(actual.first?["description"] as? String, "A test feature")
+        XCTAssertEqual(actual.first?["keyword"] as? String, "Feature")
     }
 
-    func testStepIsWrittenToFile() {
-        let reporter = MockReporter()
-        let step = Given(I: print(""))
-        let step2 = Given(I: print(""))
-        Feature("findme") {
-            Scenario("findscn") {
-                step
-                step2
+    func testScenariosAreWrittenToFile() throws {
+        let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
+        Feature("F1") {
+            Description("A test feature")
+            Scenario("S1") {
+                Given(I: print(""))
             }
         }
+        reporter.testSuiteStarted(at: Date())
+        Cucumber.shared.executeFeatures()
 
-        reporter.writeStep(step)
-        reporter.writeStep(step2)
-        let featureJSON = reporter.currentJSON?.first
-        XCTAssertNotNil(featureJSON)
-
-        let scenarios = featureJSON?["elements"] as? [[String: Any]]
-        XCTAssertNotNil(scenarios?.first)
-
-        let steps = scenarios?.first?["steps"] as? [[String: Any]]
-        XCTAssertNotNil(steps?.first)
-        XCTAssertEqual(steps?.count, 2)
+        let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+        XCTAssertEqual(actual.count, 1)
+        let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(scenarios?.count, 1)
+        XCTAssertEqual(scenarios?.first?["id"] as? String, "s1")
+        XCTAssertEqual(scenarios?.first?["keyword"] as? String, "Scenario")
+        XCTAssertEqual(scenarios?.first?["type"] as? String, "scenario")
+        XCTAssertEqual(scenarios?.first?["name"] as? String, "S1")
+        XCTAssertEqual(scenarios?.first?["description"] as? String, "")
     }
 
-    @available(iOS 13.0, *)
-    func testStepDurationIsAccuratelyWrittenToFile() {
-        let reporter = MockReporter()
-        let step = Given(I: print(""))
-        let d = Date()
-        step.startTime = d
-        step.endTime = d.addingTimeInterval(1)
-        Feature("findme") {
-            Scenario("findscn") {
-                step
+    func testStepsAreWrittenToFile() throws {
+        let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
+        Feature("F1") {
+            Description("A test feature")
+            Scenario("S1") {
+                Given(I: print(""))
             }
         }
+        reporter.testSuiteStarted(at: Date())
+        Cucumber.shared.executeFeatures()
 
-        let duration = step.executionDuration.converted(to: .nanoseconds).value
-        XCTAssertEqual(duration, 1_000_000_000)
-
-        reporter.writeStep(step)
-
-        let featureJSON = reporter.currentJSON?.first
-        let scenarios = featureJSON?["elements"] as? [[String: Any]]
-        let steps = scenarios?.first?["steps"] as? [[String: Any]]
-        XCTAssertEqual((steps?.first?["result"] as? [String: Any])?["duration"] as? Double, duration)
+        let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+        XCTAssertEqual(actual.count, 1)
+        let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(scenarios?.count, 1)
+        let steps = scenarios?.first?["steps"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(steps?.count, 1)
+        XCTAssertEqual(steps?.first?["name"] as? String, "I: print(\"\")")
+        XCTAssertEqual(steps?.first?["keyword"] as? String, "Given")
+        let result = steps?.first?["result"] as? [AnyHashable: Any]
+        XCTAssertEqual(result?["status"] as? String, "passed")
     }
 
-    func testStepDurationIsAccuratelyWrittenToFileOlderIOS() {
-        let reporter = MockReporter()
+    func testFailingStepsAreWrittenToFile() throws {
+        enum Err: Error { case e1 }
+        let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
         let step = Given(I: print(""))
-        let d = Date()
-        step.startTime = d
-        step.endTime = d.addingTimeInterval(1)
-        Feature("findme") {
-            Scenario("findscn") {
-                step
-            }
-        }
+        let scenario = Scenario("S1") { step }
+        let feature = Feature("F1") { scenario }
+        reporter.testSuiteStarted(at: Date())
+        reporter.didStart(feature: feature, at: Date())
+        reporter.didStart(scenario: scenario, at: Date())
+        reporter.didStart(step: step, at: Date())
+        reporter.didFinish(step: step, result: .failed(Err.e1.localizedDescription), duration: .init(value: 1, unit: .seconds))
 
-        let duration = step.executionDuration.converted(to: .seconds).value * 1_000_000_000
-        XCTAssertEqual(duration, 1_000_000_000)
-
-        reporter.writeStep(step)
-
-        let featureJSON = reporter.currentJSON?.first
-        let scenarios = featureJSON?["elements"] as? [[String: Any]]
-        let steps = scenarios?.first?["steps"] as? [[String: Any]]
-        XCTAssertEqual((steps?.first?["result"] as? [String: Any])?["duration"] as? Double, duration)
+        let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+        XCTAssertEqual(actual.count, 1)
+        let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(scenarios?.count, 1)
+        let steps = scenarios?.first?["steps"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(steps?.count, 1)
+        XCTAssertEqual(steps?.first?["name"] as? String, "I: print(\"\")")
+        XCTAssertEqual(steps?.first?["keyword"] as? String, "Given")
+        let result = steps?.first?["result"] as? [AnyHashable: Any]
+        XCTAssertEqual(result?["status"] as? String, "failed")
+        XCTAssertEqual(result?["error_message"] as? String, Err.e1.localizedDescription)
+        let actualDuration = try XCTUnwrap(result?["duration"] as? Double)
+        XCTAssertEqual(actualDuration, 1_000_000_000, accuracy: 0.9)
     }
-}
 
-class MockReporter: Reporter {
-    var writeCalled = 0
-    var lastDict: [[String: Any]] = []
+    func testPendingStepsAreWrittenToFile() throws {
+        let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
 
-    override var currentJSON: [[String: Any]]? { lastDict }
+        let step = Given(I: print(""))
+        let scenario = Scenario("S1") { step }
+        let feature = Feature("F1") { scenario }
 
-    override func write(_ dict: [[String: Any]]) {
-        writeCalled += 1
-        lastDict = dict
+        reporter.testSuiteStarted(at: Date())
+        reporter.didStart(feature: feature, at: Date())
+        reporter.didStart(scenario: scenario, at: Date())
+        reporter.didStart(step: step, at: Date())
+
+        let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+        XCTAssertEqual(actual.count, 1)
+        let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(scenarios?.count, 1)
+        let steps = scenarios?.first?["steps"] as? [[AnyHashable: Any]]
+        XCTAssertEqual(steps?.count, 1)
+        XCTAssertEqual(steps?.first?["name"] as? String, "I: print(\"\")")
+        XCTAssertEqual(steps?.first?["keyword"] as? String, "Given")
+        let result = steps?.first?["result"] as? [AnyHashable: Any]
+        XCTAssertEqual(result?["status"] as? String, "pending")
     }
 }
 
