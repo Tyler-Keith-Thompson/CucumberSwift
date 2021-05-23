@@ -32,7 +32,6 @@
 		AD2F20E0216969990041657C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20DF216969990041657C /* Errors.swift */; };
 		AD2F20E2216969DF0041657C /* ErrorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD2F20E1216969DF0041657C /* ErrorTests.swift */; };
 		AD406F7F2105514600D9B011 /* DataTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD406F7E2105514600D9B011 /* DataTable.swift */; };
-		AD4E772F2235963D005938B7 /* Reporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E772E2235963D005938B7 /* Reporter.swift */; };
 		AD4E773122359C6B005938B7 /* ReporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E773022359C6B005938B7 /* ReporterTests.swift */; };
 		AD4E77332235A04B005938B7 /* WaitUntil.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD4E77322235A04B005938B7 /* WaitUntil.swift */; };
 		AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */; };
@@ -106,6 +105,7 @@
 		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
 		CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */; };
 		CAB20B3E24CCF6B20024C703 /* DSLRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */; };
+		CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */; };
 		CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51EC5255873E90095A5C4 /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */; };
 		CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -161,7 +161,6 @@
 		AD2F20E1216969DF0041657C /* ErrorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTests.swift; sourceTree = "<group>"; };
 		AD406F7E2105514600D9B011 /* DataTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataTable.swift; sourceTree = "<group>"; };
 		AD4B2E0A222CB2BC001946F1 /* copy_snippets.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = copy_snippets.sh; sourceTree = "<group>"; };
-		AD4E772E2235963D005938B7 /* Reporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reporter.swift; sourceTree = "<group>"; };
 		AD4E773022359C6B005938B7 /* ReporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReporterTests.swift; sourceTree = "<group>"; };
 		AD4E77322235A04B005938B7 /* WaitUntil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitUntil.swift; sourceTree = "<group>"; };
 		AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestingExtensions.swift; sourceTree = "<group>"; };
@@ -243,6 +242,7 @@
 		CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDSL.swift; sourceTree = "<group>"; };
 		CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLRuleTests.swift; sourceTree = "<group>"; };
 		CABED02C256A17F2001E92C1 /* CucumberSwift.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CucumberSwift.xctestplan; sourceTree = "<group>"; };
+		CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONReporter.swift; sourceTree = "<group>"; };
 		CAF51EA42557B1C70095A5C4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
 		CAF51EC5255873E90095A5C4 /* XCTestHooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
 		CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
@@ -328,7 +328,7 @@
 		AD4E772D2235962F005938B7 /* Reporter */ = {
 			isa = PBXGroup;
 			children = (
-				AD4E772E2235963D005938B7 /* Reporter.swift */,
+				CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */,
 				CA097286264F4E3500573DA5 /* ReporterResult.swift */,
 			);
 			path = Reporter;
@@ -887,7 +887,6 @@
 				CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
-				AD4E772F2235963D005938B7 /* Reporter.swift in Sources */,
 				CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */,
 				1DA761A2239A7A74001CBA5B /* ASTToken.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
@@ -898,6 +897,7 @@
 				AD2F20E0216969990041657C /* Errors.swift in Sources */,
 				CA5A211824CA42370077AD50 /* FeatureDSL.swift in Sources */,
 				1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */,
+				CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */,
 				1DA761A6239A7C41001CBA5B /* Nodes.swift in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */,
