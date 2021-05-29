@@ -12,13 +12,14 @@ jobs:
       - uses: codecov/codecov-action@v1
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
+          files: .build/debug/codecov/CucumberSwift.json
           fail_ci_if_error: true
-      - name: Upload Coverage Report
-        uses: actions/upload-artifact@v2
-        with:
-          name: CucumberSwift-coverage.json
-          path: .build/debug/codecov/CucumberSwift.json
-          retention-days: 1
+      # - name: Upload Coverage Report
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: CucumberSwift-coverage.json
+      #     path: .build/debug/codecov/CucumberSwift.json
+      #     retention-days: 1
 
   # sonar_scan:
   #   needs: test
