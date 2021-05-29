@@ -1,8 +1,6 @@
 ![Build Status](https://github.com/Tyler-Keith-Thompson/CucumberSwift/actions/workflows/CI.yml/badge.svg?branch=master)
 ![Pod Platform](https://img.shields.io/cocoapods/p/CucumberSwift.svg?style=popout) [![Pod Version](https://img.shields.io/cocoapods/v/CucumberSwift.svg?style=popout)](http://cocoapods.org/pods/CucumberSwift)
-[![Quality Gate](https://img.shields.io/sonar/quality_gate/Tyler-Keith-Thompson_CucumberSwift?server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=Tyler-Keith-Thompson_CucumberSwift)
-[![Coverage](https://img.shields.io/sonar/coverage/Tyler-Keith-Thompson_CucumberSwift?server=http%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/component_measures?id=Tyler-Keith-Thompson_CucumberSwift&metric=Coverage&view=list)
-
+[![codecov](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift/branch/master/graph/badge.svg?token=ARIPC8Q7H1)](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift)
 
 ### Welcome to CucumberSwift
 CucumberSwift is a lightweight Swift only Cucumber implementation for iOS, tvOS, and macOS. It was born out of frustration with current iOS Cucumber implementations. The whole goal is to make it easy to install and easy to use, so please feel free to give feedback.
