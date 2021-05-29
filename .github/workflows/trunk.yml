@@ -9,7 +9,7 @@ on:
 
 jobs:
   version_bump:
-    runs-on: macos-latest
+    runs-on: self-hosted
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - uses: actions/checkout@v2
