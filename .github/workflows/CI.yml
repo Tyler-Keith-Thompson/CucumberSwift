@@ -45,6 +45,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Validate SwiftPM BUILDs
-        run: swift build
+        run: fastlane build_swiftpm
       - name: Validate Cocoapods Can Deploy (lib lint)
-        run: pod lib lint
+        run: fastlane cocoapods_liblint
