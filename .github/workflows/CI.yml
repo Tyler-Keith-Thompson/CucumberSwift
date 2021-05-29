@@ -10,7 +10,7 @@ jobs:
       - name: Run TESTS
         run: swift test --enable-code-coverage
       - name: Custom codecov thing
-        run: ./codecov.sh -J 'CucumberSwift' -f .build/debug/codecov/CucumberSwift.json
+        run: ./codecov.sh -J 'CucumberSwift' -f .build/debug/codecov/default.profdata
       # - uses: codecov/codecov-action@v1
       #   with:
       #     token: ${{ secrets.CODECOV_TOKEN }}
