@@ -32,6 +32,10 @@ jobs:
           path: artifacts
       - name: Rename Paths in Coverage
         run: |
+          pwd
+          ls -al
+          cd artifacts
+          ls -al
           sed 's+/Users/tylerthompson/workspace/actions-runner/_work/CucumberSwift/CucumberSwift/++g' artifacts/CucumberSwift-coverage.json > CucumberSwift-coverage.json
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
