@@ -33,9 +33,9 @@ jobs:
         name: CucumberSwift-coverage.json
         path: artifacts
     - uses: mattpolzin/swift-codecov-action@0.6.0
-          with:
-            CODECOV_JSON: artifacts/CucumberSwift.json
-            MINIMUM_COVERAGE: 80
+      with:
+        CODECOV_JSON: artifacts/CucumberSwift.json
+        MINIMUM_COVERAGE: 80
   #     - uses: actions/checkout@v2
   #       with:
   #         fetch-depth: 0
