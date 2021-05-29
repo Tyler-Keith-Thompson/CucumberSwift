@@ -9,6 +9,10 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run TESTS
         run: swift test --enable-code-coverage
+      - uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v2
         with:
