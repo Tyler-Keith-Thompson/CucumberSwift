@@ -20,26 +20,26 @@ jobs:
           path: .build/debug/codecov/CucumberSwift.json
           retention-days: 1
 
-  sonar_scan:
-    needs: test
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Download Coverage Report
-        uses: actions/download-artifact@v2
-        with:
-          name: CucumberSwift-coverage.json
-          path: artifacts
-      - name: Rename Paths in Coverage
-        run: |
-          sed 's+/Users/tylerthompson/workspace/actions-runner/_work/CucumberSwift/CucumberSwift/++g' artifacts/CucumberSwift.json > CucumberSwift-coverage.json
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  # sonar_scan:
+  #   needs: test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+  #     - name: Download Coverage Report
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: CucumberSwift-coverage.json
+  #         path: artifacts
+  #     - name: Rename Paths in Coverage
+  #       run: |
+  #         sed 's+/Users/tylerthompson/workspace/actions-runner/_work/CucumberSwift/CucumberSwift/++g' artifacts/CucumberSwift.json > CucumberSwift-coverage.json
+  #     - name: SonarCloud Scan
+  #       uses: sonarsource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   build_for_package_managers:
     needs: test
