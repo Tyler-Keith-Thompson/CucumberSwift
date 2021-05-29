@@ -32,11 +32,7 @@ jobs:
           path: artifacts
       - name: Rename Paths in Coverage
         run: |
-          pwd
-          ls -al
-          cd artifacts
-          ls -al
-          sed 's+/Users/tylerthompson/workspace/actions-runner/_work/CucumberSwift/CucumberSwift/++g' artifacts/CucumberSwift-coverage.json > CucumberSwift-coverage.json
+          sed 's+/Users/tylerthompson/workspace/actions-runner/_work/CucumberSwift/CucumberSwift/++g' artifacts/CucumberSwift.json > CucumberSwift-coverage.json
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@master
         env:
@@ -48,8 +44,6 @@ jobs:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
-      - name: Install CocoaPods
-        run: gem install cocoapods
       - name: Validate SwiftPM BUILDs
         run: fastlane build_swiftpm
       - name: Validate Cocoapods Can Deploy (lib lint)
