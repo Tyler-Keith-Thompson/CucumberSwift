@@ -8,10 +8,10 @@ platform :ios do
   end
 
   lane :unit_test do
-    spm(
-      command: "test",
-      build_path: "./build",
-      enable_code_coverage: true,
+    scan(
+      code_coverage: true,
+      scheme:  'CucumberSwift',
+      project: 'CucumberSwift.xcodeproj'
     )
   end
 
