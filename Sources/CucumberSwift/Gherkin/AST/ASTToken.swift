@@ -20,14 +20,14 @@ extension AST {
 
         var priority: UInt {
             switch self {
-                case .feature(_): return 0
-                case .rule(_): return 1
-                case .background(_): return 2
-                case .scenario(_): return 2
-                case .scenarioOutline(_): return 2
-                case .examples(_): return 2
-                case .step(_): return 3
-                case .description(_): return 3
+                case .feature: return 0
+                case .rule: return 1
+                case .background: return 2
+                case .scenario: return 2
+                case .scenarioOutline: return 2
+                case .examples: return 2
+                case .step: return 3
+                case .description: return 3
             }
         }
 
