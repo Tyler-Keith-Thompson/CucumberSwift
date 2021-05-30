@@ -15,7 +15,7 @@ import CucumberSwift_ObjC
 
 @objc public class Cucumber: NSObject {
     static var shared: Cucumber = {
-        return Cucumber()
+        Cucumber()
     }()
 
     var features = [Feature]()

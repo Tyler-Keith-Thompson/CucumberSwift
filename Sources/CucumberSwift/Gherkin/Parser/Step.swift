@@ -77,7 +77,7 @@ public class Step: CustomStringConvertible {
             .filter { $0.isTableCell() || $0.isNewline() }
             .groupedByLine()
             .map { line -> [String] in
-                return line.filter { $0.isTableCell() }
+                line.filter { $0.isTableCell() }
                     .map { token -> String in
                         if case Lexer.Token.tableCell(_, let cellText) = token {
                             return cellText
@@ -165,16 +165,16 @@ extension Step {
             }
             return "UNKNOWN"
         }
-
+        
         public func hasMultipleValues() -> Bool {
             guard rawValue > 2 else { return false }
             return ceil(log2(Double(rawValue))) != floor(log2(Double(rawValue)))
         }
-
+        
         public static let given = Keyword(rawValue: 1 << 0)
-        public static let when  = Keyword(rawValue: 1 << 1)
-        public static let then  = Keyword(rawValue: 1 << 2)
-        public static let and   = Keyword(rawValue: 1 << 3)
-        public static let but   = Keyword(rawValue: 1 << 4)
+        public static let when = Keyword(rawValue: 1 << 1)
+        public static let then = Keyword(rawValue: 1 << 2)
+        public static let and = Keyword(rawValue: 1 << 3)
+        public static let but = Keyword(rawValue: 1 << 4)
     }
 }

@@ -41,14 +41,14 @@ extension AST {
 
         func hash(into hasher: inout Hasher) {
             switch self {
-                case .feature(_): hasher.combine(1)
-                case .rule(_): hasher.combine(2)
-                case .background(_): hasher.combine(3)
-                case .scenario(_): hasher.combine(4)
-                case .scenarioOutline(_): hasher.combine(5)
-                case .examples(_): hasher.combine(6)
-                case .step(_): hasher.combine(7)
-                case .description(_): hasher.combine(8)
+                case .feature: hasher.combine(1)
+                case .rule: hasher.combine(2)
+                case .background: hasher.combine(3)
+                case .scenario: hasher.combine(4)
+                case .scenarioOutline: hasher.combine(5)
+                case .examples: hasher.combine(6)
+                case .step: hasher.combine(7)
+                case .description: hasher.combine(8)
             }
         }
 

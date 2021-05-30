@@ -88,7 +88,7 @@ extension Lexer {
 
         var valueDescription: String {
             switch self {
-                case .newLine(_): return "\n"
+                case .newLine: return "\n"
                 case .integer(_, let val): return "\(val)"
                 case .string(_, let val): return "\(val)"
                 case .docString(_, let val): return "\(val)"
@@ -104,7 +104,7 @@ extension Lexer {
         }
 
         func isNewline() -> Bool {
-            if case .newLine(_) = self {
+            if case .newLine = self {
                 return true
             }
             return false

@@ -61,7 +61,7 @@ public class StringReader {
         var str = ""
         var indexCopy = index
         let currentCharacter = {
-            return (indexCopy < self.input.endIndex && indexCopy >= self.input.startIndex) ? self.input[indexCopy] : nil
+            (indexCopy < self.input.endIndex && indexCopy >= self.input.startIndex) ? self.input[indexCopy] : nil
         }
         while let char = currentCharacter(), !evaluation(char) {
             str.append(char)
