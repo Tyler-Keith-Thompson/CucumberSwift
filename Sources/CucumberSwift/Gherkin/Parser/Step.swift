@@ -165,12 +165,12 @@ extension Step {
             }
             return "UNKNOWN"
         }
-        
+
         public func hasMultipleValues() -> Bool {
             guard rawValue > 2 else { return false }
             return ceil(log2(Double(rawValue))) != floor(log2(Double(rawValue)))
         }
-        
+
         public static let given = Keyword(rawValue: 1 << 0)
         public static let when = Keyword(rawValue: 1 << 1)
         public static let then = Keyword(rawValue: 1 << 2)
