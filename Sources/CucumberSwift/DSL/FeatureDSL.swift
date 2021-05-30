@@ -14,7 +14,13 @@ extension Feature {
                                                column: UInt = #column,
                                                file: StaticString = #file,
                                                @ScenarioBuilder _ content: () -> [ScenarioDSL]) {
-        self.init(with: content().flatMap { $0.scenarios }, title: title, tags: tags, position: Lexer.Position(line: line, column: column), file: file)
+        let all = content()
+        self.init(with: all.flatMap { $0.scenarios },
+                  title: title,
+                  description: all.compactMap { ($0 as? Description)?.title }.joined(separator: "\n"),
+                  tags: tags,
+                  position: Lexer.Position(line: line, column: column),
+                  file: file)
         Cucumber.shared.features.append(self)
     }
     @discardableResult public convenience init(_ title: String,

@@ -12,8 +12,9 @@ import Foundation
 public struct Description: ScenarioDSL {
     // intentionally blank because we do not want Descriptions to be counted as real scenarios
     public var scenarios: [Scenario] { [] }
+    public var title: String
     public init(_ title: String) {
-        // title is purely for readability in the DSL, not needed here.
+        self.title = title
     }
 }
 

@@ -52,10 +52,10 @@ extension Array {
     }
 
     func appending(_ element: Element) -> [Element] {
-        return self + [element]
+        self + [element]
     }
 
     func appending(contentsOf elementArr: [Element]) -> [Element] {
-        return self + elementArr
+        self + elementArr
     }
 }

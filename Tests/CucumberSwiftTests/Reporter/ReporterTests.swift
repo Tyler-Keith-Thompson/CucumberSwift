@@ -5,7 +5,6 @@
 //  Created by Tyler Thompson on 3/10/19.
 //  Copyright © 2019 Tyler Thompson. All rights reserved.
 //
-// swiftlint:disable file_types_order force_unwrapping
 
 import Foundation
 import XCTest
@@ -34,7 +33,7 @@ class ReporterTests: XCTestCase {
         XCTAssertEqual(actual.first?["uri"] as? String, getCurrentFilePath())
         XCTAssertEqual(actual.first?["id"] as? String, "f1")
         XCTAssertEqual(actual.first?["name"] as? String, "F1")
-//        XCTAssertEqual(actual.first?["description"] as? String, "A test feature")
+        XCTAssertEqual(actual.first?["description"] as? String, "A test feature")
         XCTAssertEqual(actual.first?["keyword"] as? String, "Feature")
     }
 

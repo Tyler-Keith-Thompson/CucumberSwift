@@ -8,7 +8,7 @@
 
 import Foundation
 
-@_functionBuilder
+@resultBuilder
 public enum ScenarioBuilder {
     public static func buildBlock(_ items: ScenarioDSL...) -> [ScenarioDSL] {
         let (backgroundSteps, scenarioDSLs) = items.reduce(into: ([StepDSL](), [ScenarioDSL]())) { res, scenarioDSL in
@@ -22,6 +22,6 @@ public enum ScenarioBuilder {
         scenarios.forEach {
             $0.steps.insert(contentsOf: backgroundSteps, at: 0)
         }
-        return scenarios
+        return scenarios + scenarioDSLs.compactMap { $0 as? Description }
     }
 }

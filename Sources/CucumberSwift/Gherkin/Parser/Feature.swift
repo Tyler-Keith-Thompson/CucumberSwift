@@ -46,11 +46,12 @@ public class Feature: Taggable, Positionable {
         endLocation ?= scenarios.last?.endLocation
     }
 
-    init(with scenarios: [Scenario], title: String?, tags: [String], position: Lexer.Position, file: StaticString = #file) {
+    init(with scenarios: [Scenario], title: String?, description: String = "", tags: [String], position: Lexer.Position, file: StaticString = #file) {
         location = position
         endLocation = scenarios.last?.endLocation ?? .start
         self.scenarios = scenarios
         self.title ?= title
+        self.desc = description
         self.tags = tags
         self.scenarios.forEach { [weak self] in $0.feature = self }
         self.uri = String(file)
