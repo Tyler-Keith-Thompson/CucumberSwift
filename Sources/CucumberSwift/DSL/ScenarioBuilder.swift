@@ -8,7 +8,7 @@
 
 import Foundation
 
-@resultBuilder
+@_functionBuilder
 public enum ScenarioBuilder {
     public static func buildBlock(_ items: ScenarioDSL...) -> [ScenarioDSL] {
         let (backgroundSteps, scenarioDSLs) = items.reduce(into: ([StepDSL](), [ScenarioDSL]())) { res, scenarioDSL in
