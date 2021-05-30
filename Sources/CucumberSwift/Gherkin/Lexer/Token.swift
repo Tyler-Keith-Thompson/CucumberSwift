@@ -111,31 +111,31 @@ extension Lexer {
         }
 
         func isTableCell() -> Bool {
-            if case .tableCell(_, _) = self {
+            if case .tableCell = self {
                 return true
             }
             return false
         }
         func isKeyword() -> Bool {
-            if case .keyword(_, _) = self {
+            if case .keyword = self {
                 return true
             }
             return false
         }
         func isString() -> Bool {
-            if case .string(_, _) = self {
+            if case .string = self {
                 return true
             }
             return false
         }
         func isInteger() -> Bool {
-            if case .integer(_, _) = self {
+            if case .integer = self {
                 return true
             }
             return false
         }
         func isDescription() -> Bool {
-            if case .description(_, _) = self {
+            if case .description = self {
                 return true
             }
             return false

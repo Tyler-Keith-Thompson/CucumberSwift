@@ -37,7 +37,7 @@ class AST {
 
     func parse(_ tokens: [Lexer.Token], inFile url: String = "") -> [FeatureNode] {
         for token in tokens {
-            if case Lexer.Token.tag(_, _) = token {
+            if case Lexer.Token.tag = token {
                 tags.append(token)
             } else {
                 if let t = AST.Token(token) {
