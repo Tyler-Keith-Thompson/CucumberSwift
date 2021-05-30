@@ -103,6 +103,7 @@
 		CAA337AB21044ACC002C361D /* CucumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337AA21044ACC002C361D /* CucumberTests.swift */; };
 		CAA337AF21045847002C361D /* testdata in Resources */ = {isa = PBXBuildFile; fileRef = CAA337AE21045847002C361D /* testdata */; };
 		CAA337B12104C310002C361D /* DocstringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA337B02104C310002C361D /* DocstringTests.swift */; };
+		CAAD49C1266368D6007B6E6E /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = CAAD49C0266368D6007B6E6E /* .swiftlint.yml */; };
 		CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */; };
 		CAB20B3E24CCF6B20024C703 /* DSLRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */; };
 		CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */; };
@@ -235,10 +236,10 @@
 		CA73474124CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CucumberSwiftDSLConsumerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA73474324CB4EDB00D1A018 /* CucumberSwiftDSLConsumerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftDSLConsumerTests.swift; sourceTree = "<group>"; };
 		CA73474524CB4EDB00D1A018 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CA919A482650B8FD00AA111E /* .swiftlint.yaml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yaml; sourceTree = "<group>"; };
 		CAA337AA21044ACC002C361D /* CucumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberTests.swift; sourceTree = "<group>"; };
 		CAA337AE21045847002C361D /* testdata */ = {isa = PBXFileReference; lastKnownFileType = folder; path = testdata; sourceTree = "<group>"; };
 		CAA337B02104C310002C361D /* DocstringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocstringTests.swift; sourceTree = "<group>"; };
+		CAAD49C0266368D6007B6E6E /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDSL.swift; sourceTree = "<group>"; };
 		CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLRuleTests.swift; sourceTree = "<group>"; };
 		CABED02C256A17F2001E92C1 /* CucumberSwift.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CucumberSwift.xctestplan; sourceTree = "<group>"; };
@@ -362,7 +363,7 @@
 		AD9EB4562079CF87002494C0 = {
 			isa = PBXGroup;
 			children = (
-				CA919A482650B8FD00AA111E /* .swiftlint.yaml */,
+				CAAD49C0266368D6007B6E6E /* .swiftlint.yml */,
 				AD9EB4622079CF87002494C0 /* Sources */,
 				AD9EB46D2079CF87002494C0 /* Tests */,
 				AD9EB4612079CF87002494C0 /* Products */,
@@ -796,6 +797,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAAD49C1266368D6007B6E6E /* .swiftlint.yml in Resources */,
 				AD831B67222C961A003EE136 /* Gherkin.xclangspec in Resources */,
 				AD22A1BF222C599F0025E41C /* Snippets in Resources */,
 				AD7F1C0C2104D6B10004852A /* gherkin-languages.json in Resources */,
@@ -847,7 +849,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --config .swiftlint.yaml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint --config .swiftlint.yml\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

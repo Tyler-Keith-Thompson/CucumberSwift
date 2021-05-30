@@ -20,14 +20,14 @@ extension AST {
 
         var priority: UInt {
             switch self {
-                case .feature(_): return 0
-                case .rule(_): return 1
-                case .background(_): return 2
-                case .scenario(_): return 2
-                case .scenarioOutline(_): return 2
-                case .examples(_): return 2
-                case .step(_): return 3
-                case .description(_): return 3
+                case .feature: return 0
+                case .rule: return 1
+                case .background: return 2
+                case .scenario: return 2
+                case .scenarioOutline: return 2
+                case .examples: return 2
+                case .step: return 3
+                case .description: return 3
             }
         }
 
@@ -41,14 +41,14 @@ extension AST {
 
         func hash(into hasher: inout Hasher) {
             switch self {
-                case .feature(_): hasher.combine(1)
-                case .rule(_): hasher.combine(2)
-                case .background(_): hasher.combine(3)
-                case .scenario(_): hasher.combine(4)
-                case .scenarioOutline(_): hasher.combine(5)
-                case .examples(_): hasher.combine(6)
-                case .step(_): hasher.combine(7)
-                case .description(_): hasher.combine(8)
+                case .feature: hasher.combine(1)
+                case .rule: hasher.combine(2)
+                case .background: hasher.combine(3)
+                case .scenario: hasher.combine(4)
+                case .scenarioOutline: hasher.combine(5)
+                case .examples: hasher.combine(6)
+                case .step: hasher.combine(7)
+                case .description: hasher.combine(8)
             }
         }
 
@@ -66,7 +66,7 @@ extension AST {
         }
 
         init?(_ token: Lexer.Token) {
-            if case Lexer.Token.keyword(_, _) = token {
+            if case Lexer.Token.keyword = token {
                 self = .step(token)
             } else if case Lexer.Token.scope(_, let scope) = token {
                 switch scope {
@@ -78,7 +78,7 @@ extension AST {
                     case .examples: self = .examples(token)
                     default: return nil
                 }
-            } else if case Lexer.Token.description(_, _) = token {
+            } else if case Lexer.Token.description = token {
                 self = .description(token)
             } else {
                 return nil

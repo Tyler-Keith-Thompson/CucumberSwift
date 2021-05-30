@@ -89,7 +89,7 @@ class DSLFeatureTests: XCTestCase {
         }
 
         Cucumber.shouldRunWith = { scenario, _ in
-            return shouldRun(scenario?.withLine(96))
+            shouldRun(scenario?.withLine(96))
         }
 
         Feature("") {
@@ -116,7 +116,7 @@ class DSLFeatureTests: XCTestCase {
         }
 
         Cucumber.shouldRunWith = { scenario, _ in
-            return scenario?.title == "First"
+            scenario?.title == "First"
         }
 
         Feature("") {
@@ -140,7 +140,7 @@ class DSLFeatureTests: XCTestCase {
         }
 
         Cucumber.shouldRunWith = { _, tags in
-            return tags.contains("t1")
+            tags.contains("t1")
         }
 
         Feature("") {

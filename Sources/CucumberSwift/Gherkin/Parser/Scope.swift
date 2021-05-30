@@ -56,7 +56,7 @@ enum Scope: Equatable, Hashable {
     }
 
     func isStep() -> Bool {
-        if case .step(_) = self {
+        if case .step = self {
             return true
         }
         return false

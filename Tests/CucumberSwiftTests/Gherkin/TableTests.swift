@@ -177,11 +177,11 @@ class TableTests: XCTestCase {
               | uno | dos  |
     """)
         var firstGivenCalled = false
-        Given("the un") { (_, _) in
+        Given("the un") { _, _ in
             firstGivenCalled = true
         }
         var secondGivenCalled = false
-        Given("the uno") { (_, _) in
+        Given("the uno") { _, _ in
             secondGivenCalled = true
         }
         Cucumber.shared.executeFeatures()

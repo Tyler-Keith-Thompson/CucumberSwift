@@ -16,9 +16,9 @@ enum StubGenerator {
                     .escapedPattern(for: m)
                     .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
                     .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
-            } else if case Lexer.Token.string(_, _) = token {
+            } else if case Lexer.Token.string = token {
                 regex += "\\\"(.*?)\\\""
-            } else if case Lexer.Token.integer(_, _) = token {
+            } else if case Lexer.Token.integer = token {
                 regex += "(\\\\d+)"
             }
         }

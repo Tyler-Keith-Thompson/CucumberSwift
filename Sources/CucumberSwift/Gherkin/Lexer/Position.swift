@@ -11,7 +11,7 @@ import Foundation
 extension Lexer {
     public struct Position: Hashable {
         static let start: Position = {
-            return Position(line: 0, column: 0)
+            Position(line: 0, column: 0)
         }()
         public internal(set) var line: UInt
         public internal(set) var column: UInt
