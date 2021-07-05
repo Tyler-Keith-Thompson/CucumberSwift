@@ -102,6 +102,35 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(matchAllCalled)
     }
 
+    func testGivenWorksForChainedAnd() {
+        let bundle: Bundle = {
+            #if canImport(CucumberSwift_ObjC)
+            // swiftlint:disable:next force_unwrapping
+            return Bundle(url: Bundle.module.bundleURL.deletingLastPathComponent().appendingPathComponent("CucumberSwift_CucumberSwiftTests.bundle"))!
+            #else
+            return Bundle(for: CucumberSwiftTests.self)
+            #endif
+        }()
+
+        Cucumber.shared.readFromFeaturesFolder(in: bundle)
+        var givenCalled = false
+        Given("S(.)mE (?:precondition)") { matches, _  in
+            givenCalled = true
+            XCTAssertEqual(matches.count, 2)
+            XCTAssertEqual(matches.last, "o")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(givenCalled)
+
+        var andCalled = false
+        Given("some other precondition") { matches, _ in
+            andCalled = true
+            XCTAssertEqual(matches.count, 1)
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(andCalled)
+    }
+
     func testStepFailsIfObserverCallsBackWithFailure() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.currentStep = Step(with: AST.StepNode())
