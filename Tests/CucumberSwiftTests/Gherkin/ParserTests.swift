@@ -244,4 +244,40 @@ class ParserTests: XCTestCase {
         let lastStep = cucumber.features.first?.scenarios.first?.steps.last
         XCTAssertEqual(lastStep?.keyword, [.then, .and])
     }
+
+    func testButKeywordTiesCorrectlyToGiven() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a step
+                But a different step
+    """)
+        let lastStep = cucumber.features.first?.scenarios.first?.steps.last
+        XCTAssertEqual(lastStep?.keyword, [.given, .but])
+    }
+
+    func testButKeywordTiesCorrectlyToWhen() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a step
+         When differentThing
+             But andThing
+    """)
+        let lastStep = cucumber.features.first?.scenarios.first?.steps.last
+        XCTAssertEqual(lastStep?.keyword, [.when, .but])
+    }
+
+    func testButKeywordTiesCorrectlyToThen() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a step
+         When differentThing
+         Then lastThing
+             But andThing
+    """)
+        let lastStep = cucumber.features.first?.scenarios.first?.steps.last
+        XCTAssertEqual(lastStep?.keyword, [.then, .but])
+    }
 }
