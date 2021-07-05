@@ -29,14 +29,14 @@ class Method {
 
     private func getKeywordStrings(matchAllAllowed: Bool) -> [String] {
         var keywordStrings = [String]()
-        if keyword.hasMultipleValues() && matchAllAllowed {
+        if keyword.primaryKeywords.hasMultipleValues() && matchAllAllowed {
             keywordStrings.append("MatchAll")
-        } else if !matchAllAllowed && keyword.hasMultipleValues() {
-            keywordStrings.append(contentsOf: keywords.map { $0.toString() })
+        } else if !matchAllAllowed && keyword.primaryKeywords.hasMultipleValues() {
+            keywordStrings.append(contentsOf: keywords.map { $0.primaryKeywords.toString() })
         } else {
-            keywordStrings.append(keyword.toString())
+            keywordStrings.append(keyword.primaryKeywords.toString())
         }
-        return keywordStrings
+        return keywordStrings.uniqueElements
     }
 
     func generateSwift(matchAllAllowed: Bool = true) -> String {

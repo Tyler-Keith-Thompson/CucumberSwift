@@ -124,6 +124,9 @@ public class Step: CustomStringConvertible {
 extension Step {
     public struct Keyword: OptionSet, Hashable {
         public let rawValue: Int
+        var primaryKeywords: Keyword {
+            intersection(Self.primaryKeywords)
+        }
         private var stringValue: String?
         public init(rawValue: Int) {
             self.rawValue = rawValue
