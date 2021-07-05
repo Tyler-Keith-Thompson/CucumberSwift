@@ -91,7 +91,7 @@ class StepGenerationTests: XCTestCase {
         Given("^A user with an idea$") { _, _ in }
         let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
         let expected = """
-        And("^A PO with two$") { _, _ in
+        Given("^A PO with two$") { _, _ in
 
         }
         """.stringByEscapingCharacters()
@@ -209,9 +209,6 @@ class StepGenerationTests: XCTestCase {
         When("^I login as \\"(.*?)\\"$") { matches, _ in
             let string = matches[1]
         }
-        And("^I login as \\"(.*?)\\"$") { matches, _ in
-            let string = matches[1]
-        }
         """
         XCTAssertEqual(actual, expected)
     }
@@ -297,7 +294,7 @@ class StepGenerationTests: XCTestCase {
             let stringTwo = matches[2]
             let dataTable = step.dataTable
         }
-        And("^a DocString with the number (\\\\d+) and another number (\\\\d+)$") { matches, step in
+        Given("^a DocString with the number (\\\\d+) and another number (\\\\d+)$") { matches, step in
             let integer = matches[1]
             let integerTwo = matches[2]
             let docString = step.docString

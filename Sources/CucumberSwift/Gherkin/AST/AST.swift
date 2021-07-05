@@ -52,7 +52,7 @@ class AST {
         return featureNodes
     }
     var featureNodes: [FeatureNode] = []
-    var ruleLookup: [AST.Token?:Rule] = [:]
+    var ruleLookup: [AST.Token?: Rule] = [:]
     var nodeLookup: [UInt: Node] = [:]
     var tags = [Lexer.Token]()
 

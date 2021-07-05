@@ -97,6 +97,13 @@ public class Step: CustomStringConvertible {
         self.execute = execute
     }
 
+    func addPrimaryKeyword(_ keyword: Keyword) throws {
+        guard Keyword.primaryKeywords.contains(keyword) else {
+            throw Keyword.KeywordError.notPrimaryKeyword
+        }
+        self.keyword.insert(keyword)
+    }
+
     func toJSON() -> [String: Any] {
         if #available(iOS 13.0, macOS 10.15, tvOS 13, *) {
             return [
@@ -176,5 +183,10 @@ extension Step {
         public static let then = Keyword(rawValue: 1 << 2)
         public static let and = Keyword(rawValue: 1 << 3)
         public static let but = Keyword(rawValue: 1 << 4)
+        public static let primaryKeywords: Keyword = [.given, .when, .then]
+
+        enum KeywordError: Error {
+            case notPrimaryKeyword
+        }
     }
 }

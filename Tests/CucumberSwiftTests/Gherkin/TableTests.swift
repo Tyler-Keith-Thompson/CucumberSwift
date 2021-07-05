@@ -53,7 +53,7 @@ class TableTests: XCTestCase {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some first")
-            XCTAssertEqual(steps?[1].keyword, .and)
+            XCTAssertEqual(steps?[1].keyword, [.given, .and])
             XCTAssertEqual(steps?[1].match, "some second")
             XCTAssertEqual(steps?[2].keyword, .when)
             XCTAssertEqual(steps?[2].match, "some action by Bob")
@@ -64,7 +64,7 @@ class TableTests: XCTestCase {
             let steps = secondScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some third")
-            XCTAssertEqual(steps?[1].keyword, .and)
+            XCTAssertEqual(steps?[1].keyword, [.given, .and])
             XCTAssertEqual(steps?[1].match, "some fourth")
             XCTAssertEqual(steps?[2].keyword, .when)
             XCTAssertEqual(steps?[2].match, "some action by Susan")

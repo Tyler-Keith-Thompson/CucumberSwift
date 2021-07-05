@@ -111,13 +111,13 @@ class ParserTests: XCTestCase {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some precondition")
-            XCTAssertEqual(steps?[1].keyword, .and)
+            XCTAssertEqual(steps?[1].keyword, [.given, .and])
             XCTAssertEqual(steps?[1].match, "some other precondition")
             XCTAssertEqual(steps?[2].keyword, .when)
             XCTAssertEqual(steps?[2].match, "some action by the actor")
-            XCTAssertEqual(steps?[3].keyword, .and)
+            XCTAssertEqual(steps?[3].keyword, [.when, .and])
             XCTAssertEqual(steps?[3].match, "some other action")
-            XCTAssertEqual(steps?[4].keyword, .and)
+            XCTAssertEqual(steps?[4].keyword, [.when, .and])
             XCTAssertEqual(steps?[4].match, "yet another action")
             XCTAssertEqual(steps?[5].keyword, .then)
             XCTAssertEqual(steps?[5].match, "some testable outcome is achieved")
@@ -128,7 +128,7 @@ class ParserTests: XCTestCase {
             let steps = lastScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
             XCTAssertEqual(steps?[0].match, "some precondition")
-            XCTAssertEqual(steps?[1].keyword, .and)
+            XCTAssertEqual(steps?[1].keyword, [.given, .and])
             XCTAssertEqual(steps?[1].match, "some other precondition")
             XCTAssertEqual(steps?[2].keyword, .when)
             XCTAssertEqual(steps?[2].match, "some action by the actor")
@@ -162,7 +162,7 @@ class ParserTests: XCTestCase {
         let secondStep = scenario?.steps.last
         XCTAssertEqual(firstStep?.keyword, .given)
         XCTAssertEqual(firstStep?.match, "a user with 2 ideas")
-        XCTAssertEqual(secondStep?.keyword, .and)
+        XCTAssertEqual(secondStep?.keyword, [.given, .and])
         XCTAssertEqual(secondStep?.match, "a PO with 1")
     }
 
@@ -179,7 +179,7 @@ class ParserTests: XCTestCase {
         let secondStep = scenario?.steps.last
         XCTAssertEqual(firstStep?.keyword, .given)
         XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
-        XCTAssertEqual(secondStep?.keyword, .and)
+        XCTAssertEqual(secondStep?.keyword, [.given, .and])
         XCTAssertEqual(secondStep?.match, "a PO with 0.5")
     }
 
@@ -199,7 +199,7 @@ class ParserTests: XCTestCase {
         XCTAssertEqual(firstStep?.keyword, .given)
         XCTAssertEqual(firstStep?.match, "a user with 2.5 ideas")
         if (scenario?.steps.count ?? 0) == 4 {
-            XCTAssertEqual(scenario?.steps[1].keyword, .and)
+            XCTAssertEqual(scenario?.steps[1].keyword, [.given, .and])
             XCTAssertEqual(scenario?.steps[1].match, "a birthday with 08.01.1992")
             XCTAssertEqual(scenario?.steps[2].keyword, .when)
             XCTAssertEqual(scenario?.steps[2].match, "a requirement is to handle 08 without changing it")
@@ -207,5 +207,20 @@ class ParserTests: XCTestCase {
             XCTAssertEqual(scenario?.steps[3].match, "it works")
         }
         cucumber.executeFeatures()
+    }
+
+    func testAndKeywordTiesCorrectlyToGiven() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some feature
+       Scenario: Some determinable business situation
+         Given a step
+            And a different step
+    """)
+        let feature = cucumber.features.first
+        let scenario = feature?.scenarios.first
+        let firstStep = scenario?.steps.first
+        let secondStep = scenario?.steps.last
+        XCTAssertEqual(firstStep?.keyword, .given)
+        XCTAssertEqual(secondStep?.keyword, [.given, .and])
     }
 }

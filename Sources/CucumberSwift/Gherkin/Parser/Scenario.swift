@@ -30,7 +30,7 @@ public class Scenario: NSObject, Taggable, Positionable {
         }
         steps ?= node.children.compactMap { $0 as? AST.StepNode }.map { Step(with: $0) }
         steps.insert(contentsOf: stepNodes.map { Step(with: $0) }, at: 0)
-        steps.forEach { $0.scenario = self }
+        setupSteps()
         endLocation ?= steps.last?.location
     }
 
@@ -41,7 +41,21 @@ public class Scenario: NSObject, Taggable, Positionable {
         self.steps = steps
         self.title = title ?? ""
         self.tags = tags
-        self.steps.forEach { [weak self] in $0.scenario = self }
+        setupSteps()
+    }
+
+    private func setupSteps() {
+        // What happens with Background steps? Background is Given, step is And?
+        var previousKeyword: Step.Keyword?
+        self.steps.forEach { [weak self] in
+            $0.scenario = self
+            if let previous = previousKeyword, !Step.Keyword.primaryKeywords.contains($0.keyword) {
+                try? $0.addPrimaryKeyword(previous)
+            }
+            if Step.Keyword.primaryKeywords.contains($0.keyword) {
+                previousKeyword = $0.keyword
+            }
+        }
     }
 
     public func containsTags(_ tags: [String]) -> Bool {
