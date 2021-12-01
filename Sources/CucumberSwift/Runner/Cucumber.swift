@@ -150,7 +150,10 @@ import CucumberSwift_ObjC
            let lastScenarioStep = scenario.steps.last,
            lastScenarioStep === step {
             Cucumber.shared.afterScenarioHooks.forEach { $0.hook(scenario) }
-            let result: Reporter.Result = (scenario.steps.contains { $0.result == .failed }) ? .failed : .passed
+            var result: Reporter.Result = .passed
+            if let failedResult = scenario.steps.first(where: {$0.result == .failed})?.result {
+                result = failedResult
+            }
             reporters.forEach { $0.didFinish(scenario: scenario,
                                              result: result,
                                              duration: Measurement(value: Date().timeIntervalSince(scenario.startDate),
@@ -161,7 +164,11 @@ import CucumberSwift_ObjC
            let lastStep = feature.scenarios.last(where: { !$0.steps.isEmpty })?.steps.last,
            lastStep === step {
             Cucumber.shared.afterFeatureHooks.forEach { $0.hook(feature) }
-            let result: Reporter.Result = (feature.scenarios.contains { $0.steps.contains { $0.result == .failed } }) ? .failed : .passed
+            var result: Reporter.Result = .passed
+            if let failedResult = feature.scenarios.compactMap({$0.steps.first(where: {$0.result == .failed})?.result}).first  {
+                result = failedResult
+            }
+
             reporters.forEach { $0.didFinish(feature: feature,
                                              result: result,
                                              duration: Measurement(value: Date().timeIntervalSince(feature.startDate),
