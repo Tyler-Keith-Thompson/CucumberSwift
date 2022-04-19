@@ -149,6 +149,12 @@ extension Step {
 
 extension String {
     fileprivate func toClassString() -> String {
-        camelCasingString().capitalizingFirstLetter()
+        camelCasingString()
+            .lazy
+            .drop { $0.isNumber }
+            .filter { $0.isLetter || $0.isNumber || $0 == "_" }
+            .map(String.init)
+            .joined()
+            .capitalizingFirstLetter()
     }
 }
