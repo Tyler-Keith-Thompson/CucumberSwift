@@ -41,11 +41,26 @@ extension String {
         prefix(1).lowercased() + dropFirst()
     }
 
-    func camelCasingString() -> String {
+    func tokenize(locale: CFLocale) -> [String] {
+        let inputRange = CFRange(location: 0, length: count)
+        let flag = UInt(kCFStringTokenizerUnitWord)
+        let tokenizer = CFStringTokenizerCreate(kCFAllocatorDefault, self as CFString, inputRange, flag, locale)
+        var tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+        var tokens = [String]()
+
+        while !tokenType.isEmpty {
+            let currentTokenRange = CFStringTokenizerGetCurrentTokenRange(tokenizer)
+            let substring = self[index(startIndex, offsetBy: currentTokenRange.location)..<index(startIndex, offsetBy: currentTokenRange.location + currentTokenRange.length)]
+            tokens.append(String(substring))
+            tokenType = CFStringTokenizerAdvanceToNextToken(tokenizer)
+        }
+
+        return tokens
+    }
+
+    func camelCasingString(locale: CFLocale = CFLocaleCopyCurrent()) -> String {
         var str = ""
-        let words = replacingOccurrences( of: "[^a-zA-Z]", with: " ", options: .regularExpression)
-                    .components(separatedBy: .whitespaces)
-        for (i, word) in words.enumerated() {
+        for (i, word) in tokenize(locale: locale).enumerated() {
             if i == 0 {
                 str += word.lowercasingFirstLetter()
                 continue
