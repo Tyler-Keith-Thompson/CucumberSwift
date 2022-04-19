@@ -55,29 +55,32 @@ class CucumberTest: XCTestCase {
     }
 
     private static func createTestCaseFor(className: String, scenario: Scenario, tests:inout [XCTestCase]) {
-        scenario.steps.compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in
-            if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
-                                                                           method: step.method) {
-                return (step, testCase, methodSelector)
+        scenario
+            .steps
+            .lazy
+            .compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in
+                if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
+                                                                               method: step.method) {
+                    return (step, testCase, methodSelector)
+                }
+                return nil
             }
-            return nil
-        }
-        .map { step, testCaseClass, methodSelector -> (Step, XCTestCase) in
-            objc_registerClassPair(testCaseClass)
-            return (step, testCaseClass.init(selector: methodSelector))
-        }
-        .forEach { step, testCase in
-            testCase.addTeardownBlock {
-                (step.executeInstance as? XCTestCase)?.tearDown()
-                Cucumber.shared.afterStepHooks.forEach { $0.hook(step) }
-                Cucumber.shared.setupAfterHooksFor(step)
-                step.endTime = Date()
+            .map { step, testCaseClass, methodSelector -> (Step, XCTestCase) in
+                objc_registerClassPair(testCaseClass)
+                return (step, testCaseClass.init(selector: methodSelector))
             }
-            step.continueAfterFailure ?= (Cucumber.shared as? StepImplementation)?.continueTestingAfterFailure ?? testCase.continueAfterFailure
-            step.testCase = testCase
-            testCase.continueAfterFailure = step.continueAfterFailure
-            tests.append(testCase)
-        }
+            .forEach { step, testCase in
+                testCase.addTeardownBlock {
+                    (step.executeInstance as? XCTestCase)?.tearDown()
+                    Cucumber.shared.afterStepHooks.forEach { $0.hook(step) }
+                    Cucumber.shared.setupAfterHooksFor(step)
+                    step.endTime = Date()
+                }
+                step.continueAfterFailure ?= (Cucumber.shared as? StepImplementation)?.continueTestingAfterFailure ?? testCase.continueAfterFailure
+                step.testCase = testCase
+                testCase.continueAfterFailure = step.continueAfterFailure
+                tests.append(testCase)
+            }
     }
 
     // A test case needs at least one test to trigger the observer
