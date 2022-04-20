@@ -25,44 +25,50 @@ enum StubGenerator {
         return regex.trimmingCharacters(in: .whitespaces)
     }
 
-    static func getStubs(for features: [Feature]) -> [String] {
-        var methods = [Method]()
+    static func getStubs(for features: [Feature]) -> [(step: Step, generatedSwift: String)] {
         var lookup = [String: Method]()
-        let executableSteps = features.taggedElements(askImplementor: false)
+        let executableSteps = features
+            .taggedElements(askImplementor: false)
             .flatMap { $0.scenarios }
             .taggedElements(askImplementor: true)
             .flatMap { $0.steps }
             .sorted { $0.keyword.rawValue < $1.keyword.rawValue }
-        executableSteps.filter { !$0.canExecute }.forEach {
-            let regex = regexForTokens($0.tokens)
-            let stringCount = $0.tokens.filter { $0.isString() }.count
-            let integerCount = $0.tokens.filter { $0.isInteger() }.count
-            let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
-            let variables = [
-                (type: "string", count: stringCount),
-                (type: "integer", count: integerCount),
-                (type: "dataTable", count: $0.dataTable != nil ? 1 : 0),
-                (type: "docString", count: $0.docString != nil ? 1 : 0)
-            ]
-            let method = Method(keyword: $0.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
-            if let m = lookup[regex],
-                !m.keyword.contains($0.keyword) {
-                    m.insertKeyword($0.keyword)
-            } else {
-                methods.append(method)
-                lookup[regex] = method
+
+        let implementedSteps = executableSteps.filter { $0.canExecute }
+
+        let methods = executableSteps
+            .filter { !$0.canExecute }
+            .reduce(into: [(step: Step, method: Method)]()) {
+                let regex = regexForTokens($1.tokens)
+                let stringCount = $1.tokens.filter { $0.isString() }.count
+                let integerCount = $1.tokens.filter { $0.isInteger() }.count
+                let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
+                let variables = [
+                    (type: "string", count: stringCount),
+                    (type: "integer", count: integerCount),
+                    (type: "dataTable", count: $1.dataTable != nil ? 1 : 0),
+                    (type: "docString", count: $1.docString != nil ? 1 : 0)
+                ]
+
+                if let m = lookup[regex],
+                   !m.keyword.contains($1.keyword) {
+                    m.insertKeyword($1.keyword)
+                } else {
+                    let method = Method(keyword: $1.keyword, regex: regex, matchesParameter: matchesParameter, variables: variables)
+                    $0.append(($1, method))
+                    lookup[regex] = method
+                }
             }
-        }
-        return methods.map { method in
-            let implementedSteps = executableSteps.filter { $0.canExecute }
-            let canMatchAll = !(implementedSteps.contains { !$0.match.matches(for: method.regex).isEmpty })
+
+        return methods.map { step, method in
+            let canMatchAll = implementedSteps.allSatisfy { $0.match.matches(for: method.regex).isEmpty }
             let overwrittenSteps = implementedSteps.filter { method.keyword.contains($0.keyword) && !$0.match.matches(for: method.regex).isEmpty }
             if !overwrittenSteps.isEmpty {
                 method.comment = "//FIXME: WARNING: This will overwite your implementation for the step(s):\n"
                 method.comment += overwrittenSteps.map { "//                \($0.keyword.toString()) \($0.match)" }.joined(separator: "\n")
                 method.comment += "\n"
             }
-            return method.generateSwift(matchAllAllowed: canMatchAll)
+            return (step, method.generateSwift(matchAllAllowed: canMatchAll))
         }
     }
 }

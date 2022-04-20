@@ -48,6 +48,15 @@ extension Step: Hashable {
     }
 }
 
+var recordedIssues = [XCTIssue]()
+
+extension CucumberTest {
+    @_dynamicReplacement(for: failStep)
+    func replacementFailStep(_ issue: XCTIssue) {
+        recordedIssues.append(issue)
+    }
+}
+
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
         #if canImport(CucumberSwift_ObjC)
@@ -94,6 +103,86 @@ extension Cucumber: StepImplementation {
                 XCTFail("Should not have the same after hook called")
             }
             afterFeatureHooks[feature, default: 0] += 1
+            XCTAssertEqual(recordedIssues.count, 13)
+            guard recordedIssues.count == 13 else { return }
+            XCTAssert(recordedIssues[0].description.contains(
+                """
+                Given("^I have some steps that have not been implemented$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[1].description.contains(
+                """
+                Given("^a DocString of some kind that is not implemented$") { _, step in
+                    let docString = step.docString
+                }
+                """))
+            XCTAssert(recordedIssues[2].description.contains(
+                """
+                Given("^I have some data table that is not implemented$") { _, step in
+                    let dataTable = step.dataTable
+                }
+                """))
+            XCTAssert(recordedIssues[3].description.contains(
+                """
+                When("^I look in my test report$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[4].description.contains(
+                """
+                When("^I look in my test report$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[5].description.contains(
+                """
+                When("^I look in my test report$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[6].description.contains(
+                """
+                Then("^I see some PENDING steps with a swift attachment$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[7].description.contains(
+                """
+                Then("^I can access the data table$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[8].description.contains(
+                """
+                Then("^I see some PENDING steps with a swift attachment$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[9].description.contains(
+                """
+                Then("^I see some PENDING steps with a swift attachment$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[10].description.contains(
+                """
+                Then("^I can copy and paste the swift code into my test case$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[11].description.contains(
+                """
+                Then("^I can copy and paste the swift code into my test case$") { _, _ in
+
+                }
+                """))
+            XCTAssert(recordedIssues[12].description.contains(
+                """
+                Then("^I can copy and paste the swift code into my test case$") { _, _ in
+
+                }
+                """))
         }
         Given("^I have a before feature hook$") { _, _ in
             XCTAssert(true)

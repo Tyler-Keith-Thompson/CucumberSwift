@@ -9,8 +9,8 @@
 import Foundation
 import XCTest
 
-class CucumberTest: XCTestCase {
-    override class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
+public final class CucumberTest: XCTestCase {
+    public override class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
@@ -37,8 +37,10 @@ class CucumberTest: XCTestCase {
     }
 
     private static func createTestCaseForStubs(_ tests:inout [XCTestCase]) {
-        let generatedSwift = Cucumber.shared.generateUnimplementedStepDefinitions()
-        guard !generatedSwift.isEmpty else { return }
+        let stubs = StubGenerator.getStubs(for: Cucumber.shared.features)
+        let generatedSwift = stubs.map(\.generatedSwift).joined(separator: "\n")
+
+        guard !stubs.isEmpty else { return }
         if let (testCaseClass, methodSelector) = TestCaseGenerator.initWith(className: "Generated Steps", method: TestCaseMethod(withName: "GenerateStepsStubsIfNecessary", closure: {
             XCTContext.runActivity(named: "Pending Steps") { activity in
                 let attachment = XCTAttachment(uniformTypeIdentifier: "swift",
@@ -86,9 +88,29 @@ class CucumberTest: XCTestCase {
     // A test case needs at least one test to trigger the observer
     final func testGherkin() {
         XCTAssert(Gherkin.errors.isEmpty, "Gherkin language errors found:\n\(Gherkin.errors.joined(separator: "\n"))")
+
         Gherkin.errors.forEach {
             XCTFail($0)
         }
+
+        StubGenerator.getStubs(for: Cucumber.shared.features).forEach { [self] in
+            guard let sourceFile = $0.step.location.uri else { return }
+            let attachment = XCTAttachment(uniformTypeIdentifier: "swift",
+                                           name: "\(sourceFile):\($0.step.location.line)",
+                                           payload: $0.generatedSwift.data(using: .utf8),
+                                           userInfo: nil)
+
+            failStep(XCTIssue(type: .assertionFailure,
+                              compactDescription: "No CucumberSwift expression found that matches this step. Try adding the following Swift code to your step implementation file: \n\($0.generatedSwift)", // swiftlint:disable:this line_length
+                              detailedDescription: nil,
+                              sourceCodeContext: .init(location: .init(fileURL: sourceFile, lineNumber: Int($0.step.location.line))),
+                              associatedError: nil,
+                              attachments: [attachment]))
+        }
+    }
+
+    public dynamic func failStep(_ issue: XCTIssue) {
+        record(issue)
     }
 }
 
@@ -151,7 +173,7 @@ extension String {
     fileprivate func toClassString() -> String {
         camelCasingString()
             .lazy
-            .drop { $0.isNumber }
+            .drop { !$0.isLetter }
             .filter { $0.isLetter || $0.isNumber || $0 == "_" }
             .map(String.init)
             .joined()

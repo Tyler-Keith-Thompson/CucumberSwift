@@ -10,12 +10,17 @@
 import Foundation
 
 public class StepDSL: Step {
-    public init() {
+    public init(line: Int,
+                file: StaticString) {
         super.init(with: AST.StepNode())
+        sourceLine = line
+        sourceFile = file
     }
 
-    public init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void) {
+    public init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void, file: StaticString) {
         super.init(with: { _, _ in handler() }, match: match, position: Lexer.Position(line: line, column: column))
+        sourceLine = Int(line)
+        sourceFile = file
     }
 
     public func continueAfterFailure(_ val: Bool) -> StepDSL {

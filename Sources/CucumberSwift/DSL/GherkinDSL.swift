@@ -9,8 +9,8 @@
 
 import Foundation
 public protocol GherkinDSL {
-    init()
-    @discardableResult init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void)
+    init(line: Int, file: StaticString)
+    @discardableResult init(line: UInt, column: UInt, match: String?, handler: @escaping () -> Void, file: StaticString)
 }
 
 private enum StepError: Error {
@@ -79,7 +79,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(I handler: @escaping @autoclosure () -> Void,
@@ -90,7 +91,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(it handler: @escaping @autoclosure () -> Void,
@@ -101,7 +103,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(my handler: @escaping @autoclosure () -> Void,
@@ -112,7 +115,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(some handler: @escaping @autoclosure () -> Void,
@@ -123,7 +127,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(a handler: @escaping @autoclosure () -> Void,
@@ -134,7 +139,8 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 
     @discardableResult public init(the handler: @escaping @autoclosure () -> Void,
@@ -145,6 +151,7 @@ extension GherkinDSL {
         self.init(line: line,
                   column: column,
                   match: try? readStepName(lineNumber: line, column: column, filePath: file),
-                  handler: handler)
+                  handler: handler,
+                  file: file)
     }
 }

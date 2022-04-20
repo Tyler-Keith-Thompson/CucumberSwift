@@ -176,16 +176,7 @@ import CucumberSwift_ObjC
                             .map { Feature(with: $0, uri: uri) })
     }
 
-    @discardableResult func generateUnimplementedStepDefinitions() -> String {
-        var generatedSwift = ""
-        let stubs = StubGenerator.getStubs(for: features)
-        if !stubs.isEmpty {
-            generatedSwift = stubs.joined(separator: "\n")
-        }
-        return generatedSwift
-    }
-
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback:@escaping (([String], Step) -> Void)) {
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback: @escaping (([String], Step) -> Void), line: Int, file: StaticString) {
         features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
             .filter { step -> Bool in
@@ -201,10 +192,12 @@ import CucumberSwift_ObjC
                 step.result = .undefined
                 step.execute = callback
                 step.regex = regex
+                step.sourceLine = line
+                step.sourceFile = file
             }
     }
 
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector) {
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector, line: Int, file: StaticString) {
         features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
             .filter { step -> Bool in
@@ -221,6 +214,8 @@ import CucumberSwift_ObjC
                 step.executeSelector = selector
                 step.executeClass = `class`
                 step.regex = regex
+                step.sourceLine = line
+                step.sourceFile = file
             }
     }
 }

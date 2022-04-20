@@ -26,7 +26,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given Some precondition
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: cucumber.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^Some precondition$") { _, _ in
 
@@ -41,7 +43,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              When Some precondition
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: cucumber.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         When("^Some precondition$") { _, _ in
 
@@ -56,7 +60,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              When A totally different string match
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: cucumber.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         When("^A totally different string match$") { _, _ in
 
@@ -71,7 +77,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given A user with an idea(ish)
         """)
-        let actual = cucumber.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: cucumber.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^A user with an idea\\(ish\\)$") { _, _ in
 
@@ -89,7 +97,9 @@ class StepGenerationTests: XCTestCase {
               And A PO with two
         """)
         Given("^A user with an idea$") { _, _ in }
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^A PO with two$") { _, _ in
 
@@ -112,7 +122,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given I login as "Dave"
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let string = matches[1]
@@ -128,7 +140,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given I login as "Dave" with a password of "hello"
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
             let string = matches[1]
@@ -145,7 +159,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given I login 1 time
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I login (\\\\d+) time$") { matches, _ in
             let integer = matches[1]
@@ -161,7 +177,9 @@ class StepGenerationTests: XCTestCase {
            Scenario: Some determinable business situation
              Given I enter 1234 then 4321
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
             let integer = matches[1]
@@ -181,7 +199,9 @@ class StepGenerationTests: XCTestCase {
              When I login as "Anne"
              Then I login as "Robert Downey Jr"
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
             let string = matches[1]
@@ -201,7 +221,9 @@ class StepGenerationTests: XCTestCase {
              Then I login as "Robert Downey Jr"
         """)
         Then("^I login as \"(.*?)\"$") { _, _ in }
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I login as \\"(.*?)\\"$") { matches, _ in
             let string = matches[1]
@@ -222,7 +244,9 @@ class StepGenerationTests: XCTestCase {
              Given I login as "Robert Downey Jr"
         """)
         Given("^I login as \"Robert Downey Jr\"$") { _, _ in }
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         //FIXME: WARNING: This will overwite your implementation for the step(s):
         //                Given I login as "Robert Downey Jr"
@@ -242,7 +266,9 @@ class StepGenerationTests: XCTestCase {
                    | tbl |
                    | foo |
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I have some data table that is not implemented$") { _, step in
             let dataTable = step.dataTable
@@ -263,7 +289,9 @@ class StepGenerationTests: XCTestCase {
                </foo>
                ```
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^a DocString of some kind that is not implemented$") { _, step in
             let docString = step.docString
@@ -287,7 +315,9 @@ class StepGenerationTests: XCTestCase {
                     </foo>
                     ```
         """)
-        let actual = Cucumber.shared.generateUnimplementedStepDefinitions()
+        let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
+            .map(\.generatedSwift)
+            .joined(separator: "\n")
         let expected = """
         Given("^I have some data table that is not implemented and some string \\"(.*?)\\" and some other string \\"(.*?)\\"$") { matches, step in
             let string = matches[1]

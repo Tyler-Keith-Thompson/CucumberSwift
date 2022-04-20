@@ -54,6 +54,8 @@ public class Step: CustomStringConvertible {
         }
     }
     var tokens = [Lexer.Token]()
+    var sourceLine: Int?
+    var sourceFile: StaticString?
 
     init(with node: AST.StepNode) {
         location = node.tokens.first { $0.isKeyword() }?.position ?? .start
@@ -91,7 +93,7 @@ public class Step: CustomStringConvertible {
         match = match.trimmingCharacters(in: .whitespaces)
     }
 
-    init(with execute:@escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
+    init(with execute: @escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
         location = position
         self.match ?= match
         self.execute = execute
