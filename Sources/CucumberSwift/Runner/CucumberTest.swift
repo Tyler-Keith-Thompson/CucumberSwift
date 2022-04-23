@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 public final class CucumberTest: XCTestCase {
-    public override class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
+    override public class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
@@ -20,6 +20,7 @@ public final class CucumberTest: XCTestCase {
             Cucumber.shared.readFromFeaturesFolder(in: bundle)
         }
         (Cucumber.shared as? StepImplementation)?.setupSteps()
+        assert(!Cucumber.shared.features.isEmpty, "CucumberSwift found no features to run. Check out our documentation for instructions on including you Features folder. Be aware it's a case sensitive search. If you're using the DSL, make sure your features are defined in the `setupSteps()` method.") // swiftlint:disable:this line_length
         allGeneratedTests.forEach { suite.addTest($0) }
         return suite
     }
