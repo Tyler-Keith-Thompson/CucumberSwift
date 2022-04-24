@@ -110,6 +110,7 @@
 		CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51EC5255873E90095A5C4 /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */; };
 		CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CAF87A55281453EF00F7946A /* CucumberSwift.docc in Sources */ = {isa = PBXBuildFile; fileRef = CAF87A54281453EF00F7946A /* CucumberSwift.docc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -248,6 +249,7 @@
 		CAF51EC5255873E90095A5C4 /* XCTestHooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
 		CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
 		CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
+		CAF87A54281453EF00F7946A /* CucumberSwift.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CucumberSwift.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -615,6 +617,7 @@
 		CAF51EAE2557B35C0095A5C4 /* CucumberSwift */ = {
 			isa = PBXGroup;
 			children = (
+				CAF87A54281453EF00F7946A /* CucumberSwift.docc */,
 				CA5A210A24C9D0640077AD50 /* DSL */,
 				AD4E772D2235962F005938B7 /* Reporter */,
 				AD99DB6121335B2100E57823 /* Runner */,
@@ -901,6 +904,7 @@
 				1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */,
 				CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */,
 				1DA761A6239A7C41001CBA5B /* Nodes.swift in Sources */,
+				CAF87A55281453EF00F7946A /* CucumberSwift.docc in Sources */,
 				AD73CEF82222ECD8002BF7C0 /* TestingExtensions.swift in Sources */,
 				CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */,
 				AD9EB4852079EB1C002494C0 /* MightEqualOperator.swift in Sources */,

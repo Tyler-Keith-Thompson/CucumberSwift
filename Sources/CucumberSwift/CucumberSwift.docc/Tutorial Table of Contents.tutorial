@@ -1,0 +1,11 @@
+@Tutorials(name: "Getting Started") {
+    @Intro(title: "Getting Started with CucumberSwift") {
+        This getting started series will walk you through installation and basic setup of CucumberSwift on your project.
+    }
+    
+    @Chapter(name: "Installation") {
+        @Image(source: "CucumberSwiftSuccessfulTestRun.png", alt: "A test report showing a successful run of CucumberSwift tests")
+        How to install CucumberSwift and add it to your project.
+        @TutorialReference(tutorial: "doc:CocoaPods-Step-By-Step")
+    }
+}
