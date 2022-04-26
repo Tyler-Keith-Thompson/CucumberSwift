@@ -7,3 +7,4 @@ It's great
 You can do cool things
 
 ## Topics
+<doc:CocoaPods-Step-By-Step.tutorial>

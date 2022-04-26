@@ -15,7 +15,7 @@
                 Open your `xcworkspace` file and add `pod 'CucumberSwift'` to your `Podfile`.
                 > NOTE: CucumberSwift can be added to either a UI testing bundle or a unit testing bundle.
 
-                Make sure to run `pod install` after your Podfile is saved to install CucumberSwift
+                Make sure to run `pod install --repo-update` after your Podfile is saved to install CucumberSwift
             }
             
             @Step {
@@ -32,7 +32,7 @@
             
             @Step {
                 @Image(source: "ChangeFeaturesPath.png", alt: "Info.plist being modified to add a FeaturesPath property")
-                Open the `info.plist` file located in your test target. You can do this in the folder navigator or the project navigator, whatever you want. Add a property called `FeaturesPath` with the relative path (from the bundle) to the folder containing all you `.feature` files.
+                Open the `info` tab of your target. Add a property called `FeaturesPath` with the relative path (from the bundle) to the folder containing all you `.feature` files.
                 
                 > NOTE: If you named your folder "Features" (case sensitive!) then you may skip the this step.
             }

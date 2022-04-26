@@ -10,6 +10,7 @@ import Foundation
 import XCTest
 @testable import CucumberSwift
 
+// swiftlint:disable:next type_body_length
 class ParserTests: XCTestCase {
     override func setUpWithError() throws {
         Cucumber.shared.reset()
