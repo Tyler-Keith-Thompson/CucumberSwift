@@ -23,12 +23,12 @@ jobs:
           echo "##[set-output name=version;]$VERSION"
       - name: GitHub Pages Deploy
         run: |
-            swift package --allow-writing-to-directory docs \
+            swift package --allow-writing-to-directory ./docs \
               generate-documentation --target CucumberSwift \
               --disable-indexing \
               --transform-for-static-hosting \
               --hosting-base-path CucumberSwift \
-              --output-path docs
+              --output-path ./docs
       - name: Commit version changes and docs
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
