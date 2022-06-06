@@ -1,5 +1,0 @@
-json:
-  inputs: CucumberSwift/Gherkin/gherkin-languages.json
-  outputs:
-    templatePath: template.stencil
-    output: CucumberSwift/Generated/I18n.swift
