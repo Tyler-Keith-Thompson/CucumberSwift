@@ -1,6 +1,6 @@
-![Build Status](https://github.com/Tyler-Keith-Thompson/CucumberSwift/actions/workflows/CI.yml/badge.svg?branch=master)
+![Build Status](https://github.com/Tyler-Keith-Thompson/CucumberSwift/actions/workflows/CI.yml/badge.svg?branch=main)
 ![Pod Platform](https://img.shields.io/cocoapods/p/CucumberSwift.svg?style=popout) [![Pod Version](https://img.shields.io/cocoapods/v/CucumberSwift.svg?style=popout)](http://cocoapods.org/pods/CucumberSwift)
-[![codecov](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift/branch/master/graph/badge.svg?token=ARIPC8Q7H1)](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift)
+[![codecov](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift/branch/main/graph/badge.svg?token=ARIPC8Q7H1)](https://codecov.io/gh/Tyler-Keith-Thompson/CucumberSwift)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/c29b0bf4883b4387a41ac1d090773f65)](https://www.codacy.com/gh/Tyler-Keith-Thompson/CucumberSwift/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Tyler-Keith-Thompson/CucumberSwift&amp;utm_campaign=Badge_Grade)
 
 ### Welcome to CucumberSwift
