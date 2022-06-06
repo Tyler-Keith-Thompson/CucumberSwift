@@ -674,9 +674,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AD9EB4742079CF87002494C0 /* Build configuration list for PBXNativeTarget "CucumberSwift" */;
 			buildPhases = (
+				AD9EB45D2079CF87002494C0 /* Headers */,
 				AD9EB45B2079CF87002494C0 /* Sources */,
 				AD9EB45C2079CF87002494C0 /* Frameworks */,
-				AD9EB45D2079CF87002494C0 /* Headers */,
 				AD9EB45E2079CF87002494C0 /* Resources */,
 				CA919A472650B87A00AA111E /* Lint */,
 			);
