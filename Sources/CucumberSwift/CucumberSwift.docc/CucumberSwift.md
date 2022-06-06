@@ -11,3 +11,4 @@ CucumberSwift is a lightweight Cucumber implementation for iOS, tvOS, and macOS.
 ### Discussions
 - <doc:Tutorial-Table-of-Contents>
 - <doc:Generating-Reports>
+- <doc:Hooks>
