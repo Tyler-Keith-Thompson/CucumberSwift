@@ -21,15 +21,7 @@ jobs:
           bundle exec fastlane patch
           VERSION=`/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" Sources/CucumberSwift/Info.plist`
           echo "##[set-output name=version;]$VERSION"
-      - name: GitHub Pages Deploy
-        run: |
-            swift package --allow-writing-to-directory ./docs \
-              generate-documentation --target CucumberSwift \
-              --disable-indexing \
-              --transform-for-static-hosting \
-              --hosting-base-path CucumberSwift/ \
-              --output-path ./docs
-      - name: Commit version changes and docs
+     - name: Commit version changes
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: "[ci skip] Apply automatic changes"
