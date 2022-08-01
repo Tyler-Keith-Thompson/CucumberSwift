@@ -176,7 +176,7 @@ import CucumberSwift_ObjC
                             .map { Feature(with: $0, uri: uri) })
     }
 
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback: @escaping (([String], Step) -> Void), line: Int, file: StaticString) {
+    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback: @escaping (([String], Step) throws -> Void), line: Int, file: StaticString) {
         features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
             .filter { step -> Bool in
@@ -190,12 +190,41 @@ import CucumberSwift_ObjC
             }
             .forEach { step in
                 step.result = .undefined
-                step.execute = callback
+                step.execute = { try callback(step.match.matches(for: step.regex), step) }
                 step.regex = regex
                 step.sourceLine = line
                 step.sourceFile = file
             }
     }
+
+#if swift(>=5.7)
+    @available(iOS 16.0, *)
+    func attachClosureToSteps<Output>(keyword: Step.Keyword? = nil,
+                                      regex: Regex<Output>,
+                                      callback: @escaping ((Regex<Output>.Match, Step) throws -> Void),
+                                      line: Int,
+                                      file: StaticString) {
+        features
+            .flatMap { $0.scenarios.flatMap { $0.steps } }
+            .filter { step -> Bool in
+                if  let k = keyword,
+                    step.keyword.contains(k) {
+                    let match = try? regex.wholeMatch(in: step.match)
+                    return match != nil
+                } else if keyword == nil {
+                    let match = try? regex.wholeMatch(in: step.match)
+                    return match != nil
+                }
+                return false
+            }
+            .forEach { step in
+                step.result = .undefined
+                step.execute = { try callback(try XCTUnwrap(regex.wholeMatch(in: step.match)), step) }
+                step.sourceLine = line
+                step.sourceFile = file
+            }
+    }
+#endif
 
     func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector, line: Int, file: StaticString) {
         features

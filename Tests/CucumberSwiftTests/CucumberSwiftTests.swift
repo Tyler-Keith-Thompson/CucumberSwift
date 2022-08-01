@@ -19,28 +19,6 @@ class CucumberSwiftTests: XCTestCase {
         Cucumber.shared.reset()
     }
 
-    let featureFile: String =
-    """
-    Feature: Some terse yet descriptive text of what is desired
-       Textual description of the business value of this feature
-       Business rules that govern the scope of the feature
-       Any additional information that will make the feature easier to understand
-
-       Scenario: Some determinable business situation
-         Given some precondition
-           And some other precondition
-         When some action by the actor
-           And some other action
-           And yet another action
-         Then some testable outcome is achieved
-
-       Scenario: Some other determinable business situation
-         Given some precondition
-           And some other precondition
-         When some action by the actor
-         Then some testable outcome is achieved
-    """
-
     func testStepsGetCallbacksAttachedCorrectly() {
         let bundle: Bundle = {
             #if canImport(CucumberSwift_ObjC)
@@ -101,6 +79,67 @@ class CucumberSwiftTests: XCTestCase {
         Cucumber.shared.executeFeatures()
         XCTAssertTrue(matchAllCalled)
     }
+
+#if swift(>=5.7)
+    @available(iOS 16.0, *)
+    func testStepsGetCallbacksAttachedCorrectly_WithRegexLiterals() {
+        let featureFile: String =
+        """
+        Feature: Some terse yet descriptive text of what is desired
+           Textual description of the business value of this feature
+           Business rules that govern the scope of the feature
+           Any additional information that will make the feature easier to understand
+
+           Scenario: Some determinable business situation
+             Given some precondition
+               And some other precondition
+             When some action by the actor
+               And some other action
+               And yet another action
+             Then some testable outcome is achieved
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalled = false
+        Given(/^S(.)mE (?:precondition)$/.ignoresCase()) { match, _  in
+            givenCalled = true
+            XCTAssertEqual(match.1, "o")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(givenCalled)
+
+        var whenCalled = false
+        When(/^some (\w+) by the actor$/) { match, _ in
+            whenCalled = true
+            XCTAssertEqual(match.1, "action")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(whenCalled)
+
+        var thenCalled = false
+        Then(/^some (\w+) outcome is achieved$/) { match, _ in
+            thenCalled = true
+            XCTAssertEqual(match.1, "testable")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(thenCalled)
+
+        var andCalled = false
+        Given(/^some (\w+) precondition$/) { match, _ in
+            andCalled = true
+            XCTAssertEqual(match.1, "other")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(andCalled)
+
+        var matchAllCalled = false
+        MatchAll(/(.*?)/) { _, _ in
+            matchAllCalled = true
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(matchAllCalled)
+    }
+#endif
 
     func testGivenWorksForChainedAnd() {
         let bundle: Bundle = {

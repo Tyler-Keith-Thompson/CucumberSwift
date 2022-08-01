@@ -136,7 +136,7 @@ extension Step {
 
             func runAndReport() {
                 Cucumber.shared.reporters.forEach { $0.didStart(step: self, at: startTime) }
-                self.run()
+                XCTAssertNoThrow(try self.run())
                 self.endTime = Date()
                 Cucumber.shared.reporters.forEach { $0.didFinish(step: self, result: self.result, duration: self.executionDuration) }
             }
@@ -153,7 +153,7 @@ extension Step {
         }
     }
 
-    fileprivate func run() {
+    fileprivate func run() throws {
         if let `class` = executeClass, let selector = executeSelector {
             executeInstance = (`class` as? NSObject.Type)?.init()
             if let instance = executeInstance,
@@ -162,7 +162,7 @@ extension Step {
                     instance.perform(selector)
             }
         } else {
-            execute?(match.matches(for: regex), self)
+            try execute?()
         }
         if execute != nil && result != .failed {
             result = .passed

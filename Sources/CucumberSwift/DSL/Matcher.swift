@@ -22,11 +22,24 @@ extension Matcher {
         self.init(line: line, file: file)
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class: `class`, selector: selector, line: line, file: file)
     }
+
     @discardableResult public init(_ regex: String,
-                                   callback:@escaping (([String], Step) -> Void),
+                                   callback: @escaping (([String], Step) throws -> Void),
                                    line: Int = #line,
                                    file: StaticString = #file) {
         self.init(line: line, file: file)
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback, line: line, file: file)
     }
+
+#if swift(>=5.7)
+    @available(iOS 16.0, *)
+    @discardableResult public init<Output>(_ regex: Regex<Output>,
+                                           callback: @escaping ((Regex<Output>.Match, Step) -> Void),
+                                           line: Int = #line,
+                                           file: StaticString = #file) {
+        self.init(line: line, file: file)
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback, line: line, file: file)
+    }
+
+#endif
 }

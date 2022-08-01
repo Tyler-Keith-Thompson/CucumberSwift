@@ -36,7 +36,7 @@ public class Step: CustomStringConvertible {
     public internal(set) var testCase: XCTestCase?
 
     var result: Reporter.Result = .pending
-    var execute: (([String], Step) -> Void)?
+    var execute: (() throws -> Void)?
     var executeSelector: Selector?
     var executeClass: AnyClass?
     var executeInstance: NSObject?
@@ -96,7 +96,9 @@ public class Step: CustomStringConvertible {
     init(with execute: @escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
         location = position
         self.match ?= match
-        self.execute = execute
+        self.execute = {
+            execute(self.match.matches(for: self.regex), self)
+        }
     }
 
     func addPrimaryKeyword(_ keyword: Keyword) throws {
