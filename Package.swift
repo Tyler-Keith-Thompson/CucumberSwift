@@ -13,6 +13,7 @@ let package = Package(
             targets: ["CucumberSwift_ObjC", "CucumberSwift"])
     ],
     dependencies: [
+        .package(url: "https://github.com/Tyler-Keith-Thompson/CucumberSwiftExpressions.git", from: "0.0.1"),
         .package(url: "https://github.com/apple/swift-docc-plugin", from: "1.0.0")
     ],
     targets: [
@@ -25,7 +26,10 @@ let package = Package(
             publicHeadersPath: "Include"),
         .target(
             name: "CucumberSwift",
-            dependencies: ["CucumberSwift_ObjC"],
+            dependencies: [
+                "CucumberSwiftExpressions",
+                "CucumberSwift_ObjC"
+            ],
             path: "Sources/CucumberSwift",
             exclude: ["Info.plist"],
             resources: [

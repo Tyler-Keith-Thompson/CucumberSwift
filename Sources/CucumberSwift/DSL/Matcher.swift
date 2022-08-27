@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CucumberSwiftExpressions
 
 public protocol Matcher {
     init(line: Int, file: StaticString)
@@ -31,8 +32,16 @@ extension Matcher {
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback, line: line, file: file)
     }
 
+    @discardableResult public init(_ expression: CucumberExpression,
+                                   callback: @escaping ((CucumberSwiftExpressions.Match, Step) throws -> Void),
+                                   line: Int = #line,
+                                   file: StaticString = #file) {
+        self.init(line: line, file: file)
+        Cucumber.shared.attachClosureToSteps(keyword: keyword, expression: expression, callback: callback, line: line, file: file)
+    }
+
 #if swift(>=5.7)
-    @available(iOS 16.0, *)
+    @available(iOS 16.0, macOS 13.0, *)
     @discardableResult public init<Output>(_ regex: Regex<Output>,
                                            callback: @escaping ((Regex<Output>.Match, Step) -> Void),
                                            line: Int = #line,

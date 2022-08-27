@@ -8,6 +8,7 @@
 // swiftlint:disable function_body_length
 
 import XCTest
+import CucumberSwiftExpressions
 @testable import CucumberSwift
 
 class CucumberSwiftTests: XCTestCase {
@@ -140,6 +141,64 @@ class CucumberSwiftTests: XCTestCase {
         XCTAssertTrue(matchAllCalled)
     }
 #endif
+
+    func testStepsGetCallbacksAttachedCorrectly_WithCucumberExpressions() {
+        let featureFile: String =
+        """
+        Feature: Some terse yet descriptive text of what is desired
+           Textual description of the business value of this feature
+           Business rules that govern the scope of the feature
+           Any additional information that will make the feature easier to understand
+
+           Scenario: Some determinable business situation
+             Given some precondition
+               And some other precondition
+             When some action by the actor
+               And some other action
+               And yet another action
+             Then some testable outcome is achieved
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalled = false
+        Given("some {word}" as CucumberExpression) { match, _  in
+            givenCalled = true
+            XCTAssertEqual(try match.first(\.word), "precondition")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(givenCalled)
+
+        var whenCalled = false
+        When("some {word} by the actor" as CucumberExpression) { match, _ in
+            whenCalled = true
+            XCTAssertEqual(try match.first(\.word), "action")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(whenCalled)
+
+        var thenCalled = false
+        Then("some {word} outcome is achieved" as CucumberExpression) { match, _ in
+            thenCalled = true
+            XCTAssertEqual(try match.first(\.word), "testable")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(thenCalled)
+
+        var andCalled = false
+        Given("some {word} precondition" as CucumberExpression) { match, _ in
+            andCalled = true
+            XCTAssertEqual(try match.first(\.word), "other")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(andCalled)
+
+        var matchAllCalled = false
+        MatchAll("{}" as CucumberExpression) { _, _ in
+            matchAllCalled = true
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertTrue(matchAllCalled)
+    }
 
     func testGivenWorksForChainedAnd() {
         let bundle: Bundle = {

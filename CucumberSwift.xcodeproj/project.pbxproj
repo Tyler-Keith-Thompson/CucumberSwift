@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 48;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -78,6 +78,8 @@
 		CA1C47ED2634C6C7008D8E12 /* ScenarioHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */; };
 		CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */; };
 		CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F82634C6E9008D8E12 /* StepHook.swift */; };
+		CA3ED0E328B9A4D9003ACE79 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */; };
+		CA3ED0E528B9A4E1003ACE79 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CA3ED0E428B9A4E1003ACE79 /* CucumberSwiftExpressions */; };
 		CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */; };
 		CA4E2D0124CCC8AE00A44983 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */; };
 		CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */; };
@@ -107,6 +109,7 @@
 		CAB20B3C24CCF5C10024C703 /* RuleDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3B24CCF5C10024C703 /* RuleDSL.swift */; };
 		CAB20B3E24CCF6B20024C703 /* DSLRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */; };
 		CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */; };
+		CAEE41EE28B324BF000D4703 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CAEE41ED28B324BF000D4703 /* CucumberSwiftExpressions */; };
 		CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51EC5255873E90095A5C4 /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */; };
 		CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -257,6 +260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAEE41EE28B324BF000D4703 /* CucumberSwiftExpressions in Frameworks */,
 				AD26922B223ADC8D00134D02 /* XCTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -265,6 +269,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA3ED0E328B9A4D9003ACE79 /* CucumberSwiftExpressions in Frameworks */,
 				AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -273,6 +278,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA3ED0E528B9A4E1003ACE79 /* CucumberSwiftExpressions in Frameworks */,
 				ADA5D9672131EA3200530826 /* CucumberSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -685,6 +691,9 @@
 			dependencies = (
 			);
 			name = CucumberSwift;
+			packageProductDependencies = (
+				CAEE41ED28B324BF000D4703 /* CucumberSwiftExpressions */,
+			);
 			productName = CucumberSwift;
 			productReference = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */;
 			productType = "com.apple.product-type.framework";
@@ -703,6 +712,9 @@
 				AD9EB46C2079CF87002494C0 /* PBXTargetDependency */,
 			);
 			name = CucumberSwiftTests;
+			packageProductDependencies = (
+				CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */,
+			);
 			productName = CucumberSwiftTests;
 			productReference = AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -721,6 +733,9 @@
 				ADA5D9692131EA3200530826 /* PBXTargetDependency */,
 			);
 			name = CucumberSwiftConsumerTests;
+			packageProductDependencies = (
+				CA3ED0E428B9A4E1003ACE79 /* CucumberSwiftExpressions */,
+			);
 			productName = CucumberSwiftConsumerTests;
 			productReference = ADA5D9622131EA3200530826 /* CucumberSwiftConsumerTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -783,6 +798,9 @@
 				Base,
 			);
 			mainGroup = AD9EB4562079CF87002494C0;
+			packageReferences = (
+				CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */,
+			);
 			productRefGroup = AD9EB4612079CF87002494C0 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1107,7 +1125,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1132,7 +1151,11 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = Sources/CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1160,7 +1183,11 @@
 				FRAMEWORK_SEARCH_PATHS = "$(PLATFORM_DIR)/Developer/Library/Frameworks";
 				INFOPLIST_FILE = Sources/CucumberSwift/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = TylerThompson.CucumberSwift;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1179,7 +1206,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Tyler.Thompson.CucumberSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1197,7 +1228,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Tyler.Thompson.CucumberSwiftTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1215,7 +1250,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = dignityhealth.CucumberSwiftConsumerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1231,7 +1270,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = dignityhealth.CucumberSwiftConsumerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1245,7 +1288,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = TT.CucumberSwiftDSLConsumerTests;
@@ -1262,7 +1309,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = TT.CucumberSwiftDSLConsumerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1320,6 +1371,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Tyler-Keith-Thompson/CucumberSwiftExpressions.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */;
+			productName = CucumberSwiftExpressions;
+		};
+		CA3ED0E428B9A4E1003ACE79 /* CucumberSwiftExpressions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */;
+			productName = CucumberSwiftExpressions;
+		};
+		CAEE41ED28B324BF000D4703 /* CucumberSwiftExpressions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */;
+			productName = CucumberSwiftExpressions;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AD9EB4572079CF87002494C0 /* Project object */;
 }

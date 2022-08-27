@@ -27,6 +27,9 @@ Pod::Spec.new do |s|
     s.subspec 'syntax' do |ss| 
       ss.resources = ["Sources/CucumberSwift/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
     end
+
+    s.dependency "CucumberSwiftExpressions"
+
     s.framework = "XCTest"
     s.pod_target_xcconfig = {
       'FRAMEWORK_SEARCH_PATHS' => '$(inherited) "$(PLATFORM_DIR)/Developer/Library/Frameworks"',

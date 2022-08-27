@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import CucumberSwiftExpressions
 
 #if canImport(CucumberSwift_ObjC)
 import CucumberSwift_ObjC
@@ -197,8 +198,32 @@ import CucumberSwift_ObjC
             }
     }
 
+    func attachClosureToSteps(keyword: Step.Keyword? = nil,
+                              expression: CucumberExpression,
+                              callback: @escaping ((CucumberSwiftExpressions.Match, Step) throws -> Void),
+                              line: Int,
+                              file: StaticString) {
+        features
+            .flatMap { $0.scenarios.flatMap { $0.steps } }
+            .filter { step -> Bool in
+                if  let k = keyword,
+                    step.keyword.contains(k) {
+                    return expression.match(in: step.match) != nil
+                } else if keyword == nil {
+                    return expression.match(in: step.match) != nil
+                }
+                return false
+            }
+            .forEach { step in
+                step.result = .undefined
+                step.execute = { try callback(try XCTUnwrap(expression.match(in: step.match)), step) }
+                step.sourceLine = line
+                step.sourceFile = file
+            }
+    }
+
 #if swift(>=5.7)
-    @available(iOS 16.0, *)
+    @available(iOS 16.0, macOS 13.0, *)
     func attachClosureToSteps<Output>(keyword: Step.Keyword? = nil,
                                       regex: Regex<Output>,
                                       callback: @escaping ((Regex<Output>.Match, Step) throws -> Void),
