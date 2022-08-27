@@ -4,7 +4,7 @@ on: [ workflow_dispatch, pull_request ]
 
 jobs:
   test:
-    runs-on: self-hosted
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v2
       - name: Run TESTS
@@ -16,7 +16,7 @@ jobs:
 
   build_for_package_managers:
     needs: test
-    runs-on: self-hosted
+    runs-on: macos-12
     steps:
       - uses: actions/checkout@v2
       - name: Validate SwiftPM BUILDs
