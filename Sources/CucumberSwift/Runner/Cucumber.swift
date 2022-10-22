@@ -234,7 +234,7 @@ import CucumberSwift_ObjC
     }
 
 #if swift(>=5.7)
-    @available(iOS 16.0, macOS 13.0, *)
+    @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     func attachClosureToSteps<Output>(keyword: Step.Keyword? = nil,
                                       regex: Regex<Output>,
                                       callback: @escaping ((Regex<Output>.Match, Step) throws -> Void),
