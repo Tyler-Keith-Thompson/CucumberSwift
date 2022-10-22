@@ -184,11 +184,74 @@ class TableTests: XCTestCase {
         Given("the uno") { _, _ in
             secondGivenCalled = true
         }
+
         Cucumber.shared.executeFeatures()
+
         waitUntil(firstGivenCalled)
         waitUntil(secondGivenCalled)
         XCTAssert(firstGivenCalled)
         XCTAssert(secondGivenCalled)
+    }
+
+    func testExamplesCanAffectDataTableOnAStep() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Sample
+
+        Scenario Outline: Sample scenario
+            Then I have a sample step with a=<paramA>,b=<paramB>
+                | a        | b        |
+                | <paramA> | <paramB> |
+
+            Examples:
+                | paramA | paramB |
+                | 0      | 1      |
+                | 5      | 10     |
+        """)
+        var thenCalled = 0
+        Then("^I have a sample step with a=(\\d+),b=(\\d+)$") { matches, step in
+            defer { thenCalled += 1 }
+            if thenCalled < 1 {
+                XCTAssertEqual(matches[1], "0")
+                XCTAssertEqual(matches[2], "1")
+
+                let dataTable = try XCTUnwrap(step.dataTable)
+
+                XCTAssertEqual(dataTable.rows.count, 2)
+                guard dataTable.rows.count == 2 else { return }
+                XCTAssertEqual(dataTable.rows[0].count, 2)
+                XCTAssertEqual(dataTable.rows[1].count, 2)
+                guard dataTable.rows[0].count == 2,
+                      dataTable.rows[1].count == 2 else { return }
+
+                XCTAssertEqual(dataTable.rows[0][0], "a")
+                XCTAssertEqual(dataTable.rows[0][1], "b")
+                XCTAssertEqual(dataTable.rows[1][0], "0")
+                XCTAssertEqual(dataTable.rows[1][1], "1")
+            } else {
+                XCTAssertEqual(matches[1], "5")
+                XCTAssertEqual(matches[2], "10")
+
+                let dataTable = try XCTUnwrap(step.dataTable)
+
+                XCTAssertEqual(dataTable.rows.count, 2)
+                guard dataTable.rows.count == 2 else { return }
+                XCTAssertEqual(dataTable.rows[0].count, 2)
+                XCTAssertEqual(dataTable.rows[1].count, 2)
+                guard dataTable.rows[0].count == 2,
+                      dataTable.rows[1].count == 2 else { return }
+
+                XCTAssertEqual(dataTable.rows[0][0], "a")
+                XCTAssertEqual(dataTable.rows[0][1], "b")
+                XCTAssertEqual(dataTable.rows[1][0], "5")
+                XCTAssertEqual(dataTable.rows[1][1], "10")
+            }
+        }
+
+        Cucumber.shared.executeFeatures()
+
+        waitUntil(thenCalled == 2)
+        XCTAssertEqual(thenCalled, 2)
     }
 
     func testTestDataAttachedToAStep() {

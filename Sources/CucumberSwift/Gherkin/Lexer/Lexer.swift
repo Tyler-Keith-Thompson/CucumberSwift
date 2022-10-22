@@ -18,6 +18,10 @@ public class Lexer: StringReader {
         super.init(str)
     }
 
+    override private init(_ str: String) {
+        super.init(str)
+    }
+
     override public var position: Position {
         let pos = super.position
         return Position(line: pos.line, column: pos.column, uri: url)
@@ -111,11 +115,15 @@ public class Lexer: StringReader {
                 if currentChar != Character.tableCellDelimiter {
                     return advanceToNextToken()
                 }
-                return .tableCell(position, tableCellContents)
-            case _ where atLineStart: return readScope()
+                if let firstTableCellContentsToken = Lexer(tableCellContents).lex().first,
+                   case .tableHeader(_, let headerContents) = firstTableCellContentsToken {
+                    return .tableCell(position, .tableHeader(position, headerContents))
+                }
+                return .tableCell(position, .match(position, tableCellContents))
             case .tableHeaderOpen:
                 let str = advance(readLineUntil { $0.isHeaderClosed })
                 return advance(.tableHeader(position, str))
+            case _ where atLineStart: return readScope()
             case _ where lastScope != nil:
                 let title = readLineUntil { $0.isHeaderOpen }
                 if title.isEmpty { // hack to get around potential infinite loop

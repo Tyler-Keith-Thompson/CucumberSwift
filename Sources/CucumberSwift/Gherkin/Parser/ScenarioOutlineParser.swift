@@ -53,7 +53,7 @@ enum ScenarioOutlineParser {
         validateTable(lines, uri: uri)
         let headerLookup: [String: Int]? = lines.first?.enumerated().reduce(into: [:]) {
             if case Lexer.Token.tableCell(_, let headerText) = $1.element {
-                $0?[headerText] = $1.offset
+                $0?[headerText.valueDescription] = $1.offset
             }
         }
         let tags = outlineTags
@@ -64,7 +64,7 @@ enum ScenarioOutlineParser {
                         index < line.count,
                         index >= 0,
                         case Lexer.Token.tableCell(_, let cellText) = line[index] {
-                        $0? += cellText
+                        $0? += cellText.valueDescription
                     }
                 } else if case Lexer.Token.title(_, let titleText) = $1 {
                     $0? += titleText
@@ -83,10 +83,16 @@ enum ScenarioOutlineParser {
         let node = AST.StepNode(node: stepNode)
         for (i, token) in node.tokens.enumerated() {
             if case Lexer.Token.tableHeader(_, let headerText) = token,
-                let index = lookup?[headerText],
-                let cell = line[safe: index],
-                case Lexer.Token.tableCell(let pos, let cellText) = cell {
-                    node.tokens[i] = .match(pos, cellText)
+               let index = lookup?[headerText],
+               let cell = line[safe: index],
+               case Lexer.Token.tableCell(let pos, let cellText) = cell {
+                node.tokens[i] = .match(pos, cellText.valueDescription)
+            } else if case Lexer.Token.tableCell(_, let cellToken) = token,
+                      case Lexer.Token.tableHeader(_, let headerText) = cellToken,
+                      let index = lookup?[headerText],
+                      let cell = line[safe: index],
+                      case Lexer.Token.tableCell(let pos, let cellText) = cell {
+                node.tokens[i] = .tableCell(pos, .match(cellToken.position, cellText.valueDescription))
             }
         }
         return Step(with: node)

@@ -82,7 +82,7 @@ public class Step: CustomStringConvertible {
                 line.filter { $0.isTableCell() }
                     .map { token -> String in
                         if case Lexer.Token.tableCell(_, let cellText) = token {
-                            return cellText
+                            return cellText.valueDescription
                         }
                         return ""
                     }

@@ -28,7 +28,7 @@ extension Sequence where Element == Lexer.Token {
 }
 
 extension Lexer {
-    enum Token: Equatable, Hashable {
+    indirect enum Token: Equatable, Hashable {
         case newLine(Lexer.Position)
         case integer(Lexer.Position, String)
         case string(Lexer.Position, String)
@@ -38,7 +38,7 @@ extension Lexer {
         case description(Lexer.Position, String)
         case tag(Lexer.Position, String)
         case tableHeader(Lexer.Position, String)
-        case tableCell(Lexer.Position, String)
+        case tableCell(Lexer.Position, Token)
         case scope(Lexer.Position, Scope)
         case keyword(Lexer.Position, Step.Keyword)
 
@@ -97,7 +97,7 @@ extension Lexer {
                 case .description(_, let val): return "\(val)"
                 case .tag(_, let val): return "\(val)"
                 case .tableHeader(_, let val): return "\(val)"
-                case .tableCell(_, let val): return "\(val)"
+                case .tableCell(_, let val): return val.valueDescription
                 case .scope(_, let val): return "\(val)"
                 case .keyword(_, let val): return "\(val)"
             }

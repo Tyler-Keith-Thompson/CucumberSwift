@@ -29,6 +29,7 @@ extension Collection where Element == Lexer.Token {
     }
 }
 
+@available(iOS 16.0, *)
 class CucumberTests: XCTestCase {
     override func setUpWithError() throws {
         Cucumber.shared.reset()
@@ -101,8 +102,10 @@ class CucumberTests: XCTestCase {
                         if let cells = row["cells"] as? [[String: Any]] {
                             XCTAssertEqual(dRow?.count, cells.count, "Row on DataTable doesn't have correct cells in: \(fileName)")
                             for (cellIndex, cell) in cells.enumerated() {
-                                if let value = cell["value"] as? String {
-                                    XCTAssertEqual(value, dRow?[safe: cellIndex])
+                                // slight hack to get around the fact we're comparing against parsed output
+                                if let value = cell["value"] as? String,
+                                   let unwrappedValue = try? /^\<?(.*?)\>?$/.firstMatch(in: value) {
+                                    XCTAssertEqual(String(unwrappedValue.1), dRow?[safe: cellIndex], fileName)
                                 }
                             }
                         }
@@ -170,7 +173,7 @@ class CucumberTests: XCTestCase {
                     for (cellIndex, cell) in header.enumerated() {
                         let headerToken = headerTokens?[safe: cellIndex]
                         if let token = headerToken, case .tableCell(_, let value) = token {
-                            XCTAssertEqual(cell["value"] as? String, value)
+                            XCTAssertEqual(cell["value"] as? String, value.valueDescription)
                         }
                     }
                 }
@@ -184,7 +187,7 @@ class CucumberTests: XCTestCase {
                             for (cellIndex, cell) in cells.enumerated() {
                                 let cellToken = lineTokens?[safe: cellIndex]
                                 if let token = cellToken, case .tableCell(_, let value) = token {
-                                    XCTAssertEqual(cell["value"] as? String, value, "Wrong cell value in file: \(fileName)")
+                                    XCTAssertEqual(cell["value"] as? String, value.valueDescription, "Wrong cell value in file: \(fileName)")
                                 }
                             }
                         }
