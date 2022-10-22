@@ -81,8 +81,11 @@ public class Step: CustomStringConvertible {
             .map { line -> [String] in
                 line.filter { $0.isTableCell() }
                     .map { token -> String in
-                        if case Lexer.Token.tableCell(_, let cellText) = token {
-                            return cellText.valueDescription
+                        if case Lexer.Token.tableCell(_, let cellToken) = token {
+                            if case Lexer.Token.tableHeader = cellToken {
+                                Gherkin.errors.append("File: \(cellToken.position.uri?.lastPathComponent ?? ""), table header <\(cellToken.valueDescription)> not found")
+                            }
+                            return cellToken.valueDescription
                         }
                         return ""
                     }

@@ -254,6 +254,35 @@ class TableTests: XCTestCase {
         XCTAssertEqual(thenCalled, 2)
     }
 
+    func testDataTableOnStepCanEscape() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures(#"""
+        Feature: Sample
+
+        Scenario: minimalistic
+            Given a simple data table
+            | \<foo\> | \<bar\> |
+        """#)
+        var givenCalled = 0
+        Given("^a simple data table$") { matches, step in
+            defer { givenCalled += 1 }
+            let dataTable = try XCTUnwrap(step.dataTable)
+
+            XCTAssertEqual(dataTable.rows.count, 1)
+            guard dataTable.rows.count == 1 else { return }
+            XCTAssertEqual(dataTable.rows[0].count, 2)
+            guard dataTable.rows[0].count == 2 else { return }
+
+            XCTAssertEqual(dataTable.rows[0][0], "<foo>")
+            XCTAssertEqual(dataTable.rows[0][1], "<bar>")
+        }
+
+        Cucumber.shared.executeFeatures()
+
+        waitUntil(givenCalled > 0)
+        XCTAssertEqual(givenCalled, 1)
+    }
+
     func testTestDataAttachedToAStep() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures("""

@@ -36,12 +36,14 @@ public class Lexer: StringReader {
     }
 
     // table cells have weird rules I don't necessarily agree with...
-    @discardableResult internal func readCellUntil(_ evaluation: ((Character) -> Bool)) -> String {
+    @discardableResult internal func readCell() -> Token {
         var str = ""
+        var isTableHeader = false
+        var tableHeaderClosed = false
         while let char = currentChar, !char.isNewline {
             if char.isEscapeCharacter,
                let next = nextChar,
-               next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter {
+               next.isTableCellDelimiter || next == "n" || next.isEscapeCharacter || next == .tableHeaderOpen || next == .tableHeaderClose {
                 if next == "n" {
                     str.append("\n")
                 } else {
@@ -51,13 +53,30 @@ public class Lexer: StringReader {
                 advanceIndex()
                 continue
             }
-            if evaluation(char) {
+            if char == .tableHeaderOpen {
+                isTableHeader = true
+                advanceIndex()
+                continue
+            }
+            if char == .tableHeaderClose {
+                tableHeaderClosed = true
+                advanceIndex()
+                continue
+            }
+            if char.isTableCellDelimiter {
+                if isTableHeader && !tableHeaderClosed {
+                    Gherkin.errors.append("File: \(url?.lastPathComponent ?? ""), table header not closed in table cell")
+                }
                 break
             }
             str.append(char)
             advanceIndex()
         }
-        return str
+        if isTableHeader {
+            return .tableHeader(position, str.trimmingCharacters(in: .whitespaces))
+        } else {
+            return .match(position, str.trimmingCharacters(in: .whitespaces))
+        }
     }
 
     @discardableResult internal func readDocString(_ evaluation: ((Character) -> Bool)) -> String {
@@ -110,16 +129,11 @@ public class Lexer: StringReader {
             case .comment: return readComment()
             case .tagMarker: return advance(.tag(position, readLineUntil({ !$0.isTagCharacter })))
             case .tableCellDelimiter:
-                let tableCellContents = advance(readCellUntil({ $0.isTableCellDelimiter })
-                                                    .trimmingCharacters(in: .whitespaces))
+                let tableCellContents = advance(readCell())
                 if currentChar != Character.tableCellDelimiter {
                     return advanceToNextToken()
                 }
-                if let firstTableCellContentsToken = Lexer(tableCellContents).lex().first,
-                   case .tableHeader(_, let headerContents) = firstTableCellContentsToken {
-                    return .tableCell(position, .tableHeader(position, headerContents))
-                }
-                return .tableCell(position, .match(position, tableCellContents))
+                return .tableCell(position, tableCellContents)
             case .tableHeaderOpen:
                 let str = advance(readLineUntil { $0.isHeaderClosed })
                 return advance(.tableHeader(position, str))
