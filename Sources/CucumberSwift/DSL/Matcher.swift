@@ -49,6 +49,5 @@ extension Matcher {
         self.init(line: line, file: file)
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, callback: callback, line: line, file: file)
     }
-
 #endif
 }
