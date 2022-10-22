@@ -43,7 +43,7 @@ private func readClosureNameFrom(line: String) -> String {
     // overly complex way of matching () to grab the step text
     // ignores strings and docstrings
     // any more complex and I need to pull in a way to look at the Swift AST
-    return line.reduce((match:"", openCount: 0, closeCount: 0)) { res, c in
+    return line.reduce((match: "", openCount: 0, closeCount: 0)) { res, c in
         let char = String(c)
         var (match, openCount, closeCount) = res
         if openCount > 0 && openCount == closeCount { return res }

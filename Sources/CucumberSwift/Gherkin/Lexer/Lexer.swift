@@ -84,7 +84,7 @@ public class Lexer: StringReader {
         return false
     }
 
-    @discardableResult private func advance<T>(_ t:@autoclosure () -> T) -> T {
+    @discardableResult private func advance<T>(_ t: @autoclosure () -> T) -> T {
         advanceIndex()
         return t()
     }
@@ -144,7 +144,7 @@ public class Lexer: StringReader {
                 return false
             }.components(separatedBy: "\n")
             .enumerated()
-            .reduce(into: (whitespaceCount:0, trimmedLines:[String]())) { res, e in
+            .reduce(into: (whitespaceCount: 0, trimmedLines: [String]())) { res, e in
                 let (offset, line) = e
                 if offset == 1 {
                     res.whitespaceCount ?= line.map { $0 }.firstIndex { !$0.isWhitespace }

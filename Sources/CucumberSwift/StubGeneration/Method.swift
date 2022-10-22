@@ -13,8 +13,8 @@ class Method {
     var comment = ""
     private(set) var regex = ""
     private(set) var matchesParameter = ""
-    private(set) var variables:[(type: String, count: Int)] = []
-    init(keyword: Step.Keyword, regex: String, matchesParameter: String, variables:[(type: String, count: Int)]) {
+    private(set) var variables: [(type: String, count: Int)] = []
+    init(keyword: Step.Keyword, regex: String, matchesParameter: String, variables: [(type: String, count: Int)]) {
         self.keyword = keyword
         self.keywords = [keyword]
         self.regex = regex

@@ -17,8 +17,8 @@ extension AST {
             children.append(child)
         }
         init(node: Node? = nil) {
-            parent   ?= node?.parent
-            tokens   ?= node?.tokens
+            parent ?= node?.parent
+            tokens ?= node?.tokens
             children ?= node?.children
         }
     }

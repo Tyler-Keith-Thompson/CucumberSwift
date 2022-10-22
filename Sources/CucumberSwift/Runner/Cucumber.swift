@@ -91,11 +91,18 @@ import CucumberSwift_ObjC
     }
 
     @objc public static func Load() {
-        guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
-              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
+        //        guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
+        //              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
+        //            return
+        //        }
+        //        method_exchangeImplementations(testSuiteInit, swizzledInit)
+
+        guard let testCaseInit = class_getClassMethod(XCTestCase.self, #selector(XCTestCase.init(selector:))),
+              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCase(selector:))) else {
             return
         }
-        method_exchangeImplementations(testSuiteInit, swizzledInit)
+
+        method_exchangeImplementations(testCaseInit, swizzledInit)
     }
 
     @objc static func testCaseWith(name: String) -> XCTestSuite? {
@@ -105,10 +112,14 @@ import CucumberSwift_ObjC
 
         guard let className = name.components(separatedBy: "/").first,
               let testCaseClass = Bundle.allBundles.compactMap({
-                $0.classNamed(className)
+                  $0.classNamed(className)
               }).first else { return nil }
 
         return XCTestSuite(forTestCaseClass: testCaseClass)
+    }
+
+    @objc static func testCase(selector: Selector) -> XCTestCase {
+        fatalError("Should trigger")
     }
 
     func readFromFeaturesFolder(in testBundle: Bundle) {
@@ -174,7 +185,7 @@ import CucumberSwift_ObjC
     func parseIntoFeatures(_ string: String, uri: String = "") {
         let tokens = Lexer(string, uri: uri).lex()
         features.append(contentsOf: AST.standard.parse(tokens, inFile: uri)
-                            .map { Feature(with: $0, uri: uri) })
+            .map { Feature(with: $0, uri: uri) })
     }
 
     func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback: @escaping (([String], Step) throws -> Void), line: Int, file: StaticString) {

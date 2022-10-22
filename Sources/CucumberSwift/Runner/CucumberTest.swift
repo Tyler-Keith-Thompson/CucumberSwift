@@ -10,7 +10,7 @@ import Foundation
 import XCTest
 
 public final class CucumberTest: XCTestCase {
-    override public class var defaultTestSuite: XCTestSuite { // swiftlint:disable:this empty_xctest_method
+    override public class var defaultTestSuite: XCTestSuite {
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
@@ -37,7 +37,7 @@ public final class CucumberTest: XCTestCase {
         return tests
     }
 
-    private static func createTestCaseForStubs(_ tests:inout [XCTestCase]) {
+    private static func createTestCaseForStubs(_ tests: inout [XCTestCase]) {
         let stubs = StubGenerator.getStubs(for: Cucumber.shared.features)
         let generatedSwift = stubs.map(\.generatedSwift).joined(separator: "\n")
 
@@ -57,7 +57,7 @@ public final class CucumberTest: XCTestCase {
         }
     }
 
-    private static func createTestCaseFor(className: String, scenario: Scenario, tests:inout [XCTestCase]) {
+    private static func createTestCaseFor(className: String, scenario: Scenario, tests: inout [XCTestCase]) {
         scenario
             .steps
             .lazy

@@ -31,7 +31,7 @@ class AST {
         .ruleFor(.description(), Rule.validateParentExists)
     }
 
-    private init(_ ruleLookup: [AST.Token?:Rule] = [:]) {
+    private init(_ ruleLookup: [AST.Token?: Rule] = [:]) {
         self.ruleLookup = ruleLookup
     }
 
