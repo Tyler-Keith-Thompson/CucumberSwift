@@ -40,7 +40,7 @@ extension Matcher {
         Cucumber.shared.attachClosureToSteps(keyword: keyword, expression: expression, callback: callback, line: line, file: file)
     }
 
-#if swift(>=5.7)
+#if compiler(>=5.7) && canImport(_StringProcessing)
     @available(iOS 16.0, macOS 13.0, tvOS 16.0, watchOS 9.0, *)
     @discardableResult public init<Output>(_ regex: Regex<Output>,
                                            callback: @escaping ((Regex<Output>.Match, Step) -> Void),
