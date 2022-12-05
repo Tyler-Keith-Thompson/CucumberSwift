@@ -23,6 +23,7 @@ let package = Package(
             name: "CucumberSwift_ObjC",
             dependencies: [],
             path: "Sources/Obj-C BS",
+            exclude: ["Gherkin/XCode-Specific"], // SPM shouldn't vend the syntax highlighting files
             publicHeadersPath: "Include"),
         .target(
             name: "CucumberSwift",
