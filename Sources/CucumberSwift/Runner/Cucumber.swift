@@ -91,18 +91,11 @@ import CucumberSwift_ObjC
     }
 
     @objc public static func Load() {
-        //        guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
-        //              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
-        //            return
-        //        }
-        //        method_exchangeImplementations(testSuiteInit, swizzledInit)
-
-        guard let testCaseInit = class_getClassMethod(XCTestCase.self, #selector(XCTestCase.init(selector:))),
-              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCase(selector:))) else {
+        guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
+              let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
             return
         }
-
-        method_exchangeImplementations(testCaseInit, swizzledInit)
+        method_exchangeImplementations(testSuiteInit, swizzledInit)
     }
 
     @objc static func testCaseWith(name: String) -> XCTestSuite? {
@@ -116,10 +109,6 @@ import CucumberSwift_ObjC
               }).first else { return nil }
 
         return XCTestSuite(forTestCaseClass: testCaseClass)
-    }
-
-    @objc static func testCase(selector: Selector) -> XCTestCase {
-        fatalError("Should trigger")
     }
 
     func readFromFeaturesFolder(in testBundle: Bundle) {

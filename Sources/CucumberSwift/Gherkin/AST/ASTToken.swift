@@ -31,7 +31,7 @@ extension AST {
             }
         }
 
-        public static func == (lhs: Self, rhs: Self) -> Bool {
+        static func == (lhs: Self, rhs: Self) -> Bool {
             var lHasher = Hasher()
             lhs.hash(into: &lHasher)
             var rHasher = Hasher()

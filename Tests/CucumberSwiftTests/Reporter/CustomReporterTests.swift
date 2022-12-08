@@ -5,7 +5,7 @@
 //  Created by Tyler Thompson on 5/14/21.
 //  Copyright © 2021 Tyler Thompson. All rights reserved.
 //
-// swiftlint:disable file_types_order function_body_length type_body_length
+// swiftlint:disable file_types_order type_body_length
 
 import Foundation
 import XCTest
@@ -226,7 +226,7 @@ class CustomReporterTests: XCTestCase {
         Cucumber.shared.parseIntoFeatures(featureFile)
         var called = 0
         var steps = [Step]()
-        Self.mockObserver.didFinishStep = { step, result, _ in
+        Self.mockObserver.didFinishStep = { step, _, _ in
             defer { called += 1 }
             steps.append(step)
             XCTAssertEqual(step.result, .pending)
@@ -289,7 +289,7 @@ class CustomReporterTests: XCTestCase {
          Given some precondition
     """)
         var called = 0
-        Self.mockObserver.didFinishStep = { step, result, _ in
+        Self.mockObserver.didFinishStep = { step, _, _ in
             defer { called += 1 }
             XCTAssertEqual(step.keyword, .given)
             XCTAssertEqual(step.match, "some precondition")
