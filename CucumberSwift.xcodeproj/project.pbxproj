@@ -20,6 +20,7 @@
 		5AE2C0BD20FE4CC8000DDD48 /* TableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BC20FE4CC8000DDD48 /* TableTests.swift */; };
 		5AE2C0BF20FE7EE7000DDD48 /* AST.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0BE20FE7EE7000DDD48 /* AST.swift */; };
 		5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE2C0C020FEA958000DDD48 /* ScenarioOutlineParser.swift */; };
+		6508AB8D295DE03D00CB1D9B /* JSONSchema in Frameworks */ = {isa = PBXBuildFile; productRef = 6508AB8C295DE03D00CB1D9B /* JSONSchema */; };
 		AD01722D21160E0B00FBC9AF /* StepGenerationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01722C21160E0B00FBC9AF /* StepGenerationTests.swift */; };
 		AD01722F2116341200FBC9AF /* SequenceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01722E2116341200FBC9AF /* SequenceExtensions.swift */; };
 		AD01723121166C3D00FBC9AF /* StubGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD01723021166C3D00FBC9AF /* StubGenerator.swift */; };
@@ -271,6 +272,7 @@
 			files = (
 				CA3ED0E328B9A4D9003ACE79 /* CucumberSwiftExpressions in Frameworks */,
 				AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */,
+				6508AB8D295DE03D00CB1D9B /* JSONSchema in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -714,6 +716,7 @@
 			name = CucumberSwiftTests;
 			packageProductDependencies = (
 				CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */,
+				6508AB8C295DE03D00CB1D9B /* JSONSchema */,
 			);
 			productName = CucumberSwiftTests;
 			productReference = AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */;
@@ -800,6 +803,7 @@
 			mainGroup = AD9EB4562079CF87002494C0;
 			packageReferences = (
 				CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */,
+				6508AB8B295DE03D00CB1D9B /* XCRemoteSwiftPackageReference "JSONSchema" */,
 			);
 			productRefGroup = AD9EB4612079CF87002494C0 /* Products */;
 			projectDirPath = "";
@@ -1201,7 +1205,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1223,7 +1227,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1245,7 +1249,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1265,7 +1269,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1283,7 +1287,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1304,7 +1308,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9CUJHB48U6;
+				DEVELOPMENT_TEAM = 9SHTE6GGFH;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1370,6 +1374,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		6508AB8B295DE03D00CB1D9B /* XCRemoteSwiftPackageReference "JSONSchema" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kylef/JSONSchema.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.0;
+			};
+		};
 		CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Tyler-Keith-Thompson/CucumberSwiftExpressions.git";
@@ -1381,6 +1393,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		6508AB8C295DE03D00CB1D9B /* JSONSchema */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6508AB8B295DE03D00CB1D9B /* XCRemoteSwiftPackageReference "JSONSchema" */;
+			productName = JSONSchema;
+		};
 		CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAEE41EC28B324BF000D4703 /* XCRemoteSwiftPackageReference "CucumberSwiftExpressions" */;

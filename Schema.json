@@ -1,0 +1,245 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$ref": "#/definitions/CucumberJsJson",
+  "definitions": {
+    "CucumberJsJson": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/JsFeature"
+      }
+    },
+    "JsFeature": {
+      "type": "object",
+      "properties": {
+        "uri": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsElement"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsTag"
+          }
+        }
+      },
+      "required": ["uri", "id", "line", "keyword", "name", "elements", "tags"],
+      "additionalProperties": false
+    },
+    "JsElement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "type": {
+          "type": "string",
+          "const": "scenario"
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "steps": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsStepOrHook"
+          }
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsTag"
+          }
+        }
+      },
+      "required": ["id", "line", "keyword", "name", "steps", "tags"],
+      "additionalProperties": false
+    },
+    "JsStepOrHook": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JsStep"
+        },
+        {
+          "$ref": "#/definitions/JsHookStep"
+        }
+      ]
+    },
+    "JsStep": {
+      "type": "object",
+      "properties": {
+        "arguments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsArgument"
+          }
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        },
+        "match": {
+          "$ref": "#/definitions/JsMatch"
+        },
+        "name": {
+          "type": "string"
+        },
+        "isBackground": {
+          "type": "boolean"
+        },
+        "result": {
+          "$ref": "#/definitions/JsResult"
+        }
+      },
+      "required": ["arguments", "keyword", "line", "name", "result"],
+      "additionalProperties": false
+    },
+    "JsArgument": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/JsDocString"
+        },
+        {
+          "$ref": "#/definitions/JsDataTable"
+        }
+      ]
+    },
+    "JsDocString": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string"
+        },
+        "line": {
+          "type": "number"
+        }
+      },
+      "required": ["content", "line"],
+      "additionalProperties": false
+    },
+    "JsDataTable": {
+      "type": "object",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/JsRow"
+          }
+        }
+      },
+      "required": ["rows"],
+      "additionalProperties": false
+    },
+    "JsRow": {
+      "type": "object",
+      "properties": {
+        "cells": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": ["cells"],
+      "additionalProperties": false
+    },
+    "JsMatch": {
+      "type": "object",
+      "properties": {
+        "location": {
+          "type": "string"
+        }
+      },
+      "required": ["location"],
+      "additionalProperties": false
+    },
+    "JsResult": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "number"
+        },
+        "status": {
+          "$ref": "#/definitions/JsStatus"
+        },
+        "error_message": {
+          "type": "string"
+        }
+      },
+      "required": ["status"],
+      "additionalProperties": false
+    },
+    "JsStatus": {
+      "type": "string",
+      "enum": ["passed", "failed", "skipped", "undefined", "pending"]
+    },
+    "JsHookStep": {
+      "type": "object",
+      "properties": {
+        "arguments": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 0
+        },
+        "hidden": {
+          "type": "boolean",
+          "const": true
+        },
+        "keyword": {
+          "type": "string"
+        },
+        "match": {
+          "$ref": "#/definitions/JsMatch"
+        },
+        "result": {
+          "$ref": "#/definitions/JsResult"
+        }
+      },
+      "required": ["hidden", "keyword", "result"],
+      "additionalProperties": false
+    },
+    "JsTag": {
+      "type": "object",
+      "properties": {
+        "line": {
+          "type": "number"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["line", "name"],
+      "additionalProperties": false
+    }
+  }
+}
