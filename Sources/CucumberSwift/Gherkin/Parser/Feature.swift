@@ -67,7 +67,7 @@ public class Feature: Taggable, Positionable {
         return false
     }
 
-    func toJSON() -> [String: Any] {
+    /*func toJSON() -> [String: Any] {
         [
             "uri": uri,
             "id": title.lowercased().replacingOccurrences(of: " ", with: "-"),
@@ -76,5 +76,5 @@ public class Feature: Taggable, Positionable {
             "keyword": "Feature",
             "elements": []
         ]
-    }
+    }*/
 }

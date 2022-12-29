@@ -9,6 +9,7 @@
 import Foundation
 import XCTest
 @testable import CucumberSwift
+import JSONSchema
 
 class ReporterTests: XCTestCase {
     override func setUpWithError() throws {
@@ -17,6 +18,49 @@ class ReporterTests: XCTestCase {
 
     func getCurrentFilePath(file: StaticString = #file) -> String { String(file) }
 
+    // swiftlint:disable function_body_length superfluous_disable_command
+    func testReportJsonConformsToCucumberJsonSchema() throws {
+        let path = URL(fileURLWithPath: #file)
+            .deletingLastPathComponent()
+            .appendingPathComponent("Schema.json")
+        let data = try Data(contentsOf: path, options: .mappedIfSafe)
+        let json = try JSONSerialization.jsonObject(with: data, options: [])
+        if let schema = json as? [String: Any] {
+          // access dictionary values
+            let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
+            // TODO: use a feature file for fixing line location
+            Feature("F1") {
+                Description("A test feature")
+                Scenario("S1") {
+                    Given(I: print(""))
+                }
+            }
+            reporter.testSuiteStarted(at: Date())
+            Cucumber.shared.executeFeatures()
+
+            let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
+            print(actual)
+            // print(schema)
+            let result = try JSONSchema.validate(actual, schema: schema)
+            if let errors = result.errors {
+                errors.forEach { error in
+                    print(error.instanceLocation)
+                    print(error.description)
+                    print(error.keywordLocation)
+                }
+            }
+            XCTAssertEqual(actual.count, 1)
+            XCTAssertEqual(actual.first?["uri"] as? String, getCurrentFilePath())
+            XCTAssertEqual(actual.first?["id"] as? String, "f1")
+            XCTAssertEqual(actual.first?["name"] as? String, "F1")
+            XCTAssertEqual(actual.first?["description"] as? String, "A test feature")
+            XCTAssertEqual(actual.first?["keyword"] as? String, "Feature")
+            XCTAssertEqual(actual.first?["line"] as? UInt, 32)
+        } else if let array = json as? [Any] {
+          // access array values
+        }
+    }
+    
     func testFeaturesAreWrittenToFile() throws {
         let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
         Feature("F1") {
