@@ -478,8 +478,8 @@
 		CA09728C264F505600573DA5 /* Reporter */ = {
 			isa = PBXGroup;
 			children = (
-				AD4E773022359C6B005938B7 /* ReporterTests.swift */,
 				6508AB90295DE58200CB1D9B /* Schema.json */,
+				AD4E773022359C6B005938B7 /* ReporterTests.swift */,
 				CA09728D264F507300573DA5 /* CustomReporterTests.swift */,
 			);
 			path = Reporter;
