@@ -1209,7 +1209,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1231,7 +1231,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1253,7 +1253,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1273,7 +1273,7 @@
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1291,7 +1291,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1312,7 +1312,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9SHTE6GGFH;
+				DEVELOPMENT_TEAM = 9CUJHB48U6;
 				INFOPLIST_FILE = Tests/CucumberSwiftDSLConsumerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

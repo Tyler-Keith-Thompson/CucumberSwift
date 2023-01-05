@@ -154,10 +154,8 @@ class ReporterTests: XCTestCase {
             let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
             let result = try JSONSchema.validate(actual, schema: schema)
             if let errors = result.errors {
-                errors.forEach { error in
-                    print(error.instanceLocation)
-                    print(error.description)
-                    print(error.keywordLocation)
+                if !errors.isEmpty {
+                    XCTFail("Should validate the JOSN with the Schema, got \(errors) instead")
                 }
                 XCTAssertEqual(errors.count, 0)
             }
