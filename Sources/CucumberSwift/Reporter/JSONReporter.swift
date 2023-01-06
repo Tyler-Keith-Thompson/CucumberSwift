@@ -86,6 +86,8 @@ extension CucumberJSONReporter {
         let description: String
         let keyword: String = "Feature"
         var elements: [Scenario] = []
+        let line: UInt
+        var tags: [String] = []
 
         init(_ feature: CucumberSwift.Feature) {
             uri = feature.uri
@@ -93,6 +95,8 @@ extension CucumberJSONReporter {
             id = feature.title.lowercased().replacingOccurrences(of: " ", with: "-")
             name = feature.title
             description = feature.desc
+            line = feature.location.line
+            tags = feature.tags
         }
     }
 
@@ -103,6 +107,8 @@ extension CucumberJSONReporter {
         let name: String
         let description: String
         var steps: [Step] = []
+        var line: UInt
+        var tags: [String] = []
 
         init(_ scenario: CucumberSwift.Scenario) {
 //            #warning("Add better id logic so all whitespace is replaced")
@@ -110,6 +116,8 @@ extension CucumberJSONReporter {
             name = scenario.title
 //            #warning("Fix this")
             description = ""
+            line = scenario.location.line
+            tags = scenario.tags
         }
     }
 
@@ -118,6 +126,8 @@ extension CucumberJSONReporter {
             case result
             case name
             case keyword
+            case line
+            case arguments
         }
 
         enum ResultKeys: String, CodingKey {
@@ -130,10 +140,14 @@ extension CucumberJSONReporter {
         var duration: Measurement<UnitDuration>?
         var name: String
         var keyword: CucumberSwift.Step.Keyword
+        var line: UInt
+        var arguments: [String]
 
         init(_ step: CucumberSwift.Step) {
             name = step.match
             keyword = step.keyword
+            line = step.location.line
+            arguments = []
         }
 
         func encode(to encoder: Encoder) throws {
@@ -161,6 +175,8 @@ extension CucumberJSONReporter {
             try container.encode(name, forKey: .name)
 //            #warning("Fix this")
             try container.encode(keyword.toString(), forKey: .keyword)
+            try container.encode(line, forKey: .line)
+            try container.encode(arguments, forKey: .arguments)
         }
     }
 }
