@@ -57,7 +57,7 @@ enum ScenarioOutlineParser {
             }
         }
         let tags = outlineTags
-        for line in lines.dropFirst() {
+        for (index, line) in lines.dropFirst().enumerated() {
             let title = titleLine?.reduce(into: "") {
                 if case Lexer.Token.tableHeader(_, let headerText) = $1 {
                     if let index = headerLookup?[headerText],
@@ -69,12 +69,13 @@ enum ScenarioOutlineParser {
                 } else if case Lexer.Token.title(_, let titleText) = $1 {
                     $0? += titleText
                 }
-            }
+            } ?? ""
             var steps = backgroundStepNodes.map { Step(with: $0) }
             for stepNode in stepNodes {
                 steps.append(getStepFromLine(line, lookup: headerLookup, stepNode: stepNode))
             }
-            scenarios.append(Scenario(with: steps, title: title, tags: tags, position: line.first?.position ?? .start))
+            let exampleNumber = index + 1
+            scenarios.append(Scenario(with: steps, title: "\(title) (example \(exampleNumber))", tags: tags, position: line.first?.position ?? .start))
         }
         return scenarios
     }

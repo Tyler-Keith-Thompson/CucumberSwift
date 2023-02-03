@@ -21,20 +21,28 @@ public final class CucumberTest: XCTestCase {
         }
         (Cucumber.shared as? StepImplementation)?.setupSteps()
         assert(!Cucumber.shared.features.isEmpty, "CucumberSwift found no features to run. Check out our documentation for instructions on including you Features folder. Be aware it's a case sensitive search. If you're using the DSL, make sure your features are defined in the `setupSteps()` method.") // swiftlint:disable:this line_length
-        allGeneratedTests.forEach { suite.addTest($0) }
+        generateAlltests(suite)
         return suite
     }
 
-    static var allGeneratedTests: [XCTestCase] {
-        var tests = [XCTestCase]()
-        createTestCaseForStubs(&tests)
+    static func generateAlltests(_ rootSuite: XCTestSuite) {
+        let stubsSuite = XCTestSuite(name: "GeneratedSteps")
+        var stubTests = [XCTestCase]()
+        createTestCaseForStubs(&stubTests)
+        stubTests.forEach { stubsSuite.addTest($0) }
+        rootSuite.addTest(stubsSuite)
+
         for feature in Cucumber.shared.features.taggedElements(with: Cucumber.shared.environment, askImplementor: false) {
             let className = feature.title.toClassString() + readFeatureScenarioDelimiter()
+
             for scenario in feature.scenarios.taggedElements(with: Cucumber.shared.environment, askImplementor: true) {
+                let childSuite = XCTestSuite(name: scenario.title.toClassString())
+                var tests = [XCTestCase]()
                 createTestCaseFor(className: className, scenario: scenario, tests: &tests)
+                tests.forEach { childSuite.addTest($0) }
+                rootSuite.addTest(childSuite)
             }
         }
-        return tests
     }
 
     private static func createTestCaseForStubs(_ tests: inout [XCTestCase]) {

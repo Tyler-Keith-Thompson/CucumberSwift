@@ -47,8 +47,8 @@ class TableTests: XCTestCase {
         XCTAssertEqual(feature?.scenarios.count, 2)
         XCTAssertEqual(firstScenario?.steps.count, 4)
         XCTAssertEqual(secondScenario?.steps.count, 4)
-        XCTAssertEqual(firstScenario?.title, "Some determinable business situation")
-        XCTAssertEqual(secondScenario?.title, "Some determinable business situation")
+        XCTAssertEqual(firstScenario?.title, "Some determinable business situation (example 1)")
+        XCTAssertEqual(secondScenario?.title, "Some determinable business situation (example 2)")
         if (firstScenario?.steps.count ?? 0) == 4 {
             let steps = firstScenario?.steps
             XCTAssertEqual(steps?[0].keyword, .given)
@@ -96,8 +96,9 @@ class TableTests: XCTestCase {
     """)
         let feature = cucumber.features.first
         XCTAssertEqual(feature?.scenarios.count, 2)
-        feature?.scenarios.forEach({ (scenario) in
-            XCTAssertEqual(scenario.title, "Some determinable business situation")
+        feature?.scenarios.enumerated().forEach({ (index, scenario) in
+            let exampleNumber = index + 1
+            XCTAssertEqual(scenario.title, "Some determinable business situation (example \(exampleNumber))")
             XCTAssertEqual(scenario.steps.count, 5)
         })
     }
@@ -126,8 +127,9 @@ class TableTests: XCTestCase {
     """)
         let feature = cucumber.features.first
         XCTAssertEqual(feature?.scenarios.count, 2)
-        feature?.scenarios.forEach({ (scenario) in
-            XCTAssertEqual(scenario.title, "Some determinable business situation")
+        feature?.scenarios.enumerated().forEach({ (index, scenario) in
+            let exampleNumber = index + 1
+            XCTAssertEqual(scenario.title, "Some determinable business situation (example \(exampleNumber))")
             XCTAssertEqual(scenario.steps.count, 5)
             XCTAssert(scenario.containsTag("outline"))
         })
@@ -146,8 +148,8 @@ class TableTests: XCTestCase {
     """)
         let firstScenario = cucumber.features.first?.scenarios.first
         let secondScenario = cucumber.features.first?.scenarios.last
-        XCTAssertEqual(firstScenario?.title, "the un")
-        XCTAssertEqual(secondScenario?.title, "the uno")
+        XCTAssertEqual(firstScenario?.title, "the un (example 1)")
+        XCTAssertEqual(secondScenario?.title, "the uno (example 2)")
     }
 
     func testTableCellWithEscapeCharacter() {
@@ -161,7 +163,7 @@ class TableTests: XCTestCase {
               | u\\|o | dos  |
     """)
         let firstScenario = cucumber.features.first?.scenarios.first
-        XCTAssertEqual(firstScenario?.title, "the u|o")
+        XCTAssertEqual(firstScenario?.title, "the u|o (example 1)")
     }
 
     func testTableGetAttachedToSteps() {

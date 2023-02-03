@@ -27,6 +27,21 @@ extension Cucumber {
 
     func executeFeatures(callDefaultTestSuite: Bool = false) {
         if callDefaultTestSuite { _ = CucumberTest.defaultTestSuite }
-        CucumberTest.allGeneratedTests.forEach { $0.invokeTest() }
+        let suite = XCTestSuite(name: "Dummy")
+        CucumberTest.generateAlltests(suite)
+
+        var tests = [XCTestCase]()
+        Cucumber.enumerateTestsCases(&tests, suite)
+        tests.forEach { $0.invokeTest() }
+    }
+
+    private static func enumerateTestsCases(_ tests: inout [XCTestCase], _ suite: XCTestSuite) {
+        suite.tests.forEach {
+            if let testCase = $0 as? XCTestCase {
+                tests.append(testCase)
+            } else if let suite = $0 as? XCTestSuite {
+                enumerateTestsCases(&tests, suite)
+            }
+        }
     }
 }
