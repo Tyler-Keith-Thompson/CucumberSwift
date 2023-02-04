@@ -91,6 +91,7 @@ import CucumberSwift_ObjC
     }
 
     @objc public static func Load() {
+        print("LOAD METHOD CALLED")
         guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
               let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
             return
