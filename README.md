@@ -8,8 +8,8 @@ CucumberSwift is a lightweight Swift only Cucumber implementation for iOS, tvOS,
 
 NOTE: WatchOS support coming soon!
 
-* [Installation](https://github.com/Tyler-Keith-Thompson/CucumberSwift/wiki/installation)
-* [Getting Started](https://github.com/Tyler-Keith-Thompson/CucumberSwift/wiki)
+* [Docs](https://tyler-keith-thompson.github.io/CucumberSwift/documentation/cucumberswift/)
+* [Getting Started](https://tyler-keith-thompson.github.io/CucumberSwift/tutorials/tutorial-table-of-contents/)
 * [XCTest Integration](https://github.com/Tyler-Keith-Thompson/CucumberSwift/wiki/xctest-integration)
 
 * [Contributing](/CONTRIBUTING.md)
