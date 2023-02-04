@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D1648DB245A7549000CA612 /* XCTestHooks.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D1648DA245A7549000CA612 /* XCTestHooks.m */; };
 		1DA7619923933BCB001CBA5B /* RunWithLineNumberTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */; };
 		1DA7619B23933F18001CBA5B /* Positionable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619A23933F18001CBA5B /* Positionable.swift */; };
 		1DA7619D2393C5AB001CBA5B /* DocString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DA7619C2393C5AB001CBA5B /* DocString.swift */; };
@@ -52,7 +51,6 @@
 		AD9E15CD21176FC500FB5B6C /* StringReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */; };
 		AD9EB46A2079CF87002494C0 /* CucumberSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD9EB4602079CF87002494C0 /* CucumberSwift.framework */; };
 		AD9EB46F2079CF87002494C0 /* CucumberSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */; };
-		AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = AD9EB4632079CF87002494C0 /* CucumberSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47A2079CFA1002494C0 /* Cucumber.swift */; };
 		AD9EB47D2079D280002494C0 /* Feature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47C2079D280002494C0 /* Feature.swift */; };
 		AD9EB47F2079D28E002494C0 /* Step.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD9EB47E2079D28E002494C0 /* Step.swift */; };
@@ -112,9 +110,6 @@
 		CAB20B3E24CCF6B20024C703 /* DSLRuleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAB20B3D24CCF6B20024C703 /* DSLRuleTests.swift */; };
 		CADD26DD265B1D1F00EE8707 /* JSONReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */; };
 		CAEE41EE28B324BF000D4703 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CAEE41ED28B324BF000D4703 /* CucumberSwiftExpressions */; };
-		CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51EC5255873E90095A5C4 /* XCTestHooks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */ = {isa = PBXBuildFile; fileRef = CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */; };
-		CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CAF87A55281453EF00F7946A /* CucumberSwift.docc in Sources */ = {isa = PBXBuildFile; fileRef = CAF87A54281453EF00F7946A /* CucumberSwift.docc */; };
 /* End PBXBuildFile section */
 
@@ -143,7 +138,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1D1648DA245A7549000CA612 /* XCTestHooks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = XCTestHooks.m; sourceTree = "<group>"; };
 		1DA7619823933BCB001CBA5B /* RunWithLineNumberTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunWithLineNumberTests.swift; sourceTree = "<group>"; };
 		1DA7619A23933F18001CBA5B /* Positionable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Positionable.swift; sourceTree = "<group>"; };
 		1DA7619C2393C5AB001CBA5B /* DocString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocString.swift; sourceTree = "<group>"; };
@@ -186,7 +180,6 @@
 		AD9E15CA21176F8D00FB5B6C /* StringReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReader.swift; sourceTree = "<group>"; };
 		AD9E15CC21176FC500FB5B6C /* StringReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringReaderTests.swift; sourceTree = "<group>"; };
 		AD9EB4602079CF87002494C0 /* CucumberSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CucumberSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD9EB4632079CF87002494C0 /* CucumberSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CucumberSwift.h; sourceTree = "<group>"; };
 		AD9EB4642079CF87002494C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AD9EB4692079CF87002494C0 /* CucumberSwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CucumberSwiftTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AD9EB46E2079CF87002494C0 /* CucumberSwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CucumberSwiftTests.swift; sourceTree = "<group>"; };
@@ -252,9 +245,6 @@
 		CABED02C256A17F2001E92C1 /* CucumberSwift.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CucumberSwift.xctestplan; sourceTree = "<group>"; };
 		CADD26DC265B1D1F00EE8707 /* JSONReporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONReporter.swift; sourceTree = "<group>"; };
 		CAF51EA42557B1C70095A5C4 /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = SOURCE_ROOT; };
-		CAF51EC5255873E90095A5C4 /* XCTestHooks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = XCTestHooks.h; sourceTree = "<group>"; };
-		CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NSObjectLoadable.h; sourceTree = "<group>"; };
-		CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NSObjectLoadable.m; sourceTree = "<group>"; };
 		CAF87A54281453EF00F7946A /* CucumberSwift.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = CucumberSwift.docc; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -397,7 +387,6 @@
 		AD9EB4622079CF87002494C0 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				CAF51EEB25587AFC0095A5C4 /* Obj-C BS */,
 				CAF51EAE2557B35C0095A5C4 /* CucumberSwift */,
 				CAF51EA42557B1C70095A5C4 /* Package.swift */,
 			);
@@ -639,30 +628,10 @@
 				CA5A7C3720FC2B0A00F4564A /* Extensions */,
 				CA5A7C3620FC2AF600F4564A /* Gherkin */,
 				CA612FAD24CD298D00A7BBCD /* Generated */,
-				AD9EB4632079CF87002494C0 /* CucumberSwift.h */,
 				AD9EB4642079CF87002494C0 /* Info.plist */,
 				AD73CEF72222ECD8002BF7C0 /* TestingExtensions.swift */,
 			);
 			path = CucumberSwift;
-			sourceTree = "<group>";
-		};
-		CAF51EEB25587AFC0095A5C4 /* Obj-C BS */ = {
-			isa = PBXGroup;
-			children = (
-				1D1648DA245A7549000CA612 /* XCTestHooks.m */,
-				CAF51ED8255877FC0095A5C4 /* NSObjectLoadable.m */,
-				CAF51EEC25587B4C0095A5C4 /* Include */,
-			);
-			path = "Obj-C BS";
-			sourceTree = "<group>";
-		};
-		CAF51EEC25587B4C0095A5C4 /* Include */ = {
-			isa = PBXGroup;
-			children = (
-				CAF51EC5255873E90095A5C4 /* XCTestHooks.h */,
-				CAF51ED7255877ED0095A5C4 /* NSObjectLoadable.h */,
-			);
-			path = Include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,9 +641,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AD9EB4712079CF87002494C0 /* CucumberSwift.h in Headers */,
-				CAF51ED2255874D20095A5C4 /* XCTestHooks.h in Headers */,
-				CAF51EE2255878C80095A5C4 /* NSObjectLoadable.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -919,7 +885,6 @@
 				CA1C47F32634C6D9008D8E12 /* FeatureHook.swift in Sources */,
 				AD017234211671D200FBC9AF /* Method.swift in Sources */,
 				ADAA738E20A9356000D2344C /* CollectionExtensions.swift in Sources */,
-				CAF51ED9255877FC0095A5C4 /* NSObjectLoadable.m in Sources */,
 				1DA761A2239A7A74001CBA5B /* ASTToken.swift in Sources */,
 				AD9EB47B2079CFA1002494C0 /* Cucumber.swift in Sources */,
 				AD9EB4832079D606002494C0 /* Scenario.swift in Sources */,
@@ -945,7 +910,6 @@
 				AD9EB47F2079D28E002494C0 /* Step.swift in Sources */,
 				5AE2C0C120FEA958000DDD48 /* ScenarioOutlineParser.swift in Sources */,
 				CA097281264F4D5100573DA5 /* CucumberTestObserver.swift in Sources */,
-				1D1648DB245A7549000CA612 /* XCTestHooks.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
