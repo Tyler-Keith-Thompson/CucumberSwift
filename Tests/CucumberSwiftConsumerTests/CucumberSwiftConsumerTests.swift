@@ -59,11 +59,8 @@ extension CucumberTest {
 
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
-        #if canImport(CucumberSwift_ObjC)
-        return Bundle(url: Bundle.module.bundleURL.deletingLastPathComponent().appendingPathComponent("CucumberSwift_CucumberSwiftConsumerTests.bundle"))!
-        #else
-        return Bundle(for: Me.self)
-        #endif
+        class TestDiscovery: CucumberTest { }
+        return Bundle(for: TestDiscovery.self)
     }
 
     public func setupSteps() {

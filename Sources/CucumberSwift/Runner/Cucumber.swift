@@ -10,14 +10,8 @@ import Foundation
 import XCTest
 import CucumberSwiftExpressions
 
-#if canImport(CucumberSwift_ObjC)
-import CucumberSwift_ObjC
-#endif
-
 @objc public class Cucumber: NSObject {
-    static var shared: Cucumber = {
-        Cucumber()
-    }()
+    static var shared = Cucumber()
 
     var features = [Feature]()
     var currentStep: Step?
@@ -83,6 +77,7 @@ import CucumberSwift_ObjC
     override public init() {
         super.init()
         XCTestObservationCenter.shared.addTestObserver(self)
+        print("INIT CALLED")
     }
 
     init(withString string: String) {
@@ -271,11 +266,5 @@ import CucumberSwift_ObjC
                 step.sourceLine = line
                 step.sourceFile = file
             }
-    }
-}
-
-@nonobjc extension XCTestCase {
-    @objc override public class func beforeParallelization() {
-        Cucumber.Load()
     }
 }

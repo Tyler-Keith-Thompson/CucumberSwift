@@ -3,8 +3,8 @@ import CucumberSwift
 
 extension Cucumber: StepImplementation {
     public var bundle: Bundle {
-        class Findme { }
-        return Bundle(for: Findme.self) //This is just my shortcut way of identifying the test bundle, you do you. This bundle needs to contain the folder reference we added
+        class TestExplorer: CucumberTest { } // !! Make sure to inherit from CucumberTest
+        return Bundle(for: TestExplorer.self) // !! Important, this is what allows Cucumber Tests to be discovered.
     }
 
     public func setupSteps() {
