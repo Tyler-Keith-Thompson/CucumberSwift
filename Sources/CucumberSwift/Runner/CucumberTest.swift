@@ -9,7 +9,7 @@
 import Foundation
 import XCTest
 
-public final class CucumberTest: XCTestCase {
+@objc open class CucumberTest: XCTestCase {
     override public class var defaultTestSuite: XCTestSuite {
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
