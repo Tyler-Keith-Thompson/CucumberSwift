@@ -14,9 +14,11 @@ import CucumberSwiftExpressions
 import CucumberSwift_ObjC
 #endif
 
+let sharedCucumber = Cucumber()
+
 @objc public class Cucumber: NSObject {
     static var shared: Cucumber = {
-        Cucumber()
+        sharedCucumber
     }()
 
     var features = [Feature]()
@@ -91,7 +93,6 @@ import CucumberSwift_ObjC
     }
 
     @objc public static func Load() {
-        print("LOAD METHOD CALLED")
         guard let testSuiteInit = class_getClassMethod(XCTestSuite.self, #selector(XCTestSuite.init(forTestCaseWithName:))),
               let swizzledInit = class_getClassMethod(self, #selector(Cucumber.testCaseWith(name:))) else {
             return
