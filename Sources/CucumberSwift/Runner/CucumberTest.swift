@@ -162,7 +162,7 @@ extension Step {
                     instance.perform(selector)
             }
         } else {
-            try execute?()
+            try execute?(self.match, self)
         }
         if execute != nil && result != .failed {
             result = .passed

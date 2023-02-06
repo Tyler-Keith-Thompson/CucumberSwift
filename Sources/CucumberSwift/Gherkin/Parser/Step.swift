@@ -35,12 +35,15 @@ public class Step: CustomStringConvertible {
     public private(set)  var location: Lexer.Position
     public internal(set) var testCase: XCTestCase?
 
+    typealias MatchesExpression = ((_ str: String) -> Bool)
+    typealias Execute = ((_ match: String, _ steps: Step) throws -> Void)
+
     var result: Reporter.Result = .pending
-    var execute: (() throws -> Void)?
+    var execute: Execute?
     var executeSelector: Selector?
     var executeClass: AnyClass?
     var executeInstance: NSObject?
-    var regex: String = ""
+    var matchesExpression: MatchesExpression?
     var errorMessage: String = ""
     var startTime: Date?
     var endTime: Date?
@@ -99,8 +102,8 @@ public class Step: CustomStringConvertible {
     init(with execute: @escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
         location = position
         self.match ?= match
-        self.execute = {
-            execute(self.match.matches(for: self.regex), self)
+        self.execute = { match, step in
+            execute(self.match.matches(for: ""), step)
         }
     }
 
