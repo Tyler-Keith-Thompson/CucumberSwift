@@ -102,7 +102,7 @@ public class Step: CustomStringConvertible {
     init(with execute: @escaping (([String], Step) -> Void), match: String?, position: Lexer.Position) {
         location = position
         self.match ?= match
-        self.execute = { match, step in
+        self.execute = { _, step in
             execute(self.match.matches(for: ""), step)
         }
     }
