@@ -49,8 +49,10 @@ class Method {
             var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), \(stepParameter) in\n"
             for variable in variables {
                 for i in 0..<variable.count {
-                    let spelledNumber = (i > 0) ? NumberFormatter.localizedString(from: .init(value: i + 1),
-                                                                                  number: .spellOut) : ""
+                    let formatter = NumberFormatter()
+                    formatter.numberStyle = .spellOut
+                    formatter.locale = Locale(identifier: "en-US")
+                    let spelledNumber = (i > 0) ? formatter.string(from: .init(value: i + 1)) ?? "" : ""
                     let varName = "\(variable.type) \(spelledNumber)".camelCasingString()
                     if variable.type != "dataTable" && variable.type != "docString" {
                         methodString += "    let \(varName) = \(matchesParameter)[\(i + 1)]\n"
