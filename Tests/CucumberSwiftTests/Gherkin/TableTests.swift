@@ -9,6 +9,7 @@
 
 import Foundation
 import XCTest
+import CucumberSwiftExpressions
 @testable import CucumberSwift
 
 class TableTests: XCTestCase {
@@ -211,11 +212,11 @@ class TableTests: XCTestCase {
                 | 5      | 10     |
         """)
         var thenCalled = 0
-        Then("^I have a sample step with a=(\\d+),b=(\\d+)$") { matches, step in
+        Then("I have a sample step with a={int},b={int}" as CucumberExpression) { matches, step in
             defer { thenCalled += 1 }
             if thenCalled < 1 {
-                XCTAssertEqual(matches[1], "0")
-                XCTAssertEqual(matches[2], "1")
+                XCTAssertEqual(matches[\.int, index: 0], 0)
+                XCTAssertEqual(matches[\.int, index: 1], 1)
 
                 let dataTable = try XCTUnwrap(step.dataTable)
 
@@ -231,8 +232,8 @@ class TableTests: XCTestCase {
                 XCTAssertEqual(dataTable.rows[1][0], "0")
                 XCTAssertEqual(dataTable.rows[1][1], "1")
             } else {
-                XCTAssertEqual(matches[1], "5")
-                XCTAssertEqual(matches[2], "10")
+                XCTAssertEqual(matches[\.int, index: 0], 5)
+                XCTAssertEqual(matches[\.int, index: 1], 10)
 
                 let dataTable = try XCTUnwrap(step.dataTable)
 
@@ -266,7 +267,7 @@ class TableTests: XCTestCase {
             | \<foo\> | \<bar\> |
         """#)
         var givenCalled = 0
-        Given("^a simple data table$") { matches, step in
+        Given("a simple data table") { matches, step in
             defer { givenCalled += 1 }
             let dataTable = try XCTUnwrap(step.dataTable)
 
@@ -313,7 +314,7 @@ class TableTests: XCTestCase {
         }
         var givenCalled = false
         if step?.dataTable != nil {
-            Given("^a simple data table$") { (_, step) in
+            Given("a simple data table") { (_, step) in
                 givenCalled = true
                 let dt = step.dataTable!
                 let firstRow = dt.rows.first!

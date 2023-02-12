@@ -15,6 +15,7 @@ public protocol Matcher {
 }
 
 extension Matcher {
+    @_disfavoredOverload
     @available(*, deprecated, message: "To use regular expressions with CucumberSwift please migrate to use regex literals.")
     @discardableResult public init(_ regex: String,
                                    class: AnyClass,
@@ -25,6 +26,7 @@ extension Matcher {
         Cucumber.shared.attachClosureToSteps(keyword: keyword, regex: regex, class: `class`, selector: selector, line: line, file: file)
     }
 
+    @_disfavoredOverload
     @available(*, deprecated, message: "To use regular expressions with CucumberSwift please migrate to use regex literals.")
     @discardableResult public init(_ regex: String,
                                    callback: @escaping (([String], Step) throws -> Void),

@@ -298,7 +298,7 @@ class CustomReporterTests: XCTestCase {
             XCTAssertEqual(step.result, .passed)
         }
 
-        Given("^some precondition") { _, _ in
+        Given("some precondition") { _, _ in
             XCTAssert(true)
         }
 
@@ -328,7 +328,7 @@ class CustomReporterTests: XCTestCase {
             XCTAssertEqual(result, .failed("failed - should have failed"))
         }
 
-        Given("^some precondition") { _, _ in
+        Given("some precondition") { _, _ in
             XCTFail("should have failed")
         }
 
@@ -355,7 +355,7 @@ class CustomReporterTests: XCTestCase {
             XCTAssertEqual(result, .failed("failed - should have failed"))
         }
 
-        Given("^some precondition") { _, _ in
+        Given("some precondition") { _, _ in
             XCTFail("should have failed")
         }
 
@@ -381,7 +381,7 @@ class CustomReporterTests: XCTestCase {
             XCTAssertEqual(result, .failed("failed - should have failed"))
         }
 
-        Given("^some precondition") { _, _ in
+        Given("some precondition") { _, _ in
             XCTFail("should have failed")
         }
 

@@ -96,7 +96,7 @@ class StepGenerationTests: XCTestCase {
              Given A user with an idea
               And A PO with two
         """)
-        Given("^A user with an idea$") { _, _ in }
+        Given("A user with an idea") { _, _ in }
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
@@ -220,7 +220,7 @@ class StepGenerationTests: XCTestCase {
              When I login as "Anne"
              Then I login as "Robert Downey Jr"
         """)
-        Then("^I login as \"(.*?)\"$") { _, _ in }
+        Then("I login as {string}") { _, _ in }
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
@@ -243,7 +243,7 @@ class StepGenerationTests: XCTestCase {
              Given I login as "Anne"
              Given I login as "Robert Downey Jr"
         """)
-        Given("^I login as \"Robert Downey Jr\"$") { _, _ in }
+        Given("I login as \"Robert Downey Jr\"") { _, _ in }
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")

@@ -181,32 +181,32 @@ extension Cucumber: StepImplementation {
                 }
                 """))
         }
-        Given("^I have a before feature hook$") { _, _ in
+        Given("I have a before feature hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have a before scenario outline hook$") { _, _ in
+        Given("I have a before scenario outline hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have a before scenario hook$") { _, _ in
+        Given("I have a before scenario hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have a before step hook$") { _, _ in
+        Given("I have a before step hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have an after step hook$") { _, _ in
+        Given("I have an after step hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have an after scenario hook$") { _, _ in
+        Given("I have an after scenario hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have an after feature hook$") { _, _ in
+        Given("I have an after feature hook") { _, _ in
             XCTAssert(true)
         }
-        Given("^I have a scenario defined$") { _, _ in
+        Given("I have a scenario defined") { _, _ in
             XCTAssert(true)
         }
-        Given("^I point my step to a unit test$", class: Me.self, selector: #selector(Me.unitTestIsExecuted))
-        Given("^a step with a data table$") { _, step in
+        Given("I point my step to a unit test", class: Me.self, selector: #selector(Me.unitTestIsExecuted))
+        Given("a step with a data table") { _, step in
             guard let dataTable = step.dataTable else {
                 XCTFail("no data table found!"); return
             }
@@ -217,45 +217,45 @@ extension Cucumber: StepImplementation {
             XCTAssertEqual(dataTable.rows[1][1], "boo")
         }
 
-        When("^I run the tests$") { _, step in
+        When("I run the tests") { _, step in
             XCTAssert(true)
             XCTAssertNotNil(step.testCase)
         }
 
-        Then("^BeforeFeature gets called once per feature$") { _, step in
+        Then("BeforeFeature gets called once per feature") { _, step in
             XCTAssertEqual(beforeFeatureHooks[step.scenario!.feature!], 1)
             XCTAssertEqual(secondaryBeforeFeatureHooks[step.scenario!.feature!], 1)
         }
-        Then("^BeforeScenario gets called once per scenario$") { _, step in
+        Then("BeforeScenario gets called once per scenario") { _, step in
             XCTAssertEqual(beforeScenarioHooks[step.scenario!], 1)
         }
-        Then("^BeforeScenario gets called once per scenario outline$") { _, step in
+        Then("BeforeScenario gets called once per scenario outline") { _, step in
             XCTAssertEqual(beforeScenarioHooks[step.scenario!], 1)
         }
-        Then("^BeforeStep gets called once per step$") { _, step in
+        Then("BeforeStep gets called once per step") { _, step in
             XCTAssertEqual(beforeStepHooks[step], 1)
         }
-        Then("^AfterStep gets called once per step$") { _, _ in
+        Then("AfterStep gets called once per step") { _, _ in
             XCTAssertFalse(afterStepHooks.keys.isEmpty)
         }
-        Then("^AfterScenario gets called once per scenario$") { _, _ in
+        Then("AfterScenario gets called once per scenario") { _, _ in
             // gotta test this after the scenario...
         }
-        Then("^AfterFeature gets called once per feature$") { _, _ in
+        Then("AfterFeature gets called once per feature") { _, _ in
             // gotta test this after the feature...
         }
-        Then("^The scenario runs without crashing$") { _, _ in
+        Then("The scenario runs without crashing") { _, _ in
             let expectation = self.expectation(description: "waiting")
             expectation.fulfill()
             self.wait(for: [expectation], timeout: 3)
             XCTAssert(true)
         }
-        Then("^The unit test runs$") { _, _ in
+        Then("The unit test runs") { _, _ in
             XCTAssertEqual(Me.unitTestSetupCalled, 1)
             XCTAssert(Me.unitTestExecuted, "Unit test did not run")
             XCTAssertEqual(Me.unitTestTearDownCalled, 1)
         }
-        And("^The steps are slightly different$") { _, _ in
+        And("The steps are slightly different") { _, _ in
             XCTAssert(true)
         }
     }
