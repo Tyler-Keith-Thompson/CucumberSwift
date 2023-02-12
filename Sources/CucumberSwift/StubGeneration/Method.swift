@@ -46,7 +46,7 @@ class Method {
             // swiftlint:disable:next empty_count
             let variablesOnStepObject = variables.filter { $0.type == "dataTable" || $0.type == "docString" }.filter { $0.count > 0 }
             let stepParameter = (!variablesOnStepObject.isEmpty) ? "step" : "_"
-            var methodString = "\(keywordString.capitalizingFirstLetter())(\"^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$\") { \(matchesParameter), \(stepParameter) in\n"
+            var methodString = "\(keywordString.capitalizingFirstLetter())(/^\(regex.trimmingCharacters(in: .whitespacesAndNewlines))$/) { \(matchesParameter), \(stepParameter) in\n"
             for variable in variables {
                 for i in 0..<variable.count {
                     let formatter = NumberFormatter()

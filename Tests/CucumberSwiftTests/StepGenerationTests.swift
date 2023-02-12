@@ -29,11 +29,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: cucumber.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^Some precondition$") { _, _ in
+        let expected = #"""
+        Given(/^Some precondition$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -46,11 +46,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: cucumber.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        When("^Some precondition$") { _, _ in
+        let expected = #"""
+        When(/^Some precondition$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -63,11 +63,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: cucumber.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        When("^A totally different string match$") { _, _ in
+        let expected = #"""
+        When(/^A totally different string match$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -80,11 +80,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: cucumber.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^A user with an idea\\(ish\\)$") { _, _ in
+        let expected = #"""
+        Given(/^A user with an idea\(ish\)$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -100,16 +100,16 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^A PO with two$") { _, _ in
+        let expected = #"""
+        Given(/^A PO with two$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
-        let notExpected = """
-        Given("^A user with an idea$") { _, _ in
+        """#
+        let notExpected = #"""
+        Given(/^A user with an idea$/) { _, _ in
 
         }
-        """.stringByEscapingCharacters()
+        """#
 
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
         XCTAssert(!actual.contains(notExpected), "\"\(actual)\" should not contain \"\(notExpected)\"")
@@ -125,11 +125,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        let expected = #"""
+        Given(/^I login as \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
         }
-        """
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -143,12 +143,12 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I login as \\"(.*?)\\" with a password of \\"(.*?)\\"$") { matches, _ in
+        let expected = #"""
+        Given(/^I login as \"(.*?)\" with a password of \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
             let stringTwo = matches[2]
         }
-        """
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -162,11 +162,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I login (\\\\d+) time$") { matches, _ in
+        let expected = #"""
+        Given(/^I login (\d+) time$/) { matches, _ in
             let integer = matches[1]
         }
-        """
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -180,12 +180,12 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I enter (\\\\d+) then (\\\\d+)$") { matches, _ in
+        let expected = #"""
+        Given(/^I enter (\d+) then (\d+)$/) { matches, _ in
             let integer = matches[1]
             let integerTwo = matches[2]
         }
-        """
+        """#
         XCTAssert(actual.contains(expected), "\"\(actual)\" does not contain \"\(expected)\"")
     }
 
@@ -202,11 +202,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        MatchAll("^I login as \\"(.*?)\\"$") { matches, _ in
+        let expected = #"""
+        MatchAll(/^I login as \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
     }
 
@@ -224,14 +224,14 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        let expected = #"""
+        Given(/^I login as \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
         }
-        When("^I login as \\"(.*?)\\"$") { matches, _ in
+        When(/^I login as \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
     }
 
@@ -247,13 +247,13 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
+        let expected = #"""
         //FIXME: WARNING: This will overwite your implementation for the step(s):
         //                Given I login as "Robert Downey Jr"
-        Given("^I login as \\"(.*?)\\"$") { matches, _ in
+        Given(/^I login as \"(.*?)\"$/) { matches, _ in
             let string = matches[1]
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
     }
 
@@ -269,11 +269,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I have some data table that is not implemented$") { _, step in
+        let expected = #"""
+        Given(/^I have some data table that is not implemented$/) { _, step in
             let dataTable = step.dataTable
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
     }
 
@@ -292,11 +292,11 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^a DocString of some kind that is not implemented$") { _, step in
+        let expected = #"""
+        Given(/^a DocString of some kind that is not implemented$/) { _, step in
             let docString = step.docString
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
     }
 
@@ -318,24 +318,18 @@ class StepGenerationTests: XCTestCase {
         let actual = StubGenerator.getStubs(for: Cucumber.shared.features)
             .map(\.generatedSwift)
             .joined(separator: "\n")
-        let expected = """
-        Given("^I have some data table that is not implemented and some string \\"(.*?)\\" and some other string \\"(.*?)\\"$") { matches, step in
+        let expected = #"""
+        Given(/^I have some data table that is not implemented and some string \"(.*?)\" and some other string \"(.*?)\"$/) { matches, step in
             let string = matches[1]
             let stringTwo = matches[2]
             let dataTable = step.dataTable
         }
-        Given("^a DocString with the number (\\\\d+) and another number (\\\\d+)$") { matches, step in
+        Given(/^a DocString with the number (\d+) and another number (\d+)$/) { matches, step in
             let integer = matches[1]
             let integerTwo = matches[2]
             let docString = step.docString
         }
-        """
+        """#
         XCTAssertEqual(actual, expected)
-    }
-}
-
-extension String {
-    func stringByEscapingCharacters() -> String {
-        replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
     }
 }

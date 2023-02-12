@@ -14,12 +14,10 @@ enum StubGenerator {
             if case Lexer.Token.match(_, let m) = token {
                 regex += NSRegularExpression
                     .escapedPattern(for: m)
-                    .replacingOccurrences(of: "\\", with: "\\\\", options: [], range: nil)
-                    .replacingOccurrences(of: "\"", with: "\\\"", options: [], range: nil)
             } else if case Lexer.Token.string = token {
                 regex += "\\\"(.*?)\\\""
             } else if case Lexer.Token.integer = token {
-                regex += "(\\\\d+)"
+                regex += "(\\d+)"
             }
         }
         return regex.trimmingCharacters(in: .whitespaces)
