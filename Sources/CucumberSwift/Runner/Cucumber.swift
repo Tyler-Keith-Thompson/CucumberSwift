@@ -172,25 +172,65 @@ import CucumberSwiftExpressions
             .map { Feature(with: $0, uri: uri) })
     }
 
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, callback: @escaping (([String], Step) throws -> Void), line: Int, file: StaticString) {
+    func executeFirstStep(keyword: Step.Keyword? = nil, matching: String) {
+        let firstMatchingStep = features
+            .flatMap { $0.scenarios.flatMap { $0.steps } }
+            .first {step -> Bool in
+                if  let k = keyword,
+                    step.keyword.contains(k) {
+                    return step.matchesExpression?(matching) == true
+                } else if keyword == nil {
+                    return step.matchesExpression?(matching) == true
+                }
+                return false
+            }
+
+        if let firstMatchingStep = firstMatchingStep {
+            XCTAssertNoThrow(try firstMatchingStep.execute?(matching, firstMatchingStep))
+        } else {
+            XCTFail("No CucumberSwift expression found that matches step '\(matching)'")
+        }
+    }
+
+    private func attachClosureToSteps(keyword: Step.Keyword?,
+                                      execute: Step.Execute? = nil,
+                                      matchesExpression: @escaping Step.MatchesExpression,
+                                      line: Int,
+                                      file: StaticString,
+                                      executeSelector: Selector? = nil,
+                                      executeClass: AnyClass? = nil) {
         features
             .flatMap { $0.scenarios.flatMap { $0.steps } }
             .filter { step -> Bool in
                 if  let k = keyword,
                     step.keyword.contains(k) {
-                    return !step.match.matches(for: regex).isEmpty
+                    return matchesExpression(step.match)
                 } else if keyword == nil {
-                    return !step.match.matches(for: regex).isEmpty
+                    return matchesExpression(step.match)
                 }
                 return false
             }
             .forEach { step in
                 step.result = .undefined
-                step.execute = { try callback(step.match.matches(for: step.regex), step) }
-                step.regex = regex
+                step.execute = execute
+                step.matchesExpression = matchesExpression
                 step.sourceLine = line
                 step.sourceFile = file
+                step.executeSelector = executeSelector
+                step.executeClass = executeClass
             }
+    }
+
+    func attachClosureToSteps(keyword: Step.Keyword? = nil,
+                              regex: String,
+                              callback: @escaping (([String], Step) throws -> Void),
+                              line: Int,
+                              file: StaticString) {
+        attachClosureToSteps(keyword: keyword,
+                             execute: { match, step in try callback(match.matches(for: regex), step) },
+                             matchesExpression: { str in !str.matches(for: regex).isEmpty },
+                             line: line,
+                             file: file)
     }
 
     func attachClosureToSteps(keyword: Step.Keyword? = nil,
@@ -198,23 +238,11 @@ import CucumberSwiftExpressions
                               callback: @escaping ((CucumberSwiftExpressions.Match, Step) throws -> Void),
                               line: Int,
                               file: StaticString) {
-        features
-            .flatMap { $0.scenarios.flatMap { $0.steps } }
-            .filter { step -> Bool in
-                if  let k = keyword,
-                    step.keyword.contains(k) {
-                    return expression.match(in: step.match) != nil
-                } else if keyword == nil {
-                    return expression.match(in: step.match) != nil
-                }
-                return false
-            }
-            .forEach { step in
-                step.result = .undefined
-                step.execute = { try callback(try XCTUnwrap(expression.match(in: step.match)), step) }
-                step.sourceLine = line
-                step.sourceFile = file
-            }
+        attachClosureToSteps(keyword: keyword,
+                             execute: { match, step in try callback(try XCTUnwrap(expression.match(in: match)), step) },
+                             matchesExpression: { str in expression.match(in: str) != nil },
+                             line: line,
+                             file: file)
     }
 
 #if compiler(>=5.7) && canImport(_StringProcessing)
@@ -224,47 +252,25 @@ import CucumberSwiftExpressions
                                       callback: @escaping ((Regex<Output>.Match, Step) throws -> Void),
                                       line: Int,
                                       file: StaticString) {
-        features
-            .flatMap { $0.scenarios.flatMap { $0.steps } }
-            .filter { step -> Bool in
-                if  let k = keyword,
-                    step.keyword.contains(k) {
-                    let match = try? regex.wholeMatch(in: step.match)
-                    return match != nil
-                } else if keyword == nil {
-                    let match = try? regex.wholeMatch(in: step.match)
-                    return match != nil
-                }
-                return false
-            }
-            .forEach { step in
-                step.result = .undefined
-                step.execute = { try callback(try XCTUnwrap(regex.wholeMatch(in: step.match)), step) }
-                step.sourceLine = line
-                step.sourceFile = file
-            }
+        attachClosureToSteps(keyword: keyword,
+                             execute: { match, step in try callback(try XCTUnwrap(regex.wholeMatch(in: match)), step) },
+                             matchesExpression: { str in (try? regex.wholeMatch(in: str)) != nil },
+                             line: line,
+                             file: file)
     }
 #endif
 
-    func attachClosureToSteps(keyword: Step.Keyword? = nil, regex: String, class: AnyClass, selector: Selector, line: Int, file: StaticString) {
-        features
-            .flatMap { $0.scenarios.flatMap { $0.steps } }
-            .filter { step -> Bool in
-                if  let k = keyword,
-                    step.keyword.contains(k) {
-                    return !step.match.matches(for: regex).isEmpty
-                } else if keyword == nil {
-                    return !step.match.matches(for: regex).isEmpty
-                }
-                return false
-            }
-            .forEach { step in
-                step.result = .undefined
-                step.executeSelector = selector
-                step.executeClass = `class`
-                step.regex = regex
-                step.sourceLine = line
-                step.sourceFile = file
-            }
+    func attachClosureToSteps(keyword: Step.Keyword? = nil,
+                              regex: String,
+                              class: AnyClass,
+                              selector: Selector,
+                              line: Int,
+                              file: StaticString) {
+        attachClosureToSteps(keyword: keyword,
+                             matchesExpression: { str in !str.matches(for: regex).isEmpty },
+                             line: line,
+                             file: file,
+                             executeSelector: selector,
+                             executeClass: `class`)
     }
 }

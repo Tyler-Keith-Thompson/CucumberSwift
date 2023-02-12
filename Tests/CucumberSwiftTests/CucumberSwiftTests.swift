@@ -5,7 +5,7 @@
 //  Created by Tyler Thompson on 4/7/18.
 //  Copyright © 2018 Tyler Thompson. All rights reserved.
 //
-// swiftlint:disable function_body_length
+// swiftlint:disable function_body_length type_body_length file_length
 
 import XCTest
 import CucumberSwiftExpressions
@@ -139,6 +139,220 @@ class CucumberSwiftTests: XCTestCase {
         }
         Cucumber.shared.executeFeatures()
         XCTAssertTrue(matchAllCalled)
+    }
+#endif
+
+    func testExecuteFirstStep_WithoutParameter() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalledCount = 0
+        Given("some precondition") { _, _  in
+            givenCalledCount += 1
+        }
+
+        Given("some other precondition") { _, _  in
+            ExecuteFirstStep(matching: "some precondition")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenCalledCount, 2)
+    }
+
+    func testExecuteFirstStep_WithKeyword() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some text
+             When some text
+             Then some then text
+
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalledCount = 0
+        Given("some text") { _, _  in
+            givenCalledCount += 1
+        }
+
+        var whenCalledCount = 0
+        When("some text") { _, _  in
+            whenCalledCount += 1
+        }
+
+        Then("some then text") { _, _ in
+            ExecuteFirstStep(keyword: .when, matching: "some text")
+            ExecuteFirstStep(keyword: .given, matching: "some text")
+            ExecuteFirstStep(keyword: .given, matching: "some text")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenCalledCount, 3)
+        XCTAssertEqual(whenCalledCount, 2)
+    }
+
+    func testExecuteFirstStep_WithParameter() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition with parameter1
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenParameters = [String]()
+        Given("some precondition with (.*)") { match, _  in
+            givenParameters.append(match[1])
+        }
+
+        Given("some other precondition") { _, _  in
+            ExecuteFirstStep(matching: "some precondition with parameter2")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenParameters.count, 2)
+        XCTAssertEqual(givenParameters[0], "parameter1")
+        XCTAssertEqual(givenParameters[1], "parameter2")
+    }
+
+    func testExecuteFirstStep_WithoutParameterWithCucumberExpression() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalledCount = 0
+        Given("some precondition" as CucumberExpression) { _, _  in
+            givenCalledCount += 1
+        }
+
+        Given("some other precondition" as CucumberExpression) { _, _  in
+            ExecuteFirstStep(matching: "some precondition")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenCalledCount, 2)
+    }
+
+    func testExecuteFirstStep_WithParameterWithCucumberExpression() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition with parameter1
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenParameters = [String]()
+        Given("some precondition with {}" as CucumberExpression) { match, _  in
+            givenParameters.append(try match.first(\.anonymous))
+        }
+
+        Given("some other precondition" as CucumberExpression) { _, _  in
+            ExecuteFirstStep(matching: "some precondition with parameter2")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenParameters.count, 2)
+        XCTAssertEqual(givenParameters[0], "parameter1")
+        XCTAssertEqual(givenParameters[1], "parameter2")
+    }
+
+    func testExecuteFirstStep_WithKeywordWithCucumberExpression() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some text
+             When some text
+             Then some then text
+
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalledCount = 0
+        Given("some text" as CucumberExpression) { _, _  in
+            givenCalledCount += 1
+        }
+
+        var whenCalledCount = 0
+        When("some text" as CucumberExpression) { _, _  in
+            whenCalledCount += 1
+        }
+
+        Then("some then text" as CucumberExpression) { _, _ in
+            ExecuteFirstStep(keyword: .when, matching: "some text")
+            ExecuteFirstStep(keyword: .given, matching: "some text")
+            ExecuteFirstStep(keyword: .given, matching: "some text")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenCalledCount, 3)
+        XCTAssertEqual(whenCalledCount, 2)
+    }
+
+#if swift(>=5.7)
+    @available(iOS 16.0, *)
+    func testExecuteFirstStep_WithoutParameterWithRegexLiteral() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenCalledCount = 0
+        Given(/^some precondition$/) { _, _  in
+            givenCalledCount += 1
+        }
+
+        Given(/^some other precondition$/) { _, _  in
+            ExecuteFirstStep(matching: "some precondition")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenCalledCount, 2)
+    }
+
+    @available(iOS 16.0, *)
+    func testExecuteFirstStep_WithParameterWithRegexLiteral() {
+        let featureFile: String =
+        """
+        Feature: Some text
+
+           Scenario: Some determinable business situation
+             Given some precondition with parameter1
+               And some other precondition
+        """
+
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        var givenParameters = [String]()
+        Given(/some precondition with (.*)/) { match, _  in
+            givenParameters.append("\(match.1)")
+        }
+
+        Given(/some other precondition/) { _, _  in
+            ExecuteFirstStep(matching: "some precondition with parameter2")
+        }
+        Cucumber.shared.executeFeatures()
+        XCTAssertEqual(givenParameters.count, 2)
+        XCTAssertEqual(givenParameters[0], "parameter1")
+        XCTAssertEqual(givenParameters[1], "parameter2")
     }
 #endif
 

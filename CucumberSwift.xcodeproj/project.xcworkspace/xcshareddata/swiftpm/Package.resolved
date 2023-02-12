@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Tyler-Keith-Thompson/CucumberSwiftExpressions.git",
       "state" : {
-        "revision" : "d6bcc190304d5096ae64b95bd6adc7a0342f1245",
-        "version" : "0.0.7"
+        "revision" : "5200dc2c5d7cd31f07a13f030ab0027224d2dbea",
+        "version" : "0.0.8"
       }
     },
     {

@@ -27,3 +27,7 @@ public func BeforeStep(priority: UInt? = nil, closure: @escaping ((Step) -> Void
 public func AfterStep(priority: UInt? = nil, closure: @escaping ((Step) -> Void)) {
     Cucumber.shared.afterStepHooks.append(.init(priority: priority, hook: closure))
 }
+// Execute a step matching the given step definition
+public func ExecuteFirstStep(keyword: Step.Keyword? = nil, matching: String) {
+    Cucumber.shared.executeFirstStep(keyword: keyword, matching: matching)
+}
