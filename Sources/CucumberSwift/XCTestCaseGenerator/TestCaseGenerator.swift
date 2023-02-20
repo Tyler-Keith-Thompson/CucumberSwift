@@ -16,7 +16,7 @@ enum TestCaseGenerator {
             var name = className
             while NSClassFromString(name) != nil {
                 count += 1
-                name = "\(name)\(count)"
+                name = "\(className)\(count)"
             }
             return name
         }()
