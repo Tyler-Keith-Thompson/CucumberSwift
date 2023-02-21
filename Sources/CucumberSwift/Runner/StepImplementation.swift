@@ -15,4 +15,5 @@ import Foundation
     @objc optional func shouldRunWith(tags: [String]) -> Bool
     @objc optional func shouldRunWith(scenario: Scenario?, tags: [String]) -> Bool
     @objc optional var continueTestingAfterFailure: Bool { get }
+    @objc optional var reverseOrderForAfterHooks: Bool { get }
 }

@@ -18,6 +18,10 @@ import CucumberSwiftExpressions
     var reportName: String = "CucumberTestResultsFor"
     var environment: [String: String] = ProcessInfo.processInfo.environment
 
+    private var reverseOrderForAfterHooks: Bool {
+        (Cucumber.shared as? StepImplementation)?.reverseOrderForAfterHooks ?? false
+    }
+
     private var _beforeFeatureHooks = [FeatureHook]()
     var beforeFeatureHooks: [FeatureHook] {
         get {
@@ -29,7 +33,7 @@ import CucumberSwiftExpressions
     private var _afterFeatureHooks = [FeatureHook]()
     var afterFeatureHooks: [FeatureHook] {
         get {
-            _afterFeatureHooks.sorted()
+            reverseOrderForAfterHooks ? _afterFeatureHooks.sorted().reversed() : _afterFeatureHooks.sorted()
         } set {
             _afterFeatureHooks = newValue
         }
@@ -45,7 +49,7 @@ import CucumberSwiftExpressions
     private var _afterScenarioHooks = [ScenarioHook]()
     var afterScenarioHooks: [ScenarioHook] {
         get {
-            _afterScenarioHooks.sorted()
+            reverseOrderForAfterHooks ? _afterScenarioHooks.sorted().reversed() : _afterScenarioHooks.sorted()
         } set {
             _afterScenarioHooks = newValue
         }
@@ -61,7 +65,7 @@ import CucumberSwiftExpressions
     private var _afterStepHooks = [StepHook]()
     var afterStepHooks: [StepHook] {
         get {
-            _afterStepHooks.sorted()
+            reverseOrderForAfterHooks ? _afterStepHooks.sorted().reversed() : _afterStepHooks.sorted()
         } set {
             _afterStepHooks = newValue
         }
