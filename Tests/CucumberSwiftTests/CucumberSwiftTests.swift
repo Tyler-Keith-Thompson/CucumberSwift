@@ -490,4 +490,7 @@ extension Cucumber: StepImplementation {
     public func shouldRunWith(scenario: Scenario?, tags: [String]) -> Bool {
         Cucumber.shouldRunWith(scenario, tags)
     }
+
+    public static var overrideReverseOrderForAfterHooks = false
+    public var reverseOrderForAfterHooks: Bool { Cucumber.overrideReverseOrderForAfterHooks }
 }
