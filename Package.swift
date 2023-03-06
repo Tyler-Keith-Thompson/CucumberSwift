@@ -27,8 +27,7 @@ let package = Package(
             path: "Sources/CucumberSwift",
             exclude: ["Info.plist"],
             resources: [
-                .copy("Gherkin/XCode-Specific/"),
-                .copy("Gherkin/gherkin-languages.json")
+                .copy("Gherkin/XCode-Specific/")
             ]),
         .testTarget(
             name: "CucumberSwiftTests",

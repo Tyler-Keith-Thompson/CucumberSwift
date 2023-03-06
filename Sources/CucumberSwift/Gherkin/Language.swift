@@ -54,8 +54,7 @@ public class Language {
 
     init?(_ langName: String = "en") {
         let bundle = Bundle(for: Cucumber.self).resolvedForSPM
-        if  let path = bundle.path(forResource: "gherkin-languages", ofType: "json"),
-            let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+        if  let data = Self.languages.data(using: .utf8),
             let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
             let json = jsonObject as? [String: Any],
             let language = json[langName] as? [String: Any] {

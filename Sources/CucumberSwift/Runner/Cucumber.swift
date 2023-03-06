@@ -81,7 +81,6 @@ import CucumberSwiftExpressions
     override public init() {
         super.init()
         XCTestObservationCenter.shared.addTestObserver(self)
-        print("INIT CALLED")
     }
 
     init(withString string: String) {
