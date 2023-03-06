@@ -19,7 +19,6 @@ Pod::Spec.new do |s|
   
     s.source_files = 'Sources/**/*.{swift,h,m}'
     s.exclude_files = 'Sources/CucumberSwift/CucumberSwift.docc/'
-    s.resources = ["Sources/**/*.{json}"]
 
     s.subspec 'snippets' do |ss| 
       ss.resources = ["Sources/**/*.{codesnippet,sh}"]
