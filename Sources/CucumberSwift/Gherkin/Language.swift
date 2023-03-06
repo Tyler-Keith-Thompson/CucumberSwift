@@ -53,7 +53,6 @@ public class Language {
     private init() { }
 
     init?(_ langName: String = "en") {
-        let bundle = Bundle(for: Cucumber.self).resolvedForSPM
         if  let data = Self.languages.data(using: .utf8),
             let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []),
             let json = jsonObject as? [String: Any],

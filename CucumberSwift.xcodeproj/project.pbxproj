@@ -79,7 +79,6 @@
 		CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA1C47F82634C6E9008D8E12 /* StepHook.swift */; };
 		CA3ED0E328B9A4D9003ACE79 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CA3ED0E228B9A4D9003ACE79 /* CucumberSwiftExpressions */; };
 		CA3ED0E528B9A4E1003ACE79 /* CucumberSwiftExpressions in Frameworks */ = {isa = PBXBuildFile; productRef = CA3ED0E428B9A4E1003ACE79 /* CucumberSwiftExpressions */; };
-		CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */; };
 		CA4E2D0124CCC8AE00A44983 /* PositionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */; };
 		CA4E2D0324CCDDDC00A44983 /* BackgroundDSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */; };
 		CA4E2D0524CCDF0500A44983 /* DSLBackgroundTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA4E2D0424CCDF0500A44983 /* DSLBackgroundTests.swift */; };
@@ -212,7 +211,6 @@
 		CA1C47EC2634C6C7008D8E12 /* ScenarioHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScenarioHook.swift; sourceTree = "<group>"; };
 		CA1C47F22634C6D9008D8E12 /* FeatureHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureHook.swift; sourceTree = "<group>"; };
 		CA1C47F82634C6E9008D8E12 /* StepHook.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StepHook.swift; sourceTree = "<group>"; };
-		CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleExtensions.swift; sourceTree = "<group>"; };
 		CA4E2D0024CCC8AE00A44983 /* PositionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PositionTests.swift; sourceTree = "<group>"; };
 		CA4E2D0224CCDDDC00A44983 /* BackgroundDSL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundDSL.swift; sourceTree = "<group>"; };
 		CA4E2D0424CCDF0500A44983 /* DSLBackgroundTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSLBackgroundTests.swift; sourceTree = "<group>"; };
@@ -536,7 +534,6 @@
 				ADAA738D20A9356000D2344C /* CollectionExtensions.swift */,
 				CA5A7C3820FC2B1700F4564A /* CharacterExtensions.swift */,
 				AD01722E2116341200FBC9AF /* SequenceExtensions.swift */,
-				CA44539325ABA6D600A41DA5 /* BundleExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -862,7 +859,6 @@
 				AD9E15CB21176F8D00FB5B6C /* StringReader.swift in Sources */,
 				CA5A211024C9D0B10077AD50 /* GherkinDSL.swift in Sources */,
 				CA5939F629B5CF2500C9DB24 /* Languages.swift in Sources */,
-				CA44539425ABA6D600A41DA5 /* BundleExtensions.swift in Sources */,
 				CA097287264F4E3500573DA5 /* ReporterResult.swift in Sources */,
 				CA5A7C3D20FC2B2900F4564A /* Token.swift in Sources */,
 				CA1C47F92634C6E9008D8E12 /* StepHook.swift in Sources */,
