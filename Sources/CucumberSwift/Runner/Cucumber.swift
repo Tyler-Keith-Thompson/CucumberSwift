@@ -119,13 +119,22 @@ import CucumberSwiftExpressions
                 return testBundle.bundleURL.appendingPathComponent("Features")
             }
         }()
-        let enumerator: FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: featuresURL, includingPropertiesForKeys: nil)
-        while let url = enumerator?.nextObject() as? URL {
-            if (url.pathExtension == "feature"),
-               let string = try? String(contentsOf: url, encoding: .utf8) {
+        featureFiles(at: featuresURL).forEach { url in
+            if let string = try? String(contentsOf: url, encoding: .utf8) {
                 Cucumber.shared.parseIntoFeatures(string, uri: url.absoluteString)
             }
         }
+    }
+
+    private func featureFiles(at featuresURL: URL) -> [URL] {
+        let enumerator: FileManager.DirectoryEnumerator? = FileManager.default.enumerator(at: featuresURL, includingPropertiesForKeys: nil)
+        var fileList = [URL]()
+        while let url = enumerator?.nextObject() as? URL {
+            if url.pathExtension == "feature" {
+                fileList.append(url)
+            }
+        }
+        return fileList.sorted { $0.absoluteString < $1.absoluteString }
     }
 
     func setupBeforeHooksFor(_ step: Step) {
