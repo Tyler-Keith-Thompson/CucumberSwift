@@ -30,6 +30,18 @@ class CommentTests: XCTestCase {
         XCTAssertEqual(steps?.first?.match, "some precondition")
     }
 
+    func testCommentCharacterCanBeEscapedInline() {
+        let cucumber = Cucumber(withString: """
+    Feature: Some terse yet descriptive text of what is desired
+       Scenario: Some determinable business situation
+         Given some color \\#ffffff
+    """)
+        let firstScenario = cucumber.features.first?.scenarios.first
+        let steps = firstScenario?.steps
+        XCTAssertEqual(steps?.first?.keyword, .given)
+        XCTAssertEqual(steps?.first?.match, "some color #ffffff")
+    }
+
     func testCommentedLinesAreIgnored() {
         let cucumber = Cucumber(withString: """
     Feature: Some terse yet descriptive text of what is desired

@@ -53,12 +53,13 @@ extension Character {
     }
     var isSymbol: Bool {
         isComment ||
-            isNewline ||
-            isTagMarker ||
-            isQuote ||
-            isNumeric ||
-            isTableCellDelimiter ||
-            isHeaderToken
+        isNewline ||
+        isTagMarker ||
+        isQuote ||
+        isNumeric ||
+        isTableCellDelimiter ||
+        isHeaderToken ||
+        isEscapeCharacter
     }
     var isHeaderToken: Bool {
         isHeaderOpen || isHeaderClosed

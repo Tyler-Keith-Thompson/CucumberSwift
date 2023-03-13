@@ -145,6 +145,12 @@ public class Lexer: StringReader {
                 }
                 return .title(position, title)
             case .quote: return readString()
+            case _ where char.isEscapeCharacter:
+                if nextChar == .comment {
+                    return advance(advance(.match(position, "\(Character.comment)")))
+                } else {
+                    return advance(.match(position, "\(char)" + readLineUntil { $0.isSymbol }))
+                }
             case _ where char.isNumeric: return .integer(position, readLineUntil { !$0.isNumeric })
             case _ where lastKeyword != nil: return .match(position, readLineUntil { $0.isSymbol })
             default: return advance(advanceToNextToken())
