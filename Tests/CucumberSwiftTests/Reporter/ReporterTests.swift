@@ -59,7 +59,7 @@ class ReporterTests: XCTestCase {
         XCTAssertEqual(scenarios?.first?["name"] as? String, "S1")
         XCTAssertEqual(scenarios?.first?["description"] as? String, "")
     }
-    
+
     func testStepsAreWrittenToFile() throws {
         let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
         Feature("F1") {
@@ -70,7 +70,7 @@ class ReporterTests: XCTestCase {
         }
         reporter.testSuiteStarted(at: Date())
         Cucumber.shared.executeFeatures()
-        
+
         let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
         XCTAssertEqual(actual.count, 1)
         let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
@@ -82,7 +82,7 @@ class ReporterTests: XCTestCase {
         let result = steps?.first?["result"] as? [AnyHashable: Any]
         XCTAssertEqual(result?["status"] as? String, "passed")
     }
-    
+
     func testFailingStepsAreWrittenToFile() throws {
         enum Err: Error { case e1 }
         let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
@@ -94,7 +94,7 @@ class ReporterTests: XCTestCase {
         reporter.didStart(scenario: scenario, at: Date())
         reporter.didStart(step: step, at: Date())
         reporter.didFinish(step: step, result: .failed(Err.e1.localizedDescription), duration: .init(value: 1, unit: .seconds))
-        
+
         let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
         XCTAssertEqual(actual.count, 1)
         let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
@@ -109,19 +109,19 @@ class ReporterTests: XCTestCase {
         let actualDuration = try XCTUnwrap(result?["duration"] as? Double)
         XCTAssertEqual(actualDuration, 1_000_000_000, accuracy: 0.9)
     }
-    
+
     func testPendingStepsAreWrittenToFile() throws {
         let reporter = try XCTUnwrap(Cucumber.shared.reporters.compactMap { $0 as? CucumberJSONReporter }.first)
-        
+
         let step = Given(I: print(""))
         let scenario = Scenario("S1") { step }
         let feature = Feature("F1") { scenario }
-        
+
         reporter.testSuiteStarted(at: Date())
         reporter.didStart(feature: feature, at: Date())
         reporter.didStart(scenario: scenario, at: Date())
         reporter.didStart(step: step, at: Date())
-        
+
         let actual = try XCTUnwrap(try JSONSerialization.jsonObject(with: JSONEncoder().encode(reporter.features)) as? [[AnyHashable: Any]])
         XCTAssertEqual(actual.count, 1)
         let scenarios = actual.first?["elements"] as? [[AnyHashable: Any]]
@@ -133,7 +133,7 @@ class ReporterTests: XCTestCase {
         let result = steps?.first?["result"] as? [AnyHashable: Any]
         XCTAssertEqual(result?["status"] as? String, "pending")
     }
-    
+
     func testReporterJsonConformsToCucumberJsonSchema() throws {
         let path = URL(fileURLWithPath: #file)
             .deletingLastPathComponent()

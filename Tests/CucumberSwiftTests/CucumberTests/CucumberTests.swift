@@ -15,10 +15,6 @@ extension Collection where Element == Lexer.Token {
     public var text: String {
         return compactMap { (token) -> String? in
             switch token {
-                case .integer(_, let t):
-                    return t
-                case .string(_, let t):
-                    return "\"\(t)\""
                 case .match(_, let t):
                     return t
                 case .tableHeader(_, let t):

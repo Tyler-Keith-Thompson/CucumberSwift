@@ -30,8 +30,6 @@ extension Sequence where Element == Lexer.Token {
 extension Lexer {
     indirect enum Token: Equatable, Hashable {
         case newLine(Lexer.Position)
-        case integer(Lexer.Position, String)
-        case string(Lexer.Position, String)
         case docString(Lexer.Position, DocString)
         case match(Lexer.Position, String)
         case title(Lexer.Position, String)
@@ -45,8 +43,6 @@ extension Lexer {
         var position: Lexer.Position {
             switch self {
                 case .newLine(let pos): return pos
-                case .integer(let pos, _): return pos
-                case .string(let pos, _): return pos
                 case .docString(let pos, _): return pos
                 case .match(let pos, _): return pos
                 case .title(let pos, _): return pos
@@ -71,10 +67,6 @@ extension Lexer {
                     return description1 == description2
                 case let (.tag(_, tag1), .tag(_, tag2)):
                     return tag1 == tag2
-                case let (.integer(_, num1), .integer(_, num2)):
-                    return num1 == num2
-                case let (.string(_, string1), .string(_, string2)):
-                    return string1 == string2
                 case let (.docString(_, string1), .docString(_, string2)):
                     return string1.literal == string2.literal
                 case let (.tableHeader(_, tableHeader1), .tableHeader(_, tableHeader2)):
@@ -89,8 +81,6 @@ extension Lexer {
         var valueDescription: String {
             switch self {
                 case .newLine: return "\n"
-                case .integer(_, let val): return "\(val)"
-                case .string(_, let val): return "\(val)"
                 case .docString(_, let val): return "\(val)"
                 case .match(_, let val): return "\(val)"
                 case .title(_, let val): return "\(val)"
@@ -118,18 +108,6 @@ extension Lexer {
         }
         func isKeyword() -> Bool {
             if case .keyword = self {
-                return true
-            }
-            return false
-        }
-        func isString() -> Bool {
-            if case .string = self {
-                return true
-            }
-            return false
-        }
-        func isInteger() -> Bool {
-            if case .integer = self {
                 return true
             }
             return false

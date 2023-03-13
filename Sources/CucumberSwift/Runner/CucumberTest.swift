@@ -69,7 +69,7 @@ open class CucumberTest: XCTestCase {
         scenario
             .steps
             .lazy
-            .compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in
+            .compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in // swiftlint:disable:this large_tuple
                 if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
                                                                                method: step.method) {
                     return (step, testCase, methodSelector)

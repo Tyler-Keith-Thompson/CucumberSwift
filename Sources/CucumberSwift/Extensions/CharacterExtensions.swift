@@ -56,7 +56,6 @@ extension Character {
         isNewline ||
         isTagMarker ||
         isQuote ||
-        isNumeric ||
         isTableCellDelimiter ||
         isHeaderToken ||
         isEscapeCharacter

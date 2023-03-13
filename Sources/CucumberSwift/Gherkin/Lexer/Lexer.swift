@@ -151,7 +151,6 @@ public class Lexer: StringReader {
                 } else {
                     return advance(.match(position, "\(char)" + readLineUntil { $0.isSymbol }))
                 }
-            case _ where char.isNumeric: return .integer(position, readLineUntil { !$0.isNumeric })
             case _ where lastKeyword != nil: return .match(position, readLineUntil { $0.isSymbol })
             default: return advance(advanceToNextToken())
         }
@@ -189,8 +188,7 @@ public class Lexer: StringReader {
             return advance(.docString(position, DocString(literal: docStringValues.dropFirst().joined(separator: "\n"),
                                                           contentType: docStringValues.first?.trimmingCharacters(in: .whitespacesAndNewlines))))
         } else if char == .quote {
-            let str = advance(readLineUntil { $0.isQuote })
-            return advance(.string(position, str))
+            return advance(.match(position, "\(Character.quote)"))
         }
         return nil
     }

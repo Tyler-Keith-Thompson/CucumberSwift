@@ -68,10 +68,6 @@ public class Step: CustomStringConvertible {
                 keyword = kw
             } else if case Lexer.Token.match(_, let m) = token {
                 match += m
-            } else if case Lexer.Token.string(_, let s) = token {
-                match += "\"\(s)\""
-            } else if case Lexer.Token.integer(_, let n) = token {
-                match += n
             } else if case Lexer.Token.tableHeader(_, let h) = token {
                 match += h
             } else if case Lexer.Token.docString(_, let s) = token {

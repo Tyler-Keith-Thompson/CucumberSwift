@@ -8,15 +8,15 @@
 
 import Foundation
 enum StubGenerator {
-    private static func regexForTokens(_ tokens: [Lexer.Token]) -> String {
+    private static func regexForTokens(_ tokens: [Token]) -> String {
         var regex = ""
         for token in tokens {
-            if case Lexer.Token.match(_, let m) = token {
+            if case .match(let m) = token {
                 regex += NSRegularExpression
                     .escapedPattern(for: m)
-            } else if case Lexer.Token.string = token {
+            } else if case .string = token {
                 regex += "\\\"(.*?)\\\""
-            } else if case Lexer.Token.integer = token {
+            } else if case .int = token {
                 regex += "(\\d+)"
             }
         }
@@ -37,9 +37,10 @@ enum StubGenerator {
         let methods = executableSteps
             .filter { !$0.canExecute }
             .reduce(into: [(step: Step, method: Method)]()) {
-                let regex = regexForTokens($1.tokens)
-                let stringCount = $1.tokens.filter { $0.isString() }.count
-                let integerCount = $1.tokens.filter { $0.isInteger() }.count
+                let tokens = StubGenerator.Lexer($1.match).lex()
+                let regex = regexForTokens(tokens)
+                let stringCount = tokens.filter { $0.isString() }.count
+                let integerCount = tokens.filter { $0.isInteger() }.count
                 let matchesParameter = (stringCount > 0 || integerCount > 0) ? "matches" : "_"
                 let variables = [
                     (type: "string", count: stringCount),

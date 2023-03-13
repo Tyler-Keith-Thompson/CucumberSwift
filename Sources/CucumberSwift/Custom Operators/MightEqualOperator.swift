@@ -6,7 +6,7 @@ precedencegroup MightBePrecedence {
 }
 
 infix operator ?= : MightBePrecedence
-internal func ?=<T> ( lhs: inout T, rhs: T?) {
+internal func ?= <T> ( lhs: inout T, rhs: T?) {
     if let r = rhs {
         lhs = r
     }
