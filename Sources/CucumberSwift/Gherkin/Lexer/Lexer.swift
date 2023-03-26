@@ -55,17 +55,13 @@ public class Lexer: StringReader {
             }
             if char == .tableHeaderOpen {
                 isTableHeader = true
-                advanceIndex()
-                continue
             }
             if char == .tableHeaderClose {
                 tableHeaderClosed = true
-                advanceIndex()
-                continue
             }
             if char.isTableCellDelimiter {
                 if isTableHeader && !tableHeaderClosed {
-                    Gherkin.errors.append("File: \(url?.lastPathComponent ?? ""), table header not closed in table cell")
+                    isTableHeader = false
                 }
                 break
             }
@@ -73,7 +69,7 @@ public class Lexer: StringReader {
             advanceIndex()
         }
         if isTableHeader {
-            return .tableHeader(position, str.trimmingCharacters(in: .whitespaces))
+            return .tableHeader(position, String(str.trimmingCharacters(in: .whitespaces).dropFirst().dropLast().trimmingCharacters(in: .whitespaces)))
         } else {
             return .match(position, str.trimmingCharacters(in: .whitespaces))
         }

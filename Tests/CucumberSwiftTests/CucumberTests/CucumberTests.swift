@@ -98,10 +98,8 @@ class CucumberTests: XCTestCase {
                         if let cells = row["cells"] as? [[String: Any]] {
                             XCTAssertEqual(dRow?.count, cells.count, "Row on DataTable doesn't have correct cells in: \(fileName)")
                             for (cellIndex, cell) in cells.enumerated() {
-                                // slight hack to get around the fact we're comparing against parsed output
-                                if let value = cell["value"] as? String,
-                                   let unwrappedValue = try? /^\<?(.*?)\>?$/.firstMatch(in: value) {
-                                    XCTAssertEqual(String(unwrappedValue.1), dRow?[safe: cellIndex], fileName)
+                                if let value = cell["value"] as? String {
+                                    XCTAssertEqual(String(value), dRow?[safe: cellIndex], fileName)
                                 }
                             }
                         }

@@ -272,6 +272,36 @@ class TableTests: XCTestCase {
         XCTAssertEqual(thenCalled, 2)
     }
 
+    func testUnclosedTableHeader() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Sample
+            Scenario: Scenario description
+                Given Something
+                When Something is done
+                Then the data looks like:
+                  | speed   |  <9000 |
+                  | size    | >12000 |
+        """)
+
+        let scenario = Cucumber.shared.features.first?.scenarios.first
+        let step = scenario?.steps.last
+        let table = step?.dataTable
+        let firstRow = table?.rows.first
+        XCTAssertNotNil(step?.dataTable)
+        XCTAssertEqual(table?.rows.count, 2)
+        XCTAssertEqual(firstRow?.count, 2)
+        guard table?.rows.count == 2, firstRow?.count == 2 else { return }
+        XCTAssertEqual(firstRow?[0], "speed")
+        XCTAssertEqual(firstRow?[1], "<9000")
+
+        XCTAssertEqual(table?.rows[1][0], "size")
+        XCTAssertEqual(table?.rows[1][1], ">12000")
+
+        XCTAssert(Gherkin.errors.isEmpty)
+        Cucumber.shared.executeFeatures()
+    }
+
     func testDataTableOnStepCanEscape() {
         Cucumber.shared.features.removeAll()
         Cucumber.shared.parseIntoFeatures(#"""
@@ -364,6 +394,75 @@ class TableTests: XCTestCase {
             XCTAssertEqual(firstRow?[1], "")
             XCTAssertEqual(firstRow?[2], "bar")
         }
+        Cucumber.shared.executeFeatures()
+    }
+
+    func testComplexDataAttachedToStep() {
+        Cucumber.shared.features.removeAll()
+        Cucumber.shared.parseIntoFeatures("""
+        Feature: Some terse yet descriptive text of what is desired
+            Scenario: minimalistic
+                Given a simple data table
+                Then  User should see log entries:
+                      | TYPE    | NAME       | SUMMARY              | LABEL     | ACTIONS |
+                      | missed  | 01/06/2021 | Missed check         |           | <none>  |
+                      | missed  | 01/05/2021 | Missed check         |           | <none>  |
+                      | checked | 01/04/2021 | Logged by Test user  |           | <none>  |
+                      | checked | 01/03/2021 | Logged by Test user  |           | <none>  |
+                      | ignored | 01/02/2021 | Ignored by Test user | (Ignored) | <none>  |
+                      | ignored | 01/01/2021 | Ignored by Test user | (Ignored) | <none>  |
+        """)
+        let scenario = Cucumber.shared.features.first?.scenarios.first
+        let step = scenario?.steps.last
+        let table = step?.dataTable
+        let firstRow = table?.rows.first
+        XCTAssertNotNil(step?.dataTable)
+        XCTAssertEqual(table?.rows.count, 7)
+        XCTAssertEqual(firstRow?.count, 5)
+        guard table?.rows.count == 7, firstRow?.count == 5 else { return }
+        XCTAssertEqual(firstRow?[0], "TYPE")
+        XCTAssertEqual(firstRow?[1], "NAME")
+        XCTAssertEqual(firstRow?[2], "SUMMARY")
+        XCTAssertEqual(firstRow?[3], "LABEL")
+        XCTAssertEqual(firstRow?[4], "ACTIONS")
+
+        XCTAssertEqual(table?.rows[1][0], "missed")
+        XCTAssertEqual(table?.rows[1][1], "01/06/2021")
+        XCTAssertEqual(table?.rows[1][2], "Missed check")
+        XCTAssertEqual(table?.rows[1][3], "")
+        XCTAssertEqual(table?.rows[1][4], "<none>")
+
+        XCTAssertEqual(table?.rows[2][0], "missed")
+        XCTAssertEqual(table?.rows[2][1], "01/05/2021")
+        XCTAssertEqual(table?.rows[2][2], "Missed check")
+        XCTAssertEqual(table?.rows[2][3], "")
+        XCTAssertEqual(table?.rows[2][4], "<none>")
+
+        XCTAssertEqual(table?.rows[3][0], "checked")
+        XCTAssertEqual(table?.rows[3][1], "01/04/2021")
+        XCTAssertEqual(table?.rows[3][2], "Logged by Test user")
+        XCTAssertEqual(table?.rows[3][3], "")
+        XCTAssertEqual(table?.rows[3][4], "<none>")
+
+        XCTAssertEqual(table?.rows[4][0], "checked")
+        XCTAssertEqual(table?.rows[4][1], "01/03/2021")
+        XCTAssertEqual(table?.rows[4][2], "Logged by Test user")
+        XCTAssertEqual(table?.rows[4][3], "")
+        XCTAssertEqual(table?.rows[4][4], "<none>")
+
+        XCTAssertEqual(table?.rows[5][0], "ignored")
+        XCTAssertEqual(table?.rows[5][1], "01/02/2021")
+        XCTAssertEqual(table?.rows[5][2], "Ignored by Test user")
+        XCTAssertEqual(table?.rows[5][3], "(Ignored)")
+        XCTAssertEqual(table?.rows[5][4], "<none>")
+
+        XCTAssertEqual(table?.rows[6][0], "ignored")
+        XCTAssertEqual(table?.rows[6][1], "01/01/2021")
+        XCTAssertEqual(table?.rows[6][2], "Ignored by Test user")
+        XCTAssertEqual(table?.rows[6][3], "(Ignored)")
+        XCTAssertEqual(table?.rows[6][4], "<none>")
+
+        XCTAssert(Gherkin.errors.isEmpty)
         Cucumber.shared.executeFeatures()
     }
 

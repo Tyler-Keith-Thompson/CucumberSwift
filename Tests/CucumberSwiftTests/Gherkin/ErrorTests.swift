@@ -82,33 +82,6 @@ class ErrorsTests: XCTestCase {
         XCTAssert(Gherkin.errors.contains("File: single_parser_error.feature, expected: #EOF, #Language, #TagLine, #FeatureLine, #Comment, #Empty, got 'invalid line here'"))
     }
 
-    func testTableHeaderNotClosedInCell() {
-        Cucumber.shared.parseIntoFeatures("""
-        Feature: Sample
-
-        Scenario Outline: Sample scenario
-            Then I have a sample step
-                | <paramA | <paramB> |
-
-            Examples:
-                | paramA | paramB |
-                | 0      | 1      |
-        """, uri: "table_header_not_closed_in_cell.feature")
-        XCTAssert(Gherkin.errors.contains("File: table_header_not_closed_in_cell.feature, table header not closed in table cell"))
-    }
-
-    func testTableHeaderNotFound() {
-        Cucumber.shared.parseIntoFeatures("""
-        Feature: Sample
-
-        Scenario: minimalistic
-            Given a simple data table
-            | <foo> | <bar> |
-        """, uri: "table_header_not_found.feature")
-        XCTAssert(Gherkin.errors.contains("File: table_header_not_found.feature, table header <foo> not found"))
-        XCTAssert(Gherkin.errors.contains("File: table_header_not_found.feature, table header <bar> not found"))
-    }
-
     override func tearDown() {
         Gherkin.errors.removeAll()
     }
