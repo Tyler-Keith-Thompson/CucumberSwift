@@ -25,10 +25,7 @@ let package = Package(
                 "CucumberSwiftExpressions"
             ],
             path: "Sources/CucumberSwift",
-            exclude: ["Info.plist"],
-            resources: [
-                .copy("Gherkin/XCode-Specific/")
-            ]),
+            exclude: ["Info.plist"]),
         .testTarget(
             name: "CucumberSwiftTests",
             dependencies: ["CucumberSwift"],

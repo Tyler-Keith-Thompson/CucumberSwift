@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
     s.name             = 'CucumberSwift'
-    s.version          = '4.2.2'
+    s.version          = '4.3.0'
     s.summary          = 'A lightweight swift only cucumber implementation.'
 
     s.description      = <<-DESC
@@ -19,13 +19,6 @@ Pod::Spec.new do |s|
   
     s.source_files = 'Sources/**/*.{swift,h,m}'
     s.exclude_files = 'Sources/CucumberSwift/CucumberSwift.docc/'
-
-    s.subspec 'snippets' do |ss| 
-      ss.resources = ["Sources/**/*.{codesnippet,sh}"]
-    end
-    s.subspec 'syntax' do |ss| 
-      ss.resources = ["Sources/CucumberSwift/Gherkin/**/*.{xclangspec,sh,ideplugin}"]
-    end
 
     s.dependency "CucumberSwiftExpressions"
 
