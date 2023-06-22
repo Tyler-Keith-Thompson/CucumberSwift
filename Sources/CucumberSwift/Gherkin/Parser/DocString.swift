@@ -8,6 +8,7 @@
 
 import Foundation
 public struct DocString: Hashable {
+    public let rawLiteral: String
     public var literal: String
     public var contentType: String?
 }

@@ -75,13 +75,18 @@ public class Lexer: StringReader {
         }
     }
 
-    @discardableResult internal func readDocString(_ evaluation: ((Character) -> Bool)) -> String {
+    @discardableResult internal func readDocString(
+        _ evaluation: ((Character) -> Bool)
+    ) -> (docString: String, rawDocString: String) {
         var str = ""
+        var rawStr = ""
         while let char = currentChar {
             if char.isEscapeCharacter,
                let next = nextChar,
                next.isDocStringLiteral {
                 str.append(next)
+                rawStr.append(char)
+                rawStr.append(next)
                 advanceIndex()
                 advanceIndex()
                 continue
@@ -90,9 +95,10 @@ public class Lexer: StringReader {
                 break
             }
             str.append(char)
+            rawStr.append(char)
             advanceIndex()
         }
-        return str
+        return (str, rawStr)
     }
 
     @discardableResult internal func stripSpaceIfNecessary() -> Bool {
@@ -159,13 +165,16 @@ public class Lexer: StringReader {
         let open = lookAheadAtLineUntil { !$0.isDocStringLiteral }
         if open.isDocStringLiteral() {
             readLineUntil { !$0.isDocStringLiteral }
-            let docStringValues = readDocString {
+
+            let (docString, rawDocString) = readDocString {
                 if $0.isDocStringLiteral {
                     let close = lookAheadAtLineUntil { !$0.isDocStringLiteral }
                     if close == open { return true }
                 }
                 return false
-            }.components(separatedBy: "\n")
+            }
+
+            let docStringValues = docString.components(separatedBy: "\n")
             .enumerated()
             .reduce(into: (whitespaceCount: 0, trimmedLines: [String]())) { res, e in
                 let (offset, line) = e
@@ -181,8 +190,14 @@ public class Lexer: StringReader {
             .dropLast { $0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
 
             readLineUntil { !$0.isDocStringLiteral }
-            return advance(.docString(position, DocString(literal: docStringValues.dropFirst().joined(separator: "\n"),
-                                                          contentType: docStringValues.first?.trimmingCharacters(in: .whitespacesAndNewlines))))
+            return advance(.docString(
+                position,
+                DocString(
+                    rawLiteral: rawDocString,
+                    literal: docStringValues.dropFirst().joined(separator: "\n"),
+                    contentType: docStringValues.first?.trimmingCharacters(in: .whitespacesAndNewlines)
+                )
+            ))
         } else if char == .quote {
             return advance(.match(position, "\(Character.quote)"))
         }
