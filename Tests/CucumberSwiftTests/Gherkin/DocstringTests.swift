@@ -162,4 +162,30 @@ class DocstringTests: XCTestCase {
         third line
         """)
     }
+
+    func testDocStringPreservesEscapedQuotesWithinJSONString() throws {
+        let cucumber = Cucumber(withString:
+            #"""
+            Feature: DocString variations
+
+            Scenario: minimalistic
+                Given a DocString with JSON with escaped quotes in a string
+                """
+                {
+                    "stringWithEscapedQuote":"String with a \"quote\" or two"
+                }
+                """
+            """#
+        )
+        let firstStep = cucumber.features.first?.scenarios.first?.steps.first
+        let jsonString = try XCTUnwrap(firstStep?.docString?.rawLiteral)
+        let jsonData = try XCTUnwrap(jsonString.data(using: .utf8))
+
+        struct MyJsonType: Decodable {
+            let stringWithEscapedQuote: String
+        }
+
+        let jsonObject = try JSONDecoder().decode(MyJsonType.self, from: jsonData)
+        XCTAssertEqual(jsonObject.stringWithEscapedQuote, "String with a \"quote\" or two")
+    }
 }
