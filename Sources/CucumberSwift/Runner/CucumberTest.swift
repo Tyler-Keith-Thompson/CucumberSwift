@@ -10,18 +10,9 @@ import Foundation
 import XCTest
 
 open class CucumberTest: XCTestCase {
-
     static var didRun = false
 
     private static var suiteInstance: XCTestSuite?
-
-    override open func invokeTest() {
-        guard !Self.didRun else {
-            return
-        }
-        Self.didRun = true
-        super.invokeTest()
-    }
 
     override public class var defaultTestSuite: XCTestSuite {
         // notify reporters every time
@@ -43,6 +34,14 @@ open class CucumberTest: XCTestCase {
         assert(!Cucumber.shared.features.isEmpty, "CucumberSwift found no features to run. Check out our documentation for instructions on including you Features folder. Be aware it's a case sensitive search. If you're using the DSL, make sure your features are defined in the `setupSteps()` method.") // swiftlint:disable:this line_length
         generateAlltests(suite)
         return suite
+    }
+
+    override open func invokeTest() {
+        guard !Self.didRun else {
+            return
+        }
+        Self.didRun = true
+        super.invokeTest()
     }
 
     static func generateAlltests(_ rootSuite: XCTestSuite) {
