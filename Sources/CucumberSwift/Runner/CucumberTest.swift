@@ -36,14 +36,6 @@ open class CucumberTest: XCTestCase {
         return suite
     }
 
-    override open func invokeTest() {
-        guard !Self.didRun else {
-            return
-        }
-        Self.didRun = true
-        super.invokeTest()
-    }
-
     static func generateAlltests(_ rootSuite: XCTestSuite) {
         let stubsSuite = XCTestSuite(name: "GeneratedSteps")
         var stubTests = [XCTestCase]()
@@ -111,6 +103,14 @@ open class CucumberTest: XCTestCase {
                 testCase.continueAfterFailure = step.continueAfterFailure
                 tests.append(testCase)
             }
+    }
+
+    override open func invokeTest() {
+        guard !Self.didRun else {
+            return
+        }
+        Self.didRun = true
+        super.invokeTest()
     }
 
     // A test case needs at least one test to trigger the observer
