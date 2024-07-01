@@ -16,13 +16,14 @@ open class CucumberTest: XCTestCase {
     private static var suiteInstance: XCTestSuite?
 
     override open func invokeTest() {
-        guard !Self.didRun else { return }
+        guard !Self.didRun else {
+            return
+        }
         Self.didRun = true
         super.invokeTest()
     }
 
     override public class var defaultTestSuite: XCTestSuite {
-
         // notify reporters every time
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
