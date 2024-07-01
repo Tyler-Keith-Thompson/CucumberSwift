@@ -10,10 +10,29 @@ import Foundation
 import XCTest
 
 open class CucumberTest: XCTestCase {
+
+    static var didRun = false
+
+    private static var suiteInstance: XCTestSuite?
+
+    override open func invokeTest() {
+        guard !Self.didRun else { return }
+        Self.didRun = true
+        super.invokeTest()
+    }
+
     override public class var defaultTestSuite: XCTestSuite {
+
+        // notify reporters every time
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
+        // create default test suite only once
+        if let existingSuite = suiteInstance {
+            return existingSuite
+        }
+
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
+        suiteInstance = suite
 
         Cucumber.shared.features.removeAll()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
