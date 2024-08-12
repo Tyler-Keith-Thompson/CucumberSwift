@@ -113,6 +113,16 @@ class CustomReporterTests: XCTestCase {
         Cucumber.shared.reset()
     }
 
+    func testDefaultSuiteIsCreatedOnlyOnce() {
+        Cucumber.shared.parseIntoFeatures(featureFile)
+        let defaultSuiteBefore = CucumberTest.defaultTestSuite
+
+        Cucumber.shared.executeFeatures(callDefaultTestSuite: true)
+
+        let defaultSuiteAfter = CucumberTest.defaultTestSuite
+        XCTAssertEqual(defaultSuiteBefore, defaultSuiteAfter)
+    }
+
     func testReporterIsToldWhenTestSuiteStarts() {
         Cucumber.shared.parseIntoFeatures(featureFile)
         var called = 0

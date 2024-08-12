@@ -10,10 +10,21 @@ import Foundation
 import XCTest
 
 open class CucumberTest: XCTestCase {
+    static var didRun = false
+
+    private static var suiteInstance: XCTestSuite?
+
     override public class var defaultTestSuite: XCTestSuite {
+        // notify reporters every time
         Cucumber.shared.reporters.forEach { $0.testSuiteStarted(at: Date()) }
 
+        // create default test suite only once
+        if let existingSuite = suiteInstance {
+            return existingSuite
+        }
+
         let suite = XCTestSuite(forTestCaseClass: CucumberTest.self)
+        suiteInstance = suite
 
         Cucumber.shared.features.removeAll()
         if let bundle = (Cucumber.shared as? StepImplementation)?.bundle {
@@ -92,6 +103,14 @@ open class CucumberTest: XCTestCase {
                 testCase.continueAfterFailure = step.continueAfterFailure
                 tests.append(testCase)
             }
+    }
+
+    override open func invokeTest() {
+        guard !Self.didRun else {
+            return
+        }
+        Self.didRun = true
+        super.invokeTest()
     }
 
     // A test case needs at least one test to trigger the observer
