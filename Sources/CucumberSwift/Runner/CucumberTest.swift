@@ -77,12 +77,13 @@ open class CucumberTest: XCTestCase {
     }
 
     private static func createTestCaseFor(className: String, scenario: Scenario, tests: inout [XCTestCase]) {
+        let testCase = TestCaseGenerator.makeClass(className: className.appending(scenario.title.toClassString()))
         scenario
             .steps
             .lazy
             .compactMap { step -> (step: Step, XCTestCase.Type, Selector)? in // swiftlint:disable:this large_tuple
-                if let (testCase, methodSelector) = TestCaseGenerator.initWith(className: className.appending(scenario.title.toClassString()),
-                                                                               method: step.method) {
+                if let testCase = testCase,
+                   let methodSelector = TestCaseGenerator.addTestMethod(testCase: testCase, method: step.method) {
                     return (step, testCase, methodSelector)
                 }
                 return nil
