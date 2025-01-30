@@ -11,6 +11,17 @@ import XCTest
 
 enum TestCaseGenerator {
     static func initWith(className: String, method: TestCaseMethod?) -> (XCTestCase.Type, Selector)? {
+        guard let method = method,
+              let testCase = makeClass(className: className ) else { return nil }
+
+        if let methodSelector = addTestMethod(testCase: testCase, method: method) {
+            return (testCase, methodSelector)
+        }
+
+        return nil
+    }
+
+    static func makeClass(className: String) -> XCTestCase.Type? {
         let uniqueName = { () -> String in
             var count = 0
             var name = className
@@ -22,16 +33,22 @@ enum TestCaseGenerator {
         }()
 
         // swiftlint:disable:next legacy_objc_type
-        guard let className = (uniqueName as NSString).utf8String,
-              let method = method else { return nil }
+        guard let className = (uniqueName as NSString).utf8String else { return nil }
 
         if let testCase = objc_allocateClassPair(XCTestCase.self, className, 0) as? XCTestCase.Type {
-            let methodSelector = sel_registerName(method.name)
-            let implementation = imp_implementationWithBlock(method.closure)
-            class_addMethod(testCase, methodSelector, implementation, "v@:")
-            return (testCase, methodSelector)
+            return testCase
         }
 
         return nil
+    }
+
+    static func addTestMethod(testCase: XCTestCase.Type?, method: TestCaseMethod?) -> Selector? {
+        guard let method = method,
+              let testCase = testCase else { return nil }
+
+        let methodSelector = sel_registerName(method.name)
+        let implementation = imp_implementationWithBlock(method.closure)
+        class_addMethod(testCase, methodSelector, implementation, "v@:")
+        return methodSelector
     }
 }
